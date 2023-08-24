@@ -13,6 +13,7 @@ body{
     cursor: pointer;
 }
 .btn-def:hover {
+    position: static;
     border: 1px solid #000;
 }
 
@@ -987,9 +988,11 @@ img {
     .gridModalPersonajes {
         display: none;
         width: 15.15vW;
-        height: 27.75vh;
+        /* height: 27.75vh; */
+        height: 35vh;
         grid-template-columns: 33.33% 33.33% 33.33%;
-        grid-template-rows: 20% 20% 20% 20% 20%;
+        /* grid-template-rows: 20% 20% 20% 20% 20%; */
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
         position: absolute;
         margin-left: 20%;
         margin-top: 30%;
@@ -997,8 +1000,6 @@ img {
         border: solid #ffffff 9px;
         text-align: center;
         z-index: 300;
-
-
     }
 
     .itemModalPersonajes {
@@ -1010,6 +1011,7 @@ img {
         vertical-align: center;
         align-items: center;
         background-color: #ffffff;
+        overflow: none;
     }
 
     .itemModalPersonajes:nth-child(1) {

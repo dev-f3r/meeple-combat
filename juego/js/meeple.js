@@ -1034,7 +1034,6 @@
         menuBtn.addEventListener('click', () => {
 
 
-
             if (edicion == 0) {
 
                 modalPersonajes.style.display = "grid"
