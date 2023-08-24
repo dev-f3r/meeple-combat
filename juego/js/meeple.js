@@ -1,3 +1,4 @@
+
 {//VARIABLES
 
     var edicion = 0
@@ -132,7 +133,7 @@
 
 
 
-   
+
 
 
 
@@ -3852,6 +3853,3 @@ portadaMascotaBtn.addEventListener('click', function () {
 
 
 })
-
-
-
