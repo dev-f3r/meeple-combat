@@ -1,105 +1,71 @@
 export let edicion = 0
 
-class Personaje {
-  constructor(
-    icono,
-    nombre,
-    descripcion,
-    experiencia,
-    ataque,
-    esquiva,
-    mitigacion,
-    velocidad,
-    vida,
-    vidaMaxima,
-    poder,
-    poderMaxima,
-    maestrias,
-    habilidades
-  ) {
-    this.icono = icono
-    this.nombre = nombre
-    this.descripcion = descripcion
-    this.experiencia = experiencia
-    this.ataque = ataque
-    this.esquiva = esquiva
-    this.mitigacion = mitigacion
-    this.velocidad = velocidad
-    this.vida = vida
-    this.vidaMaxima = vidaMaxima
-    this.poder = poder
-    this.poderMaxima = poderMaxima
-    this.maestrias = maestrias
-    this.habilidades = habilidades
-
-  }
-}
 
 let personaje = {
 
-  icono: "img/portada.png",
-  nombre: "BIENVENIDOS",
-  descripcion: "",
+    icono: "img/portada.png",
+    nombre: "BIENVENIDOS",
+    descripcion: "",
 
-  experiencia: 0,
+    experiencia: 0,
 
-  ataque: 0,
-  esquiva: 0,
-  mitigacion: 0,
-  velocidad: 0,
+    ataque: 0,
+    esquiva: 0,
+    mitigacion: 0,
+    velocidad: 0,
 
-  vida: 0,
-  vidaMaxima: 0,
+    vida: 0,
+    vidaMaxima: 0,
 
-  poder: 0,
-  poderMaxima: 0,
+    poder: 0,
+    poderMaxima: 0,
 
-  maestria1Nombre: "",
-  maestria1Icono: "",
-  maestria1: 0,
+    maestria1Nombre: "",
+    maestria1Icono: "",
+    maestria1: 0,
 
-  maestria2Nombre: "",
-  maestria2Icono: "",
-  maestria2: 0,
+    maestria2Nombre: "",
+    maestria2Icono: "",
+    maestria2: 0,
 
-  maestria3Nombre: "",
-  maestria3Icono: "",
-  maestria3: 0,
-
-
+    maestria3Nombre: "",
+    maestria3Icono: "",
+    maestria3: 0,
 
 
 
-  habilidad1: "",
-  habilidad2: "",
-  habilidad3: "",
+
+
+    habilidad1: "",
+    habilidad2: "",
+    habilidad3: "",
 
 }
 
 
 export class Arma {
-  constructor(
-    nombre,
-    danno = "",
-    descripcion = ""
-  ) {
-    this.nombre = nombre
-    this.icono = "img/nada.png"
-    this.danno = danno
-    this.descripcion = descripcion
-  }
+    constructor(
+        nombre,
+        danno = 0,
+        descripcion = ""
+    ) {
+        this.nombre = nombre
+        this.icono = "img/nada.png"
+        this.danno = danno
+        this.descripcion = descripcion
+    }
 
-  setIcono(val) {
-    this.icono = val
-  }
+    setIcono(val) {
+        this.icono = val
+    }
 
-  setDanno(val) {
-    this.danno = val
-  }
+    setDanno(val) {
+        this.danno = val
+    }
 
-  setDescription(val) {
-    this.descripcion = val
-  }
+    setDescription(val) {
+        this.descripcion = val
+    }
 }
 
 // let arma1 = {
@@ -151,21 +117,21 @@ export let descripcionArma = ""
 
 
 export class Habilidad {
-  constructor(
-    nombre = "",
-    descripcion = ""
+    constructor(
+        nombre = "",
+        descripcion = ""
     ) {
-    this.nombre = nombre
-    this.descripcion = descripcion
-  }
+        this.nombre = nombre
+        this.descripcion = descripcion
+    }
 
-  setNombre(val) {
-    this.nombre = val
-  }
+    setNombre(val) {
+        this.nombre = val
+    }
 
-  setDescripcion(val) {
-    this.descripcion = val
-  }
+    setDescripcion(val) {
+        this.descripcion = val
+    }
 }
 
 // let habilidad1 = {
@@ -212,15 +178,15 @@ export class Habilidad {
 
 export let consolaData = "Un juego pensado para los amantes del PVP y como un primer contacto con el mundo del Rol.<br><br>Abre el menu y selecciona el personaje con el que deseas jugar.<br><br> Tambien puedes cambiar armas, hechizos y crear un nuevo personaje a tu gusto.<br><br> Conoce más acerca de la creación de personajes y de Battlerol en<br> www.battlerol.net <br><br> Versión 1.7.0a"
 
-let estadisticaSeleccionada = 0
-let nombreStatSelect = ""
+export let estadisticaSeleccionada = 0
+export let nombreStatSelect = ""
 
-let edicionTotal = 0
-let aprender = 0
-let equipar = 0
-let editarNombre = 0
+export let edicionTotal = 0
+export let aprender = 0
+export let equipar = 0
+export let editarNombre = 0
 
-let comando = ""
+export let comando = ""
 
 
-let ventanMascota = 0
+export let ventanMascota = 0

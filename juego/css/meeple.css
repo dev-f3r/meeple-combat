@@ -1,4 +1,4 @@
-body{
+body {
     display: flex;
     justify-content: center;
 }
@@ -12,6 +12,7 @@ body{
 .btn-def {
     cursor: pointer;
 }
+
 .btn-def:hover {
     position: static;
     border: 1px solid #000;
@@ -143,49 +144,59 @@ img {
 
 }
 
-.itemPersonaje:nth-child(7) {
-    grid-column: 1/ span 9;
+.itemPersonaje#izquierdaBtn {
+    /* background-color: #000; */
+    grid-column: 1;
     grid-row: 3 / span 1;
-
 }
 
 .itemPersonaje:nth-child(8) {
+    grid-column: 2/ span 7;
+    grid-row: 3 / span 1;
+}
+
+.itemPersonaje#derechaBtn {
+    grid-column: 9;
+    grid-row: 3 / span 1;
+}
+
+.itemPersonaje:nth-child(10) {
     grid-column: 1/ span 6;
     grid-row: 4 / span 1;
 
 }
 
-.itemPersonaje:nth-child(9) {
+.itemPersonaje:nth-child(11) {
     grid-column: 7/ span 3;
     grid-row: 4 / span 1;
 
 }
 
-.itemPersonaje:nth-child(19) {
+.itemPersonaje:nth-child(21) {
     grid-column: 1/ span 9;
     grid-row: 6 / span 1;
 
 }
 
-.itemPersonaje:nth-child(20) {
+.itemPersonaje:nth-child(22) {
     grid-column: 1/ span 9;
     grid-row: 7 / span 1;
 
 }
 
-.itemPersonaje:nth-child(21) {
+.itemPersonaje:nth-child(23) {
     grid-column: 1/ span 9;
     grid-row: 8 / span 1;
 
 }
 
-.itemPersonaje:nth-child(22) {
+.itemPersonaje:nth-child(24) {
     grid-column: 1/ span 9;
     grid-row: 9 / span 1;
 
 }
 
-.itemPersonaje:nth-child(23) {
+.itemPersonaje:nth-child(25) {
     grid-column: 1/ span 9;
     grid-row: 10 / span 1;
 
@@ -284,7 +295,7 @@ img {
 
 
 .gridModalAura {
-    
+
     display: none;
     width: 11.11vW;
     height: 5.55vh;

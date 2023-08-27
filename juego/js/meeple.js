@@ -1,4 +1,3 @@
-
 {//VARIABLES
 
     var edicion = 0
