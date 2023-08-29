@@ -1,7 +1,17 @@
 {//VARIABLES
 
+    // En esta sección se establece las estructuras necesarias para establecer el contenido que se muestra
     var edicion = 0
 
+    /*  Cada personaje consta de:
+        1. Nombre (Barbaro, mago, etc)
+        2. Atributos (Hasta 6)
+        3. Equipamiento (Hasta 3 items)
+        4. Armas (hasta 2)
+        5. Habilidades (Hasta 3)
+        6. EXP (Para edición de de atributos)
+        7. Una descripción
+     */
     var personaje = {
 
         icono: "img/portada.png",
@@ -1585,7 +1595,7 @@
 
 
 
-
+        // Funcion para remover los caracteres diacríticos
         function removeAccents(text) {
             const sustitutions = {
                 àáâãäå: "a",
@@ -1886,7 +1896,7 @@
 
         }//FIN COMANDOS
 
-
+        // Logica para creación de un nuevo personaje
         nuevoBtn.addEventListener('click', function () {
 
             edicionTotal = 1
@@ -1941,7 +1951,7 @@
 
 
     {//TIRADA
-
+        // Función que contiene la logica de los ataques
         function tirada() {
 
 
@@ -2325,7 +2335,7 @@
 
                     if (nombreStatSelect == "Maestria1" || nombreStatSelect == "Maestria2" || nombreStatSelect == "Maestria3") {
 
-                       
+
                             consolaData = "Pronto"
                         
 
@@ -2478,7 +2488,7 @@
 
 
 
-
+    // Función para cerrar menu emergentes
     function cerrarModales() {
 
         arriba.style.display = "none"
@@ -2488,13 +2498,13 @@
 
     }
 
-
+    // Intervalo que ejecuta imprimir() cada 50 ms
     setInterval(() => {
         imprimir()
 
     }, 50);
 
-
+    // Función para imprimir los cambios realizados a los personajes
     function imprimir() {
 
         icono.src = personaje.icono
