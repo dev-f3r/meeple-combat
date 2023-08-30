@@ -55,7 +55,13 @@
     }
 
 
-
+    /* 
+        Cada arma tiene:
+        1. Nombre
+        2. Icono
+        3. Danno
+        4. Descripción
+    */
     var arma1 = {
 
         nombre: "Arma 1",
@@ -103,7 +109,11 @@
     var descripcionArma = ""
 
 
-
+    /* 
+        Cada habilidad tiene:
+        1. Nombre
+        2. Descripción
+    */
     var habilidad1 = {
 
         nombre: "",
@@ -145,7 +155,7 @@
 
 
 
-
+    // Texto por defecto de la consola
     var consolaData = "Un juego pensado para los amantes del PVP y como un primer contacto con el mundo del Rol.<br><br>Abre el menu y selecciona el personaje con el que deseas jugar.<br><br> Tambien puedes cambiar armas, hechizos y crear un nuevo personaje a tu gusto.<br><br> Conoce más acerca de la creación de personajes y de Battlerol en<br> www.battlerol.net <br><br> Versión 1.7.0a"
 
     var estadisticaSeleccionada = 0
@@ -172,9 +182,10 @@
 
 {//FUNCIONES
 
-
+    // Refresca la dirección actual
     window.reload = function () { location.reload(); }
 
+    // Al hacer click  limpia la consola
     consolaBtn.addEventListener('click', function () {
 
         armas("Dado D20", 0)
