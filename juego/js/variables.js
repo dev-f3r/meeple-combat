@@ -42,6 +42,84 @@ let personaje = {
 
 }
 
+export class Personaje {
+    constructor(
+        icono = "img/portada.png",
+        nombre = "BIENVENIDOS",
+        descripcion,
+
+        experiencia,
+
+        ataque = 0,
+        esquiva = 0,
+        mitigacion = 0,
+        velocidad = 0,
+
+        vida = 0,
+        vidaMaxima = 0,
+
+        poder = 0,
+        poderMaxima = 0,
+
+        maestria1Nombre = "",
+        maestria1Icono = "",
+        maestria1 = 0,
+
+        maestria2Nombre = "",
+        maestria2Icono = "",
+        maestria2 = 0,
+
+        maestria3Nombre = "",
+        maestria3Icono = "",
+        maestria3 = 0,
+
+
+
+
+
+        habilidad1 = "",
+        habilidad2 = "",
+        habilidad3 = "",
+    ) {
+        this.icono = icono
+        this.nombre = nombre
+        this.descripcion = descripcion
+
+        this.experiencia = experiencia
+
+        this.ataque = ataque
+        this.esquiva = esquiva
+        this.mitigacion = mitigacion
+        this.velocidad = velocidad
+
+        this.vida = vida
+        this.vidaMaxima = vidaMaxima
+
+        this.poder = poder
+        this.poderMaxima = poderMaxima
+
+        this.maestria1Nombre = maestria1Nombre
+        this.maestria1Icono = maestria1Icono
+        this.maestria1 = maestria1
+
+        this.maestria2Nombre = maestria2Nombre
+        this.maestria2Icono = maestria2Icono
+        this.maestria2 = maestria2
+
+        this.maestria3Nombre = maestria3Nombre
+        this.maestria3Icono = maestria3Icono
+        this.maestria3 = maestria3
+
+
+
+
+
+        this.habilidad3 = habilidad3
+        this.habilidad1 = habilidad1
+        this.habilidad2 = habilidad2
+    }
+}
+
 
 export class Arma {
     constructor(
