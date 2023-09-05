@@ -1,14 +1,13 @@
-
 body {
     display: flex;
     justify-content: center;
     background-color: rgb(0, 0, 0);
-  }
-  
-  .contenedor {
+}
+
+.contenedor {
     height: 100vh;
     width: 100vw;
-  }
+}
 
 
 * {
@@ -68,7 +67,7 @@ img {
     height: 100vh;
     width: 100vw;
     background: rgb(255, 255, 255);
-    
+
 }
 
 
@@ -82,62 +81,62 @@ img {
 
 }
 
-.item-grilla:nth-child(1){
-    grid-column: 1/  span 9;
+.item-grilla:nth-child(1) {
+    grid-column: 1/ span 9;
     grid-row: 1 / span 6;
     background-color: #000000;
 }
 
 
-.item-grilla:nth-child(4){
+.item-grilla:nth-child(4) {
     grid-column: 3 / span 5;
     grid-row: 7 / span 1;
 }
 
-.item-grilla:nth-child(7){
+.item-grilla:nth-child(7) {
     grid-column: 1 / span 9;
     grid-row: 8 / span 3;
 }
 
-.item-grilla:nth-child(8){
+.item-grilla:nth-child(8) {
     grid-column: 1 / span 6;
     grid-row: 11 / span 1;
     background-color: #000000;
 }
 
-.item-grilla:nth-child(9){
+.item-grilla:nth-child(9) {
     grid-column: 7 / span 3;
     grid-row: 11 / span 1;
     background-color: #000000;
 }
 
-.item-grilla:nth-child(10){
+.item-grilla:nth-child(10) {
     grid-column: 1 / span 9;
     grid-row: 12 / span 2;
 }
 
-.item-grilla:nth-child(11){
+.item-grilla:nth-child(11) {
     grid-column: 1 / span 9;
     grid-row: 14 / span 1;
 }
 
-.item-grilla:nth-child(12){
+.item-grilla:nth-child(12) {
     grid-column: 1 / span 9;
     grid-row: 15 / span 1;
     background-color: #000000;
 }
 
-.item-grilla:nth-child(13){
+.item-grilla:nth-child(13) {
     grid-column: 1 / span 9;
     grid-row: 16 / span 1;
 }
 
-.item-grilla:nth-child(14){
+.item-grilla:nth-child(14) {
     grid-column: 1 / span 9;
     grid-row: 17 / span 1;
 }
 
-.item-grilla:nth-child(15){
+.item-grilla:nth-child(15) {
     grid-column: 1 / span 9;
     grid-row: 18 / span 1;
 }
@@ -148,7 +147,7 @@ img {
 
 
 .boton {
-    
+
     width: 100%;
     height: 100%;
     display: grid;
@@ -176,7 +175,7 @@ img {
 
 
 .botoneraCentral {
-    
+
     width: 100%;
     height: 100%;
     display: grid;
@@ -220,7 +219,7 @@ img {
 
 .modal {
 
-    
+
     display: none;
     width: 33vW;
     height: 33vh;
@@ -234,7 +233,7 @@ img {
     outline: solid #000000 9px;
     border: solid #ffffff 9px;
     background-color: rgb(255, 255, 255);
-    
+
 }
 
 
@@ -249,7 +248,7 @@ img {
 
 }
 
-.item-modal:nth-child(1){
+.item-modal:nth-child(1) {
     grid-column: 1/ span 2;
     grid-row: 1 / span 1;
 }
@@ -260,56 +259,56 @@ img {
 
 @media only screen and (min-width: 576px) {
     .contenedor {
-      height: 100vh;
-      width: 50vw;
-      position: absolute;
+        height: 100vh;
+        width: 50vw;
+        position: absolute;
     }
-  
+
     .grilla {
-      position: absolute;
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      grid-template-rows: repeat(18, 1fr);
-      margin: 0 auto;
-      text-align: center;
-      z-index: 1;
-      height: 100vh;
-      width: 60vw;
-      background: rgb(255, 255, 255);
+        position: absolute;
+        display: grid;
+        grid-template-columns: repeat(9, 1fr);
+        grid-template-rows: repeat(18, 1fr);
+        margin: 0 auto;
+        text-align: center;
+        z-index: 1;
+        height: 100vh;
+        width: 60vw;
+        background: rgb(255, 255, 255);
     }
-  
-  
-    
-  }
-  
-  @media only screen and (min-width: 1026px) {
-  
-  
+
+
+
+}
+
+@media only screen and (min-width: 1026px) {
+
+
     .contenedor {
-      height: 100vh;
-      width: 27vw;
-      position: absolute;
+        height: 100vh;
+        width: 27vw;
+        position: absolute;
     }
-  
+
     .grilla {
-      position: absolute;
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      grid-template-rows: repeat(18, 1fr);
-      margin: 0 auto;
-      text-align: center;
-      z-index: 1;
-      height: 100vh;
-      width: 27vw;
-      background: rgb(255, 255, 255);
+        position: absolute;
+        display: grid;
+        grid-template-columns: repeat(9, 1fr);
+        grid-template-rows: repeat(18, 1fr);
+        margin: 0 auto;
+        text-align: center;
+        z-index: 1;
+        height: 100vh;
+        width: 27vw;
+        background: rgb(255, 255, 255);
     }
 
 
 
 
-    .modal { 
+    .modal {
 
-    
+
         display: none;
         width: 9vW;
         height: 33vh;
@@ -323,20 +322,17 @@ img {
         outline: solid #000000 9px;
         border: solid #ffffff 9px;
         background-color: rgb(255, 255, 255);
-        
+
     }
-  
-    
-  }
-  
-  
-  @media (prefers-color-scheme: dark) {
+
+
+}
+
+
+@media (prefers-color-scheme: dark) {
     body {
-      display: flex;
-    justify-content: center;
-    background-color: rgb(0, 0, 0);
+        display: flex;
+        justify-content: center;
+        background-color: rgb(0, 0, 0);
     }
-  }
-
-
-
+}
