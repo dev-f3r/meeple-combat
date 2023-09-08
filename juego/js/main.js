@@ -134,32 +134,70 @@ var equipo3 = {
 }
 
 
+// TODO: ADAPTAR COMIENZO
+/* 
+    ? Refresca el texto y la imagen de los siguientes componentes:
+        portada, nombre, estadisticas (ataque, esquiva, etc), equipamiento, arma slot 1, arma slot 2, habilidades
+*/
+function imprimir() {
+
+    portadaImg.src = personaje.meeple
+
+    nombreTxt.textContent = personaje.nombre
+
+    ataqueTxt.textContent = personaje.ataque
+    esquivaTxt.textContent = personaje.esquiva
+    bloqueoTxt.textContent = personaje.bloqueo
+    velocidadTxt.textContent = personaje.velocidad
+    vidaTxt.textContent = personaje.vida
+    poderTxt.textContent = personaje.poder
+
+    equipo1Txt.textContent = personaje.equipo1
+    equipo2Txt.textContent = personaje.equipo2
+    equipo3Txt.textContent = personaje.equipo3
+
+    equipo1Img.src = equipo1.icono
+    equipo2Img.src = equipo2.icono
+    equipo3Img.src = equipo3.icono
+
+    arma1Txt.textContent = personaje.arma1
+    arma2Txt.textContent = personaje.arma2
+    arma1Img.src = arma1.icono
+    arma2Img.src = arma2.icono
+
+    equipo1Txt.textContent = personaje.equipo1
+    equipo2Txt.textContent = personaje.equipo2
+    equipo3Txt.textContent = personaje.equipo3
+
+    habilidad1Txt.textContent = personaje.habilidad1
+    habilidad2Txt.textContent = personaje.habilidad2
+    habilidad3Txt.textContent = personaje.habilidad3
 
 
+}
+// TODO: ADAPTAR COMIENZO
+
+// portadaImg.src = personaje.meeple
+
+// nombreTxt.textContent = personaje.nombre
+
+// ataqueTxt.textContent = personaje.ataque
+// esquivaTxt.textContent = personaje.esquiva
+// bloqueoTxt.textContent = personaje.bloqueo
+// velocidadTxt.textContent = personaje.velocidad
 
 
+// vidaTxt.textContent = personaje.vida
+// poderTxt.textContent = personaje.poder
 
-portadaImg.src = personaje.meeple
-
-nombreTxt.textContent = personaje.nombre
-
-ataqueTxt.textContent = personaje.ataque
-esquivaTxt.textContent = personaje.esquiva
-bloqueoTxt.textContent = personaje.bloqueo
-velocidadTxt.textContent = personaje.velocidad
+// equipo1Txt.textContent = personaje.equipo1
+// equipo2Txt.textContent = personaje.equipo2
+// equipo3Txt.textContent = personaje.equipo3
 
 
-vidaTxt.textContent = personaje.vida
-poderTxt.textContent = personaje.poder
-
-equipo1Txt.textContent = personaje.equipo1
-equipo2Txt.textContent = personaje.equipo2
-equipo3Txt.textContent = personaje.equipo3
-
-
-habilidad1Txt.textContent = personaje.habilidad1
-habilidad2Txt.textContent = personaje.habilidad2
-habilidad3Txt.textContent = personaje.habilidad3
+// habilidad1Txt.textContent = personaje.habilidad1
+// habilidad2Txt.textContent = personaje.habilidad2
+// habilidad3Txt.textContent = personaje.habilidad3
 
 
 
@@ -199,20 +237,33 @@ portadaBtn.addEventListener('click', function () {
 
 // !
 /* 
-    * @val: string
+    * @opcion: string
 */
-// ? cierra modal de armas o de personajes
-function cerrarModal(val) {
-    if (val == "armas") {
-        modalArmas.style.display = "none"
-        edicion = 0
-        editarImg.src = "img/editar.png"
+// ? cierra modal de armas, de personajes o de equipamiento
+function cerrarModal(opcion) {
+    switch (val) {
+        case "armas":
+            modalArmas.style.display = "none"
+            edicion = 0
+            editarImg.src = "img/editar.png"
+            break;
+
+        case "armas":
+            modalPersonaje.style.display = "none"
+            edicion = 0
+            editarImg.src = "img/editar.png"
+            break;
+
+        case "equipamiento":
+            modalEquipo.style.display = "none"
+            edicion = 0
+            editarImg.src = "img/editar.png"
+            break;
+
+        default:
+            break;
     }
-    if (val == "personajes") {
-        modalPersonaje.style.display = "none"
-        edicion = 0
-        editarImg.src = "img/editar.png"
-    }
+
 }
 // !
 
@@ -233,7 +284,16 @@ cerrarModalArmas.addEventListener('click', function () {
     cerrarModal("armas") // !
 })
 
+// TODO: ADAPTAR COMIENZO
+cerrarModalEquipo.addEventListener('click', function () {
 
+    // modalEquipo.style.display = "none"
+    // edicion = 0
+    // editarImg.src = "img/editar.png"
+
+    cerrarModal("equipamiento")
+})
+// TODO: ADAPTAR FIN
 
 arma1ImgBtn.addEventListener('click', function () { armas(personaje.arma1, 1) })
 arma1TxtBtn.addEventListener('click', function () { armas(personaje.arma1, 1) })
@@ -248,16 +308,105 @@ arma2TxtBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
 
 
 
+// TODO: ADAPTAR COMIENZO
+/* 
+    * @meeple: string
+*/
+// ? Funcion para cambio de personaje
+function avatar(meeple) {
+
+    if (edicion == 1) {
+
+        modalPersonaje.style.display = "grid"
+
+
+        if (meeple == "GUERRERO") {
+
+            edicionTotal = 0
+
+            personaje.experiencia = 0
+
+            personaje.nombre = "GUERRERO"
+            personaje.meeple = "img/guerrero.png"
+            personaje.descripcion = "hola"
+
+            personaje.ataque = 4
+            personaje.esquiva = 2
+            personaje.bloqueo = 5
+            personaje.velocidad = 3
+            personaje.vida = 40
+            personaje.vidaMaxima = 40
+            personaje.poder = 40
+            personaje.poderMaximo = 40
+
+            personaje.equipo1 = ""
+            personaje.equipo2 = ""
+            personaje.equipo3 = ""
+
+            personaje.arma1 = "Una Mano"
+            personaje.arma2 = "Escudo"
+
+            personaje.habilidad1 = "EMBESTIDA CON ESCUDO"
+            personaje.habilidad2 = "COBERTURA"
+            personaje.habilidad3 = "ATAQUE PODEROSO"
 
 
 
-function avatar() { }
+            modalPersonaje.style.display = "none"
+            edicion = 0
+            editarImg.src = "img/editar.png"
+
+
+            armas("Una Mano", 1)
+            armas("Escudo", 2)
+
+            imprimir()
+
+        }
+
+
+
+
+
+    } else {
+
+        consolaTxt.innerHTML = "<br>" + personaje.nombre + "<br>" + personaje.descripcion
+    }
+
+
+    imprimir()
+
+}
+portadaBtn.addEventListener('click', function () { avatar() })
+guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
+// TODO: ADAPTAR FIN
 
 
 
 function atributos() { }
 
-function equipo() { }
+
+
+// TODO: ADAPTAR COMIENZO
+// ? Funcion para 
+function equipo(slot){
+
+    if (edicion == 1) {
+
+        modalEquipo.style.display = "grid"
+
+    } else {
+
+        consolaTxt.innerHTML = "<br>" + slot
+
+    }
+
+}
+
+equipo1Btn.addEventListener('click', function () { equipo(1) })
+equipo2Btn.addEventListener('click', function () { equipo(2) })
+equipo3Btn.addEventListener('click', function () { equipo(3) })
+// TODO: ADAPTAR FIN
 
 let slotSeleccionado // !
 
