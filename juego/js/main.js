@@ -197,20 +197,40 @@ portadaBtn.addEventListener('click', function () {
 
 })
 
+// !
+/* 
+    * @val: string
+*/
+// ? cierra modal de armas o de personajes
+function cerrarModal(val) {
+    if (val == "armas") {
+        modalArmas.style.display = "none"
+        edicion = 0
+        editarImg.src = "img/editar.png"
+    }
+    if (val == "personajes") {
+        modalPersonaje.style.display = "none"
+        edicion = 0
+        editarImg.src = "img/editar.png"
+    }
+}
+// !
+
 cerrarModalPersonaje.addEventListener('click', function () {
 
-    modalPersonaje.style.display = "none"
-    edicion = 0
-    editarImg.src = "img/editar.png"
-
+    // modalPersonaje.style.display = "none"
+    // edicion = 0
+    // editarImg.src = "img/editar.png"
+    cerrarModal("personajes") // !
 })
+
 
 cerrarModalArmas.addEventListener('click', function () {
 
-    modalArmas.style.display = "none"
-    edicion = 0
-    editarImg.src = "img/editar.png"
-
+    // modalArmas.style.display = "none"
+    // edicion = 0
+    // editarImg.src = "img/editar.png"
+    cerrarModal("armas") // !
 })
 
 
@@ -239,18 +259,24 @@ function atributos() { }
 
 function equipo() { }
 
-function armas(armaSeleccionada, slot) {
+let slotSeleccionado // !
 
+function armas(armaSeleccionada, slot) {
+    slotSeleccionado = slot // !
     if (edicion == 1) {
 
         modalArmas.style.display = "grid"
 
     } else {
 
-        consolaTxt.innerHTML = "<br>" + armaSeleccionada
-
+        // consolaTxt.innerHTML = "<br>" + armaSeleccionada
+        // !
+        contenConsola(
+            slotSeleccionado == 1
+                ? arma1.descripcion
+                : arma2.descripcion
+        )
     }
-
 
 
 }
@@ -277,7 +303,6 @@ let estadisticaSeleccionada
 
     function aumentarDisminuirExperiencia(accion, estadistica) {
         let valor = valorExperiencia[estadistica]
-        // console.log('mas', valor)
 
         /* switch (estadistica) {
             case 'ataque':
@@ -302,7 +327,6 @@ let estadisticaSeleccionada
                 break;
         } */
 
-        // personaje.experiencia += accion == "mas" ? 1 : -1
         personaje.experiencia += accion == 'mas' ? valor : valor * -1
         experienciaBtn.innerHTML = `EXP <br> ${personaje.experiencia}`
     }
@@ -324,8 +348,7 @@ let estadisticaSeleccionada
     }
 
     /* 
-        * estadistica: string
-        * sin retorno
+        * @estadistica: string
     */
     // ? muestra los botones de edición, y modifica "estadisticaSeleccionada"
     function modificarEstadistica(estadistica) {
@@ -367,13 +390,11 @@ let estadisticaSeleccionada
     }
 
     /* 
-        * accion: string
-        * estadistica: string
-        * sin retorno
+        * @accion: string
+        * @estadistica: string
      */
     // ? modifica los valores dependiendo de la estadistica
     function modificarValores(accion, estadistica) {
-        console.log('mas')
         let data = ""
 
         // * componenetes
@@ -387,7 +408,7 @@ let estadisticaSeleccionada
                     ///// TODO: decrementar EXP
                     personaje[estadistica]++
                     data = `${estadistica} ${personaje[estadistica]}`
-                    
+
                     // * decrementar exp
                     aumentarDisminuirExperiencia('menos', estadistica)
 
@@ -420,7 +441,7 @@ let estadisticaSeleccionada
     }
 }
 
-{ // * eventListener de los atributos
+{ // * eventListeners de los atributos
     ataqueBtn.addEventListener('click', () => {
         if (edicion) modificarEstadistica('ataque')
         else mostrarEstadistica('ataque')
@@ -457,11 +478,179 @@ let estadisticaSeleccionada
     })
 }
 
+{ // * eventListeners de habilidades
+    habilidad1Btn.addEventListener('click', () => {
+        if (edicion) {
+            let val = prompt("Ingrese habilidad")
+            habilidad1Txt.textContent = val
+        }
+    })
+
+    habilidad2Btn.addEventListener('click', () => {
+        if (edicion) {
+            let val = prompt("Ingrese habilidad")
+            habilidad2Txt.textContent = val
+        }
+    })
+
+    habilidad3Btn.addEventListener('click', () => {
+        if (edicion) {
+            let val = prompt("Ingrese habilidad")
+            habilidad3Txt.textContent = val
+        }
+    })
+}
+
+{ // * Funciones para cambiar armas
+    /* 
+        * @arma: string
+     */
+    // ? cambia de arma
+    function cambiarArma(arma) {
+        // ? crea una referencia al objeto arma1 o arma2, se basa en slotSeleccionado, revisar función armas()
+        let seleccion = slotSeleccionado === 1 ? arma1 : arma2
+
+        switch (arma) {
+            case 'daga':
+                // cambiar objeto arma1 o arma2
+                seleccion.nombre = "Daga"
+                seleccion.icono = "img/daga.png"
+                seleccion.danno = 1
+                seleccion.descripcion = "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
+
+                break;
+            case 'espada':
+                seleccion.nombre = "Espada"
+                seleccion.icono = "img/espada.png"
+                seleccion.danno = 1.5
+                seleccion.descripcion = "Arma a dos manos <br> 2 Acciones / 150% de ataque como daño físico"
+                break;
+            case 'arco':
+                seleccion.nombre = "Arco"
+                seleccion.icono = "img/arco.png"
+                seleccion.danno = 1.75
+                seleccion.descripcion = "Arma a distancia <br>  3 casilleros x ataque / 3 Acciones / 175% de ataque como daño físico"
+                break;
+            case 'arrojadiza':
+                seleccion.nombre = "Arrojadiza"
+                seleccion.icono = "img/arrojadiza.png"
+                seleccion.danno = 0.75
+                seleccion.descripcion = "Arma arrojadiza <br> 3 casillero x ataque / 2 Acciones / 75% de ataque como daño físico"
+                break;
+            case 'punno':
+                seleccion.nombre = "Puños"
+                seleccion.icono = "img/punno.png"
+                seleccion.danno = 0.75
+                seleccion.descripcion = "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
+                break;
+            case 'escudo':
+                seleccion.nombre = "Escudo"
+                seleccion.icono = "img/escudo.png"
+                seleccion.danno = 0.5
+                seleccion.descripcion = "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
+                break;
+            case 'magia':
+                seleccion.nombre = "Mano"
+                seleccion.icono = "img/magia.png"
+                seleccion.danno = 1
+                seleccion.descripcion = "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
+                break;
+            case 'varita':
+                seleccion.nombre = "Varita"
+                seleccion.icono = "img/varita.png"
+                seleccion.danno = 1
+                seleccion.descripcion = "Arma a distancia <br>  3 casilleros x ataque / 1 Accion / 100% de ataque como daño mágico"
+                break;
+            case 'baculo':
+                seleccion.nombre = "Baculo"
+                seleccion.icono = "img/baculo.png"
+                seleccion.danno = 1.5
+                seleccion.descripcion = "Arma a distancia <br>  2 casilleros x ataque / 2 Acciones / 150% de ataque como daño mágico"
+                break;
+            case 'totem':
+                seleccion.nombre = "Totem"
+                seleccion.icono = "img/totem.png"
+                seleccion.danno = 1
+                seleccion.descripcion = "Arma a distancia <br>  2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
+                break;
+            case 'runa':
+                seleccion.nombre = "Runa"
+                seleccion.icono = "img/runa.png"
+                seleccion.danno = 0.75
+                seleccion.descripcion = "Arma a distancia <br> 3 casilleros x ataque / 2 Acciones / 75% de ataque como daño mágico"
+                break;
+            case 'hojaruna':
+                seleccion.nombre = "Hoja Runa"
+                seleccion.icono = "img/hojaruna.png"
+                seleccion.danno = 1
+                seleccion.descripcion = "Arma mixta <br>  1 casilleros x ataque / 2 Acciones / 100% de ataque como daño fíisico o mágico"
+                break;
+
+            default:
+                break;
+        }
+
+        // reflejar cambios
+        modalArmas.style.display = "none"
+        mostrarCambioArma()
+        cerrarModal("armas")
+        cerrarEdicion()
+    }
+}
+{ // * eventListeners de armas
+    dagaBtn.addEventListener('click', () => {
+        cambiarArma('daga')
+    })
+
+    espadaBtn.addEventListener('click', () => {
+        cambiarArma('espada')
+    })
+
+    arcoBtn.addEventListener('click', () => {
+        cambiarArma('arco')
+    })
+
+    arrojadizaBtn.addEventListener('click', () => {
+        cambiarArma('arrojadiza')
+    })
+
+    punnoBtn.addEventListener('click', () => {
+        cambiarArma('punno')
+    })
+
+    escudoBtn.addEventListener('click', () => {
+        cambiarArma('escudo')
+    })
+
+    magiaBtn.addEventListener('click', () => {
+        cambiarArma('magia')
+    })
+
+    varitaBtn.addEventListener('click', () => {
+        cambiarArma('varita')
+    })
+
+    baculoBtn.addEventListener('click', () => {
+        cambiarArma('baculo')
+    })
+
+    totemBtn.addEventListener('click', () => {
+        cambiarArma('totem')
+    })
+
+    runaBtn.addEventListener('click', () => {
+        cambiarArma('runa')
+    })
+
+    hojarunaBtn.addEventListener('click', () => {
+        cambiarArma('hojaruna')
+    })
+}
+
 { // * helpers
     /* 
-    * estadistica: string
-    * sin retorno
-*/
+        * @estadistica: string
+    */
     // ? muestra la estadistica
     function mostrarEstadistica(estadistica) {
         // TODO: modificar leyenda de cada atributo
@@ -470,11 +659,28 @@ let estadisticaSeleccionada
     }
 
     /* 
-        * val: string
-        * sin retorno
+        * @val: string
     */
     // ? modifica el contenido de la consola
     function contenConsola(val) {
         consolaTxt.innerHTML = val
+    }
+
+    // ? muestra el cambio de arma
+    function mostrarCambioArma() {
+        arma1Img.src = arma1.icono
+        arma1Txt.textContent = arma1.nombre
+
+        arma2Img.src = arma2.icono
+        arma2Txt.textContent = arma2.nombre
+    }
+
+    /* 
+        * @slot: number
+    */
+    // ? muestra descripcion de arma
+    function mostrarDescripcionArma(slot) {
+        let seleccion = slot == 1 ? arma1 : arma2
+        contenConsola(seleccion.descripcion)
     }
 }
