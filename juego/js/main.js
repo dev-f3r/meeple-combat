@@ -40,13 +40,16 @@ var personaje = {
     poder: 0,
     poderMaximo: 0,
 
+    // * nivel del equipamiento
     equipo1: "",
     equipo2: "",
     equipo3: "",
 
+    // * nombre de arma
     arma1: "Una Mano",
     arma2: "Dos Manos",
 
+    // * nombre de habilidades
     habilidad1: "HABILIDAD 1",
     habilidad2: "HABILIDAD 2",
     habilidad3: "HABILIDAD 3",
@@ -392,8 +395,10 @@ function atributos() { }
 
 // TODO: ADAPTAR COMIENZO
 // ? Funcion para 
-function equipo(slot) {
+let equipamientoSeleccionado // !
 
+function equipo(slot) {
+    equipamientoSeleccionado = slot // !
     if (edicion == 1) {
 
         modalEquipo.style.display = "grid"
@@ -471,14 +476,6 @@ let estadisticaSeleccionada
 }
 
 { // * Funciones para modificar las estadisticas de los personajes
-    // ? oculta los botones de edición
-    function cerrarEdicion() {
-        edicion = 0
-        editarImg.src = "img/editar.png"
-
-        arribaBtn.style.display = "none"
-        abajoBtn.style.display = "none"
-    }
 
     /* 
         * @estadistica: string
@@ -491,35 +488,13 @@ let estadisticaSeleccionada
         estadisticaSeleccionada = estadistica
 
         // "ataque 0"
-        let data = `${estadistica} ${personaje[estadistica]}`
+        let data = `${estadistica
+            .charAt(0)
+            .toUpperCase()
+            + estadistica
+                .slice(1)} ${personaje[estadistica]}`
         contenConsola(data)
 
-        // switch (estadistica) {
-        //     case 'ataque':
-        //         data = `${estadistica} ${personaje[estadistica]}`
-        //         consolaTxt.innerHTML = data
-
-        //         break
-
-        //     case 'esquiva':
-        //         data = `${estadistica} ${personaje[estadistica]}`
-        //         consolaTxt.innerHTML = data
-        //         break
-
-        //     case 'mitigacion':
-        //         data = `${estadistica} ${personaje[estadistica]}`
-        //         consolaTxt.innerHTML = data
-        //         break
-
-        //     case 'velocidad':
-        //         data = `${estadistica} ${personaje[estadistica]}`
-        //         consolaTxt.innerHTML = data
-        //         break
-
-        //     default:
-        //         console.error('Estadistica no encontrada')
-        //         break
-        // }
     }
 
     /* 
@@ -532,7 +507,6 @@ let estadisticaSeleccionada
 
         // * componenetes
         let consola = consolaTxt
-        let estadisticaTxt = document.getElementById(`${estadistica}Txt`)
 
         switch (accion) {
             case 'mas':
@@ -540,14 +514,17 @@ let estadisticaSeleccionada
                     ///// TODO: verificar EXP
                     ///// TODO: decrementar EXP
                     personaje[estadistica]++
-                    data = `${estadistica} ${personaje[estadistica]}`
+                    data = `${estadistica
+                        .charAt(0)
+                        .toUpperCase()
+                        + estadistica
+                            .slice(1)} ${personaje[estadistica]}`
 
                     // * decrementar exp
                     aumentarDisminuirExperiencia('menos', estadistica)
 
                     // * cambiar contenido mostrado
                     consola.innerHTML = data
-                    // estadisticaTxt.innerHTML = personaje[estadistica]
                     imprimir()
                 } else {
                     consola.innerHTML = "Experiencia insuficiente"
@@ -563,9 +540,12 @@ let estadisticaSeleccionada
                     aumentarDisminuirExperiencia('mas', estadistica)
 
                     // * cambiar contenido mostrado
-                    data = `${estadistica} ${personaje[estadistica]}`
+                    data = `${estadistica
+                        .charAt(0)
+                        .toUpperCase()
+                        + estadistica
+                            .slice(1)} ${personaje[estadistica]}`
                     consola.innerHTML = data
-                    // estadisticaTxt.innerHTML = personaje[estadistica]
                     imprimir()
                 }
                 break
@@ -799,14 +779,65 @@ let estadisticaSeleccionada
     })
 }
 
+{ // * Funcione para cambiar el equipamiento
+    function cambiarEquipamiento(item) {
+        let equipo = equipamientoSeleccionado == 1
+            ? equipo1
+            : equipamientoSeleccionado == 2
+                ? equipo2
+                : equipo3
+
+        switch (item) {
+            case 'armaduraligera':
+                equipo.nombre = "Armadura Ligera"
+                equipo.icono = "img/armaduraligera.png"
+                equipo.descripcion = ""
+                equipo.nivel = 1
+                equipo.ataque = 0
+                equipo.esquiva = 0
+                equipo.bloqueo = 0
+                equipo.velocidad = 0
+                equipo.vidaMaxima =  0
+                equipo.poderMaximo =  0
+
+                break;
+
+            // ! Agregar los demas items
+
+            default:
+                break;
+        }
+        imprimir()
+        cerrarEdicion()
+        cerrarModal('equipamiento')
+    }
+
+}
+{ // * eventListeners de equipamiento
+    armaduraligeraBtn.addEventListener('click', () => {
+        cambiarEquipamiento('armaduraligera')
+    }
+    )
+    // ! Agregar los demas listeners para los items restantes
+}
+
 { // * helpers
+    // ? oculta los botones de edición, y cambia la var edición a 0
+    function cerrarEdicion() {
+        edicion = 0
+        editarImg.src = "img/editar.png"
+
+        arribaBtn.style.display = "none"
+        abajoBtn.style.display = "none"
+    }
     /* 
         * @estadistica: string
     */
     // ? muestra la estadistica
     function mostrarEstadistica(estadistica) {
-        // TODO: modificar leyenda de cada atributo
-        let data = `${estadistica} ${personaje[estadistica]}`
+        ///// TODO: modificar leyenda de cada atributo
+        // estadistica = estadistica.charAt(0).toUpperCase() + estadistica.slice(1)
+        let data = `${estadistica.charAt(0).toUpperCase() + estadistica.slice(1)} ${personaje[estadistica]}`
         contenConsola(data)
     }
 
