@@ -175,6 +175,7 @@ function imprimir() {
 
 
 }
+imprimir()
 // TODO: ADAPTAR COMIENZO
 
 // portadaImg.src = personaje.meeple
@@ -241,14 +242,14 @@ portadaBtn.addEventListener('click', function () {
 */
 // ? cierra modal de armas, de personajes o de equipamiento
 function cerrarModal(opcion) {
-    switch (val) {
+    switch (opcion) {
         case "armas":
             modalArmas.style.display = "none"
             edicion = 0
             editarImg.src = "img/editar.png"
             break;
 
-        case "armas":
+        case "personajes":
             modalPersonaje.style.display = "none"
             edicion = 0
             editarImg.src = "img/editar.png"
@@ -352,10 +353,12 @@ function avatar(meeple) {
 
 
 
-            modalPersonaje.style.display = "none"
-            edicion = 0
-            editarImg.src = "img/editar.png"
+            // modalPersonaje.style.display = "none"
+            cerrarModal("personajes")
 
+            // edicion = 0
+            // editarImg.src = "img/editar.png"
+            cerrarEdicion()
 
             armas("Una Mano", 1)
             armas("Escudo", 2)
@@ -389,7 +392,7 @@ function atributos() { }
 
 // TODO: ADAPTAR COMIENZO
 // ? Funcion para 
-function equipo(slot){
+function equipo(slot) {
 
     if (edicion == 1) {
 
@@ -446,45 +449,23 @@ let estadisticaSeleccionada
         let valor = prompt("CANTIDAD")
 
         personaje.experiencia = Number(valor)
-        experienciaBtn.innerHTML = `EXP <br> ${valor}`
-        experienciaBtn.style.cssText = "border: solid #fff;    border-width: calc(45.781px - 41.203px) calc(50.828px - 45.734px) calc(45.781px - 41.203px) calc(50.828px - 45.734px);         background: #000; color: #fff;"
+        // imprimir()
+        cerrarEdicion()
     }
 
     function aumentarDisminuirExperiencia(accion, estadistica) {
         let valor = valorExperiencia[estadistica]
 
-        /* switch (estadistica) {
-            case 'ataque':
-                valor = 3
-                break;
-            case 'esquiva':
-                valor = 6
-                break;
-            case 'bloqueo':
-                valor = 9
-                break;
-            case 'velocidad':
-                valor = 12
-                break;
-            case 'vida':
-                valor = 15
-                break;
-            case 'poder':
-                valor = 18
-                break;
-            default:
-                break;
-        } */
-
         personaje.experiencia += accion == 'mas' ? valor : valor * -1
-        experienciaBtn.innerHTML = `EXP <br> ${personaje.experiencia}`
     }
 }
 
-{ // * eventListeners de los botones para aceptar promts
+{ // * eventListeners del boton de experiencia
     experienciaBtn.addEventListener('click', () => {
         if (edicion) {
             establecerExperiencia()
+        } else {
+            contenConsola(`Experiencia: ${personaje.experiencia}`)
         }
     })
 }
@@ -492,6 +473,9 @@ let estadisticaSeleccionada
 { // * Funciones para modificar las estadisticas de los personajes
     // ? oculta los botones de edición
     function cerrarEdicion() {
+        edicion = 0
+        editarImg.src = "img/editar.png"
+
         arribaBtn.style.display = "none"
         abajoBtn.style.display = "none"
     }
@@ -563,7 +547,8 @@ let estadisticaSeleccionada
 
                     // * cambiar contenido mostrado
                     consola.innerHTML = data
-                    estadisticaTxt.innerHTML = personaje[estadistica]
+                    // estadisticaTxt.innerHTML = personaje[estadistica]
+                    imprimir()
                 } else {
                     consola.innerHTML = "Experiencia insuficiente"
                 }
@@ -580,7 +565,8 @@ let estadisticaSeleccionada
                     // * cambiar contenido mostrado
                     data = `${estadistica} ${personaje[estadistica]}`
                     consola.innerHTML = data
-                    estadisticaTxt.innerHTML = personaje[estadistica]
+                    // estadisticaTxt.innerHTML = personaje[estadistica]
+                    imprimir()
                 }
                 break
 
@@ -631,21 +617,37 @@ let estadisticaSeleccionada
     habilidad1Btn.addEventListener('click', () => {
         if (edicion) {
             let val = prompt("Ingrese habilidad")
-            habilidad1Txt.textContent = val
+            personaje.habilidad1 = val
+            // habilidad1Txt.textContent = val
+            cerrarEdicion()
+            imprimir()
+        } else {
+            contenConsola(`Habilidad 1: ${personaje.habilidad1}`)
         }
     })
 
     habilidad2Btn.addEventListener('click', () => {
         if (edicion) {
             let val = prompt("Ingrese habilidad")
-            habilidad2Txt.textContent = val
+            personaje.habilidad2 = val
+            // habilidad2Txt.textContent = val
+            cerrarEdicion()
+            imprimir()
+        } else {
+            contenConsola(`Habilidad 2: ${personaje.habilidad2}`)
         }
     })
 
     habilidad3Btn.addEventListener('click', () => {
         if (edicion) {
             let val = prompt("Ingrese habilidad")
-            habilidad3Txt.textContent = val
+            personaje.habilidad3 = val
+
+            // habilidad3Txt.textContent = val
+            cerrarEdicion()
+            imprimir()
+        } else {
+            contenConsola(`Habilidad 2: ${personaje.habilidad2}`)
         }
     })
 }
@@ -741,7 +743,8 @@ let estadisticaSeleccionada
 
         // reflejar cambios
         modalArmas.style.display = "none"
-        mostrarCambioArma()
+        // mostrarCambioArma()
+        imprimir()
         cerrarModal("armas")
         cerrarEdicion()
     }
