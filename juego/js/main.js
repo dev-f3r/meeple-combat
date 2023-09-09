@@ -59,11 +59,11 @@ var personaje = {
 // ! CODIGO FER
 let valorExperiencia = {
     ataque: 3,
-    esquiva: 6,
-    bloqueo: 9,
-    velocidad: 12,
-    vida: 15,
-    poder: 18
+    esquiva: 3,
+    bloqueo: 3,
+    velocidad: 6,
+    vida: 1,
+    poder: 1
 }
 // ! CODIGO FER
 
@@ -137,7 +137,7 @@ var equipo3 = {
 }
 
 
-// TODO: ADAPTAR COMIENZO
+///// TODO: ADAPTAR COMIENZO
 /* 
     ? Refresca el texto y la imagen de los siguientes componentes:
         portada, nombre, estadisticas (ataque, esquiva, etc), equipamiento, arma slot 1, arma slot 2, habilidades
@@ -179,7 +179,7 @@ function imprimir() {
 
 }
 imprimir()
-// TODO: ADAPTAR COMIENZO
+///// TODO: ADAPTAR COMIENZO
 
 // portadaImg.src = personaje.meeple
 
@@ -288,7 +288,7 @@ cerrarModalArmas.addEventListener('click', function () {
     cerrarModal("armas") // !
 })
 
-// TODO: ADAPTAR COMIENZO
+///// TODO: ADAPTAR COMIENZO
 cerrarModalEquipo.addEventListener('click', function () {
 
     // modalEquipo.style.display = "none"
@@ -297,7 +297,7 @@ cerrarModalEquipo.addEventListener('click', function () {
 
     cerrarModal("equipamiento")
 })
-// TODO: ADAPTAR FIN
+///// TODO: ADAPTAR FIN
 
 arma1ImgBtn.addEventListener('click', function () { armas(personaje.arma1, 1) })
 arma1TxtBtn.addEventListener('click', function () { armas(personaje.arma1, 1) })
@@ -312,7 +312,7 @@ arma2TxtBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
 
 
 
-// TODO: ADAPTAR COMIENZO
+///// TODO: ADAPTAR COMIENZO
 /* 
     * @meeple: string
 */
@@ -370,22 +370,19 @@ function avatar(meeple) {
 
         }
 
-
-
-
+        // TODO: Agregar los demas personajes
 
     } else {
 
         consolaTxt.innerHTML = "<br>" + personaje.nombre + "<br>" + personaje.descripcion
     }
 
-
     imprimir()
 
 }
 portadaBtn.addEventListener('click', function () { avatar() })
 guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
-// TODO: ADAPTAR FIN
+///// TODO: ADAPTAR FIN
 
 
 
@@ -393,10 +390,13 @@ function atributos() { }
 
 
 
-// TODO: ADAPTAR COMIENZO
-// ? Funcion para 
+///// TODO: ADAPTAR COMIENZO
 let equipamientoSeleccionado // !
 
+/* 
+    * @slot: number
+*/
+// ? Funcion para mostrar el modal de equipamiento
 function equipo(slot) {
     equipamientoSeleccionado = slot // !
     if (edicion == 1) {
@@ -414,7 +414,7 @@ function equipo(slot) {
 equipo1Btn.addEventListener('click', function () { equipo(1) })
 equipo2Btn.addEventListener('click', function () { equipo(2) })
 equipo3Btn.addEventListener('click', function () { equipo(3) })
-// TODO: ADAPTAR FIN
+///// TODO: ADAPTAR FIN
 
 let slotSeleccionado // !
 
@@ -434,7 +434,6 @@ function armas(armaSeleccionada, slot) {
                 : arma2.descripcion
         )
     }
-
 
 }
 
@@ -459,9 +458,40 @@ let estadisticaSeleccionada
     }
 
     function aumentarDisminuirExperiencia(accion, estadistica) {
-        let valor = valorExperiencia[estadistica]
+        // let valor = personaje[estadistica] * valorExperiencia[estadistica]
+        // console.log(valor)
+        // console.log(personaje.experiencia, personaje[estadistica])
 
-        personaje.experiencia += accion == 'mas' ? valor : valor * -1
+        switch (estadistica) {
+            case 'ataque':
+            case 'esquiva':
+            case 'bloqueo':
+                if (accion == 'mas') {
+                    personaje.experiencia += (personaje[estadistica] * 3)
+                } else {
+                    personaje.experiencia -= (personaje[estadistica] * 3)
+                }
+                break;
+
+            case 'velocidad':
+                if (accion == 'mas') {
+                    personaje.experiencia += (personaje[estadistica] * 6)
+                } else {
+                    personaje.experiencia -= (personaje[estadistica] * 6)
+                }
+                break;
+
+            case 'vida':
+            case 'poder':
+                if (accion == 'mas') personaje.experiencia += 1
+                else personaje.experiencia -= 1
+                break;
+
+            default:
+                break;
+        }
+
+        // personaje.experiencia += accion == 'mas' ? valor : valor * -1
     }
 }
 
@@ -508,50 +538,46 @@ let estadisticaSeleccionada
         // * componenetes
         let consola = consolaTxt
 
-        switch (accion) {
-            case 'mas':
-                if (personaje.experiencia >= valorExperiencia[estadistica]) {
-                    ///// TODO: verificar EXP
-                    ///// TODO: decrementar EXP
-                    personaje[estadistica]++
-                    data = `${estadistica
-                        .charAt(0)
-                        .toUpperCase()
-                        + estadistica
-                            .slice(1)} ${personaje[estadistica]}`
+        // ? valor de experiencia minimo requerido
+        let valor = (personaje[estadistica] + 1) * valorExperiencia[estadistica]
 
-                    // * decrementar exp
-                    aumentarDisminuirExperiencia('menos', estadistica)
+        if (accion === 'mas') {
+            if (personaje.experiencia >= valor) {
+                ///// TODO: verificar EXP
+                ///// TODO: decrementar EXP
+                personaje[estadistica]++
+                data = `${estadistica
+                    .charAt(0)
+                    .toUpperCase()
+                    + estadistica
+                        .slice(1)} ${personaje[estadistica]}`
 
-                    // * cambiar contenido mostrado
-                    consola.innerHTML = data
-                    imprimir()
-                } else {
-                    consola.innerHTML = "Experiencia insuficiente"
-                }
-                break
+                // * decrementar exp
+                aumentarDisminuirExperiencia('menos', estadistica)
 
-            case 'menos':
-                ///// TODO: incrementar EXP
-                if (personaje[estadistica] > 0) {
-                    personaje[estadistica]--
+                // * cambiar contenido mostrado
+                consola.innerHTML = data
+                imprimir()
+            } else {
+                consola.innerHTML = "Experiencia insuficiente"
+            }
+        } else {
+            ///// TODO: incrementar EXP
+            if (personaje[estadistica] > 0) {
+                personaje[estadistica]--
 
-                    // decrementar exp
-                    aumentarDisminuirExperiencia('mas', estadistica)
+                // * Incrementar exp
+                aumentarDisminuirExperiencia('mas', estadistica)
 
-                    // * cambiar contenido mostrado
-                    data = `${estadistica
-                        .charAt(0)
-                        .toUpperCase()
-                        + estadistica
-                            .slice(1)} ${personaje[estadistica]}`
-                    consola.innerHTML = data
-                    imprimir()
-                }
-                break
-
-            default:
-                break
+                // * cambiar contenido mostrado
+                data = `${estadistica
+                    .charAt(0)
+                    .toUpperCase()
+                    + estadistica
+                        .slice(1)} ${personaje[estadistica]}`
+                consola.innerHTML = data
+                imprimir()
+            }
         }
     }
 }
@@ -797,8 +823,8 @@ let estadisticaSeleccionada
                 equipo.esquiva = 0
                 equipo.bloqueo = 0
                 equipo.velocidad = 0
-                equipo.vidaMaxima =  0
-                equipo.poderMaximo =  0
+                equipo.vidaMaxima = 0
+                equipo.poderMaximo = 0
 
                 break;
 
@@ -819,6 +845,38 @@ let estadisticaSeleccionada
     }
     )
     // ! Agregar los demas listeners para los items restantes
+}
+
+{ // * Funciones para creación de un nuevo personaje
+    function nuevoPersonaje() {
+        personaje.nombre = "Nuevo Personaje"
+        personaje.meeple = "img/new.png"
+        personaje.descripcion = ""
+        personaje.experiencia = 200
+        personaje.ataque = 0
+        personaje.esquiva = 0
+        personaje.bloqueo = 0
+        personaje.velocidad = 0
+        personaje.vida = 0
+        personaje.vidaMaxima = 0
+        personaje.poder = 0
+        personaje.poderMaximo = 0
+        personaje.equipo1 = ""
+        personaje.equipo2 = ""
+        personaje.equipo3 = ""
+        personaje.arma1 = "Una Mano"
+        personaje.arma2 = "Dos Manos"
+        personaje.habilidad1 = "NUEVA HABILIDAD 1"
+        personaje.habilidad2 = "NUEVA HABILIDAD 2"
+        personaje.habilidad3 = "NUEVA HABILIDAD 3"
+
+        imprimir()
+        cerrarModal('personajes')
+    }
+
+    nuevopjBtn.addEventListener('click', () => {
+        nuevoPersonaje()
+    })
 }
 
 { // * helpers
