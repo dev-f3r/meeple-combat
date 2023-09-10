@@ -137,7 +137,6 @@ var equipo3 = {
 }
 
 
-///// TODO: ADAPTAR COMIENZO
 /* 
     ? Refresca el texto y la imagen de los siguientes componentes:
         portada, nombre, estadisticas (ataque, esquiva, etc), equipamiento, arma slot 1, arma slot 2, habilidades
@@ -175,7 +174,6 @@ function imprimir() {
 
 }
 imprimir()
-///// TODO: ADAPTAR COMIENZO
 
 // portadaImg.src = personaje.meeple
 
@@ -284,7 +282,6 @@ cerrarModalArmas.addEventListener('click', function () {
     cerrarModal("armas") // !
 })
 
-///// TODO: ADAPTAR COMIENZO
 cerrarModalEquipo.addEventListener('click', function () {
 
     // modalEquipo.style.display = "none"
@@ -293,7 +290,6 @@ cerrarModalEquipo.addEventListener('click', function () {
 
     cerrarModal("equipamiento")
 })
-///// TODO: ADAPTAR FIN
 
 arma1ImgBtn.addEventListener('click', function () { armas(personaje.arma1, 1) })
 arma1TxtBtn.addEventListener('click', function () { armas(personaje.arma1, 1) })
@@ -308,7 +304,6 @@ arma2TxtBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
 
 
 
-///// TODO: ADAPTAR COMIENZO
 /* 
     * @meeple: string
 */
@@ -381,7 +376,6 @@ function avatar(meeple) {
 }
 portadaBtn.addEventListener('click', function () { avatar() })
 guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
-///// TODO: ADAPTAR FIN
 
 
 
@@ -389,7 +383,6 @@ function atributos() { }
 
 
 
-///// TODO: ADAPTAR COMIENZO
 let equipamientoSeleccionado // !
 
 /* 
@@ -413,7 +406,6 @@ function equipo(slot) {
 equipo1Btn.addEventListener('click', function () { equipo(1) })
 equipo2Btn.addEventListener('click', function () { equipo(2) })
 equipo3Btn.addEventListener('click', function () { equipo(3) })
-///// TODO: ADAPTAR FIN
 
 let slotSeleccionado = 1 // !
 
@@ -543,8 +535,6 @@ let estadisticaSeleccionada
 
             if (accion === 'mas') {
                 if (personaje.experiencia >= valor) {
-                    ///// TODO: verificar EXP
-                    ///// TODO: decrementar EXP
                     personaje[estadistica]++
                     data = `${estadistica
                         .charAt(0)
@@ -562,7 +552,7 @@ let estadisticaSeleccionada
                     consola.innerHTML = "Experiencia insuficiente"
                 }
             } else {
-                ///// TODO: incrementar EXP
+
                 if (personaje[estadistica] > 0) {
                     personaje[estadistica]--
 
@@ -882,7 +872,7 @@ let estadisticaSeleccionada
 
                     break;
 
-                // ! Agregar los demas items
+                // TODO: Agregar los demas items
 
                 default:
                     break;
@@ -1014,7 +1004,6 @@ let estadisticaSeleccionada
     */
     // ? Muestra la estadistica
     function mostrarEstadistica(estadistica) {
-        ///// TODO: modificar leyenda de cada atributo
         // estadistica = estadistica.charAt(0).toUpperCase() + estadistica.slice(1)
         let data = `${estadistica.charAt(0).toUpperCase() + estadistica.slice(1)} ${personaje[estadistica]}`
         contenConsola(data)
