@@ -415,7 +415,7 @@ equipo2Btn.addEventListener('click', function () { equipo(2) })
 equipo3Btn.addEventListener('click', function () { equipo(3) })
 ///// TODO: ADAPTAR FIN
 
-let slotSeleccionado // !
+let slotSeleccionado = 1 // !
 
 function armas(armaSeleccionada, slot) {
     slotSeleccionado = slot // !
@@ -948,10 +948,32 @@ let estadisticaSeleccionada
 }
 
 { // * Accion
-    { // * Funciones para accion
+    { // * Funciones para tirada
+        /* 
+            * @slot: number
+        */
         function accion(slot) {
-            
+            let dado = Math.ceil((Math.random() * 20) + 0)
+
+            // ? Crea una referencia a arma1 o arma2 dependiendo del valor de slot
+            let arma = slot == 1 ? arma1 : arma2
+
+            // TODO: Completar el funcionamiento de tirada
+            if (dado == 20)
+                contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * personaje.ataque * 2)}`)
+            else if (dado == 1)
+                contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
+            else
+                contenConsola(`Ataque con ${arma.nombre}<br>Daño base ${Math.floor(arma.danno * personaje.ataque)}`)
         }
+    }
+
+    { // * evenListener accion
+        accionBtn.addEventListener('click', () => {
+            if (!edicion) {
+                accion(slotSeleccionado)
+            }
+        })
     }
 }
 
