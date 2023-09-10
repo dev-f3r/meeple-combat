@@ -376,7 +376,7 @@ function avatar(meeple) {
 }
 portadaBtn.addEventListener('click', function () { avatar() })
 guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
-
+// TODO: Agregar los demas evenListener de los personajes faltantes
 
 
 function atributos() { }
