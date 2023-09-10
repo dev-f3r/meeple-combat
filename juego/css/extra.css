@@ -32,3 +32,19 @@
 } */
 
 /* * Estilos experienciaBtn fin*/
+#experienciaBtn {
+    position: relative;
+}
+
+span.experiencia-item {
+    display: none;
+    position: absolute;
+    bottom: calc(-50%);
+    height: 50%;
+    width: 100%;
+    outline: solid 1.5px #000000;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-family: Titillium Web;
+}

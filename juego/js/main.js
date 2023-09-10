@@ -171,7 +171,7 @@ function imprimir() {
     habilidad2Txt.textContent = personaje.habilidad2
     habilidad3Txt.textContent = personaje.habilidad3
 
-
+    experienciaTxt.textContent = personaje.experiencia
 }
 imprimir()
 
@@ -211,6 +211,7 @@ editarBtn.addEventListener('click', function () {
         edicion = 1
         editarImg.src = "img/guardar.png"
         contenConsola("Seleccione nombre, slot de arma o habilidad")
+        experienciaTxt.style.display = "flex"
     } else {
 
         edicion = 0
@@ -445,7 +446,7 @@ let estadisticaSeleccionada
             let valor = prompt("CANTIDAD")
 
             personaje.experiencia = Number(valor)
-            // imprimir()
+            imprimir()
             cerrarEdicion()
         }
 
@@ -998,6 +999,8 @@ let estadisticaSeleccionada
 
         arribaBtn.style.display = "none"
         abajoBtn.style.display = "none"
+        experienciaTxt.style.display = "none"
+
     }
     /* 
         * @estadistica: string
