@@ -452,13 +452,13 @@ let estadisticaSeleccionada
 
         function aumentarDisminuirExperiencia(accion, estadistica) {
             let valor
-            
+
             if (accion == 'mas') {
-                valor = personaje[estadistica] > 0 ? personaje[estadistica] : 1 * valorExperiencia[estadistica]
+                valor = (personaje[estadistica] === 0 ? 1 : personaje[estadistica] + 1) * valorExperiencia[estadistica]
             } else {
                 valor = personaje[estadistica] * valorExperiencia[estadistica]
             }
-            
+
             personaje.experiencia += accion == 'mas' ? valor : valor * -1
         }
     }
