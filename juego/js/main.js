@@ -451,40 +451,15 @@ let estadisticaSeleccionada
         }
 
         function aumentarDisminuirExperiencia(accion, estadistica) {
-            // let valor = personaje[estadistica] * valorExperiencia[estadistica]
-            // console.log(valor)
-            // console.log(personaje.experiencia, personaje[estadistica])
-
-            switch (estadistica) {
-                case 'ataque':
-                case 'esquiva':
-                case 'bloqueo':
-                    if (accion == 'mas') {
-                        personaje.experiencia += (personaje[estadistica] * 3)
-                    } else {
-                        personaje.experiencia -= (personaje[estadistica] * 3)
-                    }
-                    break;
-
-                case 'velocidad':
-                    if (accion == 'mas') {
-                        personaje.experiencia += (personaje[estadistica] * 6)
-                    } else {
-                        personaje.experiencia -= (personaje[estadistica] * 6)
-                    }
-                    break;
-
-                case 'vida':
-                case 'poder':
-                    if (accion == 'mas') personaje.experiencia += 1
-                    else personaje.experiencia -= 1
-                    break;
-
-                default:
-                    break;
+            let valor
+            
+            if (accion == 'mas') {
+                valor = personaje[estadistica] > 0 ? personaje[estadistica] : 1 * valorExperiencia[estadistica]
+            } else {
+                valor = personaje[estadistica] * valorExperiencia[estadistica]
             }
-
-            // personaje.experiencia += accion == 'mas' ? valor : valor * -1
+            
+            personaje.experiencia += accion == 'mas' ? valor : valor * -1
         }
     }
 
