@@ -621,41 +621,58 @@ let estadisticaSeleccionada
 }
 
 { // * Nombre de habilidades y nombre de personaje
+    { //  * Descipción de habilidades
+        /* 
+            * @slot: number
+        */
+        function descripcionHabilidad(slot) {
+            let habilidad = slot == 1
+                ? personaje.habilidad1
+                : slot == 2
+                    ? personaje.habilidad2
+                    : personaje.habilidad3
+
+            // TODO: Agregar descripciones de habilidades
+            contenConsola(`Descipción habilidad ${slot}: ${habilidad}`)
+        }
+    }
     { // * eventListeners de habilidades
         habilidad1Btn.addEventListener('click', () => {
+            // ? Personalizar habilidad
             if (edicion) {
                 let val = prompt("Ingrese habilidad")
                 personaje.habilidad1 = val
-                // habilidad1Txt.textContent = val
                 cerrarEdicion()
                 imprimir()
             } else {
-                contenConsola(`Habilidad 1: ${personaje.habilidad1}`)
+                // ? Motrar descripción de habilidad 
+                descripcionHabilidad(1)
             }
         })
 
         habilidad2Btn.addEventListener('click', () => {
+            // ? Personalizar habilidad
             if (edicion) {
                 let val = prompt("Ingrese habilidad")
                 personaje.habilidad2 = val
-                // habilidad2Txt.textContent = val
                 cerrarEdicion()
                 imprimir()
             } else {
-                contenConsola(`Habilidad 2: ${personaje.habilidad2}`)
+                // ? Motrar descripción de habilidad 
+                descripcionHabilidad(2)
             }
         })
 
         habilidad3Btn.addEventListener('click', () => {
+            // ? Personalizar habilidad
             if (edicion) {
                 let val = prompt("Ingrese habilidad")
                 personaje.habilidad3 = val
-
-                // habilidad3Txt.textContent = val
                 cerrarEdicion()
                 imprimir()
             } else {
-                contenConsola(`Habilidad 2: ${personaje.habilidad2}`)
+                // ? Motrar descripción de habilidad 
+                descripcionHabilidad(3)
             }
         })
     }
@@ -977,8 +994,14 @@ let estadisticaSeleccionada
     }
 }
 
-{ // * helpers
-    // ? oculta los botones de edición, y cambia la var edición a 0
+{ // * helpers, funciones varias
+
+    // ? Limpia la consola
+    consolaBtn.addEventListener('click', () => {
+        if (edicion == 0) contenConsola("")
+    })
+
+    // ? Oculta los botones de edición, y cambia la var edición a 0
     function cerrarEdicion() {
         edicion = 0
         editarImg.src = "img/editar.png"
@@ -989,7 +1012,7 @@ let estadisticaSeleccionada
     /* 
         * @estadistica: string
     */
-    // ? muestra la estadistica
+    // ? Muestra la estadistica
     function mostrarEstadistica(estadistica) {
         ///// TODO: modificar leyenda de cada atributo
         // estadistica = estadistica.charAt(0).toUpperCase() + estadistica.slice(1)
@@ -1000,12 +1023,12 @@ let estadisticaSeleccionada
     /* 
         * @val: string
     */
-    // ? modifica el contenido de la consola
+    // ? Modifica el contenido de la consola
     function contenConsola(val) {
         consolaTxt.innerHTML = val
     }
 
-    // ? muestra el cambio de arma
+    // ? Muestra el cambio de arma
     // function mostrarCambioArma() {
     //     arma1Img.src = arma1.icono
     //     arma1Txt.textContent = arma1.nombre
@@ -1017,7 +1040,7 @@ let estadisticaSeleccionada
     /* 
         * @slot: number
     */
-    // ? muestra descripcion de arma
+    // ? Muestra descripcion de arma
     function mostrarDescripcionArma(slot) {
         let seleccion = slot == 1 ? arma1 : arma2
         contenConsola(seleccion.descripcion)
