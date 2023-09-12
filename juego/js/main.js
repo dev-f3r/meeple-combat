@@ -41,19 +41,19 @@ var personaje = {
     poderMaximo: 0,
 
     // * nivel del equipamiento
-    equipo1: 0,
+    /* equipo1: 0,
     equipo2: 0,
-    equipo3: 0,
+    equipo3: 0, */
 
     // * nombre de arma
-    arma1: "Una Mano",
-    arma2: "Dos Manos",
+    /* arma1: "Una Mano",
+    arma2: "Dos Manos", */
 
     // * nombre de habilidades
-    habilidad1: "HABILIDAD 1",
+    /* habilidad1: "HABILIDAD 1",
     habilidad2: "HABILIDAD 2",
     habilidad3: "HABILIDAD 3",
-
+     */
 }
 
 // ! CODIGO FER
@@ -136,6 +136,20 @@ var equipo3 = {
 
 }
 
+var habilidad1 = {
+    nombre: "Nombre habilidad 1",
+    descripcion: "Descripción de habilidad 1"
+}
+
+var habilidad2 = {
+    nombre: "Nombre habilidad 2",
+    descripcion: "Descripción de habilidad 2"
+}
+
+var habilidad3 = {
+    nombre: "Nombre habilidad 3",
+    descripcion: "Descripción de habilidad 3"
+}
 
 /* 
     ? Refresca el texto y la imagen de los siguientes componentes:
@@ -167,9 +181,12 @@ function imprimir() {
     arma1Img.src = arma1.icono
     arma2Img.src = arma2.icono
 
-    habilidad1Txt.textContent = personaje.habilidad1
-    habilidad2Txt.textContent = personaje.habilidad2
-    habilidad3Txt.textContent = personaje.habilidad3
+    // habilidad1Txt.textContent = personaje.habilidad1
+    // habilidad2Txt.textContent = personaje.habilidad2
+    // habilidad3Txt.textContent = personaje.habilidad3
+    habilidad1Txt.textContent = habilidad1.nombre
+    habilidad2Txt.textContent = habilidad2.nombre
+    habilidad3Txt.textContent = habilidad3.nombre
 
     experienciaTxt.textContent = personaje.experiencia
 }
@@ -593,13 +610,13 @@ let estadisticaSeleccionada
         */
         function descripcionHabilidad(slot) {
             let habilidad = slot == 1
-                ? personaje.habilidad1
+                ? habilidad1
                 : slot == 2
-                    ? personaje.habilidad2
-                    : personaje.habilidad3
+                    ? habilidad2
+                    : habilidad3
 
             // TODO: Agregar descripciones de habilidades
-            contenConsola(`Descipción habilidad ${slot}: ${habilidad}`)
+            contenConsola(habilidad.descripcion)
         }
     }
     { // * eventListeners de habilidades
@@ -607,7 +624,8 @@ let estadisticaSeleccionada
             // ? Personalizar habilidad
             if (edicion) {
                 let val = prompt("Ingrese habilidad")
-                personaje.habilidad1 = val
+                // personaje.habilidad1 = val
+                habilidad1.nombre = val
                 cerrarEdicion()
                 imprimir()
             } else {
@@ -620,7 +638,8 @@ let estadisticaSeleccionada
             // ? Personalizar habilidad
             if (edicion) {
                 let val = prompt("Ingrese habilidad")
-                personaje.habilidad2 = val
+                // personaje.habilidad2 = val
+                habilidad2.nombre = val
                 cerrarEdicion()
                 imprimir()
             } else {
@@ -633,7 +652,8 @@ let estadisticaSeleccionada
             // ? Personalizar habilidad
             if (edicion) {
                 let val = prompt("Ingrese habilidad")
-                personaje.habilidad3 = val
+                // personaje.habilidad3 = val
+                habilidad3.nombre = val
                 cerrarEdicion()
                 imprimir()
             } else {
