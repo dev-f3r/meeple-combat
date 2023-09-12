@@ -65,6 +65,14 @@ let valorExperiencia = {
     vida: 1,
     poder: 1
 }
+
+const dictHabilidades = {
+    "COBERTURA": "Aumenta 300% la mitigacíon ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo",
+
+    "EMBESTIDA CON ESCUDO": "Golpeas al objetivo generandole 200% daño físico y derribandolo<br> Poder(3) / Requiere Escudo",
+
+    "ATAQUE PODEROSO": "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos"
+}
 // ! CODIGO FER
 
 var arma1 = {
@@ -359,10 +367,15 @@ function avatar(meeple) {
             personaje.arma1 = "Una Mano"
             personaje.arma2 = "Escudo"
 
-            personaje.habilidad1 = "EMBESTIDA CON ESCUDO"
-            personaje.habilidad2 = "COBERTURA"
-            personaje.habilidad3 = "ATAQUE PODEROSO"
-
+            // personaje.habilidad1 = "EMBESTIDA CON ESCUDO"
+            // personaje.habilidad2 = "COBERTURA"
+            // personaje.habilidad3 = "ATAQUE PODEROSO"
+            habilidad1.nombre = "EMBESTIDA CON ESCUDO"
+            habilidad1.descripcion = "Golpeas al objetivo generandole 200% daño físico y derribandolo<br> Poder(3) / Requiere Escudo"
+            habilidad2.nombre = "COBERTURA"
+            habilidad2.descripcion = "Aumenta 300% la mitigacíon ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo"
+            habilidad3.nombre = "ATAQUE PODEROSO"
+            habilidad3.descripcion = "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos"
 
 
             // modalPersonaje.style.display = "none"
@@ -615,19 +628,36 @@ let estadisticaSeleccionada
                     ? habilidad2
                     : habilidad3
 
-            // TODO: Agregar descripciones de habilidades
+            // // TODO: Agregar descripciones de habilidades
             contenConsola(habilidad.descripcion)
+        }
+    }
+    { // * Funcion para cambio de habilidad
+        /* 
+            * @slot: number
+         */
+        function cambiarHabilidad(slot) {
+            let habilidad = slot == 1
+                ? habilidad1
+                : slot == 2
+                    ? habilidad2
+                    : habilidad3
+
+            let nuevoNombre = prompt("Ingrese habilidad")
+            habilidad.nombre = quitarAcentos(nuevoNombre)
+            console.log(habilidad.nombre)
+
+            habilidad.descripcion = dictHabilidades[habilidad.nombre]
+
+            cerrarEdicion()
+            imprimir()
         }
     }
     { // * eventListeners de habilidades
         habilidad1Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                let val = prompt("Ingrese habilidad")
-                // personaje.habilidad1 = val
-                habilidad1.nombre = val
-                cerrarEdicion()
-                imprimir()
+                cambiarHabilidad(1)
             } else {
                 // ? Motrar descripción de habilidad 
                 descripcionHabilidad(1)
@@ -637,11 +667,7 @@ let estadisticaSeleccionada
         habilidad2Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                let val = prompt("Ingrese habilidad")
-                // personaje.habilidad2 = val
-                habilidad2.nombre = val
-                cerrarEdicion()
-                imprimir()
+                cambiarHabilidad(2)
             } else {
                 // ? Motrar descripción de habilidad 
                 descripcionHabilidad(2)
@@ -651,11 +677,7 @@ let estadisticaSeleccionada
         habilidad3Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                let val = prompt("Ingrese habilidad")
-                // personaje.habilidad3 = val
-                habilidad3.nombre = val
-                cerrarEdicion()
-                imprimir()
+                cambiarHabilidad(3)
             } else {
                 // ? Motrar descripción de habilidad 
                 descripcionHabilidad(3)
@@ -981,7 +1003,16 @@ let estadisticaSeleccionada
 }
 
 { // * helpers, funciones varias
-
+    /* 
+        * @text: sring
+    */
+    // ? Elimina los acentos de un string
+    function quitarAcentos(text) {
+        return text
+            .normalize('NFD') // decompose accented characters into their base character and accent character
+            .replace(/[\u0300-\u036f]/g, '') // remove the accent characters
+            .toUpperCase()
+    }
     // ? Limpia la consola
     consolaBtn.addEventListener('click', () => {
         if (edicion == 0) contenConsola("")
