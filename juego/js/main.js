@@ -67,11 +67,15 @@ let valorExperiencia = {
 }
 
 const dictHabilidades = {
+
     "COBERTURA": "Aumenta 300% la mitigacíon ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo",
 
     "EMBESTIDA CON ESCUDO": "Golpeas al objetivo generandole 200% daño físico y derribandolo<br> Poder(3) / Requiere Escudo",
 
-    "ATAQUE PODEROSO": "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos"
+    "ATAQUE PODEROSO": "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos",
+
+    "SANAR": "Sanas al objetivo<br> Poder min(1) / Sin Requerimentos"
+
 }
 // ! CODIGO FER
 
@@ -371,11 +375,12 @@ function avatar(meeple) {
             // personaje.habilidad2 = "COBERTURA"
             // personaje.habilidad3 = "ATAQUE PODEROSO"
             habilidad1.nombre = "EMBESTIDA CON ESCUDO"
-            habilidad1.descripcion = "Golpeas al objetivo generandole 200% daño físico y derribandolo<br> Poder(3) / Requiere Escudo"
+            habilidad1.descripcion = dictHabilidades[habilidad1.nombre]
             habilidad2.nombre = "COBERTURA"
-            habilidad2.descripcion = "Aumenta 300% la mitigacíon ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo"
+            habilidad2.descripcion = dictHabilidades[habilidad2.nombre]
             habilidad3.nombre = "ATAQUE PODEROSO"
-            habilidad3.descripcion = "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos"
+            habilidad3.descripcion = dictHabilidades[habilidad3.nombre]
+
 
 
             // modalPersonaje.style.display = "none"
@@ -393,6 +398,9 @@ function avatar(meeple) {
             imprimir()
 
             contenConsola(personaje.descripcion)
+            descripcionHabilidad(1)
+            descripcionHabilidad(2)
+            descripcionHabilidad(3)
         }
 
         // TODO: Agregar los demas personajes
@@ -989,7 +997,7 @@ let estadisticaSeleccionada
             else if (dado == 1)
                 contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
             else
-                contenConsola(`Ataque con ${arma.nombre}<br>Daño base ${Math.floor(arma.danno * personaje.ataque)}`)
+                contenConsola(`Ataque con ${arma.nombre}<br>Daño base ${dado + personaje.ataque} <br> ${Math.floor(arma.danno * personaje.ataque)}`)
         }
     }
 
