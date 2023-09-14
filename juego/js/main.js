@@ -77,6 +77,13 @@ const dictHabilidades = {
     "SANAR": "Sanas al objetivo<br> Poder min(1) / Sin Requerimentos"
 
 }
+
+// * 1..2
+let slotArmaSeleccionada = 1 // !
+// * 1..4
+let slotEstadisticaSeleccionada = 1 // !
+// * arma || estadistica
+let objetoAccion = "arma" // !
 // ! CODIGO FER
 
 var arma1 = {
@@ -173,12 +180,12 @@ function imprimir() {
 
     nombreTxt.textContent = personaje.nombre
 
-    ataqueTxt.textContent = personaje.ataque
-    esquivaTxt.textContent = personaje.esquiva
-    bloqueoTxt.textContent = personaje.bloqueo
-    velocidadTxt.textContent = personaje.velocidad
-    vidaTxt.textContent = personaje.vida
-    poderTxt.textContent = personaje.poder
+    ataqueTxt.textContent = personaje.ataque + equipo1.ataque + equipo2.ataque + equipo3.ataque
+    esquivaTxt.textContent = personaje.esquiva + equipo1.esquiva + equipo2.esquiva + equipo3.esquiva
+    bloqueoTxt.textContent = personaje.bloqueo + equipo1.bloqueo + equipo2.bloqueo + equipo3.bloqueo
+    velocidadTxt.textContent = personaje.velocidad + equipo1.velocidad + equipo2.velocidad + equipo3.velocidad
+    vidaTxt.textContent = personaje.vida + equipo1.vidaMaxima + equipo2.vidaMaxima + equipo3.vidaMaxima
+    poderTxt.textContent = personaje.poder + equipo1.poderMaximo + equipo2.poderMaximo + equipo3.poderMaximo
 
     equipo1Txt.textContent = personaje.equipo1
     equipo2Txt.textContent = personaje.equipo2
@@ -446,10 +453,9 @@ equipo1Btn.addEventListener('click', function () { equipo(1) })
 equipo2Btn.addEventListener('click', function () { equipo(2) })
 equipo3Btn.addEventListener('click', function () { equipo(3) })
 
-let slotSeleccionado = 1 // !
-
 function armas(armaSeleccionada, slot) {
-    slotSeleccionado = slot // !
+    slotArmaSeleccionada = slot // !
+    objetoAccion = "arma" // !
     if (edicion == 1) {
 
         modalArmas.style.display = "grid"
@@ -459,7 +465,7 @@ function armas(armaSeleccionada, slot) {
         // consolaTxt.innerHTML = "<br>" + armaSeleccionada
         // !
         contenConsola(
-            slotSeleccionado == 1
+            slotArmaSeleccionada == 1
                 ? arma1.descripcion
                 : arma2.descripcion
         )
@@ -719,8 +725,8 @@ let estadisticaSeleccionada
             if (slot) {
                 seleccion = slot == 1 ? arma1 : arma2
             }
-            // ? crea una referencia al objeto arma1 o arma2, se basa en slotSeleccionado, revisar función armas()
-            else seleccion = slotSeleccionado === 1 ? arma1 : arma2
+            // ? crea una referencia al objeto arma1 o arma2, se basa en slotArmaSeleccionada, revisar función armas()
+            else seleccion = slotArmaSeleccionada === 1 ? arma1 : arma2
 
             switch (arma) {
                 case 'daga':
@@ -884,13 +890,13 @@ let estadisticaSeleccionada
             }
 
             switch (item) {
-                case 'armaduraligera':
+                case 'armaduraligera': // TODO: Arreglar estadisticas de Armadura Ligera
                     equipo.nombre = "Armadura Ligera"
                     equipo.icono = "img/armaduraligera.png"
                     equipo.descripcion = ""
                     equipo.nivel = 1
                     equipo.ataque = 0
-                    equipo.esquiva = 0
+                    equipo.esquiva = 1
                     equipo.bloqueo = 0
                     equipo.velocidad = 0
                     equipo.vidaMaxima = 0
@@ -981,6 +987,7 @@ let estadisticaSeleccionada
 }
 
 { // * Accion
+
     { // * Funciones para tirada
         /* 
             * @slot: number
@@ -988,23 +995,71 @@ let estadisticaSeleccionada
         function accion(slot) {
             let dado = Math.ceil((Math.random() * 20) + 0)
 
-            // ? Crea una referencia a arma1 o arma2 dependiendo del valor de slot
-            let arma = slot == 1 ? arma1 : arma2
+            if (objetoAccion == "arma") {
+                // ? Crea una referencia a arma1 o arma2 dependiendo del valor de slot
+                let arma = slot == 1 ? arma1 : arma2
 
-            // TODO: Completar el funcionamiento de tirada
-            if (dado == 20)
-                contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * personaje.ataque * 2)}`)
-            else if (dado == 1)
-                contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
-            else
-                contenConsola(`Ataque con ${arma.nombre}<br>Daño base ${dado + personaje.ataque} <br> ${Math.floor(arma.danno * personaje.ataque)}`)
+                // TODO: Completar el funcionamiento de tirada
+                if (dado == 20)
+                    contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * personaje.ataque * 2)}`)
+                else if (dado == 1)
+                    contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
+                else
+                    contenConsola(`Ataque con ${arma.nombre}<br>${dado + personaje.ataque}<br>Daño base ${Math.floor(arma.danno * personaje.ataque)}`)
+            } else {
+                // let estadistica
+                switch (slot) {
+                    case 1:
+                        // TODO: Retocar el ataque limpio
+                        if (dado == 20)
+                            contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(personaje.ataque * 2)}`)
+                        else if (dado == 1)
+                            contenConsola(`Ataque limpio<br>¡PIFIA!<br>Daño base 0`)
+                        else
+                            contenConsola(`Ataque limpio<br>${dado + personaje.ataque}<br>Daño base ${Math.floor(personaje.ataque)}`)
+                        break;
+                    case 2:
+                        // TODO: Retocar esquiva
+                        if (dado == 20)
+                            contenConsola(`Esquiva<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
+                        else if (dado == 1)
+                            contenConsola(`Esquiva<br>¡PIFIA!`)
+                        else
+                            contenConsola(`Esquiva<br>${dado + personaje.esquiva}`)
+                        break;
+                    case 3:
+                        // TODO: Retocar bloqueo
+                        if (dado == 20)
+                            contenConsola(`Bloquea<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
+                        else if (dado == 1)
+                            contenConsola(`Bloquea<br>¡PIFIA!`)
+                        else
+                            contenConsola(`Bloquea<br>${dado + personaje.esquiva}`)
+                        break;
+                    case 4:
+                        // TODO: Retocar huye
+                        if (dado == 20)
+                            contenConsola(`Huye<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
+                        else if (dado == 1)
+                            contenConsola(`Huye<br>¡PIFIA!`)
+                        else
+                            contenConsola(`Huye<br>${dado + personaje.esquiva}`)
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 
     { // * evenListener accion
         accionBtn.addEventListener('click', () => {
             if (!edicion) {
-                accion(slotSeleccionado)
+                accion(
+                    objetoAccion == "arma"
+                        ? slotArmaSeleccionada
+                        : slotEstadisticaSeleccionada
+                )
             }
         })
     }
@@ -1043,6 +1098,26 @@ let estadisticaSeleccionada
     function mostrarEstadistica(estadistica) {
         // estadistica = estadistica.charAt(0).toUpperCase() + estadistica.slice(1)
         let data = `${estadistica.charAt(0).toUpperCase() + estadistica.slice(1)} ${personaje[estadistica]}`
+
+        // * Para la funcion accion()
+        switch (estadistica) {
+            case "ataque":
+                slotEstadisticaSeleccionada = 1
+                break
+            case "esquiva":
+                slotEstadisticaSeleccionada = 2
+                break
+            case "bloqueo":
+                slotEstadisticaSeleccionada = 3
+                break
+            case "velocidad":
+                slotEstadisticaSeleccionada = 4
+                break
+            default:
+                break
+        }
+        objetoAccion = "estadistica"
+
         contenConsola(data)
     }
 
