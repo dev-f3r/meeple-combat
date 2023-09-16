@@ -65,8 +65,8 @@ let valorExperiencia = {
     esquiva: 3,
     bloqueo: 3,
     velocidad: 6,
-    vida: 1,
-    poder: 1
+    vidaMaxima: 1,
+    poderMaximo: 1
 }
 
 const dictHabilidades = {
@@ -187,8 +187,12 @@ function imprimir() {
     esquivaTxt.textContent = personaje.esquiva + equipo1.esquiva + equipo2.esquiva + equipo3.esquiva
     bloqueoTxt.textContent = personaje.bloqueo + equipo1.bloqueo + equipo2.bloqueo + equipo3.bloqueo
     velocidadTxt.textContent = personaje.velocidad + equipo1.velocidad + equipo2.velocidad + equipo3.velocidad
-    vidaTxt.textContent = personaje.vida + equipo1.vidaMaxima + equipo2.vidaMaxima + equipo3.vidaMaxima
-    poderTxt.textContent = personaje.poder + equipo1.poderMaximo + equipo2.poderMaximo + equipo3.poderMaximo
+
+    vidaTxt.textContent = personaje.vida
+    vidaMaximaTxt.textContent = personaje.vidaMaxima + equipo1.vidaMaxima + equipo2.vidaMaxima + equipo3.vidaMaxima
+
+    poderTxt.textContent = personaje.poder
+    poderMaximoTxt.textContent = personaje.poderMaximo + equipo1.poderMaximo + equipo2.poderMaximo + equipo3.poderMaximo
 
     equipo1Txt.textContent = personaje.equipo1
     equipo2Txt.textContent = personaje.equipo2
@@ -416,8 +420,7 @@ function avatar(meeple) {
         // TODO: Agregar los demas personajes
 
     } else {
-
-        consolaTxt.innerHTML = "<br>" + personaje.nombre + "<br>" + personaje.descripcion
+        contenConsola(`${personaje.nombre}<br>${personaje.descripcion}`)
     }
 
     imprimir()
@@ -445,9 +448,7 @@ function equipo(slot) {
         modalEquipo.style.display = "grid"
 
     } else {
-
-        consolaTxt.innerHTML = "<br>" + slot
-
+        contenConsola(`Slot de equipamiento ${slot}`)
     }
 
 }
@@ -464,8 +465,6 @@ function armas(armaSeleccionada, slot) {
         modalArmas.style.display = "grid"
 
     } else {
-
-        // consolaTxt.innerHTML = "<br>" + armaSeleccionada
         // !
         contenConsola(
             slotArmaSeleccionada == 1
@@ -498,13 +497,15 @@ let estadisticaSeleccionada
         }
 
         function aumentarDisminuirExperiencia(accion, estadistica) {
+
             let valor
 
-            if (accion == 'mas') {
+            if (accion == 'mas') { // ? Incrementa exp
                 valor = (personaje[estadistica] === 0 ? 1 : personaje[estadistica] + 1) * valorExperiencia[estadistica]
-            } else {
+            } else { // ? Decrementa exp
                 valor = personaje[estadistica] * valorExperiencia[estadistica]
             }
+
 
             personaje.experiencia += accion == 'mas' ? valor : valor * -1
         }
@@ -525,7 +526,7 @@ let estadisticaSeleccionada
         /* 
             * @estadistica: string
         */
-        // ? muestra los botones de edición, y modifica "estadisticaSeleccionada"
+        // ? Mustra los botones de incremento y decremento SOLO EN MODO EDICION, y modifica "estadisticaSeleccionada"
         function modificarEstadistica(estadistica) {
             arribaBtn.style.display = "block"
             abajoBtn.style.display = "block"
@@ -572,7 +573,7 @@ let estadisticaSeleccionada
                     consola.innerHTML = data
                     imprimir()
                 } else {
-                    consola.innerHTML = "Experiencia insuficiente"
+                    consola.innerHTML = "Experiencia ins]uficiente"
                 }
             } else {
 
@@ -593,6 +594,30 @@ let estadisticaSeleccionada
                 }
             }
         }
+
+        /* 
+            * @accion: string
+        */
+        // ? Modifica la vida o el poder actual de personaje
+        function masMenosVidaPoder(accion) {
+
+            if (estadisticaSeleccionada === "vida") {
+                if (accion === "mas") { // ? Incremento de vida
+                    if (personaje.vida < personaje.vidaMaxima) personaje.vida++
+                } else { // ? Decremento de vida
+                    if (personaje.vida > 0) personaje.vida--
+                }
+                contenConsola(`Vida ${personaje.vida}`)
+            } else if (estadisticaSeleccionada === "poder") {
+                if (accion === "mas") { // ? Incremento de poder
+                    if (personaje.poder < personaje.poderMaximo) personaje.poder++
+                } else { // ? Decremento de poder
+                    if (personaje.poder > 0) personaje.poder--
+                }
+                contenConsola(`Poder ${personaje.poder}`)
+            }
+            imprimir()
+        }
     }
 
     { // * eventListeners de los atributos
@@ -612,23 +637,40 @@ let estadisticaSeleccionada
             if (edicion) modificarEstadistica('velocidad')
             else mostrarEstadistica('velocidad')
         })
+
         vidaBtn.addEventListener('click', () => {
-            if (edicion) modificarEstadistica('vida')
-            else mostrarEstadistica('vida')
+            if (edicion) modificarEstadistica('vidaMaxima')
+            else { // ? Muestra los boton de incremento y decremento
+                arribaBtn.style.display = "block"
+                abajoBtn.style.display = "block"
+                estadisticaSeleccionada = "vida"
+
+                contenConsola(`Vida ${personaje.vida}`)
+            }
         })
         poderBtn.addEventListener('click', () => {
-            if (edicion) modificarEstadistica('poder')
-            else mostrarEstadistica('poder')
+            if (edicion) modificarEstadistica('poderMaximo')
+            else { // ? Muestra los boton de incremento y decremento
+                arribaBtn.style.display = "block"
+                abajoBtn.style.display = "block"
+                estadisticaSeleccionada = "poder"
+
+                contenConsola(`Poder ${personaje.poder}`)
+            }
         })
     }
 
     { // * eventListeners de los botones arriba y abajo
         arribaBtn.addEventListener('click', () => {
-            modificarValores('mas', estadisticaSeleccionada)
+            if (edicion) modificarValores('mas', estadisticaSeleccionada)
+            // ? Solo vida y poder se cambian en modo normal
+            else masMenosVidaPoder('mas')
         })
 
         abajoBtn.addEventListener('click', () => {
-            modificarValores('menos', estadisticaSeleccionada)
+            if (edicion) modificarValores('menos', estadisticaSeleccionada)
+            // ? Solo vida y poder se cambian en modo normal
+            else masMenosVidaPoder('menos')
         })
     }
 }
@@ -645,8 +687,8 @@ let estadisticaSeleccionada
                     ? habilidad2
                     : habilidad3
 
-            // // TODO: Agregar descripciones de habilidades
             contenConsola(habilidad.descripcion)
+            cerrarEdicion()
         }
     }
     { // * Funcion para cambio de habilidad
@@ -662,7 +704,7 @@ let estadisticaSeleccionada
 
             let nuevoNombre = prompt("Ingrese habilidad")
             habilidad.nombre = quitarAcentos(nuevoNombre)
-            console.log(habilidad.nombre)
+
 
             habilidad.descripcion = dictHabilidades[habilidad.nombre]
 
@@ -710,6 +752,7 @@ let estadisticaSeleccionada
                 imprimir()
             } else {
                 contenConsola(personaje.descripcion)
+                cerrarEdicion()
             }
         })
 
@@ -723,7 +766,6 @@ let estadisticaSeleccionada
          */
         // ? cambia de arma
         function cambiarArma(arma, slot) {
-            // console.log(...arguments)
             let seleccion
             if (slot) {
                 seleccion = slot == 1 ? arma1 : arma2
@@ -924,13 +966,13 @@ let estadisticaSeleccionada
             cambiarEquipamiento('armaduraligera')
         }
         )
-        // ! Agregar los demas listeners para los items restantes
+        // TODO: Agregar los demas listeners para los items restantes
     }
 }
 
 { // * Cambio de personaje
     { // * Funciones para cambio de personajes
-
+        // ! Revisar avatar()
     }
 
 }
@@ -1081,7 +1123,10 @@ let estadisticaSeleccionada
     }
     // ? Limpia la consola
     consolaBtn.addEventListener('click', () => {
-        if (edicion == 0) contenConsola("")
+        if (edicion == 0 && (estadisticaSeleccionada !== "vida" && estadisticaSeleccionada !== "poder")) {
+            console.log("clear")
+            contenConsola("")
+        }
     })
 
     // ? Oculta los botones de edición, y cambia la var edición a 0
@@ -1122,6 +1167,7 @@ let estadisticaSeleccionada
         objetoAccion = "estadistica"
 
         contenConsola(data)
+        cerrarEdicion()
     }
 
     /* 
@@ -1148,8 +1194,110 @@ let estadisticaSeleccionada
     function mostrarDescripcionArma(slot) {
         let seleccion = slot == 1 ? arma1 : arma2
         contenConsola(seleccion.descripcion)
+        cerrarEdicion()
     }
 }
 
 
 // * COMIENZO BLOQUE DE MASCOTAS
+{ // * Variables
+    var mascota = {
+        nombre: "CRIATURA 1",
+        imagen: "img/c1.png",
+        icono: "img/portal.png",
+
+        ataque: 0,
+        esquiva: 0,
+        mitigacion: 0,
+        velocidad: 0,
+        vida: 0,
+        vidaMaxima: 0,
+
+        poder: 0,
+        poderMaximo: 0,
+
+        arma1: "",
+        arma2: "",
+
+        habilidad1: "",
+        habilidad2: "",
+
+        descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
+    }
+
+    var mascota1 = {
+        nombre: "Criatura 1",
+        imagen: "img/c1.png",
+        icono: "img/portal.png",
+
+        ataque: 0,
+        esquiva: 0,
+        mitigacion: 0,
+        velocidad: 0,
+        vida: 0,
+        vidaMaxima: 0,
+
+        poder: 0,
+        poderMaximo: 0,
+
+        arma1: "nada",
+        arma2: "nada",
+
+        habilidad1: "DERRIBO",
+        habilidad2: "DESGARRO",
+
+        descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
+    }
+
+
+    var mascota2 = {
+        nombre: "CRIATURA 2",
+        imagen: "img/c2.png",
+        icono: "img/portal.png",
+
+        ataque: 0,
+        esquiva: 0,
+        mitigacion: 0,
+        velocidad: 0,
+        vida: 0,
+        vidaMaxima: 0,
+
+        poder: 0,
+        poderMaximo: 0,
+
+        arma1: "",
+        arma2: "",
+
+        habilidad1: "",
+        habilidad2: "",
+
+        descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
+    }
+
+
+    var mascota3 = {
+        nombre: "CRIATURA 3",
+        imagen: "img/c3.png",
+        icono: "img/portal.png",
+
+        ataque: 0,
+        esquiva: 0,
+        mitigacion: 0,
+        velocidad: 0,
+        vida: 0,
+        vidaMaxima: 0,
+
+        poder: 0,
+        poderMaximo: 0,
+
+        arma1: "",
+        arma2: "",
+
+        habilidad1: "",
+        habilidad2: "",
+
+        descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
+    }
+}
+
+let mascotaSeleccionada = 1
