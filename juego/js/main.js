@@ -57,8 +57,6 @@ var personaje = {
      */
 }
 
-import {listaMascotas} from './mascota' // !
-console.log("cosa", listaMascotas)
 
 
 // ! CODIGO FER
@@ -1152,3 +1150,6 @@ let estadisticaSeleccionada
         contenConsola(seleccion.descripcion)
     }
 }
+
+
+// * COMIENZO BLOQUE DE MASCOTAS
