@@ -3,10 +3,11 @@ document.body.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     return false;
 });
-document.body.addEventListener('keydown', (e) => {
-    e.preventDefault();
-    return false;
-});
+// TODO: Descomentar el siguiente bloque
+// document.body.addEventListener('keydown', (e) => {
+//     e.preventDefault();
+//     return false;
+// });
 document.body.addEventListener('selectstart', (e) => {
     e.preventDefault();
     return false;
@@ -55,6 +56,10 @@ var personaje = {
     habilidad3: "HABILIDAD 3",
      */
 }
+
+import {listaMascotas} from './mascota' // !
+console.log("cosa", listaMascotas)
+
 
 // ! CODIGO FER
 let valorExperiencia = {
@@ -1009,7 +1014,7 @@ let estadisticaSeleccionada
             } else {
                 // let estadistica
                 switch (slot) {
-                    case 1:
+                    case 1: // * Ataque
                         // TODO: Retocar el ataque limpio
                         if (dado == 20)
                             contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(personaje.ataque * 2)}`)
@@ -1018,7 +1023,7 @@ let estadisticaSeleccionada
                         else
                             contenConsola(`Ataque limpio<br>${dado + personaje.ataque}<br>Daño base ${Math.floor(personaje.ataque)}`)
                         break;
-                    case 2:
+                    case 2: // * Esquiva
                         // TODO: Retocar esquiva
                         if (dado == 20)
                             contenConsola(`Esquiva<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
@@ -1027,7 +1032,7 @@ let estadisticaSeleccionada
                         else
                             contenConsola(`Esquiva<br>${dado + personaje.esquiva}`)
                         break;
-                    case 3:
+                    case 3: // * Bloquea
                         // TODO: Retocar bloqueo
                         if (dado == 20)
                             contenConsola(`Bloquea<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
@@ -1036,7 +1041,7 @@ let estadisticaSeleccionada
                         else
                             contenConsola(`Bloquea<br>${dado + personaje.esquiva}`)
                         break;
-                    case 4:
+                    case 4: // * Huye
                         // TODO: Retocar huye
                         if (dado == 20)
                             contenConsola(`Huye<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
