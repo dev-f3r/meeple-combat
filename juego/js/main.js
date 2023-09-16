@@ -171,8 +171,8 @@ var habilidad2 = {
 var habilidad3 = {
     nombre: "Nombre habilidad 3",
     descripcion: "Descripción de habilidad 3"
-}
 
+}
 /* 
     ? Refresca el texto y la imagen de los siguientes componentes:
         portada, nombre, estadisticas (ataque, esquiva, etc), equipamiento, arma slot 1, arma slot 2, habilidades
@@ -189,10 +189,8 @@ function imprimir() {
     velocidadTxt.textContent = personaje.velocidad + equipo1.velocidad + equipo2.velocidad + equipo3.velocidad
 
     vidaTxt.textContent = personaje.vida
-    vidaMaximaTxt.textContent = personaje.vidaMaxima + equipo1.vidaMaxima + equipo2.vidaMaxima + equipo3.vidaMaxima
 
     poderTxt.textContent = personaje.poder
-    poderMaximoTxt.textContent = personaje.poderMaximo + equipo1.poderMaximo + equipo2.poderMaximo + equipo3.poderMaximo
 
     equipo1Txt.textContent = personaje.equipo1
     equipo2Txt.textContent = personaje.equipo2
@@ -250,10 +248,12 @@ imprimir()
 editarBtn.addEventListener('click', function () {
 
     if (edicion == 0) {
-
         edicion = 1
         editarImg.src = "img/guardar.png"
+        
         contenConsola("Seleccione nombre, slot de arma o habilidad")
+        ocultarBtnArrivaAbajo()
+
         experienciaTxt.style.display = "flex"
     } else {
 
@@ -516,6 +516,7 @@ let estadisticaSeleccionada
             if (edicion) {
                 establecerExperiencia()
             } else {
+                ocultarBtnArrivaAbajo()
                 contenConsola(`Experiencia: ${personaje.experiencia}`)
             }
         })
@@ -528,8 +529,7 @@ let estadisticaSeleccionada
         */
         // ? Mustra los botones de incremento y decremento SOLO EN MODO EDICION, y modifica "estadisticaSeleccionada"
         function modificarEstadistica(estadistica) {
-            arribaBtn.style.display = "block"
-            abajoBtn.style.display = "block"
+            mostrarBtnArrivaAbajo()
 
             estadisticaSeleccionada = estadistica
 
@@ -576,9 +576,16 @@ let estadisticaSeleccionada
                     consola.innerHTML = "Experiencia ins]uficiente"
                 }
             } else {
-
                 if (personaje[estadistica] > 0) {
                     personaje[estadistica]--
+
+                    if (estadistica === "vidaMaxima" && personaje.vidaMaxima < personaje.vida) {
+                        personaje.vida = personaje.vidaMaxima
+                    }
+
+                    if (estadistica === "poderMaximo" && personaje.poderMaximo < personaje.poder) {
+                        personaje.poder = personaje.poderMaximo
+                    }
 
                     // * Incrementar exp
                     aumentarDisminuirExperiencia('mas', estadistica)
@@ -607,14 +614,14 @@ let estadisticaSeleccionada
                 } else { // ? Decremento de vida
                     if (personaje.vida > 0) personaje.vida--
                 }
-                contenConsola(`Vida ${personaje.vida}`)
+                contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
             } else if (estadisticaSeleccionada === "poder") {
                 if (accion === "mas") { // ? Incremento de poder
                     if (personaje.poder < personaje.poderMaximo) personaje.poder++
                 } else { // ? Decremento de poder
                     if (personaje.poder > 0) personaje.poder--
                 }
-                contenConsola(`Poder ${personaje.poder}`)
+                contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
             }
             imprimir()
         }
@@ -641,21 +648,19 @@ let estadisticaSeleccionada
         vidaBtn.addEventListener('click', () => {
             if (edicion) modificarEstadistica('vidaMaxima')
             else { // ? Muestra los boton de incremento y decremento
-                arribaBtn.style.display = "block"
-                abajoBtn.style.display = "block"
+                mostrarBtnArrivaAbajo()
                 estadisticaSeleccionada = "vida"
 
-                contenConsola(`Vida ${personaje.vida}`)
+                contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
             }
         })
         poderBtn.addEventListener('click', () => {
             if (edicion) modificarEstadistica('poderMaximo')
             else { // ? Muestra los boton de incremento y decremento
-                arribaBtn.style.display = "block"
-                abajoBtn.style.display = "block"
+                mostrarBtnArrivaAbajo()
                 estadisticaSeleccionada = "poder"
 
-                contenConsola(`Poder ${personaje.poder}`)
+                contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
             }
         })
     }
@@ -1134,8 +1139,7 @@ let estadisticaSeleccionada
         edicion = 0
         editarImg.src = "img/editar.png"
 
-        arribaBtn.style.display = "none"
-        abajoBtn.style.display = "none"
+        ocultarBtnArrivaAbajo()
         experienciaTxt.style.display = "none"
 
     }
@@ -1195,6 +1199,18 @@ let estadisticaSeleccionada
         let seleccion = slot == 1 ? arma1 : arma2
         contenConsola(seleccion.descripcion)
         cerrarEdicion()
+    }
+
+    // ? Muestra los botones de incremento y decremento
+    function mostrarBtnArrivaAbajo() {
+        arribaBtn.style.display = "block"
+        abajoBtn.style.display = "block"
+    }
+
+    // ? Oculta los botones de incremento y decremento
+    function ocultarBtnArrivaAbajo() {
+        arribaBtn.style.display = "none"
+        abajoBtn.style.display = "none"
     }
 }
 

@@ -26,41 +26,6 @@
 
 /* * Estilos de consola  fin*/
 
-/* * Info vida */
-.vidaInfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.vidaInfo span {
-    margin: 0;
-    padding: 0;
-}
-.vidaInfo #vidaTxt {
-    margin-top: 5px;
-}
-.vidaInfo #vidaMaximaTxt {
-    margin-bottom: 5px;
-}
-/* * Info Poder */
-.poderInfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.poderInfo span {
-    margin: 0;
-    padding: 0;
-}
-.poderInfo #poderTxt {
-    margin-top: 5px;
-}
-.poderInfo #poderMaximaTxt {
-    margin-bottom: 5px;
-}
-
 /* * Estilos experienciaBtn comienzo*/
 /* #experienciaBtn {
     border: solid #fff;
