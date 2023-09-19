@@ -1208,7 +1208,7 @@ let estadisticaSeleccionada
     class Mascota {
         constructor(
             nombre = "",
-            image = "",
+            imagen = "",
             icono = "",
 
             ataque = 0,
@@ -1229,15 +1229,15 @@ let estadisticaSeleccionada
             descripcion = "Selecciona editar y luego el ícono de esta criatura para invocar otra."
         ) {
             this.nombre = nombre
-            this.image = image
+            this.imagen = imagen
             this.icono = icono
+
             this.ataque = ataque
             this.esquiva = esquiva
             this.bloqueo = bloqueo
             this.velocidad = velocidad
             this.vida = vida
             this.vidaMaxima = vidaMaxima
-
             this.poder = poder
             this.poderMaximo = poderMaximo
 
@@ -1290,21 +1290,22 @@ let estadisticaSeleccionada
         "lobo": {
             nombre: "LOBO",
             imagen: "img/lobo.png",
+            icono: "",
 
             ataque: 3,
             esquiva: 2,
-            mitigacion: 1,
+            bloqueo: 1,
             velocidad: 6,
             vida: 19,
             vidaMaxima: 19,
             poder: 22,
             poderMaximo: 22,
 
-            arma1: "Mordisco",
-            arma2: "Garras",
+            arma1: { nombre: "mordisco", descripcion: dictArmasMascota["mordisco"] },
+            arma2: { nombre: "garras", descripcion: dictArmasMascota["garras"] },
 
-            habilidad1: "DERRIBO",
-            habilidad2: "DESGARRO",
+            habilidad1: { nombre: "DERRIBO", descripcion: dictHabilidades["DERRIBO"] },
+            habilidad2: { nombre: "DESGARRO", descripcion: dictHabilidades["DESGARRO"] },
 
             descripcion: "LOBO <br> Criatura de Sangre <br> Coste de invocación: 20"
         }
@@ -1317,21 +1318,21 @@ let estadisticaSeleccionada
     listaMascotas.push(new Mascota()) // Mascota 1
     listaMascotas[0].actualizarMascota({
         nombre: "Test pet 1",
-        image: "c1",
+        imagen: "img/c1.png",
         arma1: { nombre: "nada", descripcion: dictArmasMascota["nada"] },
         arma2: { nombre: "nada", descripcion: dictArmasMascota["nada"] }
     })
     listaMascotas.push(new Mascota()) // Mascota 2
     listaMascotas[1].actualizarMascota({
         nombre: "Test pet 2",
-        image: "c2",
+        imagen: "img/c2.png",
         arma1: { nombre: "nada", descripcion: dictArmasMascota["nada"] },
         arma2: { nombre: "nada", descripcion: dictArmasMascota["nada"] }
     })
     listaMascotas.push(new Mascota()) // Mascota 3
     listaMascotas[2].actualizarMascota({
         nombre: "Test pet 3",
-        image: "c3",
+        imagen: "img/c3.png",
         arma1: { nombre: "nada", descripcion: dictArmasMascota["nada"] },
         arma2: { nombre: "nada", descripcion: dictArmasMascota["nada"] }
     })
@@ -1356,7 +1357,7 @@ esbirrosBtn.addEventListener('click', () => {
 // ? Función para actualizar los datos mostrados sobre la mascota seleccionada
 function imprimirMascota() {
     nombreMascotaTxt.textContent = mascotaSeleccionada.nombre.toUpperCase()
-    mascotaPortadaImg.src = `img/${mascotaSeleccionada.image}.png`
+    mascotaPortadaImg.src = mascotaSeleccionada.imagen
 
     ataqueMascotaTxt.textContent = mascotaSeleccionada.ataque
     esquivaMascotaTxt.textContent = mascotaSeleccionada.esquiva
@@ -1522,7 +1523,7 @@ imprimirMascota()
                 mostrarBtnArrivaAbajo()
                 estadisticaSeleccionada = "poder"
                 tipoEdicion = "mascota"
-                contenConsola(`Poder ${mascotaSeleccionada.poder} / ${mascotaSeleccionada.vidaMaxima}`)
+                contenConsola(`Poder ${mascotaSeleccionada.poder} / ${mascotaSeleccionada.poderMaximo}`)
             }
         })
     }
@@ -1530,6 +1531,25 @@ imprimirMascota()
 
 { // * Cambio de mascota
 
+    // * Función para cambiar de mascota
+    function cambiarMascota() {
+        let val = prompt("Ingrese comando")
+
+        if (val in dictMascotas) {
+            mascotaSeleccionada.actualizarMascota({ ...dictMascotas[val] })
+        } else {
+            contenConsola("COMANDO INCORRECTO")
+        }
+
+        cerrarEdicion()
+        imprimir()
+        imprimirMascota()
+    }
+
+    // * Trigger
+    portadaMascotaBtn.addEventListener('click', () => {
+        if (edicion) cambiarMascota()
+    })
 }
 
 { // * Habilidades
