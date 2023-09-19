@@ -21,6 +21,7 @@ document.body.addEventListener('dragstart', (e) => {
 
 
 var edicion = 0
+var tipoEdicion = ""
 
 var personaje = {
 
@@ -78,7 +79,7 @@ const dictHabilidades = {
     "ATAQUE PODEROSO": "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos",
 
     "SANAR": "Sanas al objetivo<br> Poder min(1) / Sin Requerimentos"
-
+    // TODO: Agregar las demas habilidades
 }
 
 // * 1..2
@@ -215,34 +216,6 @@ function imprimir() {
     experienciaTxt.textContent = personaje.experiencia
 }
 imprimir()
-
-// portadaImg.src = personaje.meeple
-
-// nombreTxt.textContent = personaje.nombre
-
-// ataqueTxt.textContent = personaje.ataque
-// esquivaTxt.textContent = personaje.esquiva
-// bloqueoTxt.textContent = personaje.bloqueo
-// velocidadTxt.textContent = personaje.velocidad
-
-
-// vidaTxt.textContent = personaje.vida
-// poderTxt.textContent = personaje.poder
-
-// equipo1Txt.textContent = personaje.equipo1
-// equipo2Txt.textContent = personaje.equipo2
-// equipo3Txt.textContent = personaje.equipo3
-
-
-// habilidad1Txt.textContent = personaje.habilidad1
-// habilidad2Txt.textContent = personaje.habilidad2
-// habilidad3Txt.textContent = personaje.habilidad3
-
-
-
-
-
-
 
 
 editarBtn.addEventListener('click', function () {
@@ -496,14 +469,21 @@ let estadisticaSeleccionada
             cerrarEdicion()
         }
 
-        function aumentarDisminuirExperiencia(accion, estadistica) {
+        function aumentarDisminuirExperiencia(tipo, accion, estadistica) {
 
             let valor
 
-            if (accion == 'mas') { // ? Incrementa exp
-                valor = (personaje[estadistica] === 0 ? 1 : personaje[estadistica] + 1) * valorExperiencia[estadistica]
-            } else { // ? Decrementa exp
-                valor = personaje[estadistica] * valorExperiencia[estadistica]
+            if (tipo === "personaje") {
+                if (accion === "mas") { // ? Incrementa exp
+                    valor = (personaje[estadistica] === 0 ? 1 : personaje[estadistica] + 1) * valorExperiencia[estadistica]
+                } else { // ? Decrementa exp
+                    valor = personaje[estadistica] * valorExperiencia[estadistica]
+                }
+            } else {
+                if (accion === "mas")
+                    valor = (mascotaSeleccionada[estadistica] === 0 ? 1 : mascotaSeleccionada[estadistica] + 1) * valorExperiencia[estadistica]
+                else
+                    valor = mascotaSeleccionada[estadistica] * valorExperiencia[estadistica]
             }
 
 
@@ -540,7 +520,6 @@ let estadisticaSeleccionada
                 + estadistica
                     .slice(1)} ${personaje[estadistica]}`
             contenConsola(data)
-
         }
 
         /* 
@@ -567,13 +546,13 @@ let estadisticaSeleccionada
                             .slice(1)} ${personaje[estadistica]}`
 
                     // * decrementar exp
-                    aumentarDisminuirExperiencia('menos', estadistica)
+                    aumentarDisminuirExperiencia("personaje", 'menos', estadistica)
 
                     // * cambiar contenido mostrado
                     consola.innerHTML = data
                     imprimir()
                 } else {
-                    consola.innerHTML = "Experiencia ins]uficiente"
+                    consola.innerHTML = "Experiencia insuficiente"
                 }
             } else {
                 if (personaje[estadistica] > 0) {
@@ -588,7 +567,7 @@ let estadisticaSeleccionada
                     }
 
                     // * Incrementar exp
-                    aumentarDisminuirExperiencia('mas', estadistica)
+                    aumentarDisminuirExperiencia('personaje', 'mas', estadistica)
 
                     // * cambiar contenido mostrado
                     data = `${estadistica
@@ -607,7 +586,6 @@ let estadisticaSeleccionada
         */
         // ? Modifica la vida o el poder actual de personaje
         function masMenosVidaPoder(accion) {
-
             if (estadisticaSeleccionada === "vida") {
                 if (accion === "mas") { // ? Incremento de vida
                     if (personaje.vida < personaje.vidaMaxima) personaje.vida++
@@ -629,24 +607,39 @@ let estadisticaSeleccionada
 
     { // * eventListeners de los atributos
         ataqueBtn.addEventListener('click', () => {
-            if (edicion) modificarEstadistica('ataque')
+            if (edicion) {
+                tipoEdicion = "personaje"
+                modificarEstadistica('ataque')
+            }
             else mostrarEstadistica('ataque')
         })
         esquivaBtn.addEventListener('click', () => {
-            if (edicion) modificarEstadistica('esquiva')
+            if (edicion) {
+                tipoEdicion = "personaje"
+                modificarEstadistica('esquiva')
+            }
             else mostrarEstadistica('esquiva')
         })
         bloqueoBtn.addEventListener('click', () => {
-            if (edicion) modificarEstadistica('bloqueo')
+            if (edicion) {
+                tipoEdicion = "personaje"
+                modificarEstadistica('bloqueo')
+            }
             else mostrarEstadistica('bloqueo')
         })
         velocidadBtn.addEventListener('click', () => {
-            if (edicion) modificarEstadistica('velocidad')
+            if (edicion) {
+                tipoEdicion = "personaje"
+                modificarEstadistica('velocidad')
+            }
             else mostrarEstadistica('velocidad')
         })
 
         vidaBtn.addEventListener('click', () => {
-            if (edicion) modificarEstadistica('vidaMaxima')
+            if (edicion) {
+                tipoEdicion = "personaje"
+                modificarEstadistica('vidaMaxima')
+            }
             else { // ? Muestra los boton de incremento y decremento
                 mostrarBtnArrivaAbajo()
                 estadisticaSeleccionada = "vida"
@@ -655,7 +648,10 @@ let estadisticaSeleccionada
             }
         })
         poderBtn.addEventListener('click', () => {
-            if (edicion) modificarEstadistica('poderMaximo')
+            if (edicion) {
+                tipoEdicion = "personaje"
+                modificarEstadistica('poderMaximo')
+            }
             else { // ? Muestra los boton de incremento y decremento
                 mostrarBtnArrivaAbajo()
                 estadisticaSeleccionada = "poder"
@@ -667,13 +663,19 @@ let estadisticaSeleccionada
 
     { // * eventListeners de los botones arriba y abajo
         arribaBtn.addEventListener('click', () => {
-            if (edicion) modificarValores('mas', estadisticaSeleccionada)
+            if (edicion) {
+                if (tipoEdicion === "personaje") modificarValores('mas', estadisticaSeleccionada)
+                else modificarAtributosMascota('mas', estadisticaSeleccionada)
+            }
             // ? Solo vida y poder se cambian en modo normal
             else masMenosVidaPoder('mas')
         })
 
         abajoBtn.addEventListener('click', () => {
-            if (edicion) modificarValores('menos', estadisticaSeleccionada)
+            if (edicion) {
+                if (tipoEdicion === "personaje") modificarValores('menos', estadisticaSeleccionada)
+                else modificarAtributosMascota('menos', estadisticaSeleccionada)
+            }
             // ? Solo vida y poder se cambian en modo normal
             else masMenosVidaPoder('menos')
         })
@@ -683,9 +685,15 @@ let estadisticaSeleccionada
 { // * Nombre de habilidades y nombre de personaje
     { //  * Descipción de habilidades
         /* 
-            * @habilidad: Obj
+            * @slot: number
         */
-        function descripcionHabilidad(habilidad) {
+        function descripcionHabilidad(slot) {
+            let habilidad = slot == 1
+                ? habilidad1
+                : slot == 2
+                    ? habilidad2
+                    : habilidad3
+
             contenConsola(habilidad.descripcion)
             cerrarEdicion()
         }
@@ -693,49 +701,52 @@ let estadisticaSeleccionada
     { // * Funcion para cambio de habilidad
         /* 
             * @slot: number
-            * @tipo: string
-            * @habilidad: Obj
          */
-        function cambiarHabilidad(tipo, habilidad) {
+        function cambiarHabilidad(slot) {
+            let habilidad = slot == 1
+                ? habilidad1
+                : slot == 2
+                    ? habilidad2
+                    : habilidad3
+
             let nuevoNombre = prompt("Ingrese habilidad")
             habilidad.nombre = quitarAcentos(nuevoNombre)
+
 
             habilidad.descripcion = dictHabilidades[habilidad.nombre]
 
             cerrarEdicion()
-
-            if (tipo === "personaje") imprimir()
-            else imprimirMascota()
+            imprimir()
         }
     }
     { // * eventListeners de habilidades
         habilidad1Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                cambiarHabilidad("personaje", habilidad1)
+                cambiarHabilidad(1)
             } else {
                 // ? Motrar descripción de habilidad 
-                descripcionHabilidad(habilidad1)
+                descripcionHabilidad(1)
             }
         })
 
         habilidad2Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                cambiarHabilidad("personaje", habilidad2)
+                cambiarHabilidad(2)
             } else {
                 // ? Motrar descripción de habilidad 
-                descripcionHabilidad(habilidad2)
+                descripcionHabilidad(2)
             }
         })
 
         habilidad3Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                cambiarHabilidad("personaje", habilidad3)
+                cambiarHabilidad(3)
             } else {
                 // ? Motrar descripción de habilidad 
-                descripcionHabilidad(habilidad3)
+                descripcionHabilidad(3)
             }
         })
     }
@@ -1117,6 +1128,7 @@ let estadisticaSeleccionada
             .replace(/[\u0300-\u036f]/g, '') // remove the accent characters
             .toUpperCase()
     }
+
     // ? Limpia la consola
     consolaBtn.addEventListener('click', () => {
         if (edicion == 0 && (estadisticaSeleccionada !== "vida" && estadisticaSeleccionada !== "poder")) {
@@ -1173,15 +1185,6 @@ let estadisticaSeleccionada
         consolaTxt.innerHTML = val
     }
 
-    // ? Muestra el cambio de arma
-    // function mostrarCambioArma() {
-    //     arma1Img.src = arma1.icono
-    //     arma1Txt.textContent = arma1.nombre
-
-    //     arma2Img.src = arma2.icono
-    //     arma2Txt.textContent = arma2.nombre
-    // }
-
     /* 
         * @slot: number
     */
@@ -1207,125 +1210,145 @@ let estadisticaSeleccionada
 
 
 // * COMIENZO BLOQUE DE MASCOTAS
+
 { // * Variables
-    var mascota = {
-        nombre: "CRIATURA 1",
-        imagen: "img/c1.png",
-        icono: "img/portal.png",
+    class Mascota {
+        constructor(
+            nombre = "",
+            image = "",
+            icono = "",
 
-        ataque: 0,
-        esquiva: 0,
-        mitigacion: 0,
-        velocidad: 0,
-        vida: 0,
-        vidaMaxima: 0,
+            ataque = 0,
+            esquiva = 0,
+            bloqueo = 0,
+            velocidad = 0,
+            vida = 0,
+            vidaMaxima = 0,
+            poder = 0,
+            poderMaximo = 0,
 
-        poder: 0,
-        poderMaximo: 0,
+            arma1 = { nombre: "wp 1", descripcion: "dc wp 1" },
+            arma2 = { nombre: "wp 2", descripcion: "dc wp 2" },
 
-        arma1: "",
-        arma2: "",
+            habilidad1 = { nombre: "sk 1", descripcion: "dc sk 1" },
+            habilidad2 = { nombre: "sk 2", descripcion: "dc sk 2" },
 
-        habilidad1: "",
-        habilidad2: "",
+            descripcion = "Selecciona editar y luego el ícono de esta criatura para invocar otra."
+        ) {
+            this.nombre = nombre
+            this.image = image
+            this.icono = icono
+            this.ataque = ataque
+            this.esquiva = esquiva
+            this.bloqueo = bloqueo
+            this.velocidad = velocidad
+            this.vida = vida
+            this.vidaMaxima = vidaMaxima
 
-        descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
+            this.poder = poder
+            this.poderMaximo = poderMaximo
+
+            this.arma1 = arma1
+            this.arma2 = arma2
+
+            this.habilidad1 = habilidad1
+            this.habilidad2 = habilidad2
+
+            this.descripcion = descripcion
+        }
+
+        /* 
+            * @props: Obj
+         */
+        // ? Actualiza los props de esta clase por lotes
+        actualizarMascota(props) {
+            for (let key in props) {
+                if (this.hasOwnProperty(key)) {
+                    this[key] = props[key];
+                }
+            }
+        }
+
+        settArma1(nombre, descripcion) {
+            this.arma1 = { nombre, descripcion }
+        }
+        settArma2(nombre, descripcion) {
+            this.arma2 = { nombre, descripcion }
+        }
+
+        settHabilidad1(nombre, descripcion) {
+            this.habilidad1 = { nombre, descripcion }
+        }
+
+        settHabilidad2(nombre, descripcion) {
+            this.habilidad2 = { nombre, descripcion }
+        }
     }
 
-    var mascota1 = {
-        nombre: "Criatura 1",
-        imagen: "img/c1.png",
-        icono: "img/portal.png",
-
-        ataque: 111,
-        esquiva: 222,
-        bloqueo: 333,
-        mitigacion: 444,
-        velocidad: 555,
-
-        vida: 666,
-        vidaMaxima: 777,
-
-        poder: 888,
-        poderMaximo: 999,
-
-        arma1: "garras",
-        arma2: "nada",
-
-        habilidad1: "Skill 1 de mascota 1",
-        habilidad2: "Skill 2 de mascota 2",
-
-        descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
+    var dictArmasMascota = {
+        "nada": "arma nada sin descripción",
+        "garras": "Garras <br> / 1 Accion / 100% de ataque como daño fíisico",
+        "mordisco": "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño fíisico",
+        "aliento": "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima de 1 casillero x punto de ataque"
+        // TODO: Agregar armas restantes
     }
 
+    var dictMascotas = {
+        "lobo": {
+            nombre: "LOBO",
+            imagen: "img/lobo.png",
 
-    var mascota2 = {
-        nombre: "CRIATURA 2",
-        imagen: "img/c2.png",
-        icono: "img/portal.png",
+            ataque: 3,
+            esquiva: 2,
+            mitigacion: 1,
+            velocidad: 6,
+            vida: 19,
+            vidaMaxima: 19,
+            poder: 22,
+            poderMaximo: 22,
 
-        ataque: 0,
-        esquiva: 0,
-        bloqueo: 0,
-        mitigacion: 0,
-        velocidad: 0,
-        vida: 0,
-        vidaMaxima: 0,
+            arma1: "Mordisco",
+            arma2: "Garras",
 
-        poder: 0,
-        poderMaximo: 0,
+            habilidad1: "DERRIBO",
+            habilidad2: "DESGARRO",
 
-        arma1: "nada",
-        arma2: "nada",
+            descripcion: "LOBO <br> Criatura de Sangre <br> Coste de invocación: 20"
+        }
 
-        habilidad1: "",
-        habilidad2: "",
-
-        descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
+        // TODO: Agregar las demas mascotas
     }
 
+    var listaMascotas = []
 
-    var mascota3 = {
-        nombre: "CRIATURA 3",
-        imagen: "img/c3.png",
-        icono: "img/portal.png",
-
-        ataque: 0,
-        esquiva: 0,
-        bloqueo: 0,
-        mitigacion: 0,
-        velocidad: 0,
-        vida: 0,
-        vidaMaxima: 0,
-
-        poder: 0,
-        poderMaximo: 0,
-
-        arma1: "",
-        arma2: "",
-
-        habilidad1: "",
-        habilidad2: "",
-
-        descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
-    }
-
-    var habilidad1Mascota = {
-        nombre: "Skill 1 de mascota",
-        descripcion: "Descripcion habilidad 1 mascota"
-    }
-
-    var habilidad2Mascota = {
-        nombre: "Skill 2 de mascota",
-        descripcion: "Descripcion habilidad 2 mascota"
-    }
+    listaMascotas.push(new Mascota()) // Mascota 1
+    listaMascotas[0].actualizarMascota({
+        nombre: "Test pet 1",
+        image: "c1",
+        arma1: { nombre: "nada", descripcion: dictArmasMascota["nada"] },
+        arma2: { nombre: "nada", descripcion: dictArmasMascota["nada"] }
+    })
+    listaMascotas.push(new Mascota()) // Mascota 2
+    listaMascotas[1].actualizarMascota({
+        nombre: "Test pet 2",
+        image: "c2",
+        arma1: { nombre: "nada", descripcion: dictArmasMascota["nada"] },
+        arma2: { nombre: "nada", descripcion: dictArmasMascota["nada"] }
+    })
+    listaMascotas.push(new Mascota()) // Mascota 3
+    listaMascotas[2].actualizarMascota({
+        nombre: "Test pet 3",
+        image: "c3",
+        arma1: { nombre: "nada", descripcion: dictArmasMascota["nada"] },
+        arma2: { nombre: "nada", descripcion: dictArmasMascota["nada"] }
+    })
 }
 
-let mascotaSeleccionada = 1
+let mascotaSeleccionada = listaMascotas[0]
 
 let estadoModalMascota = false
 
-// * Event que muestra y oculta el modal de mascotas
+// ? EvenListener para mostrar y ocultar el modal de mascotas
 esbirrosBtn.addEventListener('click', () => {
     if (!estadoModalMascota) {
         estadoModalMascota = true
@@ -1337,63 +1360,110 @@ esbirrosBtn.addEventListener('click', () => {
     }
 })
 
-// * Funcion que refresca los componentes del modal Mascotas
+// ? Función para actualizar los datos mostrados sobre la mascota seleccionada
 function imprimirMascota() {
-    let mascota
-    switch (mascotaSeleccionada) {
-        case 1:
-            mascota = mascota1
-            break;
-        case 2:
-            mascota = mascota2
-            break;
-        case 3:
-            mascota = mascota3
-            break;
-        default:
-            break;
-    }
+    nombreMascotaTxt.textContent = mascotaSeleccionada.nombre.toUpperCase()
+    mascotaPortadaImg.src = `img/${mascotaSeleccionada.image}.png`
 
-    nombreMascotaTxt.textContent = mascota.nombre.toUpperCase()
-    mascotaPortadaImg.src = mascota.imagen
+    ataqueMascotaTxt.textContent = mascotaSeleccionada.ataque
+    esquivaMascotaTxt.textContent = mascotaSeleccionada.esquiva
+    bloqueoMascotaTxt.textContent = mascotaSeleccionada.bloqueo
+    velocidadMascotaTxt.textContent = mascotaSeleccionada.velocidad
+    vidaMascotaTxt.textContent = mascotaSeleccionada.vida
+    poderMascotaTxt.textContent = mascotaSeleccionada.poder
 
-    ataqueMascotaTxt.textContent = mascota.ataque
-    esquivaMascotaTxt.textContent = mascota.esquiva
-    bloqueoMascotaTxt.textContent = mascota.bloqueo
-    velocidadMascotaTxt.textContent = mascota.velocidad
-    vidaMascotaTxt.textContent = mascota.vida
-    poderMascotaTxt.textContent = mascota.poder
+    arma1MascotaTxt.textContent = mascotaSeleccionada.arma1.nombre[0].toUpperCase() + mascotaSeleccionada.arma1.nombre.slice(1)
+    arma1MascotaImg.src = `img/${mascotaSeleccionada.arma1.nombre}.png`
 
-    arma1MascotaTxt.textContent = mascota.arma1[0].toUpperCase() + mascota.arma1.slice(1)
-    arma1MascotaImg.src = `img/${mascota.arma1}.png`
-    arma2MascotaTxt.textContent = mascota.arma2[0].toUpperCase() + mascota.arma2.slice(1)
-    arma2MascotaImg.src = `img/${mascota.arma2}.png`
+    arma2MascotaTxt.textContent = mascotaSeleccionada.arma2.nombre[0].toUpperCase() + mascotaSeleccionada.arma2.nombre.slice(1)
+    arma2MascotaImg.src = `img/${mascotaSeleccionada.arma2.nombre}.png`
 
-    habilidadMascota1Txt.textContent = habilidad1Mascota.nombre
-    habilidadMascota2Txt.textContent = habilidad2Mascota.nombre
+    habilidadMascota1Txt.textContent = mascotaSeleccionada.habilidad1.nombre
+    habilidadMascota2Txt.textContent = mascotaSeleccionada.habilidad2.nombre
 }
+
 imprimirMascota()
 
-{ // * Funciones para edicion de habilidades de mascota
+{ // * Atributos
+    { // * Funciones para modificación de los atributos
+        /* 
+            * @accion: string
+            * @estadistica: string
+         */
+        function modificarAtributosMascota(accion, estadistica) {
+            let data = ""
 
-    { // * EventListeners de las habilidades
-        habilidadMascota1Btn.addEventListener('click', () => {
-            // ? Personalizar habilidad
-            if (edicion) {
-                cambiarHabilidad("mascota", habilidad1Mascota)
+            // ? valor de experiencia minimo requerido
+            let valor = (mascotaSeleccionada[estadistica] + 1) * valorExperiencia[estadistica]
+
+            if (accion === 'mas') {
+                if (personaje.experiencia >= valor) {
+                    mascotaSeleccionada[estadistica]++
+                    data = `${estadistica
+                        .charAt(0)
+                        .toUpperCase()
+                        + estadistica
+                            .slice(1)} ${mascotaSeleccionada[estadistica]}`
+
+                    // * decrementar exp
+                    aumentarDisminuirExperiencia('mascota', 'menos', estadistica)
+
+                    // * cambiar contenido mostrado
+                    contenConsola(data)
+                    imprimir()
+                    imprimirMascota()
+                } else {
+                    contenConsola("Experiencia insuficiente")
+                }
             } else {
-                // ? Motrar descripción de habilidad 
-                descripcionHabilidad(habilidad1Mascota)
+                if (mascotaSeleccionada[estadistica] > 0) {
+                    mascotaSeleccionada[estadistica]--
+
+                    if (estadistica === "vidaMaxima" && mascotaSeleccionada.vidaMaxima < mascotaSeleccionada.vida) {
+                        mascotaSeleccionada.vida = mascotaSeleccionada.vidaMaxima
+                    }
+
+                    if (estadistica === "poderMaximo" && mascotaSeleccionada.poderMaximo < mascotaSeleccionada.poder) {
+                        mascotaSeleccionada.poder = mascotaSeleccionada.poderMaximo
+                    }
+
+                    // * Incrementar exp
+                    aumentarDisminuirExperiencia('mascota', 'mas', estadistica)
+
+                    // * cambiar contenido mostrado
+                    data = `${estadistica
+                        .charAt(0)
+                        .toUpperCase()
+                        + estadistica
+                            .slice(1)} ${mascotaSeleccionada[estadistica]}`
+                    contenConsola(data)
+                    imprimir()
+                    imprimirMascota()
+                }
             }
-        })
-        habilidadMascota2Btn.addEventListener('click', () => {
-            // ? Personalizar habilidad
-            if (edicion) {
-                cambiarHabilidad("mascota", habilidad2Mascota)
-            } else {
-                // ? Motrar descripción de habilidad 
-                descripcionHabilidad(habilidad2Mascota)
-            }
-        })
+        }
     }
+
+    { // * EventLister de los atributos
+        ataqueMascotaBtn.addEventListener('click', () => {
+            if (edicion) {
+                tipoEdicion = "mascota"
+                estadisticaSeleccionada = "ataque"
+                mostrarBtnArrivaAbajo()
+            }
+        })
+        // TODO: Agregar los demas listeners
+    }
+}
+
+{ // * Cambio de mascota
+
+}
+
+{ // * Habilidades
+
+}
+
+{ // * Armas
+
 }
