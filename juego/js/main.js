@@ -1391,6 +1391,11 @@ function imprimirMascota() {
 imprimirMascota()
 
 { // * Atributos
+    // * Funcion para mostrar atributos
+    function mostrarAtributoMascota(atributo) {
+        contenConsola(`${atributo[0].toUpperCase() + atributo.slice(1)} ${mascotaSeleccionada[atributo]}`)
+    }
+
     { // * Funciones para modificación de los atributos
         /* 
             * @accion: string
@@ -1482,28 +1487,28 @@ imprimirMascota()
                 tipoEdicion = "mascota"
                 estadisticaSeleccionada = "ataque"
                 mostrarBtnArrivaAbajo()
-            }
+            } else mostrarAtributoMascota("ataque")
         })
         esquivaMascotaBtn.addEventListener('click', () => {
             if (edicion) {
                 tipoEdicion = "mascota"
                 estadisticaSeleccionada = "esquiva"
                 mostrarBtnArrivaAbajo()
-            }
+            } else mostrarAtributoMascota("esquiva")
         })
         bloqueoMascotaBtn.addEventListener('click', () => {
             if (edicion) {
                 tipoEdicion = "mascota"
                 estadisticaSeleccionada = "bloqueo"
                 mostrarBtnArrivaAbajo()
-            }
+            } else mostrarAtributoMascota("bloqueo")
         })
         velocidadMascotaBtn.addEventListener('click', () => {
             if (edicion) {
                 tipoEdicion = "mascota"
                 estadisticaSeleccionada = "velocidad"
                 mostrarBtnArrivaAbajo()
-            }
+            } else mostrarAtributoMascota("velocidad")
         })
         vidaMascotaBtn.addEventListener('click', () => {
             // ? Inicia edicion de vida general
@@ -1511,7 +1516,7 @@ imprimirMascota()
                 tipoEdicion = "mascota"
                 estadisticaSeleccionada = "vidaMaxima"
                 mostrarBtnArrivaAbajo()
-            } else { 
+            } else {
                 // ? Inicia edicion de vida actual
                 mostrarBtnArrivaAbajo()
                 estadisticaSeleccionada = "vida"
@@ -1525,7 +1530,7 @@ imprimirMascota()
                 tipoEdicion = "mascota"
                 estadisticaSeleccionada = "poderMaximo"
                 mostrarBtnArrivaAbajo()
-            } else { 
+            } else {
                 // ? Inicia edicion de poder actual
                 mostrarBtnArrivaAbajo()
                 estadisticaSeleccionada = "poder"
