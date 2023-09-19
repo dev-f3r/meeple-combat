@@ -1419,10 +1419,11 @@ imprimirMascota()
                 if (mascotaSeleccionada[estadistica] > 0) {
                     mascotaSeleccionada[estadistica]--
 
+                    // ? Si la vida actual es mayor a la vida maxima iguala los atributos
                     if (estadistica === "vidaMaxima" && mascotaSeleccionada.vidaMaxima < mascotaSeleccionada.vida) {
                         mascotaSeleccionada.vida = mascotaSeleccionada.vidaMaxima
                     }
-
+                    // ? Si la poder actual es mayor a la poder maximo iguala los atributos
                     if (estadistica === "poderMaximo" && mascotaSeleccionada.poderMaximo < mascotaSeleccionada.poder) {
                         mascotaSeleccionada.poder = mascotaSeleccionada.poderMaximo
                     }
@@ -1452,7 +1453,41 @@ imprimirMascota()
                 mostrarBtnArrivaAbajo()
             }
         })
-        // TODO: Agregar los demas listeners
+        esquivaMascotaBtn.addEventListener('click', () => {
+            if (edicion) {
+                tipoEdicion = "mascota"
+                estadisticaSeleccionada = "esquiva"
+                mostrarBtnArrivaAbajo()
+            }
+        })
+        bloqueoMascotaBtn.addEventListener('click', () => {
+            if (edicion) {
+                tipoEdicion = "mascota"
+                estadisticaSeleccionada = "bloqueo"
+                mostrarBtnArrivaAbajo()
+            }
+        })
+        velocidadMascotaBtn.addEventListener('click', () => {
+            if (edicion) {
+                tipoEdicion = "mascota"
+                estadisticaSeleccionada = "velocidad"
+                mostrarBtnArrivaAbajo()
+            }
+        })
+        vidaMascotaBtn.addEventListener('click', () => {
+            if (edicion) {
+                tipoEdicion = "mascota"
+                estadisticaSeleccionada = "vidaMaxima"
+                mostrarBtnArrivaAbajo()
+            }
+        })
+        poderMascotaBtn.addEventListener('click', () => {
+            if (edicion) {
+                tipoEdicion = "mascota"
+                estadisticaSeleccionada = "poderMaximo"
+                mostrarBtnArrivaAbajo()
+            }
+        })
     }
 }
 
