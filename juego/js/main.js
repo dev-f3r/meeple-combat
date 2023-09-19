@@ -691,30 +691,18 @@ let estadisticaSeleccionada
 { // * Nombre de habilidades y nombre de personaje
     { //  * Descipción de habilidades
         /* 
-            * @slot: number
+            * @habilidad: Obj
         */
-        function descripcionHabilidad(slot) {
-            let habilidad = slot == 1
-                ? habilidad1
-                : slot == 2
-                    ? habilidad2
-                    : habilidad3
-
+        function descripcionHabilidad(habilidad) {
             contenConsola(habilidad.descripcion)
             cerrarEdicion()
         }
     }
     { // * Funcion para cambio de habilidad
         /* 
-            * @slot: number
+            * @habilidad:  Obj
          */
-        function cambiarHabilidad(slot) {
-            let habilidad = slot == 1
-                ? habilidad1
-                : slot == 2
-                    ? habilidad2
-                    : habilidad3
-
+        function cambiarHabilidad(habilidad) {
             let nuevoNombre = prompt("Ingrese habilidad")
             habilidad.nombre = quitarAcentos(nuevoNombre)
 
@@ -723,36 +711,35 @@ let estadisticaSeleccionada
 
             cerrarEdicion()
             imprimir()
+            imprimirMascota()
         }
     }
     { // * eventListeners de habilidades
         habilidad1Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                cambiarHabilidad(1)
+                cambiarHabilidad(habilidad1)
             } else {
                 // ? Motrar descripción de habilidad 
-                descripcionHabilidad(1)
+                descripcionHabilidad(habilidad1)
             }
         })
-
         habilidad2Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                cambiarHabilidad(2)
+                cambiarHabilidad(habilidad2)
             } else {
                 // ? Motrar descripción de habilidad 
-                descripcionHabilidad(2)
+                descripcionHabilidad(habilidad2)
             }
         })
-
         habilidad3Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                cambiarHabilidad(3)
+                cambiarHabilidad(habilidad3)
             } else {
                 // ? Motrar descripción de habilidad 
-                descripcionHabilidad(3)
+                descripcionHabilidad(habilidad3)
             }
         })
     }
@@ -1275,19 +1262,19 @@ let estadisticaSeleccionada
             }
         }
 
-        settArma1(nombre, descripcion) {
-            this.arma1 = { nombre, descripcion }
+        settArma1(nombre) {
+            this.arma1 = { nombre, descripcion: dictArmasMascota[nombre] }
         }
-        settArma2(nombre, descripcion) {
-            this.arma2 = { nombre, descripcion }
-        }
-
-        settHabilidad1(nombre, descripcion) {
-            this.habilidad1 = { nombre, descripcion }
+        settArma2(nombre) {
+            this.arma2 = { nombre, descripcion: dictArmasMascota[nombre] }
         }
 
-        settHabilidad2(nombre, descripcion) {
-            this.habilidad2 = { nombre, descripcion }
+        settHabilidad1(nombre) {
+            this.habilidad1 = { nombre, descripcion: dictHabilidades[nombre] }
+        }
+
+        settHabilidad2(nombre) {
+            this.habilidad2 = { nombre, descripcion: dictHabilidades[nombre] }
         }
     }
 
@@ -1546,7 +1533,26 @@ imprimirMascota()
 }
 
 { // * Habilidades
-
+    { // * EvenListeners de habilidades
+        habilidadMascota1Btn.addEventListener('click', () => {
+            // ? Personalizar habilidad
+            if (edicion) {
+                cambiarHabilidad(mascotaSeleccionada.habilidad1)
+            } else {
+                // ? Motrar descripción de habilidad 
+                descripcionHabilidad(mascotaSeleccionada.habilidad1)
+            }
+        })
+        habilidadMascota2Btn.addEventListener('click', () => {
+            // ? Personalizar habilidad
+            if (edicion) {
+                cambiarHabilidad(mascotaSeleccionada.habilidad2)
+            } else {
+                // ? Motrar descripción de habilidad 
+                descripcionHabilidad(mascotaSeleccionada.habilidad2)
+            }
+        })
+    }
 }
 
 { // * Armas
