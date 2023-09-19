@@ -668,7 +668,10 @@ let estadisticaSeleccionada
                 else modificarAtributosMascota('mas', estadisticaSeleccionada)
             }
             // ? Solo vida y poder se cambian en modo normal
-            else masMenosVidaPoder('mas')
+            else {
+                if (tipoEdicion === "personaje") masMenosVidaPoder('mas')
+                else cambiarVidaPoderActualMascota('mas')
+            }
         })
 
         abajoBtn.addEventListener('click', () => {
@@ -677,7 +680,10 @@ let estadisticaSeleccionada
                 else modificarAtributosMascota('menos', estadisticaSeleccionada)
             }
             // ? Solo vida y poder se cambian en modo normal
-            else masMenosVidaPoder('menos')
+            else {
+                if (tipoEdicion === "personaje") masMenosVidaPoder('menos')
+                else cambiarVidaPoderActualMascota('menos')
+            }
         })
     }
 }
@@ -1390,6 +1396,7 @@ imprimirMascota()
             * @accion: string
             * @estadistica: string
          */
+        // ? Modifica los atributos generales de la mascota seleccionada
         function modificarAtributosMascota(accion, estadistica) {
             let data = ""
 
@@ -1443,6 +1450,30 @@ imprimirMascota()
                 }
             }
         }
+
+        /* 
+            * @accion: string
+         */
+        // ? Modifica los atributos vida y poder actual de la mascota seleccionada
+        function cambiarVidaPoderActualMascota(accion) {
+            if (estadisticaSeleccionada === "vida") {
+                if (accion === "mas") { // ? Incremento de vida
+                    if (mascotaSeleccionada.vida < mascotaSeleccionada.vidaMaxima) mascotaSeleccionada.vida++
+                } else { // ? Decremento de vida
+                    if (mascotaSeleccionada.vida > 0) mascotaSeleccionada.vida--
+                }
+                contenConsola(`Vida ${mascotaSeleccionada.vida} / ${mascotaSeleccionada.vidaMaxima}`)
+            } else if (estadisticaSeleccionada === "poder") {
+                if (accion === "mas") { // ? Incremento de poder
+                    if (mascotaSeleccionada.poder < mascotaSeleccionada.poderMaximo) mascotaSeleccionada.poder++
+                } else { // ? Decremento de poder
+                    if (mascotaSeleccionada.poder > 0) mascotaSeleccionada.poder--
+                }
+                contenConsola(`Poder ${mascotaSeleccionada.poder} / ${mascotaSeleccionada.poderMaximo}`)
+            }
+            imprimirMascota()
+        }
+
     }
 
     { // * EventLister de los atributos
@@ -1475,17 +1506,31 @@ imprimirMascota()
             }
         })
         vidaMascotaBtn.addEventListener('click', () => {
+            // ? Inicia edicion de vida general
             if (edicion) {
                 tipoEdicion = "mascota"
                 estadisticaSeleccionada = "vidaMaxima"
                 mostrarBtnArrivaAbajo()
+            } else { 
+                // ? Inicia edicion de vida actual
+                mostrarBtnArrivaAbajo()
+                estadisticaSeleccionada = "vida"
+                tipoEdicion = "mascota"
+                contenConsola(`Vida ${mascotaSeleccionada.vida} / ${mascotaSeleccionada.vidaMaxima}`)
             }
         })
         poderMascotaBtn.addEventListener('click', () => {
+            // ? Inicia edicion de poder general
             if (edicion) {
                 tipoEdicion = "mascota"
                 estadisticaSeleccionada = "poderMaximo"
                 mostrarBtnArrivaAbajo()
+            } else { 
+                // ? Inicia edicion de poder actual
+                mostrarBtnArrivaAbajo()
+                estadisticaSeleccionada = "poder"
+                tipoEdicion = "mascota"
+                contenConsola(`Poder ${mascotaSeleccionada.poder} / ${mascotaSeleccionada.vidaMaxima}`)
             }
         })
     }
