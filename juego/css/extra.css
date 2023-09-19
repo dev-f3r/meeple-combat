@@ -60,7 +60,8 @@ span.experiencia-item {
 
     background: #fff;
     display: grid;
-    grid-template-columns: repeat(9, 11.11vw);
+    width: 100%;
+    grid-template-columns: repeat(9, 1fr);
     grid-template-rows: 20% 40% 20% 20% 20%;
 }
 

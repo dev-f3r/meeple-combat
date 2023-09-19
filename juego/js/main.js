@@ -683,15 +683,9 @@ let estadisticaSeleccionada
 { // * Nombre de habilidades y nombre de personaje
     { //  * Descipción de habilidades
         /* 
-            * @slot: number
+            * @habilidad: Obj
         */
-        function descripcionHabilidad(slot) {
-            let habilidad = slot == 1
-                ? habilidad1
-                : slot == 2
-                    ? habilidad2
-                    : habilidad3
-
+        function descripcionHabilidad(habilidad) {
             contenConsola(habilidad.descripcion)
             cerrarEdicion()
         }
@@ -699,52 +693,49 @@ let estadisticaSeleccionada
     { // * Funcion para cambio de habilidad
         /* 
             * @slot: number
+            * @tipo: string
+            * @habilidad: Obj
          */
-        function cambiarHabilidad(slot) {
-            let habilidad = slot == 1
-                ? habilidad1
-                : slot == 2
-                    ? habilidad2
-                    : habilidad3
-
+        function cambiarHabilidad(tipo, habilidad) {
             let nuevoNombre = prompt("Ingrese habilidad")
             habilidad.nombre = quitarAcentos(nuevoNombre)
-
 
             habilidad.descripcion = dictHabilidades[habilidad.nombre]
 
             cerrarEdicion()
-            imprimir()
+
+            if (tipo === "personaje") imprimir()
+            else imprimirMascota()
         }
     }
     { // * eventListeners de habilidades
         habilidad1Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                cambiarHabilidad(1)
+                cambiarHabilidad("personaje", habilidad1)
             } else {
                 // ? Motrar descripción de habilidad 
-                descripcionHabilidad(1)
+                descripcionHabilidad(habilidad1)
             }
         })
 
         habilidad2Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                cambiarHabilidad(2)
+                cambiarHabilidad("personaje", habilidad2)
             } else {
                 // ? Motrar descripción de habilidad 
-                descripcionHabilidad(2)
+                descripcionHabilidad(habilidad2)
             }
         })
 
         habilidad3Btn.addEventListener('click', () => {
             // ? Personalizar habilidad
             if (edicion) {
-                cambiarHabilidad(3)
+                cambiarHabilidad("personaje", habilidad3)
             } else {
                 // ? Motrar descripción de habilidad 
-                descripcionHabilidad(3)
+                descripcionHabilidad(habilidad3)
             }
         })
     }
@@ -1246,21 +1237,23 @@ let estadisticaSeleccionada
         imagen: "img/c1.png",
         icono: "img/portal.png",
 
-        ataque: 0,
-        esquiva: 0,
-        mitigacion: 0,
-        velocidad: 0,
-        vida: 0,
-        vidaMaxima: 0,
+        ataque: 111,
+        esquiva: 222,
+        bloqueo: 333,
+        mitigacion: 444,
+        velocidad: 555,
 
-        poder: 0,
-        poderMaximo: 0,
+        vida: 666,
+        vidaMaxima: 777,
 
-        arma1: "nada",
+        poder: 888,
+        poderMaximo: 999,
+
+        arma1: "garras",
         arma2: "nada",
 
-        habilidad1: "DERRIBO",
-        habilidad2: "DESGARRO",
+        habilidad1: "Skill 1 de mascota 1",
+        habilidad2: "Skill 2 de mascota 2",
 
         descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
     }
@@ -1273,6 +1266,7 @@ let estadisticaSeleccionada
 
         ataque: 0,
         esquiva: 0,
+        bloqueo: 0,
         mitigacion: 0,
         velocidad: 0,
         vida: 0,
@@ -1281,8 +1275,8 @@ let estadisticaSeleccionada
         poder: 0,
         poderMaximo: 0,
 
-        arma1: "",
-        arma2: "",
+        arma1: "nada",
+        arma2: "nada",
 
         habilidad1: "",
         habilidad2: "",
@@ -1298,6 +1292,7 @@ let estadisticaSeleccionada
 
         ataque: 0,
         esquiva: 0,
+        bloqueo: 0,
         mitigacion: 0,
         velocidad: 0,
         vida: 0,
@@ -1314,12 +1309,23 @@ let estadisticaSeleccionada
 
         descripcion: "Selecciona editar y luego el ícono de esta criatura para invocar otra."
     }
+
+    var habilidad1Mascota = {
+        nombre: "Skill 1 de mascota",
+        descripcion: "Descripcion habilidad 1 mascota"
+    }
+
+    var habilidad2Mascota = {
+        nombre: "Skill 2 de mascota",
+        descripcion: "Descripcion habilidad 2 mascota"
+    }
 }
 
 let mascotaSeleccionada = 1
 
 let estadoModalMascota = false
 
+// * Event que muestra y oculta el modal de mascotas
 esbirrosBtn.addEventListener('click', () => {
     if (!estadoModalMascota) {
         estadoModalMascota = true
@@ -1330,3 +1336,64 @@ esbirrosBtn.addEventListener('click', () => {
         modalMascota.style.display = "none"
     }
 })
+
+// * Funcion que refresca los componentes del modal Mascotas
+function imprimirMascota() {
+    let mascota
+    switch (mascotaSeleccionada) {
+        case 1:
+            mascota = mascota1
+            break;
+        case 2:
+            mascota = mascota2
+            break;
+        case 3:
+            mascota = mascota3
+            break;
+        default:
+            break;
+    }
+
+    nombreMascotaTxt.textContent = mascota.nombre.toUpperCase()
+    mascotaPortadaImg.src = mascota.imagen
+
+    ataqueMascotaTxt.textContent = mascota.ataque
+    esquivaMascotaTxt.textContent = mascota.esquiva
+    bloqueoMascotaTxt.textContent = mascota.bloqueo
+    velocidadMascotaTxt.textContent = mascota.velocidad
+    vidaMascotaTxt.textContent = mascota.vida
+    poderMascotaTxt.textContent = mascota.poder
+
+    arma1MascotaTxt.textContent = mascota.arma1[0].toUpperCase() + mascota.arma1.slice(1)
+    arma1MascotaImg.src = `img/${mascota.arma1}.png`
+    arma2MascotaTxt.textContent = mascota.arma2[0].toUpperCase() + mascota.arma2.slice(1)
+    arma2MascotaImg.src = `img/${mascota.arma2}.png`
+
+    habilidadMascota1Txt.textContent = habilidad1Mascota.nombre
+    habilidadMascota2Txt.textContent = habilidad2Mascota.nombre
+}
+imprimirMascota()
+
+{ // * Funciones para edicion de habilidades de mascota
+
+    { // * EventListeners de las habilidades
+        habilidadMascota1Btn.addEventListener('click', () => {
+            // ? Personalizar habilidad
+            if (edicion) {
+                cambiarHabilidad("mascota", habilidad1Mascota)
+            } else {
+                // ? Motrar descripción de habilidad 
+                descripcionHabilidad(habilidad1Mascota)
+            }
+        })
+        habilidadMascota2Btn.addEventListener('click', () => {
+            // ? Personalizar habilidad
+            if (edicion) {
+                cambiarHabilidad("mascota", habilidad2Mascota)
+            } else {
+                // ? Motrar descripción de habilidad 
+                descripcionHabilidad(habilidad2Mascota)
+            }
+        })
+    }
+}
