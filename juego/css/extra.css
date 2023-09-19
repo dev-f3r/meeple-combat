@@ -52,6 +52,112 @@ span.experiencia-item {
     font-family: Titillium Web;
 }
 
-.gridModalMascotas {
-    display: none;
+
+/* * Estilos Mascotas */
+.gridModalMascota {
+    grid-column: 1/ span 9;
+    grid-row: 1 / span 5;
+
+    background: #fff;
+    display: grid;
+    grid-template-columns: repeat(9, 11.11vw);
+    grid-template-rows: 20% 40% 20% 20% 20%;
+}
+
+.gridModalMascota * {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* * Encabezados */
+.encabezadoMascota {
+    background-color: #000;
+}
+.encabezadoMascota > span.texto {
+    color: #fff;
+}
+
+/* * Nombre */
+.itemModalMascota.nombreMascota {
+    grid-column: 1 / span 3;
+    grid-row: 1/ span 1;
+}
+
+/* * Portada */
+.itemModalMascota.portadaMascota {
+    grid-column: 1 / span 3;
+    grid-row: 2/ span 1;
+}
+
+/* * Atributos */
+.itemModalMascota.encabezadoAtributosMascota {
+    grid-column: 4/ -1;
+    grid-row: 1/ span 1;
+}
+.itemModalMascota.atributosMascota {
+    grid-column: 4/ -1;
+    grid-row: 2/ span 1;
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+.itemModalMascota.atributosMascota .atributo {
+    display: flex;
+    flex-direction: column;
+}
+
+.atributosMascota .itemBoton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.atributosMascota .itemBoton img {
+    width: 88%;
+    height: 88%;
+}
+
+
+/* * Armas */
+.itemModalMascota.encabezadoArmasMascota {
+    grid-column: 1/ span 3;
+}
+.itemModalMascota.armasMascota {
+    grid-column: 1/ span 3;
+    grid-row: 4/ -1;
+
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+.itemModalMascota.armasMascota .slotMascota {
+    height: 50%;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 33.3% 66.6%;
+    grid-template-rows: 100%;
+}
+
+.itemModalMascota.armasMascota .slotMascota img {
+    width: 88%;
+    height: 88%;
+}
+
+
+/* * Habilidades */
+.itemModalMascota.encabezadoHabilidadesMascota {
+    grid-column: 4/ -1;
+}
+.itemModalMascota.habilidadesMascota {
+    grid-column: 4/ -1;
+    grid-row: 4 / -1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
 }

@@ -238,15 +238,128 @@
             <div class="item-grilla" id="habilidad2Btn"><span id="habilidad2Txt" class="texto">HABILIDAD</span></div>
             <div class="item-grilla" id="habilidad3Btn"><span id="habilidad3Txt" class="texto">HABILIDAD</span></div>
 
+            <!-- * Mascotas -->
+            <div class="gridModalMascota" id="modalMascota">
+                <!-- * Encabezado Descripción -->
+                <div class="itemModalMascota encabezadoMascota nombreMascota">
+                    <span class="texto" id="nombreMascotaTxt">LOBO</span>
+                </div>
+                <!-- * Contenedor Descripción -->
+                <div class="itemModalMascota portadaMascota">
+                    <img id="mascotaPortadaImg" src="img/lobo.png">
+                </div>
+
+                <!-- * Encabezado Atributos -->
+                <div class="itemModalMascota encabezadoMascota encabezadoAtributosMascota">
+                    <span class="texto">ESTADISTICAS</span>
+                </div>
+                <!-- * Contenedor Atributos -->
+                <div class="itemModalMascota atributosMascota">
+                    <!-- * Ataque -->
+                    <div class="atributo boton" id="ataqueMascotaBtn">
+                        <div class="itemBoton">
+                            <img id="ataqueMascotaImg" src="img/ataque.png">
+                        </div>
+                        <div class="itemBoton">
+                            <span class="texto" id="ataqueMascotaTxt">0</span>
+                        </div>
+                    </div>
+
+                    <!-- * Esquiva -->
+                    <div class="atributo boton" id="esquivaMascotaBtn">
+                        <div class="itemBoton">
+                            <img id="esquivaMascotaImg" src="img/esquiva.png">
+                        </div>
+                        <div class="itemBoton">
+                            <span class="texto" id="esquivaMascotaTxt">0</span>
+                        </div>
+                    </div>
+
+                    <!-- * Bloqueo -->
+                    <div class="atributo boton" id="bloqueoMascotaBtn">
+                        <div class="itemBoton">
+                            <img id="bloqueoMascotaImg" src="img/bloqueo.png">
+                        </div>
+                        <div class="itemBoton">
+                            <span class="texto" id="bloqueoMascotaTxt">0</span>
+                        </div>
+                    </div>
+
+                    <!-- * Velocidad -->
+                    <div class="atributo boton" id="velocidadMascotaBtn">
+                        <div class="itemBoton">
+                            <img id="velocidadMascotaImg" src="img/velocidad.png">
+                        </div>
+                        <div class="itemBoton">
+                            <span class="texto" id="velocidadMascotaTxt">0</span>
+                        </div>
+                    </div>
+
+                    <!-- * Vida -->
+                    <div class="atributo boton" id="vidaMascotaBtn">
+                        <div class="itemBoton">
+                            <img id="vidaMascotaImg" src="img/vida.png">
+                        </div>
+                        <div class="itemBoton">
+                            <span class="texto" id="vidaMascotaTxt">0</span>
+                        </div>
+                    </div>
+
+                    <!-- * Poder -->
+                    <div class="atributo boton" id="poderMascotaBtn">
+                        <div class="itemBoton">
+                            <img id="poderMascotaImg" src="img/poder.png">
+                        </div>
+                        <div class="itemBoton">
+                            <span class="texto" id="poderMascotaTxt">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- * Encabezado Armas -->
+                <div class="itemModalMascota encabezadoMascota encabezadoArmasMascota">
+                    <span class="texto">ARMAS</span>
+                </div>
+                <!-- * Contenedor Armas -->
+                <div class="itemModalMascota armasMascota">
+                    <div class="slotMascota" id="arma1MascotaBtn">
+                        <div class="itemBoton">
+                            <img src="img/mordisco.png" id="arma1MascotaImg">
+                        </div>
+                        <div class="itemBoton">
+                            <span class="texto" id="arma1MascotaTxt">Dientes</span>
+                        </div>
+                    </div>
+                    <div class="slotMascota" id="arma2MascotaBtn">
+                        <div class="itemBoton">
+                            <img src="img/mordisco.png" id="arma2MascotaImg">
+                        </div>
+                        <div class="itemBoton">
+                            <span class="texto" id="arma2MascotaTxt">Dientes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- * Encabezado Habilidades -->
+                <div class="itemModalMascota encabezadoMascota encabezadoHabilidadesMascota">
+                    <span class="texto">HABILIDADES</span>
+                </div>
+                <!-- * Contenedor Habilidades -->
+                <div class="itemModalMascota habilidadesMascota">
+                    <div class="itemBoton id="habilidadMascota1Btn">
+                        <span class="texto" id="habilidadMascota1Txt">DESGARRO</span>
+                    </div>
+                    <div class="itemBoton" id="habilidadMascota2Btn">
+                        <span class="texto" id="habilidadMascota2Txt">DESGARRO</span>
+                    </div>
+                </div>
+
+            </div>
+
 
         </div>
 
-
-
-
-
-
-        <!-- * Personajes -->
+        <!-- * Modal Personajes -->
         <div class="modal" id="modalPersonaje">
 
             <div class="item-modal"><span class="texto">AVATAR</span></div>
@@ -274,7 +387,7 @@
 
         </div>
 
-        <!-- * Armas -->
+        <!-- * Modal Armas -->
         <div class="modal" id="modalArmas">
 
             <div class="item-modal"><span class="texto">ARMAS</span></div>
@@ -302,8 +415,7 @@
 
         </div>
 
-
-        <!-- * Equipamiento -->
+        <!-- * Modal Equipamiento -->
         <div class="modal" id="modalEquipo">
 
             <div class="item-modal"><span class="texto">EQUIPO</span></div>
@@ -330,200 +442,6 @@
             <div class="item-modal"><img src="img/atras.png"></div>
             <div class="item-modal"><img src="img/nada.png"></div>
             <div class="item-modal"><img src="img/adelante.png"></div>
-
-        </div>
-
-        <!-- * Mascotas -->
-        <div class="gridModalMascotas" id="modalMascotas">
-
-            <!-- * Nombre -->
-            <div class="itemModalMascotas" style="background-color: black;" id="nombreMAscotaBtn">
-                <span class="texto" style="color: white;" id="nombreMascotaTxt">LOBO</span>
-            </div>
-
-            <!-- * Encabezado atributos -->
-            <div class="itemModalMascotas" style="background-color: black;">
-                <span class="texto" style="color: white;">ESTADISTICAS</span>
-            </div>
-
-            <!-- * Portada -->
-            <div class="itemModalMascotas" id="portadaMascotaBtn">
-                <img id="mascotaPortadaImg" src="img/lobo.png">
-            </div>
-
-            <!-- * Atributos -->
-            <div class="itemModalMascotas atributosMascota">
-                <div class="atributo boton" id="ataqueMascotaBtn">
-                    <div class="itemBoton">
-                        <img id="ataqueImg" src="img/ataque.png">
-                    </div>
-                    <div class="itemBoton">
-                        <span class="texto" id="ataqueTxt">0</span>
-                    </div>
-                </div>
-
-                <div class="atributo boton" id="ataqueMascotaBtn">
-                    <div class="itemBoton">
-                        <img id="ataqueImg" src="img/ataque.png">
-                    </div>
-                    <div class="itemBoton">
-                        <span class="texto" id="ataqueTxt">0</span>
-                    </div>
-                </div>
-
-                <div class="atributo boton" id="ataqueMascotaBtn">
-                    <div class="itemBoton">
-                        <img id="ataqueImg" src="img/ataque.png">
-                    </div>
-                    <div class="itemBoton">
-                        <span class="texto" id="ataqueTxt">0</span>
-                    </div>
-                </div>
-
-                <div class="atributo boton" id="ataqueMascotaBtn">
-                    <div class="itemBoton">
-                        <img id="ataqueImg" src="img/ataque.png">
-                    </div>
-                    <div class="itemBoton">
-                        <span class="texto" id="ataqueTxt">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TODO: Arreglar la grilla de atributos -->
-            <!-- <div class="itemModalMascotas">
-
-                <div class="boton" id="ataqueMascotaBtn">
-
-                    <div class="itemBoton">
-                        <img id="ataqueMascotaImg" src="img/ataque.png">
-                    </div>
-
-                    <div class="itemBoton">
-                        <span class="texto" id="ataqueMascotaTxt">0</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="itemModalMascotas">
-
-                <div class="boton" id="esquivaMascotaBtn">
-
-                    <div class="itemBoton">
-                        <img id="esquivaMascotaImg" src="img/esquiva.png">
-                    </div>
-
-                    <div class="itemBoton">
-                        <span class="texto" id="esquivaMascotaTxt">0</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="itemModalMascotas">
-
-                <div class="boton" id="mitigacionMascotaBtn">
-
-                    <div class="itemBoton">
-                        <img id="mitigacionMascotaImg" src="img/mitigacion.png">
-                    </div>
-
-                    <div class="itemBoton">
-                        <span class="texto" id="mitigacionMascotaTxt">0</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="itemModalMascotas">
-
-                <div class="boton" id="velocidadMascotaBtn">
-
-                    <div class="itemBoton">
-                        <img id="velocidadMascotaImg" src="img/velocidad.png">
-                    </div>
-
-                    <div class="itemBoton">
-                        <span class="texto" id="velocidadMascotaTxt">0</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="itemModalMascotas">
-
-                <div class="boton" id="vidaMascotaBtn">
-
-                    <div class="itemBoton">
-                        <img id="vidaMascotaImg" src="img/vida.png">
-                    </div>
-
-                    <div class="itemBoton">
-                        <span class="texto" id="vidaMascotaTxt">0</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="itemModalMascotas">
-
-                <div class="boton" id="poderMascotaBtn">
-
-                    <div class="itemBoton">
-                        <img id="poderMascotaImg" src="img/poder.png">
-                    </div>
-
-                    <div class="itemBoton">
-                        <span class="texto" id="poderMascotaTxt">0</span>
-                    </div>
-
-                </div>
-
-            </div> -->
-
-            <div class="itemModalMascotas" style="background-color: black;">
-                <span class="texto" style="color: white; ">ARMAS</span>
-            </div>
-
-            <div class="itemModalMascotas" style="background-color: black;">
-                <span class="texto" style="color: white; ">HABILIDADES</span>
-            </div>
-
-            <div class="itemModalMascotas">
-
-                <div class="slotMascotas" id="arma2MascotaBtn">
-
-                    <div class="slotMascotas1"><img src="img/garras.png" id="arma1MascotaImg"></div>
-                    <div class="slotMascotas1"><span class="texto" id="arma1MascotaTxt">Garras</span></div>
-
-                </div>
-
-            </div>
-
-            <div class="itemModalMascotas" id="habilidadMascota1Btn">
-                <span class="texto" id="habilidadMascota1Txt">DERRIBO</span>
-            </div>
-
-            <div class="itemModalMascotas">
-
-                <div class="slotMascotas" id="arma1MascotaBtn">
-
-                    <div class="slotMascotas1"><img src="img/mordisco.png" id="arma2MascotaImg"></div>
-                    <div class="slotMascotas1"><span class="texto" id="arma2MascotaTxt">Dientes</span></div>
-
-                </div>
-
-            </div>
-
-            <div class="itemModalMascotas" id="habilidadMascota2Btn">
-                <span class="texto" id="habilidadMascota2Txt">DESGARRO</span>
-            </div>
 
         </div>
 

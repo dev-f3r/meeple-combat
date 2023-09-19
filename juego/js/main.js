@@ -250,7 +250,7 @@ editarBtn.addEventListener('click', function () {
     if (edicion == 0) {
         edicion = 1
         editarImg.src = "img/guardar.png"
-        
+
         contenConsola("Seleccione nombre, slot de arma o habilidad")
         ocultarBtnArrivaAbajo()
 
@@ -1317,3 +1317,16 @@ let estadisticaSeleccionada
 }
 
 let mascotaSeleccionada = 1
+
+let estadoModalMascota = false
+
+esbirrosBtn.addEventListener('click', () => {
+    if (!estadoModalMascota) {
+        estadoModalMascota = true
+        modalMascota.style.display = "grid"
+    }
+    else {
+        estadoModalMascota = false
+        modalMascota.style.display = "none"
+    }
+})
