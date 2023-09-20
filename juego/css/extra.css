@@ -59,7 +59,7 @@ span.experiencia-item {
     grid-row: 1 / span 5;
 
     background: #fff;
-    display: grid;
+    display: none;
     width: 100%;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: 20% 40% 20% 20% 20%;
@@ -79,7 +79,8 @@ span.experiencia-item {
 .encabezadoMascota {
     background-color: #000;
 }
-.encabezadoMascota > span.texto {
+
+.encabezadoMascota>span.texto {
     color: #fff;
 }
 
@@ -93,6 +94,30 @@ span.experiencia-item {
 .itemModalMascota.portadaMascota {
     grid-column: 1 / span 3;
     grid-row: 2/ span 1;
+
+    display: flex;
+    /* justify-content: space-between; */
+    overflow: hidden;
+}
+
+.izquierdaMascotaBtn {
+    grid-column: 1;
+    grid-row: 2;
+    z-index: 100;
+
+    display: flex;
+    justify-content: start;
+    padding-left: 7px;
+}
+
+.derechaMascotaBtn {
+    grid-column: 3;
+    grid-row: 2;
+    z-index: 100;
+
+    display: flex;
+    justify-content: end;
+    padding-right: 7px;
 }
 
 /* * Atributos */
@@ -100,6 +125,7 @@ span.experiencia-item {
     grid-column: 4/ -1;
     grid-row: 1/ span 1;
 }
+
 .itemModalMascota.atributosMascota {
     grid-column: 4/ -1;
     grid-row: 2/ span 1;
@@ -107,6 +133,7 @@ span.experiencia-item {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
 }
+
 .itemModalMascota.atributosMascota .atributo {
     display: flex;
     flex-direction: column;
@@ -128,6 +155,7 @@ span.experiencia-item {
 .itemModalMascota.encabezadoArmasMascota {
     grid-column: 1/ span 3;
 }
+
 .itemModalMascota.armasMascota {
     grid-column: 1/ span 3;
     grid-row: 4/ -1;
@@ -136,6 +164,7 @@ span.experiencia-item {
     flex-direction: column;
     background-color: #fff;
 }
+
 .itemModalMascota.armasMascota .slotMascota {
     height: 50%;
     width: 100%;
@@ -155,6 +184,7 @@ span.experiencia-item {
 .itemModalMascota.encabezadoHabilidadesMascota {
     grid-column: 4/ -1;
 }
+
 .itemModalMascota.habilidadesMascota {
     grid-column: 4/ -1;
     grid-row: 4 / -1;

@@ -1308,8 +1308,10 @@ let estadisticaSeleccionada
             habilidad2: { nombre: "DESGARRO", descripcion: dictHabilidades["DESGARRO"] },
 
             descripcion: "LOBO <br> Criatura de Sangre <br> Coste de invocación: 20"
+        },
+        "esqueleto": {
+            "nombre": "cosa"
         }
-
         // TODO: Agregar las demas mascotas
     }
 
@@ -1529,7 +1531,7 @@ imprimirMascota()
     }
 }
 
-{ // * Cambio de mascota
+{ // * Cambiar mascota actual
 
     // * Función para cambiar de mascota
     function cambiarMascota() {
@@ -1550,6 +1552,24 @@ imprimirMascota()
     portadaMascotaBtn.addEventListener('click', () => {
         if (edicion) cambiarMascota()
     })
+}
+
+{ // * Pasar a otra mascota
+    let i = 0
+    { // * Triggers
+        cambioIzquierdaBtn.addEventListener('click', () => {
+            i--
+            if (i < 0) i = listaMascotas.length - 1
+            mascotaSeleccionada = listaMascotas[i]
+            imprimirMascota()
+        })
+        cambioDerechaBtn.addEventListener('click', () => {
+            i++
+            if (i > listaMascotas.length - 1) i = 0
+            mascotaSeleccionada = listaMascotas[i]
+            imprimirMascota()
+        })
+    }
 }
 
 { // * Habilidades
