@@ -1596,5 +1596,12 @@ imprimirMascota()
 }
 
 { // * Armas
-
+    { // * Triggers
+        arma1MascotaBtn.addEventListener('click', () => {
+            contenConsola(mascotaSeleccionada.arma1.descripcion)
+        })
+        arma2MascotaBtn.addEventListener('click', () => {
+            contenConsola(mascotaSeleccionada.arma2.descripcion)
+        })
+    }
 }
