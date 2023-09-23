@@ -1348,17 +1348,29 @@ let estadisticaSeleccionada
      */
     configurarHabilidad(ranura, nombre) {
       if (nombre in dictHabilidades) this[`habilidad${ranura}`] = { nombre, descripcion: dictHabilidades[nombre] }
-      else this[`habilidad${ranura}`] = { nombre, descripcion: "Habilidad sin descripción"}
+      else this[`habilidad${ranura}`] = { nombre, descripcion: "Habilidad sin descripción" }
     }
   }
 
   // ? Objeto para almacenar información de las armas
   // TODO: Cada arma debe contener una propiedad para el daño y su descripción
   var armasDict = {
-    "nada": "arma nada sin descripción",
-    "garras": "Garras <br> / 1 Accion / 100% de ataque como daño fíisico",
-    "mordisco": "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño fíisico",
-    "aliento": "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima de 1 casillero x punto de ataque"
+    "nada": {
+      danno: 0,
+      descripcion: "arma nada sin descripción"
+    },
+    "garras": {
+      danno: 0.75,
+      descripcion: "Garras <br> / 1 Accion / 100% de ataque como daño fíisico"
+    },
+    "mordisco": {
+      danno: 0,
+      descripcion: "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño físico"
+    },
+    "aliento": {
+      danno: 0,
+      descripcion: "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima de 1 casillero x punto de ataque"
+    }
     // TODO: Agregar armas restantes
   }
 
@@ -1378,8 +1390,16 @@ let estadisticaSeleccionada
       poder: 22,
       poderMaximo: 22,
 
-      arma1: { nombre: "mordisco", descripcion: armasDict["mordisco"] },
-      arma2: { nombre: "garras", descripcion: armasDict["garras"] },
+      arma1: {
+        nombre: "mordisco",
+        danno: armasDict["mordisco"].danno,
+        descripcion: armasDict["mordisco"].descripcion
+      },
+      arma2: {
+        nombre: "garras",
+        danno: armasDict["garras"].danno,
+        descripcion: armasDict["garras"].descripcion
+      },
 
       habilidad1: { nombre: "DERRIBO", descripcion: dictHabilidades["DERRIBO"] },
       habilidad2: { nombre: "DESGARRO", descripcion: dictHabilidades["DESGARRO"] },
@@ -1401,8 +1421,16 @@ let estadisticaSeleccionada
       poder: 27,
       poderMaximo: 27,
 
-      arma1: { nombre: "mordisco", descripcion: armasDict["mordisco"] },
-      arma2: { nombre: "garras", descripcion: armasDict["garras"] },
+      arma1: {
+        nombre: "mordisco",
+        danno: armasDict["mordisco"].danno,
+        descripcion: armasDict["mordisco"].descripcion
+      },
+      arma2: {
+        nombre: "garras",
+        danno: armasDict["garras"].danno,
+        descripcion: armasDict["garras"].descripcion
+      },
 
       habilidad1: { nombre: "DERRIBO", descripcion: dictHabilidades["DERRIBO"] },
       habilidad2: { nombre: "DESGARRO", descripcion: dictHabilidades["DESGARRO"] },
