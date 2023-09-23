@@ -70,16 +70,57 @@ let valorExperiencia = {
   poderMaximo: 1
 }
 
-const dictHabilidades = {
-
-  "COBERTURA": "Aumenta 300% la mitigacíon ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo",
-
-  "EMBESTIDA CON ESCUDO": "Golpeas al objetivo generandole 200% daño físico y derribandolo<br> Poder(3) / Requiere Escudo",
-
-  "ATAQUE PODEROSO": "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos",
-
-  "SANAR": "Sanas al objetivo<br> Poder min(1) / Sin Requerimentos"
-  // TODO: Agregar las demas habilidades
+const habilidadesDict = {
+  "habilidad 1": "Habildad 1 sin descripción",
+  "habilidad 2": "Habildad 2 sin descripción",
+  "habilidad 3": "Habildad 3 sin descripción",
+  "machacar": "Impacta en el objetivo generando daño crítico y quitándole mitigación durante 1 turno <br> Poder min(6)",
+  "ira ciega": "Al matar un enemigo, puedes atacar a cualquier criatura o personaje que esté a tu alcance, sin necesidad de acciones <br> Poder min(1)",
+  "masestro de armas": "Eres competente con todas las armas, al matar un enemigo puedes hacerte con la suya <br> Habilidad Pasiva",
+  "duelo": "En combate 1 vs 1 obtienes +3 a la esquiva y ataque <br> Habilidad Pasiva",
+  "corte profundo": "Daña al objetivo y deja un sangrado que genera 3 puntos de daño por turno durante 3 turnos (no mitigables) <br> Poder min(6)",
+  "ataque rapido": "Avanza hacia el objetivo y lo ataca en una acción combinada / distancia máx(velocidad x 2) <br> Poder min(3) / Acciones(Arma)",
+  "cobertura": "Aumenta 300% la mitigación ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo",
+  "embestida con escudo": "Golpeas al objetivo generándole 200% daño físico y derribándolo<br> Poder(3) / Requiere Escudo",
+  "ataque poderoso": "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos",
+  "ataque multiple": "Una serie de golpes, los cuales suman todo su daño, generándolo de manera explosiva al finalizar la habilidad <br> Poder min(3)",
+  "golpe de chi": "Un poderoso empujón cargado de energía, que genera daño físico, aturde al objetivo 1 turno y lo hace retroceder (ataque x casilleros)<br> Poder min(6)",
+  "patada voladora": "Te lanzas hacia el objetivo a una distancia máxima de (velocidad x casilleros), al golpearlo generas 200% de daño físico + 1 punto de daño por metro recorrido.<br> Poder min(3) / Sin Requisitos",
+  "desarmar": "Desarmas al objetivo, dejando caer su arma a 1 casillero de distancia a elección.<br> Poder(3)",
+  "sigilo": "Si tu objetivo se encuentra en combate con otro personaje o criatura, obtienes + 3 al ataque.<br> Pasiva",
+  "torbellino": "Giras tu con tu arma generando 50% de daño a todos los objetivos en tu rango de alcance, puedes caminar mientras la habilidad está activa.<br> Poder min(6)",
+  "flechas multiples": "Lanzas 3 flechas juntas, las cuales harán 50% de daño de manera acumulativa si más de un proyectil impacta en el mismo objetivo.( se debe realizar una tirada por cada flecha)<br> Poder(3) / Requiere arco",
+  "flecha energizada": "Cargas con energía tus flechas aumentando su daño.<br> Poder min(1) / Requiere arco",
+  "flecha elemental": "Cambia el tipo de daño elemental que produce tu flecha.<br> Poder (3) / Requiere arco",
+  "invocar": "Ahora puedes manifestar criaturas elementales.",
+  "golpe vampirico": "Absorbes vida del objetivo para ti mismo. <br> Poder min(6).",
+  "incansable": "Habilidad pasiva que brinda +1 acción.",
+  "ataque doble": "Realiza dos ataques, con armas gemelas en la misma cantidad de acciones. <br> Poder min(3)",
+  // Habilidades mágicas
+  "exorcismo": "Genera daño sagrado y aturde al objetivo durante 1 turno <br> Poder min(3)",
+  "bola de fuego": "Genera daño de fuego. Los golpes críticos incendian al objetivo, lo que le genera 3 puntos de daño no mitigable, durante 3 turnos. <br> Poder min(3)",
+  "bola de hielo": "Genera daño de hielo. Los golpes críticos congelan al objetivo, quitándole mitad de velocidad y toda mitigación hacia este elemento, durante 3 turnos. <br> Poder min(3)",
+  "sentencia": "El objetivo pierde toda mitigación durante 3 turno <br> Poder(3)",
+  "sanar": "Restaura al objetivo 1 x 1 puntos de salud <br> Poder min(1)",
+  "misil arcano": "Genera daño etéreo<br> Poder min(1)",
+  "explosion de escarcha": "Una onda expansiva que congela a todos los enemigos en un radio de (ataque x casillero) / lo que les reduce a la mitad su velocidad y los deja sin mitigación hacia este elemento, durante 3 turnos.<br> Poder min(6)",
+  "invisibilidad": "Te vuelves indetectable para los demás durante 3 turnos, al atacar pierdes el efecto.<br> Poder min(6)",
+  "enraizar": "Unas poderosas raíces surgen del suelo sujetando al objetivo e impidiéndole moverse del lugar durante 3 turnos.<br> Poder min(3) / El objetivo aún puede atacar, e incluso atacar a las raíces, las cuales tienen 50 puntos de vida.",
+  "envenenar": "Envenenas al objetivo generándole 100% de daño mágico durante 3 turnos.<br> Poder (6)",
+  "licantropia": "Puedes tener garras y colmillos como armas naturales durante 3 turnos.<br> Poder o Poder(3) <br> Escribe el comando: /licántropo",
+  "terremoto": "Vuelves inestable un área de (ataque x casilleros) durante 3 turnos que se renuevan con cada lanzamiento. Atravesar este terreno cuesta doble de movimiento, podrás lanzar el ataque nuevamente cada vez que alguien pase sobre el área, en caso de acertar este se caerá. Los golpes críticos de terremoto en áreas inestables inmovilizan al objetivo. <br> Poder(3)",
+  "relampago": "Genera daño de electricidad y rebota en hasta 3 objetivos que no estén separados por más de (ataque x casilleros), los golpes críticos dejan al objetivo electrificado.<br> Poder min(3)",
+  "sobrecarga": "Sobrecargas un objetivo que se encuentre electrificado generando 500% de daño mágico.<br> Poder min(3)",
+  "control mental": "Controlas el personaje o npc durante 1 turno. <br> Poder min(9)",
+  "confundir": "Confunde al objetivo, haciendo que cualquier ataque que este haga y falle, durante 3 turno, sea un golpe certero hacia el mismo o un aliado cercano. Una pifia se considera crítico para la víctima.<br> Poder min(6)",
+  "miedo": "El objetivo gasta todas sus acciones corriendo en dirección aleatoria, siempre alejándose de quien lanzó el hechizo. En caso de un escenario cerrado, correrá y quedará en la esquina más lejana.<br> Poder min(6)",
+  "tsunami": "Una poderosa ola en forma de cono que se expande hasta 1 casillero x ataque. Empuja todo a su paso a una distancia igual a la mitad del ataque y genera daño mágico de agua.<br> Poder min(9)",
+  "drenar": "Transfiere vida, energía o maná del objetivo al conjurador, puedes apostar una de estas poders para aumentar el efecto, la cual solo se consumirá si fallas el ataque.<br> Poder min(0)",
+  "transmutar": "Convierte vida energía o maná en cualquiera de ellas, puede usarse sobre si mismo o sobre otros personajes.<br> Poder min(1)",
+  "derribo": "Derriba al objetivo.<br> Poder(3)",
+  "desgarro": "Una herida que genera 3 puntos de daño no mitigable durante 3 turnos.<br> Poder(6)",
+  "triturar": "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo.<br> Poder(6)",
+  "petrificar": "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo, una vez sin velocidad el objetivo recibe doble de daño.<br> Poder(6)"
 }
 
 // * 1..2
@@ -209,9 +250,9 @@ function imprimirPersonaje() {
   // habilidad1Txt.textContent = personaje.habilidad1
   // habilidad2Txt.textContent = personaje.habilidad2
   // habilidad3Txt.textContent = personaje.habilidad3
-  habilidad1Txt.textContent = habilidad1.nombre
-  habilidad2Txt.textContent = habilidad2.nombre
-  habilidad3Txt.textContent = habilidad3.nombre
+  habilidad1Txt.textContent = habilidad1.nombre.toUpperCase()
+  habilidad2Txt.textContent = habilidad2.nombre.toUpperCase()
+  habilidad3Txt.textContent = habilidad3.nombre.toUpperCase()
 
   experienciaTxt.textContent = personaje.experiencia
 }
@@ -361,11 +402,11 @@ function avatar(meeple) {
       // personaje.habilidad2 = "COBERTURA"
       // personaje.habilidad3 = "ATAQUE PODEROSO"
       habilidad1.nombre = "EMBESTIDA CON ESCUDO"
-      habilidad1.descripcion = dictHabilidades[habilidad1.nombre]
+      habilidad1.descripcion = habilidadesDict[habilidad1.nombre.toLowerCase()]
       habilidad2.nombre = "COBERTURA"
-      habilidad2.descripcion = dictHabilidades[habilidad2.nombre]
+      habilidad2.descripcion = habilidadesDict[habilidad2.nombre.toLowerCase()]
       habilidad3.nombre = "ATAQUE PODEROSO"
-      habilidad3.descripcion = dictHabilidades[habilidad3.nombre]
+      habilidad3.descripcion = habilidadesDict[habilidad3.nombre.toLowerCase()]
 
 
 
@@ -438,13 +479,15 @@ function armas(armaSeleccionada, slot) {
 
   } else {
     // !
-    contenConsola(
-      slotArmaSeleccionada == 1
-        ? arma1.descripcion
-        : arma2.descripcion
-    )
+    if (esPersonaje) {
+      contenConsola(
+        slotArmaSeleccionada == 1
+          ? arma1.descripcion
+          : arma2.descripcion
+      )
+    }
+    else contenConsola(esbirroSeleccionado[`arma${slotArmaSeleccionada}`].descripcion)
   }
-
 }
 
 // function accion() { }
@@ -718,7 +761,7 @@ let estadisticaSeleccionada
       habilidad.nombre = quitarAcentos(nuevoNombre)
 
 
-      habilidad.descripcion = dictHabilidades[habilidad.nombre]
+      habilidad.descripcion = habilidadesDict[habilidad.nombre.toLowerCase()]
 
       cerrarEdicion()
       imprimirPersonaje()
@@ -755,12 +798,14 @@ let estadisticaSeleccionada
   }
   { // * eventListener nombre personaje
     nombreBtn.addEventListener('click', () => {
-      if (edicion) {
-        let val = prompt("Nuevo nombre")
-        personaje.nombre = val
-        imprimirPersonaje()
-      } else {
-        contenConsola(personaje.descripcion)
+      if (esPersonaje) {
+        if (edicion) {
+          let val = prompt("Nuevo nombre")
+          personaje.nombre = val
+          imprimirPersonaje()
+        } else {
+          contenConsola(personaje.descripcion)
+        }
       }
     })
 
@@ -871,7 +916,8 @@ let estadisticaSeleccionada
   }
   { // * eventListeners de armas
     dagaBtn.addEventListener('click', () => {
-      cambiarArma('daga')
+      if (esPersonaje) cambiarArma('daga')
+      else cambiarArmaEsbirro('daga')
     })
 
     espadaBtn.addEventListener('click', () => {
@@ -1278,8 +1324,8 @@ let estadisticaSeleccionada
       poderMaximo = 0,
 
       // Armas de esbirro
-      arma1 = { nombre: "wp 1", descripcion: "dc wp 1" },
-      arma2 = { nombre: "wp 2", descripcion: "dc wp 2" },
+      arma1 = { nombre: "wp 1", danno: 0, descripcion: "dc wp 1" },
+      arma2 = { nombre: "wp 2", danno: 0, descripcion: "dc wp 2" },
 
       // Equipamiento de esbirro
       equipo1 = { nombre: "eq 1", descripcion: "dc eq 1" },
@@ -1337,7 +1383,7 @@ let estadisticaSeleccionada
      * @param {string} nombre - El nombre del arma.
      */
     configurarArma(ranura, nombre) {
-      if (nombre in armasDict) this[`arma${ranura}`] = { nombre, descripcion: armasDict[nombre] }
+      if (nombre in armasDict) this[`arma${ranura}`] = { nombre, danno: armasDict[nombre].danno, descripcion: armasDict[nombre].descripcion }
       else this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
     }
 
@@ -1347,31 +1393,117 @@ let estadisticaSeleccionada
      * @param {string} nombre - El nombre de la habilidad.
      */
     configurarHabilidad(ranura, nombre) {
-      if (nombre in dictHabilidades) this[`habilidad${ranura}`] = { nombre, descripcion: dictHabilidades[nombre] }
+      if (nombre in habilidadesDict) this[`habilidad${ranura}`] = { nombre, descripcion: habilidadesDict[nombre.toLowerCase()] }
       else this[`habilidad${ranura}`] = { nombre, descripcion: "Habilidad sin descripción" }
     }
   }
 
   // ? Objeto para almacenar información de las armas
   // TODO: Cada arma debe contener una propiedad para el daño y su descripción
+  // Definición de las armas faltantes
   var armasDict = {
-    "nada": {
-      danno: 0,
-      descripcion: "arma nada sin descripción"
-    },
-    "garras": {
+    // * Armas de personaje
+    "punno": {
       danno: 0.75,
-      descripcion: "Garras <br> / 1 Accion / 100% de ataque como daño fíisico"
+      descripcion: "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
     },
+    "patadas": {
+      danno: 1,
+      descripcion: "Arma natural <br> 2 Acciones / 100% de ataque como daño físico"
+    },
+    "daga": {
+      danno: 1,
+      descripcion: "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
+    },
+    "espada": {
+      danno: 1.5,
+      descripcion: "Arma a dos manos <br> 2 Acciones / 150% de ataque como daño físico"
+    },
+    "arco": {
+      danno: 1.75,
+      descripcion: "Arma a distancia <br> 3 casilleros x ataque / 3 Acciones / 175% de ataque como daño físico"
+    },
+    "arrojadiza": {
+      danno: 0.75,
+      descripcion: "Arma arrojadiza <br> 3 casillero x ataque / 2 Acciones / 75% de ataque como daño físico"
+    },
+    "escudo": {
+      danno: 0.5,
+      descripcion: "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
+    },
+    "mano": {
+      danno: 1,
+      descripcion: "Arma a distancia <br> 1 casillero x ataque / 1 Acción / 100% de ataque como daño mágico"
+    },
+    "varita": {
+      danno: 1,
+      descripcion: "Arma a distancia <br> 3 casilleros x ataque / 1 Accion / 100% de ataque como daño mágico"
+    },
+    "baculo": {
+      danno: 1.5,
+      descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 150% de ataque como daño mágico"
+    },
+    "runa": {
+      danno: 0.75,
+      descripcion: "Arma a distancia <br> 3 casilleros x ataque / 2 Acciones / 75% de ataque como daño mágico"
+    },
+    "totem": {
+      danno: 1,
+      descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
+    },
+    "hoja runa": {
+      danno: 1,
+      descripcion: "Arma mixta <br> 1 casillero x ataque / 2 Acciones / 100% de ataque como daño físico o mágico"
+    },
+    // * Armas de esbirros
     "mordisco": {
-      danno: 0,
+      danno: 1.5,
       descripcion: "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño físico"
     },
+    "garras": {
+      danno: 1,
+      descripcion: "Garras <br> / 1 Accion / 100% de ataque como daño físico"
+    },
     "aliento": {
-      danno: 0,
+      danno: 2.5,
       descripcion: "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima de 1 casillero x punto de ataque"
+    },
+    "pinzas": {
+      danno: 1.75,
+      descripcion: "PINZAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 175% de ataque como daño físico"
+    },
+    "mente": {
+      danno: 1,
+      descripcion: "MENTE <br> Arma a distancia / 1 Accion <br> 100% de ataque como daño mágico. <br> Distancia máxima de 2 casillero x punto de ataque"
+    },
+    "ramas": {
+      danno: 1.25,
+      descripcion: "RAMAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
+    },
+    "esporas": {
+      danno: 1.25,
+      descripcion: "ESPORAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
+    },
+    "alas": {
+      danno: 1.25,
+      descripcion: "ALAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
+    },
+    "mirada": {
+      danno: 1.25,
+      descripcion: "MIRADA <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 2 casilleros x punto de ataque"
+    },
+    "cuernos": {
+      danno: 1.25,
+      descripcion: "CUERNOS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
+    },
+    "cascos": {
+      danno: 1.25,
+      descripcion: "CASCOS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
+    },
+    "tentaculos": {
+      danno: 1.25,
+      descripcion: "TENTACULOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
     }
-    // TODO: Agregar armas restantes
   }
 
   // ? Objeto para almacenar información de los esbirros
@@ -1380,7 +1512,6 @@ let estadisticaSeleccionada
       nombre: "LOBO",
       imagen: "img/lobo.png",
       icono: "",
-
       ataque: 3,
       esquiva: 2,
       bloqueo: 1,
@@ -1389,7 +1520,6 @@ let estadisticaSeleccionada
       vidaMaxima: 19,
       poder: 22,
       poderMaximo: 22,
-
       arma1: {
         nombre: "mordisco",
         danno: armasDict["mordisco"].danno,
@@ -1400,18 +1530,15 @@ let estadisticaSeleccionada
         danno: armasDict["garras"].danno,
         descripcion: armasDict["garras"].descripcion
       },
-
-      habilidad1: { nombre: "DERRIBO", descripcion: dictHabilidades["DERRIBO"] },
-      habilidad2: { nombre: "DESGARRO", descripcion: dictHabilidades["DESGARRO"] },
-      habilidad3: { nombre: "Habilidad 3", descripcion: dictHabilidades["Habilidad 3"] },
-
+      habilidad1: { nombre: "derribo", descripcion: habilidadesDict["derribo"] },
+      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
       descripcion: "LOBO <br> Criatura de Sangre <br> Coste de invocación: 20"
     },
     "esqueleto": {
       nombre: "ESQUELETO",
       imagen: "img/esqueleto.png",
       icono: "",
-
       ataque: 4,
       esquiva: 2,
       bloqueo: 3,
@@ -1420,7 +1547,6 @@ let estadisticaSeleccionada
       vidaMaxima: 30,
       poder: 27,
       poderMaximo: 27,
-
       arma1: {
         nombre: "mordisco",
         danno: armasDict["mordisco"].danno,
@@ -1431,15 +1557,256 @@ let estadisticaSeleccionada
         danno: armasDict["garras"].danno,
         descripcion: armasDict["garras"].descripcion
       },
-
-      habilidad1: { nombre: "DERRIBO", descripcion: dictHabilidades["DERRIBO"] },
-      habilidad2: { nombre: "DESGARRO", descripcion: dictHabilidades["DESGARRO"] },
-      habilidad3: { nombre: "Habilidad 3", descripcion: dictHabilidades["Habilidad 3"] },
-
+      habilidad1: { nombre: "derribo", descripcion: habilidadesDict["derribo"] },
+      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
       descripcion: "ESQUELETO <br> Criatura de Vida y Éter <br> Coste de invocación: 15"
+    },
+    "kardanto": {
+      nombre: "KARDANTO",
+      imagen: "img/kardanto.png",
+      icono: "",
+      ataque: 4,
+      esquiva: 2,
+      bloqueo: 4,
+      velocidad: 3,
+      vida: 31,
+      vidaMaxima: 31,
+      poder: 34,
+      poderMaximo: 34,
+      arma1: {
+        nombre: "ramas",
+        danno: armasDict["ramas"].danno,
+        descripcion: armasDict["ramas"].descripcion
+      },
+      arma2: {
+        nombre: "esporas",
+        danno: armasDict["esporas"].danno,
+        descripcion: armasDict["esporas"].descripcion
+      },
+      habilidad1: { nombre: "enraizar", descripcion: habilidadesDict["enraizar"] },
+      habilidad2: { nombre: "envenenar", descripcion: habilidadesDict["envenenar"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
+      descripcion: "KARDANTO <br> Elemental de Vida <br> Coste de invocación: 20"
+    },
+    "momontu": {
+      nombre: "MOMONTU",
+      imagen: "img/momontu.png",
+      icono: "",
+      ataque: 5,
+      esquiva: 3,
+      bloqueo: 1,
+      velocidad: 4,
+      vida: 20,
+      vidaMaxima: 20,
+      poder: 51,
+      poderMaximo: 51,
+      arma1: {
+        nombre: "mano",
+        danno: armasDict["mano"].danno,
+        descripcion: armasDict["mano"].descripcion
+      },
+      arma2: {
+        nombre: "garras",
+        danno: armasDict["garras"].danno,
+        descripcion: armasDict["garras"].descripcion
+      },
+      habilidad1: { nombre: "bola de fuego", descripcion: habilidadesDict["bola de fuego"] },
+      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
+      descripcion: "MOMONTU <br> Elemental de Fuego <br> Coste de invocación: 20"
+    },
+    "tortakla": {
+      nombre: "TORTAKLA",
+      imagen: "img/tortakla.png",
+      icono: "",
+      ataque: 4,
+      esquiva: 1,
+      bloqueo: 5,
+      velocidad: 2,
+      vida: 40,
+      vidaMaxima: 40,
+      poder: 19,
+      poderMaximo: 19,
+      arma1: {
+        nombre: "aliento",
+        danno: armasDict["aliento"].danno,
+        descripcion: armasDict["aliento"].descripcion
+      },
+      arma2: {
+        nombre: "pinzas",
+        danno: armasDict["pinzas"].danno,
+        descripcion: armasDict["pinzas"].descripcion
+      },
+      habilidad1: { nombre: "tsunami", descripcion: habilidadesDict["tsunami"] },
+      habilidad2: { nombre: "triturar", descripcion: habilidadesDict["triturar"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
+      descripcion: "TORTAKLA <br> Elemental de Agua <br> Coste de invocación: 20"
+    },
+    "ghalidos": {
+      nombre: "GHALIDOS",
+      imagen: "img/ghalidos.png",
+      icono: "",
+      ataque: 4,
+      esquiva: 4,
+      bloqueo: 1,
+      velocidad: 5,
+      vida: 25,
+      vidaMaxima: 25,
+      poder: 19,
+      poderMaximo: 19,
+      arma1: {
+        nombre: "garras",
+        danno: armasDict["garras"].danno,
+        descripcion: armasDict["garras"].descripcion
+      },
+      arma2: {
+        nombre: "alas",
+        danno: armasDict["alas"].danno,
+        descripcion: armasDict["alas"].descripcion
+      },
+      habilidad1: { nombre: "tornado", descripcion: habilidadesDict["tornado"] },
+      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
+      descripcion: "GHALIDOS <br> Elemental de Aire <br> Coste de invocación: 20"
+    },
+    "terronte": {
+      nombre: "TERRONTE",
+      imagen: "img/terronte.png",
+      icono: "",
+      ataque: 4,
+      esquiva: 1,
+      bloqueo: 4,
+      velocidad: 3,
+      vida: 40,
+      vidaMaxima: 40,
+      poder: 31,
+      poderMaximo: 31,
+      arma1: {
+        nombre: "mirada",
+        danno: armasDict["mirada"].danno,
+        descripcion: armasDict["mirada"].descripcion
+      },
+      arma2: {
+        nombre: "punno",
+        danno: armasDict["punno"].danno,
+        descripcion: armasDict["punno"].descripcion
+      },
+      habilidad1: { nombre: "ataque poderoso", descripcion: habilidadesDict["ataque poderoso"] },
+      habilidad2: { nombre: "terremoto", descripcion: habilidadesDict["terremoto"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
+      descripcion: "TERRONTE <br> Elemental de Tierra <br> Coste de invocación: 20"
+    },
+    "naigaran": {
+      nombre: "NAIGARAN",
+      imagen: "img/naigaran.png",
+      icono: "",
+      ataque: 5,
+      esquiva: 3,
+      bloqueo: 2,
+      velocidad: 4,
+      vida: 20,
+      vidaMaxima: 20,
+      poder: 39,
+      poderMaximo: 39,
+      arma1: {
+        nombre: "mordisco",
+        danno: armasDict["mordisco"].danno,
+        descripcion: armasDict["mordisco"].descripcion
+      },
+      arma2: {
+        nombre: "tentaculos",
+        danno: armasDict["tentaculos"].danno,
+        descripcion: armasDict["tentaculos"].descripcion
+      },
+      habilidad1: { nombre: "confundir", descripcion: habilidadesDict["confundir"] },
+      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
+      descripcion: "NAIGARAN <br> Elemental Etereo <br> Coste de invocación: 20"
+    },
+    "sarcomos": {
+      nombre: "SARCOMOS",
+      imagen: "img/sarcomos.png",
+      icono: "",
+      ataque: 5,
+      esquiva: 4,
+      bloqueo: 2,
+      velocidad: 4,
+      vida: 23,
+      vidaMaxima: 23,
+      poder: 24,
+      poderMaximo: 24,
+      arma1: {
+        nombre: "mente",
+        danno: armasDict["mente"].danno,
+        descripcion: armasDict["mente"].descripcion
+      },
+      arma2: {
+        nombre: "garras",
+        danno: armasDict["garras"].danno,
+        descripcion: armasDict["garras"].descripcion
+      },
+      habilidad1: { nombre: "confundir", descripcion: habilidadesDict["confundir"] },
+      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
+      descripcion: "SARCOMOS <br> Elemental Psíquico <br> Coste de invocación: 20"
+    },
+    "cinirus": {
+      nombre: "CINIRUS",
+      imagen: "img/cinirus.png",
+      icono: "",
+      ataque: 4,
+      esquiva: 3,
+      bloqueo: 4,
+      velocidad: 3,
+      vida: 25,
+      vidaMaxima: 25,
+      poder: 31,
+      poderMaximo: 31,
+      arma1: {
+        nombre: "cuernos",
+        danno: armasDict["cuernos"].danno,
+        descripcion: armasDict["cuernos"].descripcion
+      },
+      arma2: {
+        nombre: "cascos",
+        danno: armasDict["cascos"].danno,
+        descripcion: armasDict["cascos"].descripcion
+      },
+      habilidad1: { nombre: "sanar", descripcion: habilidadesDict["sanar"] },
+      habilidad2: { nombre: "sentencia", descripcion: habilidadesDict["sentencia"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
+      descripcion: "CINIRUS <br> Elemental de Luz <br> Coste de invocación: 20"
+    },
+    "raizor": {
+      nombre: "RAIZOR",
+      imagen: "img/raizor.png",
+      icono: "",
+      ataque: 4,
+      esquiva: 4,
+      bloqueo: 2,
+      velocidad: 4,
+      vida: 25,
+      vidaMaxima: 25,
+      poder: 37,
+      poderMaximo: 37,
+      arma1: {
+        nombre: "garras",
+        danno: armasDict["garras"].danno,
+        descripcion: armasDict["garras"].descripcion
+      },
+      arma2: {
+        nombre: "aliento",
+        danno: armasDict["aliento"].danno,
+        descripcion: armasDict["aliento"].descripcion
+      },
+      habilidad1: { nombre: "relampago", descripcion: habilidadesDict["relampago"] },
+      habilidad2: { nombre: "sobrecarga", descripcion: habilidadesDict["sobrecarga"] },
+      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
+      descripcion: "RAIZOR <br> Elemental de Rayo <br> Coste de invocación: 20"
     }
-    // TODO: Agregar los demas esbirros
   }
+
 
   // ! Lista de esbirros !
   // Crea un array vacío para almacenar instancias de la clase Esbirro
@@ -1470,14 +1837,19 @@ esbirrosBtn.addEventListener('click', () => {
     esPersonaje = false;
     console.log("Cambio a esbirro");
 
+    // Muestra los boton de izquierda y derecha
+    mostrarControlesCambioEsbirro()
+
     // Llama a la función para mostrar la información del esbirro seleccionado
     mostrarEsbirroSeleccionado();
-
     // TODO: Agregar lógica para mostrar los botones de cambio de esbirro
   } else {
     // Si se estaba mostrando un esbirro, cambia a mostrar el personaje
     esPersonaje = true;
     console.log("Cambio a personaje");
+
+    // Oculta los boton de izquierda y derecha
+    ocultarControlesCambioEsbirro()
 
     // Llama a la función para mostrar la información del personaje
     imprimirPersonaje();
@@ -1509,14 +1881,14 @@ function mostrarEsbirroSeleccionado() {
   arma2Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma2.nombre)
   arma2Img.src = `img/${esbirroSeleccionado.arma2.nombre}.png`
 
-  habilidad1Txt.textContent = esbirroSeleccionado.habilidad1.nombre
-  habilidad2Txt.textContent = esbirroSeleccionado.habilidad2.nombre
-  habilidad3Txt.textContent = esbirroSeleccionado.habilidad3.nombre
+  habilidad1Txt.textContent = esbirroSeleccionado.habilidad1.nombre.toUpperCase()
+  habilidad2Txt.textContent = esbirroSeleccionado.habilidad2.nombre.toUpperCase()
+  habilidad3Txt.textContent = esbirroSeleccionado.habilidad3.nombre.toUpperCase()
 }
 
 { // * Cambiar esbirro seleccionado
   /**
-   * ? Función para cambiar el esbirro
+   * ? Función para cambiar el esbirro al de la izquierda o derecha
    */
   function cambiarEsbirro() {
     let val = prompt("Ingrese comando")
@@ -1528,6 +1900,7 @@ function mostrarEsbirroSeleccionado() {
     }
 
     mostrarEsbirroSeleccionado()
+    cerrarEdicion()
   }
 
   // ? Trigger de cambio de esbirro
@@ -1707,7 +2080,64 @@ function mostrarEsbirroSeleccionado() {
 // TODO: Modificación y descripción de armas
 { // * Modificación y descripción de armas
   { // * Funciones
+    /**
+     * ? Cambia el arma equipada de un esbirro seleccionado.
+     *
+     * @param {string} nombre - El nombre del arma que se desea equipar.
+     */
+    function cambiarArmaEsbirro(nombre) {
+      // Configura el arma en el slot de arma seleccionada del esbirro seleccionado.
+      esbirroSeleccionado.configurarArma(slotArmaSeleccionada, nombre);
 
+      // Muestra la información actualizada del esbirro seleccionado.
+      mostrarEsbirroSeleccionado();
+
+      // Cierra la interfaz de edición.
+      cerrarEdicion();
+
+      // Cierra el modal de selección de armas.
+      cerrarModal('armas');
+    }
+
+  }
+  { // * Triggers
+    // for (const arma in armasDict) {
+    //   debugger
+    //   const boton = document.getElementById(`${arma}Btn`) danno: 0, 
+    //   boton.addEventListener('click', () => {
+    //     console.log(`Seleccionaste ${arma}`)
+    //   })
+    // }
   }
 }
 // TODO: Intercambio de esbirros
+{ // * Intercambio de esbirro
+  { // * Funciones
+    function mostrarControlesCambioEsbirro() {
+      izquierdaBtn.style.display = "block"
+      derechaBtn.style.display = "block"
+    }
+
+    function ocultarControlesCambioEsbirro() {
+      izquierdaBtn.style.display = "none"
+      derechaBtn.style.display = "none"
+    }
+  }
+  { // * Triggers
+    let i = 0
+    izquierdaBtn.addEventListener('click', () => {
+      i--
+      if (i < 0) i = esbirros.length - 1
+      esbirroSeleccionado = esbirros[i]
+      mostrarEsbirroSeleccionado()
+    })
+    derechaBtn.addEventListener('click', () => {
+      i++
+      if (i > esbirros.length - 1) i = 0
+      esbirroSeleccionado = esbirros[i]
+      mostrarEsbirroSeleccionado()
+    })
+  }
+}
+
+// TODO: Yo, adaptar acción para esbirros

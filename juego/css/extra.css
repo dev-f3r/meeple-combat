@@ -1,8 +1,8 @@
 /* * Estilos de consola  comienzo*/
 .item-grilla#consolaBtn {
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 2.5fr 1fr;
+    grid-template-columns: 1fr 6fr 1fr;
     align-items: center;
     justify-items: center;
 }
