@@ -225,7 +225,6 @@ editarBtn.addEventListener('click', function () {
     editarImg.src = "img/guardar.png"
 
     contenConsola("Seleccione nombre, slot de arma o habilidad")
-    ocultarBtnArrivaAbajo()
 
     experienciaTxt.style.display = "flex"
   } else {
@@ -469,26 +468,42 @@ let estadisticaSeleccionada
       cerrarEdicion()
     }
 
+    /**
+     * ? Incrementa o disminuye la experiencia del personaje o esbirro según la acción y la estadística especificadas.
+     * @param {string} tipo - El tipo de entidad a la que se aplica la experiencia: "personaje" o "esbirro".
+     * @param {string} accion - La acción a realizar: "mas" para aumentar, "menos" para disminuir.
+     * @param {string} estadistica - La estadística relacionada con la experiencia: "vidaMaxima", "poderMaximo", etc.
+     */
     function aumentarDisminuirExperiencia(tipo, accion, estadistica) {
+      let valor;
 
-      let valor
+      // TODO: El valor a aumentar o disminuir sera de 1 cada 10 pts si el atributo es vidaMaxima o poderMaximo
 
       if (tipo === "personaje") {
-        if (accion === "mas") { // ? Incrementa exp
-          valor = (personaje[estadistica] === 0 ? 1 : personaje[estadistica] + 1) * valorExperiencia[estadistica]
-        } else { // ? Decrementa exp
-          valor = personaje[estadistica] * valorExperiencia[estadistica]
-        }
+        // Calcular el valor de experiencia según la acción y estadística
+        valor =
+          accion === "mas"
+            ? (personaje[estadistica] === 0 ? 1 : personaje[estadistica] + 1) *
+            valorExperiencia[estadistica]
+            : personaje[estadistica] * valorExperiencia[estadistica];
+
+        // Incrementar o disminuir la experiencia del personaje
+        personaje.experiencia += accion === "mas" ? valor : valor * -1;
       } else {
-        if (accion === "mas")
-          valor = (mascotaSeleccionada[estadistica] === 0 ? 1 : mascotaSeleccionada[estadistica] + 1) * valorExperiencia[estadistica]
-        else
-          valor = mascotaSeleccionada[estadistica] * valorExperiencia[estadistica]
+        // Calcular el valor de experiencia según la acción y estadística
+        valor =
+          accion === "mas"
+            ? (esbirroSeleccionado[estadistica] === 0
+              ? 1
+              : esbirroSeleccionado[estadistica] + 1) *
+            valorExperiencia[estadistica]
+            : esbirroSeleccionado[estadistica] * valorExperiencia[estadistica];
+
+        // Incrementar o disminuir la experiencia del esbirro seleccionado
+        esbirroSeleccionado.experiencia += accion === "mas" ? valor : valor * -1;
       }
-
-
-      personaje.experiencia += accion == 'mas' ? valor : valor * -1
     }
+
   }
 
   { // * eventListeners del boton de experiencia
@@ -504,23 +519,26 @@ let estadisticaSeleccionada
 
   { // * Funciones para modificar las estadisticas de los personajes
 
-    /* 
-        * @estadistica: string
-    */
-    // ? Mustra los botones de incremento y decremento SOLO EN MODO EDICION, y modifica "estadisticaSeleccionada"
-    function modificarEstadistica(estadistica) {
-      mostrarBtnArrivaAbajo()
+    /**
+     *  ? Muestra los botones de incremento y decremento SOLO EN MODO EDICIÓN, y modifica "estadisticaSeleccionada".
+     * @param {string} atributo - El nombre del atributo a modificar.
+     */
+    function modificarEstadistica(atributo) {
+      mostrarBtnArribaAbajo();
 
-      estadisticaSeleccionada = estadistica
+      estadisticaSeleccionada = atributo;
 
-      // "ataque 0"
-      let data = `${estadistica
-        .charAt(0)
-        .toUpperCase()
-        + estadistica
-          .slice(1)} ${personaje[estadistica]}`
-      contenConsola(data)
+      let data;
+
+      if (tipoEdicion === "personaje") {
+        data = `${capitalizarPrimeraLetra(atributo)} ${personaje[atributo]}`;
+      } else {
+        data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`;
+      }
+
+      contenConsola(data);
     }
+
 
     /* 
         * @accion: string
@@ -611,28 +629,28 @@ let estadisticaSeleccionada
         tipoEdicion = "personaje"
         modificarEstadistica('ataque')
       }
-      else mostrarEstadistica('ataque')
+      else if (esPersonaje) mostrarEstadistica('personaje', 'ataque')
     })
     esquivaBtn.addEventListener('click', () => {
       if (edicion) {
         tipoEdicion = "personaje"
         modificarEstadistica('esquiva')
       }
-      else mostrarEstadistica('esquiva')
+      else if (esPersonaje) mostrarEstadistica('personaje', 'esquiva')
     })
     bloqueoBtn.addEventListener('click', () => {
       if (edicion) {
         tipoEdicion = "personaje"
         modificarEstadistica('bloqueo')
       }
-      else mostrarEstadistica('bloqueo')
+      else if (esPersonaje) mostrarEstadistica('personaje', 'bloqueo')
     })
     velocidadBtn.addEventListener('click', () => {
       if (edicion) {
         tipoEdicion = "personaje"
         modificarEstadistica('velocidad')
       }
-      else mostrarEstadistica('velocidad')
+      else if (esPersonaje) mostrarEstadistica('personaje', 'velocidad')
     })
 
     vidaBtn.addEventListener('click', () => {
@@ -641,7 +659,7 @@ let estadisticaSeleccionada
         modificarEstadistica('vidaMaxima')
       }
       else { // ? Muestra los boton de incremento y decremento
-        mostrarBtnArrivaAbajo()
+        mostrarBtnArribaAbajo()
         estadisticaSeleccionada = "vida"
 
         contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
@@ -653,7 +671,7 @@ let estadisticaSeleccionada
         modificarEstadistica('poderMaximo')
       }
       else { // ? Muestra los boton de incremento y decremento
-        mostrarBtnArrivaAbajo()
+        mostrarBtnArribaAbajo()
         estadisticaSeleccionada = "poder"
 
         contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
@@ -662,28 +680,21 @@ let estadisticaSeleccionada
   }
 
   { // * eventListeners de los botones arriba y abajo
-    arribaBtn.addEventListener('click', () => {
-      if (edicion) {
-        if (tipoEdicion === "personaje") modificarValores('mas', estadisticaSeleccionada)
-        else modificarAtributosMascota('mas', estadisticaSeleccionada)
-      }
-      // ? Solo vida y poder se cambian en modo normal
-      else {
-        if (tipoEdicion === "personaje") masMenosVidaPoder('mas')
-        else cambiarVidaPoderActualMascota('mas')
-      }
-    })
-
-    abajoBtn.addEventListener('click', () => {
-      if (edicion) {
-        if (tipoEdicion === "personaje") modificarValores('menos', estadisticaSeleccionada)
-        else modificarAtributosMascota('menos', estadisticaSeleccionada)
-      }
-      // ? Solo vida y poder se cambian en modo normal
-      else {
-        if (tipoEdicion === "personaje") masMenosVidaPoder('menos')
-        else cambiarVidaPoderActualMascota('menos')
-      }
+    ['arriba', 'abajo'].forEach(key => {
+      const boton = document.getElementById(`${key}Btn`)
+      boton.addEventListener('click', () => {
+        let accion = key === 'arriba'
+          ? 'mas'
+          : 'menos'
+        if (edicion) {
+          if (tipoEdicion === "personaje") modificarValores(accion, estadisticaSeleccionada)
+          else modificarAtributosEsbirro(accion, estadisticaSeleccionada)
+        }
+        else {
+          if (tipoEdicion === "personaje") masMenosVidaPoder(accion)
+          else modificarVidaPoderActualEsbirro(accion)
+        }
+      })
     })
   }
 }
@@ -711,33 +722,32 @@ let estadisticaSeleccionada
 
       cerrarEdicion()
       imprimirPersonaje()
-      imprimirMascota()
     }
   }
   { // * eventListeners de habilidades
     habilidad1Btn.addEventListener('click', () => {
       // ? Personalizar habilidad
-      if (edicion) {
+      if (edicion && esPersonaje) {
         cambiarHabilidad(habilidad1)
-      } else {
+      } else if (esPersonaje) {
         // ? Motrar descripción de habilidad 
         descripcionHabilidad(habilidad1)
       }
     })
     habilidad2Btn.addEventListener('click', () => {
       // ? Personalizar habilidad
-      if (edicion) {
+      if (edicion && esPersonaje) {
         cambiarHabilidad(habilidad2)
-      } else {
+      } else if (esPersonaje) {
         // ? Motrar descripción de habilidad 
         descripcionHabilidad(habilidad2)
       }
     })
     habilidad3Btn.addEventListener('click', () => {
       // ? Personalizar habilidad
-      if (edicion) {
+      if (edicion && esPersonaje) {
         cambiarHabilidad(habilidad3)
-      } else {
+      } else if (esPersonaje) {
         // ? Motrar descripción de habilidad 
         descripcionHabilidad(habilidad3)
       }
@@ -748,11 +758,9 @@ let estadisticaSeleccionada
       if (edicion) {
         let val = prompt("Nuevo nombre")
         personaje.nombre = val
-        cerrarEdicion()
         imprimirPersonaje()
       } else {
         contenConsola(personaje.descripcion)
-        cerrarEdicion()
       }
     })
 
@@ -1143,9 +1151,12 @@ let estadisticaSeleccionada
       * @estadistica: string
   */
   // ? Muestra la estadistica
-  function mostrarEstadistica(estadistica) {
-    // estadistica = estadistica.charAt(0).toUpperCase() + estadistica.slice(1)
-    let data = `${estadistica.charAt(0).toUpperCase() + estadistica.slice(1)} ${personaje[estadistica]}`
+  function mostrarEstadistica(tipo, estadistica) {
+    let data
+
+    console.log(tipo)
+    if (tipo === "personaje") data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
+    else data = `${capitalizarPrimeraLetra(estadistica)} ${esbirroSeleccionado[estadistica]}`
 
     // * Para la funcion accion()
     switch (estadistica) {
@@ -1167,7 +1178,6 @@ let estadisticaSeleccionada
     objetoAccion = "estadistica"
 
     contenConsola(data)
-    cerrarEdicion()
   }
 
   /* 
@@ -1185,11 +1195,10 @@ let estadisticaSeleccionada
   function mostrarDescripcionArma(slot) {
     let seleccion = slot == 1 ? arma1 : arma2
     contenConsola(seleccion.descripcion)
-    cerrarEdicion()
   }
 
   // ? Muestra los botones de incremento y decremento
-  function mostrarBtnArrivaAbajo() {
+  function mostrarBtnArribaAbajo() {
     arribaBtn.style.display = "block"
     abajoBtn.style.display = "block"
   }
@@ -1227,7 +1236,6 @@ let estadisticaSeleccionada
    */
   class Esbirro {
     /**
-     * Crea una nueva instancia de Esbirro con las propiedades proporcionadas.
      * @param {Object} opciones - Objeto que contiene las propiedades del Esbirro.
      * @param {string} opciones.nombre - El nombre del Esbirro.
      * @param {string} opciones.imagen - La URL de la imagen del Esbirro.
@@ -1329,7 +1337,8 @@ let estadisticaSeleccionada
      * @param {string} nombre - El nombre del arma.
      */
     configurarArma(ranura, nombre) {
-      this[`arma${ranura}`] = { nombre, descripcion: armasDict[nombre] };
+      if (nombre in armasDict) this[`arma${ranura}`] = { nombre, descripcion: armasDict[nombre] }
+      else this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
     }
 
     /**
@@ -1338,11 +1347,13 @@ let estadisticaSeleccionada
      * @param {string} nombre - El nombre de la habilidad.
      */
     configurarHabilidad(ranura, nombre) {
-      this[`habilidad${ranura}`] = { nombre, descripcion: dictHabilidades[nombre] };
+      if (nombre in dictHabilidades) this[`habilidad${ranura}`] = { nombre, descripcion: dictHabilidades[nombre] }
+      else this[`habilidad${ranura}`] = { nombre, descripcion: "Habilidad sin descripción"}
     }
   }
 
   // ? Objeto para almacenar información de las armas
+  // TODO: Cada arma debe contener una propiedad para el daño y su descripción
   var armasDict = {
     "nada": "arma nada sin descripción",
     "garras": "Garras <br> / 1 Accion / 100% de ataque como daño fíisico",
@@ -1452,48 +1463,223 @@ esbirrosBtn.addEventListener('click', () => {
  * ? Muestra la información del esbirro seleccionado en la interfaz gráfica.
  */
 function mostrarEsbirroSeleccionado() {
-  // Obtiene una referencia al esbirro seleccionado
-  const esbirro = esbirroSeleccionado;
+  nombreTxt.textContent = esbirroSeleccionado.nombre.toUpperCase()
+  portadaImg.src = esbirroSeleccionado.imagen
+  experienciaTxt.textContent = esbirroSeleccionado.experiencia
 
-  // Muestra el nombre del esbirro en mayúsculas en el elemento de texto
-  nombreTxt.textContent = esbirro.nombre.toUpperCase();
+  // TODO: A cada atributo se le debe incrementar las stats del equipamiento
+  ataqueTxt.textContent = esbirroSeleccionado.ataque
+  esquivaTxt.textContent = esbirroSeleccionado.esquiva
+  bloqueoTxt.textContent = esbirroSeleccionado.bloqueo
+  velocidadTxt.textContent = esbirroSeleccionado.velocidad
+  vidaTxt.textContent = esbirroSeleccionado.vida
+  poderTxt.textContent = esbirroSeleccionado.poder
 
-  // Establece la fuente de la imagen de portada del esbirro
-  portadaImg.src = esbirro.imagen;
+  arma1Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma1.nombre)
+  arma1Img.src = `img/${esbirroSeleccionado.arma1.nombre}.png`
 
-  // Define un array de objetos que contienen información sobre los atributos a mostrar
-  const atributos = [
-    { elemento: ataqueTxt, propiedad: 'ataque' },
-    { elemento: esquivaTxt, propiedad: 'esquiva' },
-    { elemento: bloqueoTxt, propiedad: 'bloqueo' },
-    { elemento: velocidadTxt, propiedad: 'velocidad' },
-    { elemento: vidaTxt, propiedad: 'vida' },
-    { elemento: poderTxt, propiedad: 'poder' }
-  ];
+  arma2Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma2.nombre)
+  arma2Img.src = `img/${esbirroSeleccionado.arma2.nombre}.png`
 
-  // Itera sobre el array de atributos y muestra los valores en los elementos de texto correspondientes
-  atributos.forEach(({ elemento, propiedad }) => {
-    elemento.textContent = esbirro[propiedad];
-  });
-
-  // Función para mostrar el nombre del arma capitalizado y establecer la fuente de la imagen del arma
-  const mostrarArma = (arma, elementoTxt, elementoImg) => {
-    elementoTxt.textContent = capitalizarPrimeraLetra(arma.nombre);
-    elementoImg.src = `img/${arma.nombre}.png`;
-  };
-
-  // Muestra información sobre las dos armas del esbirro
-  mostrarArma(esbirro.arma1, arma1Txt, arma1Img);
-  mostrarArma(esbirro.arma2, arma2Txt, arma2Img);
-
-  // Muestra los nombres de las habilidades del esbirro
-  habilidad1Txt.textContent = esbirro.habilidad1.nombre;
-  habilidad2Txt.textContent = esbirro.habilidad2.nombre;
-  habilidad3Txt.textContent = esbirro.habilidad3.nombre;
+  habilidad1Txt.textContent = esbirroSeleccionado.habilidad1.nombre
+  habilidad2Txt.textContent = esbirroSeleccionado.habilidad2.nombre
+  habilidad3Txt.textContent = esbirroSeleccionado.habilidad3.nombre
 }
 
-// TODO: Cambiar esbirro por comando
-// TODO: Modificación y descripción de atributos
-// TODO: Modificación y descripción de habilidades
+{ // * Cambiar esbirro seleccionado
+  /**
+   * ? Función para cambiar el esbirro
+   */
+  function cambiarEsbirro() {
+    let val = prompt("Ingrese comando")
+
+    if (val in esbirrosDict) {
+      esbirroSeleccionado.actualizarPropiedades(esbirrosDict[val])
+    } else {
+      contenConsola("COMANDO INCORRECTO")
+    }
+
+    mostrarEsbirroSeleccionado()
+  }
+
+  // ? Trigger de cambio de esbirro
+  // TODO: Arreglar bug con cambio de nombre de personaje
+  nombreBtn.addEventListener('click', () => {
+    if (esPersonaje === false) cambiarEsbirro()
+  })
+}
+
+{ // * Edición de atributos de esbirro
+  { // * Funciones
+    /**
+     * ? Modifica los atributos del esbirro seleccionado según la acción especificada.
+     * @param {string} accion - La acción a realizar: "mas" para aumentar, "menos" para disminuir.
+     * @param {string} atributo - El atributo a modificar: "vidaMaxima", "poderMaximo", etc.
+     */
+    function modificarAtributosEsbirro(accion, atributo) {
+      let data = ""
+
+      // Valor mínimo requerido para aumentar el atributo
+      let valor = (esbirroSeleccionado[atributo] + 1) * valorExperiencia[atributo]
+
+      if (accion === 'mas') {
+        if (esbirroSeleccionado.experiencia >= valor) {
+          // Incrementar el atributo
+          esbirroSeleccionado[atributo]++
+          data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
+
+          // Decrementar experiencia
+          aumentarDisminuirExperiencia("esbirroSeleccionado", 'menos', atributo)
+          // Cambiar contenido mostrado en la consola
+          contenConsola(data)
+          // Actualizar la información del esbirro en la interfaz
+          mostrarEsbirroSeleccionado()
+        } else {
+
+          contenConsola("Experiencia insuficiente")
+        }
+      } else {
+        if (esbirroSeleccionado[atributo] > 0) {
+          // Decrementar el atributo
+          esbirroSeleccionado[atributo]--
+
+          // Ajustar atributos de vida y poder si es necesario
+          if (atributo === "vidaMaxima" && esbirroSeleccionado.vidaMaxima < esbirroSeleccionado.vida) {
+            esbirroSeleccionado.vida = esbirroSeleccionado.vidaMaxima
+          }
+          if (atributo === "poderMaximo" && esbirroSeleccionado.poderMaximo < esbirroSeleccionado.poder) {
+            esbirroSeleccionado.poder = esbirroSeleccionado.poderMaximo
+          }
+
+          // Incrementar experiencia
+          aumentarDisminuirExperiencia('esbirroSeleccionado', 'mas', atributo)
+          // Cambiar contenido mostrado en la consola
+          data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
+          contenConsola(data)
+          // Actualizar la información del esbirro en la interfaz
+          mostrarEsbirroSeleccionado()
+        }
+      }
+    }
+
+    function modificarVidaPoderActualEsbirro(accion) {
+      if (estadisticaSeleccionada === 'vida') {
+        if (accion === "mas") { // ? Incremento de vida
+          if (esbirroSeleccionado.vida < esbirroSeleccionado.vidaMaxima) esbirroSeleccionado.vida++
+        } else { // ? Decremento de vida
+          if (esbirroSeleccionado.vida > 0) esbirroSeleccionado.vida--
+        }
+        contenConsola(`Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`)
+      } else if (estadisticaSeleccionada === "poder") {
+        if (accion === "mas") { // ? Incremento de poder
+          if (esbirroSeleccionado.poder < esbirroSeleccionado.poderMaximo) esbirroSeleccionado.poder++
+        } else { // ? Decremento de poder
+          if (esbirroSeleccionado.poder > 0) esbirroSeleccionado.poder--
+        }
+        contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`)
+      }
+
+      mostrarEsbirroSeleccionado()
+    }
+  }
+  { // * Triggers
+    { // * Ataque, esquiva, bloqueo y velocidad
+      // Arreglo que contiene los nombres de atributos a los que se les asignarán eventos de clic
+      const dictAtributos = ['ataque', 'esquiva', 'bloqueo', 'velocidad']
+
+      // Itera a través del arreglo de atributos y configura eventos de clic para los botones correspondientes
+      dictAtributos.forEach((key) => {
+        // Obtiene una referencia al botón por su ID, que está compuesto por el nombre del atributo y "Btn"
+        let boton = document.getElementById(`${key}Btn`)
+
+        // Agrega un evento de clic al botón
+        boton.addEventListener('click', () => {
+          // Verifica si estamos en modo de edición y no es el personaje principal
+          if (edicion && !esPersonaje) {
+            // Establece el tipo de edición como "esbirro"
+            tipoEdicion = 'esbirro';
+            // Llama a la función para modificar la estadística correspondiente
+            modificarEstadistica(key);
+          } else if (!esPersonaje) {
+            // Si no estamos en modo de edición, muestra la estadística correspondiente
+            mostrarEstadistica('esbirro', key);
+          }
+        })
+      })
+    }
+
+    { // * Vida, vidaMaxima, poder y poderMaximo
+      // Agregar un controlador de evento al botón "vidaBtn"
+      vidaBtn.addEventListener('click', () => {
+        if (edicion && !esPersonaje) {
+          // Si estamos en modo edición y no es el personaje principal,
+          // establecer el tipo de edición en "esbirro" y modificar la estadística de "vidaMaxima"
+          tipoEdicion = "esbirro";
+          modificarEstadistica('vidaMaxima');
+        } else if (!edicion && !esPersonaje) {
+          // Si no estamos en modo edición y no es el personaje principal,
+          // establecer el tipo de edición en "esbirro", mostrar botones arriba/abajo
+          // y establecer la estadística seleccionada en "vida"
+          tipoEdicion = 'esbirro';
+          mostrarBtnArribaAbajo();
+          estadisticaSeleccionada = 'vida';
+
+          // Mostrar información de la estadística de vida actual y máxima en la consola
+          contenConsola(`Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`);
+        }
+      });
+
+      // Agregar un controlador de evento al botón "poderBtn"
+      poderBtn.addEventListener('click', () => {
+        if (edicion && !esPersonaje) {
+          // Si estamos en modo edición y no es el personaje principal,
+          // establecer el tipo de edición en "esbirro" y modificar la estadística de "poderMaximo"
+          tipoEdicion = "esbirro";
+          modificarEstadistica('poderMaximo');
+        } else if (!edicion && !esPersonaje) {
+          // Si no estamos en modo edición y no es el personaje principal,
+          // establecer el tipo de edición en "esbirro", mostrar botones arriba/abajo
+          // y establecer la estadística seleccionada en "poder"
+          tipoEdicion = 'esbirro';
+          mostrarBtnArribaAbajo();
+          estadisticaSeleccionada = 'poder';
+
+          // Mostrar información de la estadística de poder actual y máximo en la consola
+          contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`);
+        }
+      });
+    }
+  }
+}
+
+{ // * Modificación y descripción de habildades
+  { // * Funciones
+    function editarHabilidadEsbirro(ranura) {
+      let nombre = prompt('Ingrese habilidad')
+      esbirroSeleccionado.configurarHabilidad(ranura, quitarAcentos(nombre))
+
+      mostrarEsbirroSeleccionado()
+      cerrarEdicion()
+    }
+
+    function descripcionHabilidadEsbirro(ranura) {
+      contenConsola(esbirroSeleccionado[`habilidad${ranura}`].descripcion)
+    }
+  }
+  { // * Triggers
+    for (let i = 1; i <= 3; i++) {
+      const boton = document.getElementById(`habilidad${i}Btn`)
+      boton.addEventListener('click', () => {
+        if (edicion && !esPersonaje) editarHabilidadEsbirro(i)
+        else if (!esPersonaje) descripcionHabilidadEsbirro(i)
+      })
+    }
+  }
+}
 // TODO: Modificación y descripción de armas
+{ // * Modificación y descripción de armas
+  { // * Funciones
+
+  }
+}
 // TODO: Intercambio de esbirros
