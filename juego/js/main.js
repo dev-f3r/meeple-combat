@@ -804,7 +804,7 @@ let estadisticaSeleccionada
           let val = prompt("Nuevo nombre")
           personaje.nombre = val
           imprimirPersonaje()
-        } else {
+        } else if (esPersonaje) {
           contenConsola(personaje.descripcion)
         }
       }
@@ -1181,7 +1181,6 @@ let estadisticaSeleccionada
   // ? Limpia la consola
   consolaBtn.addEventListener('click', () => {
     if (edicion == 0 && (estadisticaSeleccionada !== "vida" && estadisticaSeleccionada !== "poder")) {
-      console.log("clear")
       contenConsola("")
     }
   })
@@ -1202,7 +1201,6 @@ let estadisticaSeleccionada
   function mostrarEstadistica(tipo, estadistica) {
     let data
 
-    console.log(tipo)
     if (tipo === "personaje") data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
     else data = `${capitalizarPrimeraLetra(estadistica)} ${esbirroSeleccionado[estadistica]}`
 
@@ -1845,7 +1843,6 @@ esbirrosBtn.addEventListener('click', () => {
   if (esPersonaje) {
     // Si se estaba mostrando el personaje, cambia a mostrar el esbirro
     esPersonaje = false;
-    console.log("Cambio a esbirro");
 
     // Muestra los boton de izquierda y derecha
     mostrarControlesCambioEsbirro()
@@ -1856,7 +1853,6 @@ esbirrosBtn.addEventListener('click', () => {
   } else {
     // Si se estaba mostrando un esbirro, cambia a mostrar el personaje
     esPersonaje = true;
-    console.log("Cambio a personaje");
 
     // Oculta los boton de izquierda y derecha
     ocultarControlesCambioEsbirro()
@@ -1966,7 +1962,8 @@ function mostrarEsbirroSeleccionado() {
   // ? Trigger de cambio de esbirro
   // TODO: Arreglar bug con cambio de nombre de personaje
   nombreBtn.addEventListener('click', () => {
-    if (esPersonaje === false) cambiarEsbirro()
+    if (edicion && !esPersonaje) cambiarEsbirro()
+    else if (!edicion && !esPersonaje) contenConsola(esbirroSeleccionado.descripcion)
   })
 }
 
