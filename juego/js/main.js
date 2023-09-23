@@ -21,7 +21,7 @@ document.body.addEventListener('dragstart', (e) => {
 
 
 var edicion = 0
-var tipoEdicion = ""
+var tipoEdicion = 'personaje'
 
 var personaje = {
 
@@ -127,6 +127,7 @@ const habilidadesDict = {
 let slotArmaSeleccionada = 1 // !
 // * 1..4
 let slotEstadisticaSeleccionada = 1 // !
+let atributoSeleccionado = 'ataque'
 // * arma || estadistica
 let objetoAccion = "arma" // !
 // ! CODIGO FER
@@ -989,7 +990,7 @@ let estadisticaSeleccionada
       }
 
       switch (item) {
-        case 'armaduraligera': // TODO: Arreglar estadisticas de Armadura Ligera
+        case 'armaduraLigera': // TODO: Arreglar estadisticas de Armadura Ligera
           equipo.nombre = "Armadura Ligera"
           equipo.icono = "img/armaduraligera.png"
           equipo.descripcion = ""
@@ -1017,7 +1018,8 @@ let estadisticaSeleccionada
   }
   { // * eventListeners de equipamiento
     armaduraligeraBtn.addEventListener('click', () => {
-      cambiarEquipamiento('armaduraligera')
+      if (esPersonaje) cambiarEquipamiento('armaduraLigera')
+      else cambiarEquipamientoEsbirro('armaduraLigera')
     }
     )
     // TODO: Agregar los demas listeners para los items restantes
@@ -1153,12 +1155,12 @@ let estadisticaSeleccionada
 
   { // * evenListener accion
     accionBtn.addEventListener('click', () => {
-      if (!edicion) {
-        accion(
-          objetoAccion == "arma"
-            ? slotArmaSeleccionada
-            : slotEstadisticaSeleccionada
-        )
+      if (!edicion && esPersonaje) {
+        if (objetoAccion === 'arma') accion(slotArmaSeleccionada)
+        else accion(slotEstadisticaSeleccionada)
+      } else if (!edicion && !esPersonaje) {
+        if (objetoAccion === 'arma') accionEsbirroArma(slotArmaSeleccionada)
+        else accionEsbirroAtributo(slotEstadisticaSeleccionada)
       }
     })
   }
@@ -1222,6 +1224,7 @@ let estadisticaSeleccionada
         break
     }
     objetoAccion = "estadistica"
+    atributoSeleccionado = estadistica
 
     contenConsola(data)
   }
@@ -1328,9 +1331,12 @@ let estadisticaSeleccionada
       arma2 = { nombre: "wp 2", danno: 0, descripcion: "dc wp 2" },
 
       // Equipamiento de esbirro
-      equipo1 = { nombre: "eq 1", descripcion: "dc eq 1" },
-      equipo2 = { nombre: "eq 2", descripcion: "dc eq 2" },
-      equipo3 = { nombre: "eq 3", descripcion: "dc eq 3" },
+      // equipo1 = { nombre: "eq 1", descripcion: "dc eq 1" },
+      equipo1 = "eq 1",
+      // equipo2 = { nombre: "eq 2", descripcion: "dc eq 2" },
+      equipo2 = "eq 2",
+      // equipo3 = { nombre: "eq 3", descripcion: "dc eq 3" },
+      equipo3 = "eq 3",
 
       // Habilidades de esbirro
       habilidad1 = { nombre: "sk 1", descripcion: "dc sk 1" },
@@ -1385,6 +1391,10 @@ let estadisticaSeleccionada
     configurarArma(ranura, nombre) {
       if (nombre in armasDict) this[`arma${ranura}`] = { nombre, danno: armasDict[nombre].danno, descripcion: armasDict[nombre].descripcion }
       else this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
+    }
+
+    configurarEquipamiento(ranura, nombre) {
+      this[`equipo${ranura}`] = nombre
     }
 
     /**
@@ -1867,14 +1877,64 @@ function mostrarEsbirroSeleccionado() {
   portadaImg.src = esbirroSeleccionado.imagen
   experienciaTxt.textContent = esbirroSeleccionado.experiencia
 
-  // TODO: A cada atributo se le debe incrementar las stats del equipamiento
-  ataqueTxt.textContent = esbirroSeleccionado.ataque
-  esquivaTxt.textContent = esbirroSeleccionado.esquiva
-  bloqueoTxt.textContent = esbirroSeleccionado.bloqueo
-  velocidadTxt.textContent = esbirroSeleccionado.velocidad
-  vidaTxt.textContent = esbirroSeleccionado.vida
-  poderTxt.textContent = esbirroSeleccionado.poder
 
+  { // * Dependientes de equipamiento
+    let eq1 = {
+      nombre: "",
+      icono: "img/nada.png",
+      descripcion: "",
+      nivel: 1,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
+      vidaMaxima: 0,
+      poderMaximo: 0,
+    }
+    let eq2 = {
+      nombre: "",
+      icono: "img/nada.png",
+      descripcion: "",
+      nivel: 1,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
+      vidaMaxima: 0,
+      poderMaximo: 0,
+    }
+    let eq3 = {
+      nombre: "",
+      icono: "img/nada.png",
+      descripcion: "",
+      nivel: 1,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
+      vidaMaxima: 0,
+      poderMaximo: 0,
+    }
+
+    if (esbirroSeleccionado.equipo1 in equipamientoDic) eq1 = equipamientoDic[esbirroSeleccionado.equipo1]
+    if (esbirroSeleccionado.equipo2 in equipamientoDic) eq2 = equipamientoDic[esbirroSeleccionado.equipo2]
+    if (esbirroSeleccionado.equipo3 in equipamientoDic) eq3 = equipamientoDic[esbirroSeleccionado.equipo3]
+
+    ataqueTxt.textContent = esbirroSeleccionado.ataque + eq1.ataque + eq2.ataque + eq3.ataque
+    esquivaTxt.textContent = esbirroSeleccionado.esquiva + eq1.esquiva + eq2.esquiva + eq3.esquiva
+    bloqueoTxt.textContent = esbirroSeleccionado.bloqueo + eq1.bloqueo + eq2.bloqueo + eq3.bloqueo
+    velocidadTxt.textContent = esbirroSeleccionado.velocidad + eq1.velocidad + eq2.velocidad + eq3.velocidad
+    vidaTxt.textContent = esbirroSeleccionado.vida
+    poderTxt.textContent = esbirroSeleccionado.poder
+
+    equipo1Txt.textContent = eq1.nivel
+    equipo2Txt.textContent = eq2.nivel
+    equipo3Txt.textContent = eq3.nivel
+
+    equipo1Img.src = eq1.icono
+    equipo2Img.src = eq2.icono
+    equipo3Img.src = eq3.icono
+  }
   arma1Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma1.nombre)
   arma1Img.src = `img/${esbirroSeleccionado.arma1.nombre}.png`
 
@@ -2141,3 +2201,92 @@ function mostrarEsbirroSeleccionado() {
 }
 
 // TODO: Yo, adaptar acción para esbirros
+{ // * Accion esbirro
+  { // * Funciones
+    function accionEsbirroArma(slot) {
+      let dado = Math.ceil((Math.random() * 20) + 0)
+
+      let arma = esbirroSeleccionado[`arma${slot}`]
+      // TODO: Completar el funcionamiento de tirada
+      if (dado == 20)
+        contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * esbirroSeleccionado.ataque * 2)}`)
+      else if (dado == 1)
+        contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
+      else
+        contenConsola(`Ataque con ${arma.nombre}<br>${dado + esbirroSeleccionado.ataque}<br>Daño base ${Math.floor(arma.danno * esbirroSeleccionado.ataque)}`)
+    }
+
+    function accionEsbirroAtributo(slot) {
+      let dado = Math.ceil((Math.random() * 20) + 0)
+      switch (slot) {
+        case 1: // * Ataque
+          // TODO: Retocar el ataque limpio
+          if (dado == 20)
+            contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(esbirroSeleccionado.ataque * 2)}`)
+          else if (dado == 1)
+            contenConsola(`Ataque limpio<br>¡PIFIA!<br>Daño base 0`)
+          else
+            contenConsola(`Ataque limpio<br>${dado + esbirroSeleccionado.ataque}<br>Daño base ${Math.floor(esbirroSeleccionado.ataque)}`)
+          break;
+        case 2: // * Esquiva
+          // TODO: Retocar esquiva
+          if (dado == 20)
+            contenConsola(`Esquiva<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+          else if (dado == 1)
+            contenConsola(`Esquiva<br>¡PIFIA!`)
+          else
+            contenConsola(`Esquiva<br>${dado + esbirroSeleccionado.esquiva}`)
+          break;
+        case 3: // * Bloquea
+          // TODO: Retocar bloqueo
+          if (dado == 20)
+            contenConsola(`Bloquea<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+          else if (dado == 1)
+            contenConsola(`Bloquea<br>¡PIFIA!`)
+          else
+            contenConsola(`Bloquea<br>${dado + esbirroSeleccionado.esquiva}`)
+          break;
+        case 4: // * Huye
+          // TODO: Retocar huye
+          if (dado == 20)
+            contenConsola(`Huye<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+          else if (dado == 1)
+            contenConsola(`Huye<br>¡PIFIA!`)
+          else
+            contenConsola(`Huye<br>${dado + esbirroSeleccionado.esquiva}`)
+          break;
+        default:
+          break;
+      }
+    }
+  }
+}
+
+// TODO: Yo, modificación de equipamiento de esbirros
+{ // * Equipamiento de esbirros
+  { // * Funciones
+    var equipamientoDic = {
+      'armaduraLigera': {
+        // TODO: Arreglar armadura ligera
+        nombre: "Armadura Ligera",
+        icono: "img/armaduraligera.png",
+        descripcion: "",
+        nivel: 1,
+        ataque: 1000,
+        esquiva: 1000,
+        bloqueo: 1000,
+        velocidad: 1000,
+        vidaMaxima: 1000,
+        poderMaximo: 1000,
+      }
+
+      // TODO: Agregar el resto de equipamiento
+    }
+
+    function cambiarEquipamientoEsbirro(item) {
+      esbirroSeleccionado.configurarEquipamiento(equipamientoSeleccionado, item)
+      mostrarEsbirroSeleccionado()
+      cerrarModal('equipamiento')
+    }
+  }
+}
