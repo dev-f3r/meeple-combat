@@ -1830,7 +1830,7 @@ let estadisticaSeleccionada
   esbirros[0].actualizarPropiedades(esbirrosDict.lobo)
   esbirros[1].actualizarPropiedades(esbirrosDict.esqueleto)
   esbirros[2].actualizarPropiedades(esbirrosDict.ghalidos)
-  esbirros[3].actualizarPropiedades(esbirrosDict.raizor)
+  esbirros[3].actualizarPropiedades(esbirrosDict.naigaran)
   esbirros[4].actualizarPropiedades(esbirrosDict.terronte)
   // ! Lista de esbirros !
 }
