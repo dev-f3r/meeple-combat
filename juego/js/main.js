@@ -123,14 +123,12 @@ const habilidadesDict = {
   "petrificar": "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo, una vez sin velocidad el objetivo recibe doble de daño.<br> Poder(6)"
 }
 
-// * 1..2
-let slotArmaSeleccionada = 1 // !
-// * 1..4
-let slotEstadisticaSeleccionada = 1 // !
-let atributoSeleccionado = 'ataque'
-// * arma || estadistica
-let objetoAccion = "arma" // !
-// ! CODIGO FER
+// ? Indica el arma seleccionada para ejecutar la función acción(), rango 1..2
+let slotArmaSeleccionada = 1
+// ? Indica el atributo seleccionado para ejecutar la función acción(), rango 1..6
+let slotEstadisticaSeleccionada = 1
+// ? Indica si selecciono un arma o un atributo para ejecutar la función acción(), valor "arma" || "estadistica"
+let objetoAccion = "arma"
 
 var arma1 = {
 
@@ -700,7 +698,10 @@ let estadisticaSeleccionada
         mostrarBtnArribaAbajo()
         estadisticaSeleccionada = "vida"
 
-        // contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
+        slotEstadisticaSeleccionada = 5
+        objetoAccion = "estadistica"
+
+
         consolaBtn.textContent = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
       }
     })
@@ -713,7 +714,9 @@ let estadisticaSeleccionada
         mostrarBtnArribaAbajo()
         estadisticaSeleccionada = "poder"
 
-        // contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
+        slotEstadisticaSeleccionada = 6
+        objetoAccion = "estadistica"
+
         consolaBtn.textContent = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
       }
     })
@@ -1090,6 +1093,7 @@ let estadisticaSeleccionada
         * @slot: number
     */
     function accion(slot) {
+      console.log(slot)
       let dado = Math.ceil((Math.random() * 20) + 0)
 
       if (objetoAccion == "arma") {
@@ -1141,6 +1145,16 @@ let estadisticaSeleccionada
               contenConsola(`Huye<br>¡PIFIA!`)
             else
               contenConsola(`Huye<br>${dado + personaje.esquiva}`)
+            break;
+          case 5:
+          case 6: // * Tirada limpia
+            // TODO: Retocar tirada limpia
+            if (dado == 20)
+              contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
+            else if (dado == 1)
+              contenConsola(`Tirada limpia<br>¡PIFIA!`)
+            else
+              contenConsola(`Tirada limpia<br>${dado + personaje.esquiva}`)
             break;
           default:
             break;
@@ -1218,7 +1232,6 @@ let estadisticaSeleccionada
         break
     }
     objetoAccion = "estadistica"
-    atributoSeleccionado = estadistica
 
     contenConsola(data)
   }
@@ -2090,6 +2103,9 @@ function mostrarEsbirroSeleccionado() {
           mostrarBtnArribaAbajo();
           estadisticaSeleccionada = 'vida';
 
+          slotEstadisticaSeleccionada = 5
+          objetoAccion = "estadistica"
+
           // Mostrar información de la estadística de vida actual y máxima en la consola
           // contenConsola(`Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`);
           consolaBtn.textContent = `Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`
@@ -2110,6 +2126,9 @@ function mostrarEsbirroSeleccionado() {
           tipoEdicion = 'esbirro';
           mostrarBtnArribaAbajo();
           estadisticaSeleccionada = 'poder';
+
+          slotEstadisticaSeleccionada = 6
+          objetoAccion = "estadistica"
 
           // Mostrar información de la estadística de poder actual y máximo en la consola
           // contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`)
