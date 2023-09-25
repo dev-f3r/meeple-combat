@@ -371,6 +371,7 @@ arma2TxtBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
 */
 // ? Funcion para cambio de personaje
 function avatar(meeple) {
+  esPersonaje = true
   if (meeple == "GUERRERO") {
 
     edicionTotal = 0
@@ -428,15 +429,15 @@ guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
 function atributos() { }
 
 
+// ? Indica que ranura de equipamiento se esta editando, rango 1..3
+let equipamientoSeleccionado = 1
 
-let equipamientoSeleccionado // !
-
-/* 
-    * @slot: number
-*/
-// ? Funcion para mostrar el modal de equipamiento
+/**
+ * ? Funcion para mostrar el modal de equipamiento
+ * @param {number} slot - numero de ranura en equipamiento seleccionada
+ */
 function equipo(slot) {
-  equipamientoSeleccionado = slot // !
+  equipamientoSeleccionado = slot
   if (edicion == 1) {
 
     modalEquipo.style.display = "grid"
@@ -444,7 +445,6 @@ function equipo(slot) {
   } else {
     contenConsola(`Slot de equipamiento ${slot}`)
   }
-
 }
 
 equipo1Btn.addEventListener('click', function () { equipo(1) })
