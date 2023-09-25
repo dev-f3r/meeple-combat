@@ -371,78 +371,54 @@ arma2TxtBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
 */
 // ? Funcion para cambio de personaje
 function avatar(meeple) {
+  if (meeple == "GUERRERO") {
 
-  if (edicion == 1) {
+    edicionTotal = 0
 
-    modalPersonaje.style.display = "grid"
+    personaje.experiencia = 0
 
+    personaje.nombre = "GUERRERO"
+    personaje.meeple = "img/guerrero.png"
+    personaje.descripcion = "Descripción gerrero"
 
-    if (meeple == "GUERRERO") {
+    personaje.ataque = 4
+    personaje.esquiva = 2
+    personaje.bloqueo = 5
+    personaje.velocidad = 3
+    personaje.vida = 40
+    personaje.vidaMaxima = 40
+    personaje.poder = 40
+    personaje.poderMaximo = 40
 
-      edicionTotal = 0
+    personaje.equipo1 = ""
+    personaje.equipo2 = ""
+    personaje.equipo3 = ""
 
-      personaje.experiencia = 0
+    personaje.arma1 = "Una Mano"
+    personaje.arma2 = "Escudo"
 
-      personaje.nombre = "GUERRERO"
-      personaje.meeple = "img/guerrero.png"
-      personaje.descripcion = "Descripción gerrero"
+    habilidad1.nombre = "EMBESTIDA CON ESCUDO"
+    habilidad1.descripcion = habilidadesDict[habilidad1.nombre.toLowerCase()]
+    habilidad2.nombre = "COBERTURA"
+    habilidad2.descripcion = habilidadesDict[habilidad2.nombre.toLowerCase()]
+    habilidad3.nombre = "ATAQUE PODEROSO"
+    habilidad3.descripcion = habilidadesDict[habilidad3.nombre.toLowerCase()]
 
-      personaje.ataque = 4
-      personaje.esquiva = 2
-      personaje.bloqueo = 5
-      personaje.velocidad = 3
-      personaje.vida = 40
-      personaje.vidaMaxima = 40
-      personaje.poder = 40
-      personaje.poderMaximo = 40
+    descripcionHabilidad(1)
+    descripcionHabilidad(2)
+    descripcionHabilidad(3)
 
-      personaje.equipo1 = ""
-      personaje.equipo2 = ""
-      personaje.equipo3 = ""
+    cambiarArma("daga", 1)
+    cambiarArma("escudo", 2)
 
-      personaje.arma1 = "Una Mano"
-      personaje.arma2 = "Escudo"
-
-      // personaje.habilidad1 = "EMBESTIDA CON ESCUDO"
-      // personaje.habilidad2 = "COBERTURA"
-      // personaje.habilidad3 = "ATAQUE PODEROSO"
-      habilidad1.nombre = "EMBESTIDA CON ESCUDO"
-      habilidad1.descripcion = habilidadesDict[habilidad1.nombre.toLowerCase()]
-      habilidad2.nombre = "COBERTURA"
-      habilidad2.descripcion = habilidadesDict[habilidad2.nombre.toLowerCase()]
-      habilidad3.nombre = "ATAQUE PODEROSO"
-      habilidad3.descripcion = habilidadesDict[habilidad3.nombre.toLowerCase()]
-
-
-
-      // modalPersonaje.style.display = "none"
-      cerrarModal("personajes")
-
-      // edicion = 0
-      // editarImg.src = "img/editar.png"
-      cerrarEdicion()
-
-      // armas("Una Mano", 1)
-      cambiarArma("daga", 1)
-      // armas("Escudo", 2)
-      cambiarArma("escudo", 2)
-
-      imprimirPersonaje()
-
-      contenConsola(personaje.descripcion)
-      descripcionHabilidad(1)
-      descripcionHabilidad(2)
-      descripcionHabilidad(3)
-    }
-
-    // TODO: Agregar los demas personajes
-
-  } else {
-    contenConsola(`${personaje.nombre}<br>${personaje.descripcion}`)
+    imprimirPersonaje()
+    cerrarModal("personajes")
+    cerrarEdicion()
+    contenConsola(personaje.descripcion)
   }
 
+  // TODO: Agregar los demas personajes
   imprimirPersonaje()
-
 }
 // portadaBtn.addEventListener('click', function () { avatar() })
 guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
@@ -1841,17 +1817,21 @@ let estadisticaSeleccionada
 
   // ! Lista de esbirros !
   // Crea un array vacío para almacenar instancias de la clase Esbirro
-  var esbirros = [];
+  var esbirros = []
 
   // Crea cinco instancias de Esbirro y las agrega al array esbirros
   for (let i = 0; i < 5; i++) {
-    esbirros.push(new Esbirro({ nombre: `Esbirro ${i + 1}` }));
+    esbirros.push(new Esbirro({ nombre: `Esbirro ${i + 1}` }))
   }
 
   // * El siguiente código se utiliza para actualizar la primera instancia de esbirro
   // * con la información del esbirro "lobo" de esbirrosDict. Esto es temporal y debe descartarse
   // * después de completar las pruebas necesarias.
-  esbirros[0].actualizarPropiedades(esbirrosDict.lobo);
+  esbirros[0].actualizarPropiedades(esbirrosDict.lobo)
+  esbirros[1].actualizarPropiedades(esbirrosDict.esqueleto)
+  esbirros[2].actualizarPropiedades(esbirrosDict.ghalidos)
+  esbirros[3].actualizarPropiedades(esbirrosDict.raizor)
+  esbirros[4].actualizarPropiedades(esbirrosDict.terronte)
   // ! Lista de esbirros !
 }
 
