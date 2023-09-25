@@ -27,7 +27,7 @@ var personaje = {
 
   nombre: "BIENVENIDO",
   meeple: "img/logo-meeple-combat.png",
-  descripcion: "",
+  descripcion: "Descripcion personaje default",
 
   experiencia: 0,
 
@@ -1847,12 +1847,10 @@ esbirrosBtn.addEventListener('click', () => {
     // Si se estaba mostrando el personaje, cambia a mostrar el esbirro
     esPersonaje = false;
 
-    // Muestra los boton de izquierda y derecha
-    // TODO: Yo, solo mostrar los controles de cambio de esbirro si se hace click en la portada
-    // mostrarControlesCambioEsbirro()
-
     // Llama a la función para mostrar la información del esbirro seleccionado
     mostrarEsbirroSeleccionado();
+
+    contenConsola(esbirroSeleccionado.descripcion)
   } else {
     // Si se estaba mostrando un esbirro, cambia a mostrar el personaje
     esPersonaje = true;
@@ -1862,7 +1860,8 @@ esbirrosBtn.addEventListener('click', () => {
     flagControlesCambioEsbirro = false
 
     // Llama a la función para mostrar la información del personaje
-    imprimirPersonaje();
+    imprimirPersonaje()
+    contenConsola(personaje.descripcion)
   }
 });
 
