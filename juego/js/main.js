@@ -278,15 +278,19 @@ editarBtn.addEventListener('click', function () {
 
 })
 
+let flagControlesCambioEsbirro = false
 portadaBtn.addEventListener('click', function () {
-
   if (edicion == 1) {
-
     modalPersonaje.style.display = "grid"
+  }
 
-  } else {
-
-
+  // ? Si esta en modo juego y el personaje es un esbirro muestra los botones para intercambiar entre esbirros
+  if (!edicion && !esPersonaje && !flagControlesCambioEsbirro) {
+    flagControlesCambioEsbirro = true
+    mostrarControlesCambioEsbirro()
+  } else if (!edicion && !esPersonaje && flagControlesCambioEsbirro) {
+    flagControlesCambioEsbirro = false
+    ocultarControlesCambioEsbirro()
   }
 
 })
@@ -440,7 +444,7 @@ function avatar(meeple) {
   imprimirPersonaje()
 
 }
-portadaBtn.addEventListener('click', function () { avatar() })
+// portadaBtn.addEventListener('click', function () { avatar() })
 guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
 // TODO: Agregar los demas evenListener de los personajes faltantes
 
@@ -525,26 +529,33 @@ let estadisticaSeleccionada
 
       if (tipo === "personaje") {
         // Calcular el valor de experiencia según la acción y estadística
-        valor =
-          accion === "mas"
-            ? (personaje[estadistica] === 0 ? 1 : personaje[estadistica] + 1) *
-            valorExperiencia[estadistica]
-            : personaje[estadistica] * valorExperiencia[estadistica];
-
+        if (estadistica === 'vidaMaxima' || estadistica === 'poderMaximo') {
+          valor = 1
+        }
+        else {
+          valor =
+            accion === "mas"
+              ? (personaje[estadistica] === 0 ? 1 : personaje[estadistica] + 1) *
+              valorExperiencia[estadistica]
+              : personaje[estadistica] * valorExperiencia[estadistica]
+        }
         // Incrementar o disminuir la experiencia del personaje
-        personaje.experiencia += accion === "mas" ? valor : valor * -1;
+        personaje.experiencia += accion === "mas" ? valor : valor * -1
       } else {
-        // Calcular el valor de experiencia según la acción y estadística
-        valor =
-          accion === "mas"
-            ? (esbirroSeleccionado[estadistica] === 0
-              ? 1
-              : esbirroSeleccionado[estadistica] + 1) *
-            valorExperiencia[estadistica]
-            : esbirroSeleccionado[estadistica] * valorExperiencia[estadistica];
-
+        if (estadistica === 'vidaMaxima' || estadistica === 'poderMaximo') {
+          valor = 1
+        } else {
+          // Calcular el valor de experiencia según la acción y estadística
+          valor =
+            accion === "mas"
+              ? (esbirroSeleccionado[estadistica] === 0
+                ? 1
+                : esbirroSeleccionado[estadistica] + 1) *
+              valorExperiencia[estadistica]
+              : esbirroSeleccionado[estadistica] * valorExperiencia[estadistica]
+        }
         // Incrementar o disminuir la experiencia del esbirro seleccionado
-        esbirroSeleccionado.experiencia += accion === "mas" ? valor : valor * -1;
+        esbirroSeleccionado.experiencia += accion === "mas" ? valor : valor * -1
       }
     }
 
@@ -580,7 +591,8 @@ let estadisticaSeleccionada
         data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`;
       }
 
-      contenConsola(data);
+      // contenConsola(data);
+      consolaBtn.textContent = data
     }
 
 
@@ -593,10 +605,14 @@ let estadisticaSeleccionada
       let data = ""
 
       // * componenetes
-      let consola = consolaTxt
+      let consola = consolaBtn
 
       // ? valor de experiencia minimo requerido
-      let valor = (personaje[estadistica] + 1) * valorExperiencia[estadistica]
+      let valor
+      if (estadistica === 'vidaMaxima' || estadistica === 'poderMaximo') {
+        valor = 1
+      }
+      else valor = (personaje[estadistica] + 1) * valorExperiencia[estadistica]
 
       if (accion === 'mas') {
         if (personaje.experiencia >= valor) {
@@ -654,14 +670,16 @@ let estadisticaSeleccionada
         } else { // ? Decremento de vida
           if (personaje.vida > 0) personaje.vida--
         }
-        contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
+        // contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
+        consolaBtn.textContent = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
       } else if (estadisticaSeleccionada === "poder") {
         if (accion === "mas") { // ? Incremento de poder
           if (personaje.poder < personaje.poderMaximo) personaje.poder++
         } else { // ? Decremento de poder
           if (personaje.poder > 0) personaje.poder--
         }
-        contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
+        // contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
+        consolaBtn.textContent = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
       }
       imprimirPersonaje()
     }
@@ -706,7 +724,8 @@ let estadisticaSeleccionada
         mostrarBtnArribaAbajo()
         estadisticaSeleccionada = "vida"
 
-        contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
+        // contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
+        consolaBtn.textContent = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
       }
     })
     poderBtn.addEventListener('click', () => {
@@ -718,7 +737,8 @@ let estadisticaSeleccionada
         mostrarBtnArribaAbajo()
         estadisticaSeleccionada = "poder"
 
-        contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
+        // contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
+        consolaBtn.textContent = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
       }
     })
   }
@@ -1232,7 +1252,10 @@ let estadisticaSeleccionada
   */
   // ? Modifica el contenido de la consola
   function contenConsola(val) {
-    consolaTxt.innerHTML = val
+    consolaBtn.innerHTML = val
+
+    arribaBtn.style.display = "none"
+    abajoBtn.style.display = "none"
   }
 
   /* 
@@ -1845,22 +1868,21 @@ esbirrosBtn.addEventListener('click', () => {
     esPersonaje = false;
 
     // Muestra los boton de izquierda y derecha
-    mostrarControlesCambioEsbirro()
+    // TODO: Yo, solo mostrar los controles de cambio de esbirro si se hace click en la portada
+    // mostrarControlesCambioEsbirro()
 
     // Llama a la función para mostrar la información del esbirro seleccionado
     mostrarEsbirroSeleccionado();
-    // TODO: Agregar lógica para mostrar los botones de cambio de esbirro
   } else {
     // Si se estaba mostrando un esbirro, cambia a mostrar el personaje
     esPersonaje = true;
 
     // Oculta los boton de izquierda y derecha
     ocultarControlesCambioEsbirro()
+    flagControlesCambioEsbirro = false
 
     // Llama a la función para mostrar la información del personaje
     imprimirPersonaje();
-
-    // TODO: Agregar lógica para ocultar los botones
   }
 });
 
@@ -1960,7 +1982,6 @@ function mostrarEsbirroSeleccionado() {
   }
 
   // ? Trigger de cambio de esbirro
-  // TODO: Arreglar bug con cambio de nombre de personaje
   nombreBtn.addEventListener('click', () => {
     if (edicion && !esPersonaje) cambiarEsbirro()
     else if (!edicion && !esPersonaje) contenConsola(esbirroSeleccionado.descripcion)
@@ -1978,7 +1999,10 @@ function mostrarEsbirroSeleccionado() {
       let data = ""
 
       // Valor mínimo requerido para aumentar el atributo
-      let valor = (esbirroSeleccionado[atributo] + 1) * valorExperiencia[atributo]
+      let valor
+      if (atributo === 'vidaMaxima' || atributo === 'poderMaximo') {
+        valor = 1
+      } else valor = (esbirroSeleccionado[atributo] + 1) * valorExperiencia[atributo]
 
       if (accion === 'mas') {
         if (esbirroSeleccionado.experiencia >= valor) {
@@ -1989,12 +2013,13 @@ function mostrarEsbirroSeleccionado() {
           // Decrementar experiencia
           aumentarDisminuirExperiencia("esbirroSeleccionado", 'menos', atributo)
           // Cambiar contenido mostrado en la consola
-          contenConsola(data)
+          // contenConsola(data)
+          consolaBtn.textContent = data
           // Actualizar la información del esbirro en la interfaz
-          mostrarEsbirroSeleccionado()
+          // mostrarEsbirroSeleccionado()
         } else {
-
-          contenConsola("Experiencia insuficiente")
+          // contenConsola("Experiencia insuficiente")
+          consolaBtn.textContent = "Experiencia insuficiente"
         }
       } else {
         if (esbirroSeleccionado[atributo] > 0) {
@@ -2013,11 +2038,13 @@ function mostrarEsbirroSeleccionado() {
           aumentarDisminuirExperiencia('esbirroSeleccionado', 'mas', atributo)
           // Cambiar contenido mostrado en la consola
           data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
-          contenConsola(data)
-          // Actualizar la información del esbirro en la interfaz
-          mostrarEsbirroSeleccionado()
+          // contenConsola(data)
+          consolaBtn.textContent = data
         }
       }
+      // Actualizar la información del esbirro en la interfaz
+      // console.log('actualizar')
+      mostrarEsbirroSeleccionado()
     }
 
     function modificarVidaPoderActualEsbirro(accion) {
@@ -2027,14 +2054,16 @@ function mostrarEsbirroSeleccionado() {
         } else { // ? Decremento de vida
           if (esbirroSeleccionado.vida > 0) esbirroSeleccionado.vida--
         }
-        contenConsola(`Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`)
+        // contenConsola(`Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`)
+        consolaBtn.textContent = `Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`
       } else if (estadisticaSeleccionada === "poder") {
         if (accion === "mas") { // ? Incremento de poder
           if (esbirroSeleccionado.poder < esbirroSeleccionado.poderMaximo) esbirroSeleccionado.poder++
         } else { // ? Decremento de poder
           if (esbirroSeleccionado.poder > 0) esbirroSeleccionado.poder--
         }
-        contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`)
+        // contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`)
+        consolaBtn.textContent = `Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`
       }
 
       mostrarEsbirroSeleccionado()
@@ -2083,7 +2112,8 @@ function mostrarEsbirroSeleccionado() {
           estadisticaSeleccionada = 'vida';
 
           // Mostrar información de la estadística de vida actual y máxima en la consola
-          contenConsola(`Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`);
+          // contenConsola(`Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`);
+          consolaBtn.textContent = `Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`
         }
       });
 
@@ -2103,7 +2133,8 @@ function mostrarEsbirroSeleccionado() {
           estadisticaSeleccionada = 'poder';
 
           // Mostrar información de la estadística de poder actual y máximo en la consola
-          contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`);
+          // contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`)
+          consolaBtn.textContent = `Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`
         }
       });
     }
@@ -2134,7 +2165,7 @@ function mostrarEsbirroSeleccionado() {
     }
   }
 }
-// TODO: Modificación y descripción de armas
+
 { // * Modificación y descripción de armas
   { // * Funciones
     /**
@@ -2167,7 +2198,7 @@ function mostrarEsbirroSeleccionado() {
     // }
   }
 }
-// TODO: Intercambio de esbirros
+
 { // * Intercambio de esbirro
   { // * Funciones
     function mostrarControlesCambioEsbirro() {
@@ -2197,7 +2228,6 @@ function mostrarEsbirroSeleccionado() {
   }
 }
 
-// TODO: Yo, adaptar acción para esbirros
 { // * Accion esbirro
   { // * Funciones
     function accionEsbirroArma(slot) {
@@ -2259,7 +2289,6 @@ function mostrarEsbirroSeleccionado() {
   }
 }
 
-// TODO: Yo, modificación de equipamiento de esbirros
 { // * Equipamiento de esbirros
   { // * Funciones
     var equipamientoDic = {
