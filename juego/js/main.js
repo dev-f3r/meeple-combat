@@ -2300,12 +2300,14 @@ function mostrarEsbirroSeleccionado() {
       if (i < 0) i = esbirros.length - 1
       esbirroSeleccionado = esbirros[i]
       mostrarEsbirroSeleccionado()
+      contenConsola(esbirroSeleccionado.descripcion)
     })
     derechaBtn.addEventListener('click', () => {
       i++
       if (i > esbirros.length - 1) i = 0
       esbirroSeleccionado = esbirros[i]
       mostrarEsbirroSeleccionado()
+      contenConsola(esbirroSeleccionado.descripcion)
     })
   }
 }
