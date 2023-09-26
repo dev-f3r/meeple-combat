@@ -131,6 +131,7 @@ var esbirrosDict = {
     nombre: "LOBO",
     imagen: "img/lobo.png",
     icono: "",
+
     ataque: 3,
     esquiva: 2,
     bloqueo: 1,
@@ -139,11 +140,14 @@ var esbirrosDict = {
     vidaMaxima: 19,
     poder: 22,
     poderMaximo: 22,
+
     arma1: "mordisco",
     arma2: "garras",
+
     habilidad1: "derribo",
     habilidad2: "desgarro",
     habilidad3: "habilidad 3",
+
     descripcion: "LOBO <br> Criatura de Sangre <br> Coste de invocación: 20"
   },
   "esqueleto": {
@@ -344,19 +348,24 @@ var personajesDict = {
   "guerrero": {
     nombre: "guerrero",
     imagen: "img/guerrero.png",
+    icono: "",
+
     ataque: 4,
     esquiva: 2,
-    mitigacion: 5,
+    bloqueo: 5,
     velocidad: 3,
     vida: 40,
     vidaMaxima: 40,
     poder: 40,
     poderMaximo: 40,
+
     arma1: "espada",
     arma2: "escudo",
+
     habilidad1: "embestida con escudo",
     habilidad2: "cobertura",
     habilidad3: "ataque poderoso",
+
     descripcion: "combatiente cuerpo a cuerpo, con mucha resistencia pero muy poco daño base."
   },
   "chaman": {
@@ -364,7 +373,7 @@ var personajesDict = {
     imagen: "img/chaman.png",
     ataque: 5,
     esquiva: 3,
-    mitigacion: 3,
+    bloqueo: 3,
     velocidad: 3,
     vida: 40,
     vidaMaxima: 40,
@@ -382,7 +391,7 @@ var personajesDict = {
     imagen: "img/barbaro.png",
     ataque: 6,
     esquiva: 1,
-    mitigacion: 1,
+    bloqueo: 1,
     velocidad: 4,
     vida: 33,
     vidaMaxima: 33,
@@ -400,7 +409,7 @@ var personajesDict = {
     imagen: "img/picaro.png",
     ataque: 4,
     esquiva: 4,
-    mitigacion: 2,
+    bloqueo: 2,
     velocidad: 4,
     vida: 25,
     vidaMaxima: 25,
@@ -418,7 +427,7 @@ var personajesDict = {
     imagen: "img/mago.png",
     ataque: 5,
     esquiva: 3,
-    mitigacion: 1,
+    bloqueo: 1,
     velocidad: 4,
     vida: 20,
     vidaMaxima: 20,
@@ -436,7 +445,7 @@ var personajesDict = {
     imagen: "img/paladin.png",
     ataque: 5,
     esquiva: 3,
-    mitigacion: 4,
+    bloqueo: 4,
     velocidad: 3,
     vida: 30,
     vidaMaxima: 30,
@@ -854,7 +863,11 @@ function avatar(meeple) {
   imprimirPersonaje()
 }
 // portadaBtn.addEventListener('click', function () { avatar() })
-guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
+// guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
+guerreroBtn.addEventListener('click', () => {
+  if (esPersonaje) avatar("GUERRERO")
+  else if (!esPersonaje) cambiarEsbirro('guerrero')
+})
 // TODO: Agregar los demas evenListener de los personajes faltantes
 
 
@@ -2005,22 +2018,28 @@ function mostrarEsbirroSeleccionado() {
   /**
    * ? Función para cambiar el esbirro al de la izquierda o derecha
    */
-  function cambiarEsbirro() {
-    let val = prompt("Ingrese comando")
-
-    if (val in esbirrosDict) {
-      esbirroSeleccionado.actualizarPropiedades(esbirrosDict[val])
+  function cambiarEsbirro(nombre) {
+    console.log("cambiarEsbirro", nombre)
+    if (nombre) {
+      esbirroSeleccionado.actualizarPropiedades(personajesDict[nombre])
     } else {
-      contenConsola("COMANDO INCORRECTO")
+      let val = prompt("Ingrese comando")
+
+      if (val in esbirrosDict) {
+        esbirroSeleccionado.actualizarPropiedades(esbirrosDict[val])
+      } else {
+        contenConsola("COMANDO INCORRECTO")
+      }
     }
 
     mostrarEsbirroSeleccionado()
     cerrarEdicion()
+    cerrarModal('personajes')
   }
 
   // ? Trigger de cambio de esbirro
   nombreBtn.addEventListener('click', () => {
-    if (edicion && !esPersonaje) cambiarEsbirro()
+    if (edicion && !esPersonaje) cambiarEsbirro(null)
     else if (!edicion && !esPersonaje) contenConsola(esbirroSeleccionado.descripcion)
   })
 }
