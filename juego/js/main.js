@@ -18,6 +18,440 @@ document.body.addEventListener('dragstart', (e) => {
 });
 
 
+// ? Objeto para almacenar información de las armas
+// TODO: Cada arma debe contener una propiedad para el daño y su descripción
+var armasDict = {
+  // * Armas de personaje
+  "punno": {
+    danno: 0.75,
+    descripcion: "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
+  },
+  "patadas": {
+    danno: 1,
+    descripcion: "Arma natural <br> 2 Acciones / 100% de ataque como daño físico"
+  },
+  "daga": {
+    danno: 1,
+    descripcion: "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
+  },
+  "espada": {
+    danno: 1.5,
+    descripcion: "Arma a dos manos <br> 2 Acciones / 150% de ataque como daño físico"
+  },
+  "arco": {
+    danno: 1.75,
+    descripcion: "Arma a distancia <br> 3 casilleros x ataque / 3 Acciones / 175% de ataque como daño físico"
+  },
+  "arrojadiza": {
+    danno: 0.75,
+    descripcion: "Arma arrojadiza <br> 3 casillero x ataque / 2 Acciones / 75% de ataque como daño físico"
+  },
+  "escudo": {
+    danno: 0.5,
+    descripcion: "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
+  },
+  "mano": {
+    danno: 1,
+    descripcion: "Arma a distancia <br> 1 casillero x ataque / 1 Acción / 100% de ataque como daño mágico"
+  },
+  "varita": {
+    danno: 1,
+    descripcion: "Arma a distancia <br> 3 casilleros x ataque / 1 Accion / 100% de ataque como daño mágico"
+  },
+  "baculo": {
+    danno: 1.5,
+    descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 150% de ataque como daño mágico"
+  },
+  "runa": {
+    danno: 0.75,
+    descripcion: "Arma a distancia <br> 3 casilleros x ataque / 2 Acciones / 75% de ataque como daño mágico"
+  },
+  "totem": {
+    danno: 1,
+    descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
+  },
+  "hoja runa": {
+    danno: 1,
+    descripcion: "Arma mixta <br> 1 casillero x ataque / 2 Acciones / 100% de ataque como daño físico o mágico"
+  },
+  // * Armas de esbirros
+  "mordisco": {
+    danno: 1.5,
+    descripcion: "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño físico"
+  },
+  "garras": {
+    danno: 1,
+    descripcion: "Garras <br> / 1 Accion / 100% de ataque como daño físico"
+  },
+  "aliento": {
+    danno: 2.5,
+    descripcion: "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima de 1 casillero x punto de ataque"
+  },
+  "pinzas": {
+    danno: 1.75,
+    descripcion: "PINZAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 175% de ataque como daño físico"
+  },
+  "mente": {
+    danno: 1,
+    descripcion: "MENTE <br> Arma a distancia / 1 Accion <br> 100% de ataque como daño mágico. <br> Distancia máxima de 2 casillero x punto de ataque"
+  },
+  "ramas": {
+    danno: 1.25,
+    descripcion: "RAMAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
+  },
+  "esporas": {
+    danno: 1.25,
+    descripcion: "ESPORAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
+  },
+  "alas": {
+    danno: 1.25,
+    descripcion: "ALAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
+  },
+  "mirada": {
+    danno: 1.25,
+    descripcion: "MIRADA <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 2 casilleros x punto de ataque"
+  },
+  "cuernos": {
+    danno: 1.25,
+    descripcion: "CUERNOS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
+  },
+  "cascos": {
+    danno: 1.25,
+    descripcion: "CASCOS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
+  },
+  "tentaculos": {
+    danno: 1.25,
+    descripcion: "TENTACULOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  }
+}
+
+// ? Objeto para almacenar información de los esbirros
+var esbirrosDict = {
+  "lobo": {
+    nombre: "LOBO",
+    imagen: "img/lobo.png",
+    icono: "",
+    ataque: 3,
+    esquiva: 2,
+    bloqueo: 1,
+    velocidad: 6,
+    vida: 19,
+    vidaMaxima: 19,
+    poder: 22,
+    poderMaximo: 22,
+    arma1: "mordisco",
+    arma2: "garras",
+    habilidad1: "derribo",
+    habilidad2: "desgarro",
+    habilidad3: "habilidad 3",
+    descripcion: "LOBO <br> Criatura de Sangre <br> Coste de invocación: 20"
+  },
+  "esqueleto": {
+    nombre: "ESQUELETO",
+    imagen: "img/esqueleto.png",
+    icono: "",
+    ataque: 4,
+    esquiva: 2,
+    bloqueo: 3,
+    velocidad: 2,
+    vida: 30,
+    vidaMaxima: 30,
+    poder: 27,
+    poderMaximo: 27,
+    arma1: "mordisco",
+    arma2: "garras",
+    habilidad1: "derribo",
+    habilidad2: "desgarro",
+    habilidad3: "habilidad 3",
+    descripcion: "ESQUELETO <br> Criatura de Vida y Éter <br> Coste de invocación: 15"
+  },
+  "kardanto": {
+    nombre: "KARDANTO",
+    imagen: "img/kardanto.png",
+    icono: "",
+    ataque: 4,
+    esquiva: 2,
+    bloqueo: 4,
+    velocidad: 3,
+    vida: 31,
+    vidaMaxima: 31,
+    poder: 34,
+    poderMaximo: 34,
+    arma1: "ramas",
+    arma2: "esporas",
+    habilidad1: "enraizar",
+    habilidad2: "envenenar",
+    habilidad3: "habilidad 3",
+    descripcion: "KARDANTO <br> Elemental de Vida <br> Coste de invocación: 20"
+  },
+  "momontu": {
+    nombre: "MOMONTU",
+    imagen: "img/momontu.png",
+    icono: "",
+    ataque: 5,
+    esquiva: 3,
+    bloqueo: 1,
+    velocidad: 4,
+    vida: 20,
+    vidaMaxima: 20,
+    poder: 51,
+    poderMaximo: 51,
+    arma1: "mano",
+    arma2: "garras",
+    habilidad1: "bola de fuego",
+    habilidad2: "desgarro",
+    habilidad3: "habilidad 3",
+    descripcion: "MOMONTU <br> Elemental de Fuego <br> Coste de invocación: 20"
+  },
+  "tortakla": {
+    nombre: "TORTAKLA",
+    imagen: "img/tortakla.png",
+    icono: "",
+    ataque: 4,
+    esquiva: 1,
+    bloqueo: 5,
+    velocidad: 2,
+    vida: 40,
+    vidaMaxima: 40,
+    poder: 19,
+    poderMaximo: 19,
+    arma1: "aliento",
+    arma2: "pinzas",
+    habilidad1: "tsunami",
+    habilidad2: "triturar",
+    habilidad3: "habilidad 3",
+    descripcion: "TORTAKLA <br> Elemental de Agua <br> Coste de invocación: 20"
+  },
+  "ghalidos": {
+    nombre: "GHALIDOS",
+    imagen: "img/ghalidos.png",
+    icono: "",
+    ataque: 4,
+    esquiva: 4,
+    bloqueo: 1,
+    velocidad: 5,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 19,
+    poderMaximo: 19,
+    arma1: "garras",
+    arma2: "alas",
+    habilidad1: "tornado",
+    habilidad2: "desgarro",
+    habilidad3: "habilidad 3",
+    descripcion: "GHALIDOS <br> Elemental de Aire <br> Coste de invocación: 20"
+  },
+  "terronte": {
+    nombre: "TERRONTE",
+    imagen: "img/terronte.png",
+    icono: "",
+    ataque: 4,
+    esquiva: 1,
+    bloqueo: 4,
+    velocidad: 3,
+    vida: 40,
+    vidaMaxima: 40,
+    poder: 31,
+    poderMaximo: 31,
+    arma1: "mirada",
+    arma2: "punno",
+    habilidad1: "ataque poderoso",
+    habilidad2: "terremoto",
+    habilidad3: "habilidad 3",
+    descripcion: "TERRONTE <br> Elemental de Tierra <br> Coste de invocación: 20"
+  },
+  "naigaran": {
+    nombre: "NAIGARAN",
+    imagen: "img/naigaran.png",
+    icono: "",
+    ataque: 5,
+    esquiva: 3,
+    bloqueo: 2,
+    velocidad: 4,
+    vida: 20,
+    vidaMaxima: 20,
+    poder: 39,
+    poderMaximo: 39,
+    arma1: "mordisco",
+    arma2: "tentaculos",
+    habilidad1: "confundir",
+    habilidad2: "desgarro",
+    habilidad3: "habilidad 3",
+    descripcion: "NAIGARAN <br> Elemental Etereo <br> Coste de invocación: 20"
+  },
+  "sarcomos": {
+    nombre: "SARCOMOS",
+    imagen: "img/sarcomos.png",
+    icono: "",
+    ataque: 5,
+    esquiva: 4,
+    bloqueo: 2,
+    velocidad: 4,
+    vida: 23,
+    vidaMaxima: 23,
+    poder: 24,
+    poderMaximo: 24,
+    arma1: "mente",
+    arma2: "garras",
+    habilidad1: "confundir",
+    habilidad2: "desgarro",
+    habilidad3: "habilidad 3",
+    descripcion: "SARCOMOS <br> Elemental Psíquico <br> Coste de invocación: 20"
+  },
+  "cinirus": {
+    nombre: "CINIRUS",
+    imagen: "img/cinirus.png",
+    icono: "",
+    ataque: 4,
+    esquiva: 3,
+    bloqueo: 4,
+    velocidad: 3,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 31,
+    poderMaximo: 31,
+    arma1: "cuernos",
+    arma2: "cascos",
+    habilidad1: "sanar",
+    habilidad2: "sentencia",
+    habilidad3: "habilidad 3",
+    descripcion: "CINIRUS <br> Elemental de Luz <br> Coste de invocación: 20"
+  },
+  "raizor": {
+    nombre: "RAIZOR",
+    imagen: "img/raizor.png",
+    icono: "",
+    ataque: 4,
+    esquiva: 4,
+    bloqueo: 2,
+    velocidad: 4,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 37,
+    poderMaximo: 37,
+    arma1: "garras",
+    arma2: "aliento",
+    habilidad1: "relampago",
+    habilidad2: "sobrecarga",
+    habilidad3: "habilidad 3",
+    descripcion: "RAIZOR <br> Elemental de Rayo <br> Coste de invocación: 20"
+  }
+  // TODO: Agrega los demás esbirros siguiendo el mismo patrón
+}
+
+// ? Objeto para almecenar información de los esbirros
+var personajesDict = {
+  "guerrero": {
+    nombre: "guerrero",
+    imagen: "img/guerrero.png",
+    ataque: 4,
+    esquiva: 2,
+    mitigacion: 5,
+    velocidad: 3,
+    vida: 40,
+    vidaMaxima: 40,
+    poder: 40,
+    poderMaximo: 40,
+    arma1: "espada",
+    arma2: "escudo",
+    habilidad1: "embestida con escudo",
+    habilidad2: "cobertura",
+    habilidad3: "ataque poderoso",
+    descripcion: "combatiente cuerpo a cuerpo, con mucha resistencia pero muy poco daño base."
+  },
+  "chaman": {
+    nombre: "chaman",
+    imagen: "img/chaman.png",
+    ataque: 5,
+    esquiva: 3,
+    mitigacion: 3,
+    velocidad: 3,
+    vida: 40,
+    vidaMaxima: 40,
+    poder: 43,
+    poderMaximo: 43,
+    arma1: "mano",
+    arma2: "totem",
+    habilidad1: "relampago",
+    habilidad2: "terremoto",
+    habilidad3: "sobrecarga",
+    descripcion: "combatiente mágico elemental, utiliza totems para ampliar su área de efectos."
+  },
+  "barbaro": {
+    nombre: "barbaro",
+    imagen: "img/barbaro.png",
+    ataque: 6,
+    esquiva: 1,
+    mitigacion: 1,
+    velocidad: 4,
+    vida: 33,
+    vidaMaxima: 33,
+    poder: 38,
+    poderMaximo: 38,
+    arma1: "dos manos",
+    arma2: "patadas",
+    habilidad1: "torbellino",
+    habilidad2: "incansable",
+    habilidad3: "ataque poderoso",
+    descripcion: "combatiente cuerpo a cuerpo que genera el mayor daño posible sin pensar mucho en su seguridad."
+  },
+  "picaro": {
+    nombre: "picaro",
+    imagen: "img/picaro.png",
+    ataque: 4,
+    esquiva: 4,
+    mitigacion: 2,
+    velocidad: 4,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 46,
+    poderMaximo: 46,
+    arma1: "daga",
+    arma2: "daga",
+    habilidad1: "ataque doble",
+    habilidad2: "sigilo",
+    habilidad3: "desarmar",
+    descripcion: "combatiente sigiloso y rápido, siempre intenta infligir daño sin quedar expuesto."
+  },
+  "mago": {
+    nombre: "mago",
+    imagen: "img/mago.png",
+    ataque: 5,
+    esquiva: 3,
+    mitigacion: 1,
+    velocidad: 4,
+    vida: 20,
+    vidaMaxima: 20,
+    poder: 54,
+    poderMaximo: 54,
+    arma1: "varita",
+    arma2: "daga",
+    habilidad1: "bola de hielo",
+    habilidad2: "explosion de escarcha",
+    habilidad3: "confundir",
+    descripcion: "experto en el manejo de armas y habilidades mágicas, mantiene distancia de sus enemigos."
+  },
+  "paladin": {
+    nombre: "paladin",
+    imagen: "img/paladin.png",
+    ataque: 5,
+    esquiva: 3,
+    mitigacion: 4,
+    velocidad: 3,
+    vida: 30,
+    vidaMaxima: 30,
+    poder: 41,
+    poderMaximo: 41,
+    arma1: "hoja runa",
+    arma2: "daga",
+    habilidad1: "sanar",
+    habilidad2: "sentencia",
+    habilidad3: "exorcismo",
+    descripcion: "combatiente mixto, con buen daño cuerpo a cuerpo y control de habilidades mágicas."
+  }
+  // TODO: Agrega los demás personajes siguiendo el mismo patrón
+}
+
 
 
 var edicion = 0
@@ -921,47 +1355,58 @@ let estadisticaSeleccionada
     })
 
     espadaBtn.addEventListener('click', () => {
-      cambiarArma('espada')
+      if (esPersonaje) cambiarArma('espada')
+      else cambiarArmaEsbirro('espada')
     })
 
     arcoBtn.addEventListener('click', () => {
-      cambiarArma('arco')
+      if (esPersonaje) cambiarArma('arco')
+      else cambiarArmaEsbirro('arco')
     })
 
     arrojadizaBtn.addEventListener('click', () => {
-      cambiarArma('arrojadiza')
+      if (esPersonaje) cambiarArma('arrojadiza')
+      else cambiarArmaEsbirro('arrojadiza')
     })
 
     punnoBtn.addEventListener('click', () => {
-      cambiarArma('punno')
+      if (esPersonaje) cambiarArma('punno')
+      else cambiarArmaEsbirro('punno')
     })
 
     escudoBtn.addEventListener('click', () => {
-      cambiarArma('escudo')
+      if (esPersonaje) cambiarArma('escudo')
+      else cambiarArmaEsbirro('escudo')
     })
 
     magiaBtn.addEventListener('click', () => {
-      cambiarArma('magia')
+      if (esPersonaje) cambiarArma('magia')
+      else cambiarArmaEsbirro('magia')
     })
 
     varitaBtn.addEventListener('click', () => {
-      cambiarArma('varita')
+      if (esPersonaje) cambiarArma('varita')
+      else cambiarArmaEsbirro('varita')
     })
 
     baculoBtn.addEventListener('click', () => {
-      cambiarArma('baculo')
+      if (esPersonaje) cambiarArma('baculo')
+      else cambiarArmaEsbirro('baculo')
     })
 
     totemBtn.addEventListener('click', () => {
-      cambiarArma('totem')
+      if (esPersonaje) cambiarArma('totem')
+      else cambiarArmaEsbirro('totem')
     })
 
     runaBtn.addEventListener('click', () => {
-      cambiarArma('runa')
+      if (esPersonaje) cambiarArma('runa')
+      else cambiarArmaEsbirro('runa')
     })
 
     hojarunaBtn.addEventListener('click', () => {
-      cambiarArma('hojaruna')
+      if (esPersonaje) cambiarArma('hojaruna')
+      else cambiarArmaEsbirro('hojaruna')
     })
   }
 }
@@ -1391,6 +1836,16 @@ let estadisticaSeleccionada
      */
     actualizarPropiedades(props) {
       Object.assign(this, props);
+      this.configurarArma(1, this.arma1)
+      this.configurarArma(2, this.arma2)
+
+      this.configurarHabilidad(1, this.habilidad1)
+      this.configurarHabilidad(2, this.habilidad2)
+      this.configurarHabilidad(3, this.habilidad3)
+
+      this.configurarEquipamiento(1, this.equipo1)
+      this.configurarEquipamiento(2, this.equipo2)
+      this.configurarEquipamiento(3, this.equipo3)
     }
 
     /**
@@ -1418,416 +1873,6 @@ let estadisticaSeleccionada
     }
   }
 
-  // ? Objeto para almacenar información de las armas
-  // TODO: Cada arma debe contener una propiedad para el daño y su descripción
-  // Definición de las armas faltantes
-  var armasDict = {
-    // * Armas de personaje
-    "punno": {
-      danno: 0.75,
-      descripcion: "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
-    },
-    "patadas": {
-      danno: 1,
-      descripcion: "Arma natural <br> 2 Acciones / 100% de ataque como daño físico"
-    },
-    "daga": {
-      danno: 1,
-      descripcion: "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
-    },
-    "espada": {
-      danno: 1.5,
-      descripcion: "Arma a dos manos <br> 2 Acciones / 150% de ataque como daño físico"
-    },
-    "arco": {
-      danno: 1.75,
-      descripcion: "Arma a distancia <br> 3 casilleros x ataque / 3 Acciones / 175% de ataque como daño físico"
-    },
-    "arrojadiza": {
-      danno: 0.75,
-      descripcion: "Arma arrojadiza <br> 3 casillero x ataque / 2 Acciones / 75% de ataque como daño físico"
-    },
-    "escudo": {
-      danno: 0.5,
-      descripcion: "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
-    },
-    "mano": {
-      danno: 1,
-      descripcion: "Arma a distancia <br> 1 casillero x ataque / 1 Acción / 100% de ataque como daño mágico"
-    },
-    "varita": {
-      danno: 1,
-      descripcion: "Arma a distancia <br> 3 casilleros x ataque / 1 Accion / 100% de ataque como daño mágico"
-    },
-    "baculo": {
-      danno: 1.5,
-      descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 150% de ataque como daño mágico"
-    },
-    "runa": {
-      danno: 0.75,
-      descripcion: "Arma a distancia <br> 3 casilleros x ataque / 2 Acciones / 75% de ataque como daño mágico"
-    },
-    "totem": {
-      danno: 1,
-      descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
-    },
-    "hoja runa": {
-      danno: 1,
-      descripcion: "Arma mixta <br> 1 casillero x ataque / 2 Acciones / 100% de ataque como daño físico o mágico"
-    },
-    // * Armas de esbirros
-    "mordisco": {
-      danno: 1.5,
-      descripcion: "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño físico"
-    },
-    "garras": {
-      danno: 1,
-      descripcion: "Garras <br> / 1 Accion / 100% de ataque como daño físico"
-    },
-    "aliento": {
-      danno: 2.5,
-      descripcion: "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima de 1 casillero x punto de ataque"
-    },
-    "pinzas": {
-      danno: 1.75,
-      descripcion: "PINZAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 175% de ataque como daño físico"
-    },
-    "mente": {
-      danno: 1,
-      descripcion: "MENTE <br> Arma a distancia / 1 Accion <br> 100% de ataque como daño mágico. <br> Distancia máxima de 2 casillero x punto de ataque"
-    },
-    "ramas": {
-      danno: 1.25,
-      descripcion: "RAMAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
-    },
-    "esporas": {
-      danno: 1.25,
-      descripcion: "ESPORAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
-    },
-    "alas": {
-      danno: 1.25,
-      descripcion: "ALAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
-    },
-    "mirada": {
-      danno: 1.25,
-      descripcion: "MIRADA <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 2 casilleros x punto de ataque"
-    },
-    "cuernos": {
-      danno: 1.25,
-      descripcion: "CUERNOS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
-    },
-    "cascos": {
-      danno: 1.25,
-      descripcion: "CASCOS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
-    },
-    "tentaculos": {
-      danno: 1.25,
-      descripcion: "TENTACULOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
-    }
-  }
-
-  // ? Objeto para almacenar información de los esbirros
-  var esbirrosDict = {
-    "lobo": {
-      nombre: "LOBO",
-      imagen: "img/lobo.png",
-      icono: "",
-      ataque: 3,
-      esquiva: 2,
-      bloqueo: 1,
-      velocidad: 6,
-      vida: 19,
-      vidaMaxima: 19,
-      poder: 22,
-      poderMaximo: 22,
-      arma1: {
-        nombre: "mordisco",
-        danno: armasDict["mordisco"].danno,
-        descripcion: armasDict["mordisco"].descripcion
-      },
-      arma2: {
-        nombre: "garras",
-        danno: armasDict["garras"].danno,
-        descripcion: armasDict["garras"].descripcion
-      },
-      habilidad1: { nombre: "derribo", descripcion: habilidadesDict["derribo"] },
-      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "LOBO <br> Criatura de Sangre <br> Coste de invocación: 20"
-    },
-    "esqueleto": {
-      nombre: "ESQUELETO",
-      imagen: "img/esqueleto.png",
-      icono: "",
-      ataque: 4,
-      esquiva: 2,
-      bloqueo: 3,
-      velocidad: 2,
-      vida: 30,
-      vidaMaxima: 30,
-      poder: 27,
-      poderMaximo: 27,
-      arma1: {
-        nombre: "mordisco",
-        danno: armasDict["mordisco"].danno,
-        descripcion: armasDict["mordisco"].descripcion
-      },
-      arma2: {
-        nombre: "garras",
-        danno: armasDict["garras"].danno,
-        descripcion: armasDict["garras"].descripcion
-      },
-      habilidad1: { nombre: "derribo", descripcion: habilidadesDict["derribo"] },
-      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "ESQUELETO <br> Criatura de Vida y Éter <br> Coste de invocación: 15"
-    },
-    "kardanto": {
-      nombre: "KARDANTO",
-      imagen: "img/kardanto.png",
-      icono: "",
-      ataque: 4,
-      esquiva: 2,
-      bloqueo: 4,
-      velocidad: 3,
-      vida: 31,
-      vidaMaxima: 31,
-      poder: 34,
-      poderMaximo: 34,
-      arma1: {
-        nombre: "ramas",
-        danno: armasDict["ramas"].danno,
-        descripcion: armasDict["ramas"].descripcion
-      },
-      arma2: {
-        nombre: "esporas",
-        danno: armasDict["esporas"].danno,
-        descripcion: armasDict["esporas"].descripcion
-      },
-      habilidad1: { nombre: "enraizar", descripcion: habilidadesDict["enraizar"] },
-      habilidad2: { nombre: "envenenar", descripcion: habilidadesDict["envenenar"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "KARDANTO <br> Elemental de Vida <br> Coste de invocación: 20"
-    },
-    "momontu": {
-      nombre: "MOMONTU",
-      imagen: "img/momontu.png",
-      icono: "",
-      ataque: 5,
-      esquiva: 3,
-      bloqueo: 1,
-      velocidad: 4,
-      vida: 20,
-      vidaMaxima: 20,
-      poder: 51,
-      poderMaximo: 51,
-      arma1: {
-        nombre: "mano",
-        danno: armasDict["mano"].danno,
-        descripcion: armasDict["mano"].descripcion
-      },
-      arma2: {
-        nombre: "garras",
-        danno: armasDict["garras"].danno,
-        descripcion: armasDict["garras"].descripcion
-      },
-      habilidad1: { nombre: "bola de fuego", descripcion: habilidadesDict["bola de fuego"] },
-      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "MOMONTU <br> Elemental de Fuego <br> Coste de invocación: 20"
-    },
-    "tortakla": {
-      nombre: "TORTAKLA",
-      imagen: "img/tortakla.png",
-      icono: "",
-      ataque: 4,
-      esquiva: 1,
-      bloqueo: 5,
-      velocidad: 2,
-      vida: 40,
-      vidaMaxima: 40,
-      poder: 19,
-      poderMaximo: 19,
-      arma1: {
-        nombre: "aliento",
-        danno: armasDict["aliento"].danno,
-        descripcion: armasDict["aliento"].descripcion
-      },
-      arma2: {
-        nombre: "pinzas",
-        danno: armasDict["pinzas"].danno,
-        descripcion: armasDict["pinzas"].descripcion
-      },
-      habilidad1: { nombre: "tsunami", descripcion: habilidadesDict["tsunami"] },
-      habilidad2: { nombre: "triturar", descripcion: habilidadesDict["triturar"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "TORTAKLA <br> Elemental de Agua <br> Coste de invocación: 20"
-    },
-    "ghalidos": {
-      nombre: "GHALIDOS",
-      imagen: "img/ghalidos.png",
-      icono: "",
-      ataque: 4,
-      esquiva: 4,
-      bloqueo: 1,
-      velocidad: 5,
-      vida: 25,
-      vidaMaxima: 25,
-      poder: 19,
-      poderMaximo: 19,
-      arma1: {
-        nombre: "garras",
-        danno: armasDict["garras"].danno,
-        descripcion: armasDict["garras"].descripcion
-      },
-      arma2: {
-        nombre: "alas",
-        danno: armasDict["alas"].danno,
-        descripcion: armasDict["alas"].descripcion
-      },
-      habilidad1: { nombre: "tornado", descripcion: habilidadesDict["tornado"] },
-      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "GHALIDOS <br> Elemental de Aire <br> Coste de invocación: 20"
-    },
-    "terronte": {
-      nombre: "TERRONTE",
-      imagen: "img/terronte.png",
-      icono: "",
-      ataque: 4,
-      esquiva: 1,
-      bloqueo: 4,
-      velocidad: 3,
-      vida: 40,
-      vidaMaxima: 40,
-      poder: 31,
-      poderMaximo: 31,
-      arma1: {
-        nombre: "mirada",
-        danno: armasDict["mirada"].danno,
-        descripcion: armasDict["mirada"].descripcion
-      },
-      arma2: {
-        nombre: "punno",
-        danno: armasDict["punno"].danno,
-        descripcion: armasDict["punno"].descripcion
-      },
-      habilidad1: { nombre: "ataque poderoso", descripcion: habilidadesDict["ataque poderoso"] },
-      habilidad2: { nombre: "terremoto", descripcion: habilidadesDict["terremoto"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "TERRONTE <br> Elemental de Tierra <br> Coste de invocación: 20"
-    },
-    "naigaran": {
-      nombre: "NAIGARAN",
-      imagen: "img/naigaran.png",
-      icono: "",
-      ataque: 5,
-      esquiva: 3,
-      bloqueo: 2,
-      velocidad: 4,
-      vida: 20,
-      vidaMaxima: 20,
-      poder: 39,
-      poderMaximo: 39,
-      arma1: {
-        nombre: "mordisco",
-        danno: armasDict["mordisco"].danno,
-        descripcion: armasDict["mordisco"].descripcion
-      },
-      arma2: {
-        nombre: "tentaculos",
-        danno: armasDict["tentaculos"].danno,
-        descripcion: armasDict["tentaculos"].descripcion
-      },
-      habilidad1: { nombre: "confundir", descripcion: habilidadesDict["confundir"] },
-      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "NAIGARAN <br> Elemental Etereo <br> Coste de invocación: 20"
-    },
-    "sarcomos": {
-      nombre: "SARCOMOS",
-      imagen: "img/sarcomos.png",
-      icono: "",
-      ataque: 5,
-      esquiva: 4,
-      bloqueo: 2,
-      velocidad: 4,
-      vida: 23,
-      vidaMaxima: 23,
-      poder: 24,
-      poderMaximo: 24,
-      arma1: {
-        nombre: "mente",
-        danno: armasDict["mente"].danno,
-        descripcion: armasDict["mente"].descripcion
-      },
-      arma2: {
-        nombre: "garras",
-        danno: armasDict["garras"].danno,
-        descripcion: armasDict["garras"].descripcion
-      },
-      habilidad1: { nombre: "confundir", descripcion: habilidadesDict["confundir"] },
-      habilidad2: { nombre: "desgarro", descripcion: habilidadesDict["desgarro"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "SARCOMOS <br> Elemental Psíquico <br> Coste de invocación: 20"
-    },
-    "cinirus": {
-      nombre: "CINIRUS",
-      imagen: "img/cinirus.png",
-      icono: "",
-      ataque: 4,
-      esquiva: 3,
-      bloqueo: 4,
-      velocidad: 3,
-      vida: 25,
-      vidaMaxima: 25,
-      poder: 31,
-      poderMaximo: 31,
-      arma1: {
-        nombre: "cuernos",
-        danno: armasDict["cuernos"].danno,
-        descripcion: armasDict["cuernos"].descripcion
-      },
-      arma2: {
-        nombre: "cascos",
-        danno: armasDict["cascos"].danno,
-        descripcion: armasDict["cascos"].descripcion
-      },
-      habilidad1: { nombre: "sanar", descripcion: habilidadesDict["sanar"] },
-      habilidad2: { nombre: "sentencia", descripcion: habilidadesDict["sentencia"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "CINIRUS <br> Elemental de Luz <br> Coste de invocación: 20"
-    },
-    "raizor": {
-      nombre: "RAIZOR",
-      imagen: "img/raizor.png",
-      icono: "",
-      ataque: 4,
-      esquiva: 4,
-      bloqueo: 2,
-      velocidad: 4,
-      vida: 25,
-      vidaMaxima: 25,
-      poder: 37,
-      poderMaximo: 37,
-      arma1: {
-        nombre: "garras",
-        danno: armasDict["garras"].danno,
-        descripcion: armasDict["garras"].descripcion
-      },
-      arma2: {
-        nombre: "aliento",
-        danno: armasDict["aliento"].danno,
-        descripcion: armasDict["aliento"].descripcion
-      },
-      habilidad1: { nombre: "relampago", descripcion: habilidadesDict["relampago"] },
-      habilidad2: { nombre: "sobrecarga", descripcion: habilidadesDict["sobrecarga"] },
-      habilidad3: { nombre: "habilidad 3", descripcion: habilidadesDict["habilidad 3"] },
-      descripcion: "RAIZOR <br> Elemental de Rayo <br> Coste de invocación: 20"
-    }
-  }
-
-
   // ! Lista de esbirros !
   // Crea un array vacío para almacenar instancias de la clase Esbirro
   var esbirros = []
@@ -1841,7 +1886,7 @@ let estadisticaSeleccionada
   // * con la información del esbirro "lobo" de esbirrosDict. Esto es temporal y debe descartarse
   // * después de completar las pruebas necesarias.
   esbirros[0].actualizarPropiedades(esbirrosDict.lobo)
-  esbirros[1].actualizarPropiedades(esbirrosDict.esqueleto)
+  esbirros[1].actualizarPropiedades(personajesDict.mago)
   esbirros[2].actualizarPropiedades(esbirrosDict.ghalidos)
   esbirros[3].actualizarPropiedades(esbirrosDict.naigaran)
   esbirros[4].actualizarPropiedades(esbirrosDict.terronte)
