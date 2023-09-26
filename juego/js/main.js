@@ -26,7 +26,7 @@ var armasDict = {
     danno: 0.75,
     descripcion: "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
   },
-  "patadas": {
+  "patada": {
     danno: 1,
     descripcion: "Arma natural <br> 2 Acciones / 100% de ataque como daño físico"
   },
@@ -345,6 +345,24 @@ var esbirrosDict = {
 
 // ? Objeto para almecenar información de los esbirros
 var personajesDict = {
+  "barbaro": {
+    nombre: "barbaro",
+    imagen: "img/barbaro.png",
+    ataque: 6,
+    esquiva: 1,
+    bloqueo: 1,
+    velocidad: 4,
+    vida: 33,
+    vidaMaxima: 33,
+    poder: 38,
+    poderMaximo: 38,
+    arma1: "espada",
+    arma2: "patada",
+    habilidad1: "torbellino",
+    habilidad2: "incansable",
+    habilidad3: "ataque poderoso",
+    descripcion: "combatiente cuerpo a cuerpo que genera el mayor daño posible sin pensar mucho en su seguridad."
+  },
   "guerrero": {
     nombre: "guerrero",
     imagen: "img/guerrero.png",
@@ -368,41 +386,23 @@ var personajesDict = {
 
     descripcion: "combatiente cuerpo a cuerpo, con mucha resistencia pero muy poco daño base."
   },
-  "chaman": {
-    nombre: "chaman",
-    imagen: "img/chaman.png",
+  "paladin": {
+    nombre: "paladin",
+    imagen: "img/paladin.png",
     ataque: 5,
     esquiva: 3,
-    bloqueo: 3,
+    bloqueo: 4,
     velocidad: 3,
-    vida: 40,
-    vidaMaxima: 40,
-    poder: 43,
-    poderMaximo: 43,
-    arma1: "mano",
-    arma2: "totem",
-    habilidad1: "relampago",
-    habilidad2: "terremoto",
-    habilidad3: "sobrecarga",
-    descripcion: "combatiente mágico elemental, utiliza totems para ampliar su área de efectos."
-  },
-  "barbaro": {
-    nombre: "barbaro",
-    imagen: "img/barbaro.png",
-    ataque: 6,
-    esquiva: 1,
-    bloqueo: 1,
-    velocidad: 4,
-    vida: 33,
-    vidaMaxima: 33,
-    poder: 38,
-    poderMaximo: 38,
-    arma1: "dos manos",
-    arma2: "patadas",
-    habilidad1: "torbellino",
-    habilidad2: "incansable",
-    habilidad3: "ataque poderoso",
-    descripcion: "combatiente cuerpo a cuerpo que genera el mayor daño posible sin pensar mucho en su seguridad."
+    vida: 30,
+    vidaMaxima: 30,
+    poder: 41,
+    poderMaximo: 41,
+    arma1: "hoja runa",
+    arma2: "daga",
+    habilidad1: "sanar",
+    habilidad2: "sentencia",
+    habilidad3: "exorcismo",
+    descripcion: "combatiente mixto, con buen daño cuerpo a cuerpo y control de habilidades mágicas."
   },
   "picaro": {
     nombre: "picaro",
@@ -422,6 +422,27 @@ var personajesDict = {
     habilidad3: "desarmar",
     descripcion: "combatiente sigiloso y rápido, siempre intenta infligir daño sin quedar expuesto."
   },
+  // TODO: Monje
+  // TODO: Cazador
+  // TODO: Druida
+  "chaman": {
+    nombre: "chaman",
+    imagen: "img/chaman.png",
+    ataque: 5,
+    esquiva: 3,
+    bloqueo: 3,
+    velocidad: 3,
+    vida: 40,
+    vidaMaxima: 40,
+    poder: 43,
+    poderMaximo: 43,
+    arma1: "mano",
+    arma2: "totem",
+    habilidad1: "relampago",
+    habilidad2: "terremoto",
+    habilidad3: "sobrecarga",
+    descripcion: "combatiente mágico elemental, utiliza totems para ampliar su área de efectos."
+  },
   "mago": {
     nombre: "mago",
     imagen: "img/mago.png",
@@ -440,25 +461,9 @@ var personajesDict = {
     habilidad3: "confundir",
     descripcion: "experto en el manejo de armas y habilidades mágicas, mantiene distancia de sus enemigos."
   },
-  "paladin": {
-    nombre: "paladin",
-    imagen: "img/paladin.png",
-    ataque: 5,
-    esquiva: 3,
-    bloqueo: 4,
-    velocidad: 3,
-    vida: 30,
-    vidaMaxima: 30,
-    poder: 41,
-    poderMaximo: 41,
-    arma1: "hoja runa",
-    arma2: "daga",
-    habilidad1: "sanar",
-    habilidad2: "sentencia",
-    habilidad3: "exorcismo",
-    descripcion: "combatiente mixto, con buen daño cuerpo a cuerpo y control de habilidades mágicas."
-  }
-  // TODO: Agrega los demás personajes siguiendo el mismo patrón
+  // TODO: paladinoscuro
+  // TODO: nigromante
+  // TODO: guardiarunico
 }
 
 
@@ -862,12 +867,24 @@ function avatar(meeple) {
   // TODO: Agregar los demas personajes
   imprimirPersonaje()
 }
-// portadaBtn.addEventListener('click', function () { avatar() })
-// guerreroBtn.addEventListener('click', function () { avatar("GUERRERO") })
-guerreroBtn.addEventListener('click', () => {
-  if (esPersonaje) avatar("GUERRERO")
-  else if (!esPersonaje) cambiarEsbirro('guerrero')
+// guerreroBtn.addEventListener('click', () => {
+//   if (esPersonaje) avatar("GUERRERO")
+//   else if (!esPersonaje) cambiarEsbirro('guerrero')
+// })
+
+[
+  "barbaro", "guerrero", "paladin",
+  "picaro", "monje", "cazador",
+  "druida", "chaman", "mago",
+  "paladinoscuro", "nigromante", "guardiarunico"
+].forEach(key => {
+  const boton = document.getElementById(`${key}Btn`)
+  boton.addEventListener('click', () => {
+    if (esPersonaje) avatar(key.toUpperCase())
+    else if (!esPersonaje) cambiarEsbirro(key.toLowerCase())
+  })
 })
+
 // TODO: Agregar los demas evenListener de los personajes faltantes
 
 
@@ -1742,6 +1759,9 @@ let estadisticaSeleccionada
     return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
   }
 
+  function quitarEspacios(texto){
+    return texto.split(" ").join("")
+  }
 }
 
 
@@ -2004,10 +2024,10 @@ function mostrarEsbirroSeleccionado() {
     equipo3Img.src = eq3.icono
   }
   arma1Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma1.nombre)
-  arma1Img.src = `img/${esbirroSeleccionado.arma1.nombre}.png`
+  arma1Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma1.nombre)}.png`
 
   arma2Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma2.nombre)
-  arma2Img.src = `img/${esbirroSeleccionado.arma2.nombre}.png`
+  arma2Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma2.nombre)}.png`
 
   habilidad1Txt.textContent = esbirroSeleccionado.habilidad1.nombre.toUpperCase()
   habilidad2Txt.textContent = esbirroSeleccionado.habilidad2.nombre.toUpperCase()
@@ -2020,9 +2040,9 @@ function mostrarEsbirroSeleccionado() {
    */
   function cambiarEsbirro(nombre) {
     console.log("cambiarEsbirro", nombre)
-    if (nombre) {
+    if (nombre) { // * Esbirro por personaje
       esbirroSeleccionado.actualizarPropiedades(personajesDict[nombre])
-    } else {
+    } else { // * Esbirro por esbirro
       let val = prompt("Ingrese comando")
 
       if (val in esbirrosDict) {
