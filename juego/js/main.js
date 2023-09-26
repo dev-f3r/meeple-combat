@@ -17,6 +17,119 @@ document.body.addEventListener('dragstart', (e) => {
   return false;
 });
 
+{ // * helpers, funciones varias
+  /* 
+      * @text: sring
+  */
+  // ? Elimina los acentos de un string
+  function quitarAcentos(text) {
+    return text
+      .normalize('NFD') // decompose accented characters into their base character and accent character
+      .replace(/[\u0300-\u036f]/g, '') // remove the accent characters
+      .toUpperCase()
+  }
+
+  // ? Limpia la consola
+  consolaBtn.addEventListener('click', () => {
+    if (edicion == 0 && (estadisticaSeleccionada !== "vida" && estadisticaSeleccionada !== "poder")) {
+      contenConsola("")
+    }
+  })
+
+  // ? Oculta los botones de edición, y cambia la var edición a 0
+  function cerrarEdicion() {
+    edicion = 0
+    editarImg.src = "img/editar.png"
+
+    ocultarBtnArrivaAbajo()
+    experienciaTxt.style.display = "none"
+
+  }
+  /* 
+      * @estadistica: string
+  */
+  // ? Muestra la estadistica
+  function mostrarEstadistica(tipo, estadistica) {
+    let data
+
+    if (tipo === "personaje") data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
+    else data = `${capitalizarPrimeraLetra(estadistica)} ${esbirroSeleccionado[estadistica]}`
+
+    // * Para la funcion accion()
+    switch (estadistica) {
+      case "ataque":
+        slotEstadisticaSeleccionada = 1
+        break
+      case "esquiva":
+        slotEstadisticaSeleccionada = 2
+        break
+      case "bloqueo":
+        slotEstadisticaSeleccionada = 3
+        break
+      case "velocidad":
+        slotEstadisticaSeleccionada = 4
+        break
+      default:
+        break
+    }
+    objetoAccion = "estadistica"
+
+    contenConsola(data)
+  }
+
+  /* 
+      * @val: string
+  */
+  // ? Modifica el contenido de la consola
+  function contenConsola(val) {
+    consolaBtn.innerHTML = val
+
+    arribaBtn.style.display = "none"
+    abajoBtn.style.display = "none"
+  }
+
+  /* 
+      * @slot: number
+  */
+  // ? Muestra descripcion de arma
+  function mostrarDescripcionArma(slot) {
+    let seleccion = slot == 1 ? arma1 : arma2
+    contenConsola(seleccion.descripcion)
+  }
+
+  // ? Muestra los botones de incremento y decremento
+  function mostrarBtnArribaAbajo() {
+    arribaBtn.style.display = "block"
+    abajoBtn.style.display = "block"
+  }
+
+  // ? Oculta los botones de incremento y decremento
+  function ocultarBtnArrivaAbajo() {
+    arribaBtn.style.display = "none"
+    abajoBtn.style.display = "none"
+  }
+
+  /**
+   * ? Capitaliza la primera letra de un string.
+   *
+   * @param {string} texto - El string que se va a capitalizar.
+   * @returns {string} - El string con la primera letra en mayúscula.
+   */
+  function capitalizarPrimeraLetra(texto) {
+    // Verifica si el texto está vacío o es nulo y devuelve el mismo texto sin cambios
+    if (!texto) {
+      return texto;
+    }
+
+    // Capitaliza la primera letra del texto y la concatena con el resto del texto en minúsculas
+    return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+  }
+
+  function quitarEspacios(texto) {
+    return texto.split(" ").join("")
+  }
+}
+
 
 // ? Objeto para almacenar información de las armas
 // TODO: Cada arma debe contener una propiedad para el daño y su descripción
@@ -466,8 +579,23 @@ var personajesDict = {
   // TODO: guardiarunico
 }
 
-
-
+// ? Objeto para almacenar información de los distintos equipamientos
+var equiposDict = {
+  'armaduraLigera': {
+    // TODO: Arreglar armadura ligera
+    nombre: "Armadura Ligera",
+    icono: "img/armaduraligera.png",
+    descripcion: "Descripción de Armadura ligera",
+    nivel: 1,
+    ataque: 1000,
+    esquiva: 1000,
+    bloqueo: 1000,
+    velocidad: 1000,
+    vidaMaxima: 1000,
+    poderMaximo: 1000,
+  }
+  // TODO: Agregar los demas items
+}
 var edicion = 0
 var tipoEdicion = 'personaje'
 
@@ -491,25 +619,21 @@ var personaje = {
   poderMaximo: 0,
 
   // * nivel del equipamiento
-  /* equipo1: 0,
-  equipo2: 0,
-  equipo3: 0, */
+  // equipo1: "",
+  // equipo2: "",
+  // equipo3: "",
 
   // * nombre de arma
-  /* arma1: "Una Mano",
-  arma2: "Dos Manos", */
+  arma1: "Una Mano",
+  arma2: "Dos Manos",
 
   // * nombre de habilidades
-  /* habilidad1: "HABILIDAD 1",
+  habilidad1: "HABILIDAD 1",
   habilidad2: "HABILIDAD 2",
   habilidad3: "HABILIDAD 3",
-   */
 }
 
-
-
-// ! CODIGO FER
-let valorExperiencia = {
+const valorExperiencia = {
   ataque: 3,
   esquiva: 3,
   bloqueo: 3,
@@ -669,8 +793,9 @@ var habilidad3 = {
 function imprimirPersonaje() {
 
   portadaImg.src = personaje.meeple
+  // portadaImg.src = `img/${quitarEspacios(personaje.nombre)}.png`
 
-  nombreTxt.textContent = personaje.nombre
+  nombreTxt.textContent = personaje.nombre.toUpperCase()
 
   ataqueTxt.textContent = personaje.ataque + equipo1.ataque + equipo2.ataque + equipo3.ataque
   esquivaTxt.textContent = personaje.esquiva + equipo1.esquiva + equipo2.esquiva + equipo3.esquiva
@@ -689,8 +814,8 @@ function imprimirPersonaje() {
   equipo2Img.src = equipo2.icono
   equipo3Img.src = equipo3.icono
 
-  arma1Txt.textContent = arma1.nombre
-  arma2Txt.textContent = arma2.nombre
+  arma1Txt.textContent = capitalizarPrimeraLetra(arma1.nombre)
+  arma2Txt.textContent = capitalizarPrimeraLetra(arma2.nombre)
   arma1Img.src = arma1.icono
   arma2Img.src = arma2.icono
 
@@ -818,60 +943,71 @@ arma2TxtBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
 // ? Funcion para cambio de personaje
 function avatar(meeple) {
   esPersonaje = true
-  if (meeple == "GUERRERO") {
+  // if (meeple == "GUERRERO") {
 
-    edicionTotal = 0
+  //   edicionTotal = 0
 
-    personaje.experiencia = 0
+  //   personaje.experiencia = 0
 
-    personaje.nombre = "GUERRERO"
-    personaje.meeple = "img/guerrero.png"
-    personaje.descripcion = "Descripción gerrero"
+  //   personaje.nombre = "GUERRERO"
+  //   personaje.meeple = "img/guerrero.png"
+  //   personaje.descripcion = "Descripción gerrero"
 
-    personaje.ataque = 4
-    personaje.esquiva = 2
-    personaje.bloqueo = 5
-    personaje.velocidad = 3
-    personaje.vida = 40
-    personaje.vidaMaxima = 40
-    personaje.poder = 40
-    personaje.poderMaximo = 40
+  //   personaje.ataque = 4
+  //   personaje.esquiva = 2
+  //   personaje.bloqueo = 5
+  //   personaje.velocidad = 3
+  //   personaje.vida = 40
+  //   personaje.vidaMaxima = 40
+  //   personaje.poder = 40
+  //   personaje.poderMaximo = 40
 
-    personaje.equipo1 = ""
-    personaje.equipo2 = ""
-    personaje.equipo3 = ""
+  //   personaje.equipo1 = ""
+  //   personaje.equipo2 = ""
+  //   personaje.equipo3 = ""
 
-    personaje.arma1 = "Una Mano"
-    personaje.arma2 = "Escudo"
+  //   personaje.arma1 = "Una Mano"
+  //   personaje.arma2 = "Escudo"
 
-    habilidad1.nombre = "EMBESTIDA CON ESCUDO"
-    habilidad1.descripcion = habilidadesDict[habilidad1.nombre.toLowerCase()]
-    habilidad2.nombre = "COBERTURA"
-    habilidad2.descripcion = habilidadesDict[habilidad2.nombre.toLowerCase()]
-    habilidad3.nombre = "ATAQUE PODEROSO"
-    habilidad3.descripcion = habilidadesDict[habilidad3.nombre.toLowerCase()]
+  //   habilidad1.nombre = "EMBESTIDA CON ESCUDO"
+  //   habilidad1.descripcion = habilidadesDict[habilidad1.nombre.toLowerCase()]
+  //   habilidad2.nombre = "COBERTURA"
+  //   habilidad2.descripcion = habilidadesDict[habilidad2.nombre.toLowerCase()]
+  //   habilidad3.nombre = "ATAQUE PODEROSO"
+  //   habilidad3.descripcion = habilidadesDict[habilidad3.nombre.toLowerCase()]
 
-    descripcionHabilidad(1)
-    descripcionHabilidad(2)
-    descripcionHabilidad(3)
+  //   descripcionHabilidad(1)
+  //   descripcionHabilidad(2)
+  //   descripcionHabilidad(3)
 
-    cambiarArma("daga", 1)
-    cambiarArma("escudo", 2)
+  //   cambiarArma("daga", 1)
+  //   cambiarArma("escudo", 2)
 
-    imprimirPersonaje()
-    cerrarModal("personajes")
-    cerrarEdicion()
-    contenConsola(personaje.descripcion)
-  }
+  // }
+
+  Object.assign(personaje, personajesDict[meeple])
+  personaje.meeple = `img/${quitarEspacios(personaje.nombre)}.png`
+
+  Object.assign(arma1, armasDict[personaje.arma1])
+  arma1["nombre"] = personaje.arma1
+  arma1["icono"] = `img/${quitarEspacios(personaje.arma1)}.png`
+
+  Object.assign(arma2, armasDict[personaje.arma2])
+  arma2["nombre"] = personaje.arma2
+  arma2["icono"] = `img/${quitarEspacios(personaje.arma2)}.png`
+
+  habilidad1 = { nombre: personaje.habilidad1, descripcion: habilidadesDict[personaje.habilidad1] }
+  habilidad2 = { nombre: personaje.habilidad2, descripcion: habilidadesDict[personaje.habilidad2] }
+  habilidad3 = { nombre: personaje.habilidad3, descripcion: habilidadesDict[personaje.habilidad3] }
 
   // TODO: Agregar los demas personajes
   imprimirPersonaje()
+  cerrarModal("personajes")
+  cerrarEdicion()
+  contenConsola(personaje.descripcion)
 }
-// guerreroBtn.addEventListener('click', () => {
-//   if (esPersonaje) avatar("GUERRERO")
-//   else if (!esPersonaje) cambiarEsbirro('guerrero')
-// })
 
+// * EventListener de los personajes del modal personaje
 [
   "barbaro", "guerrero", "paladin",
   "picaro", "monje", "cazador",
@@ -880,8 +1016,8 @@ function avatar(meeple) {
 ].forEach(key => {
   const boton = document.getElementById(`${key}Btn`)
   boton.addEventListener('click', () => {
-    if (esPersonaje) avatar(key.toUpperCase())
-    else if (!esPersonaje) cambiarEsbirro(key.toLowerCase())
+    if (esPersonaje) avatar(key)
+    else if (!esPersonaje) cambiarEsbirro(key)
   })
 })
 
@@ -905,7 +1041,9 @@ function equipo(slot) {
     modalEquipo.style.display = "grid"
 
   } else {
-    contenConsola(`Slot de equipamiento ${slot}`)
+    if (slot === 1) contenConsola(`${equipo1.descripcion}`)
+    if (slot === 2) contenConsola(`${equipo2.descripcion}`)
+    if (slot === 3) contenConsola(`${equipo3.descripcion}`)
   }
 }
 
@@ -1463,26 +1601,28 @@ let estadisticaSeleccionada
           break
       }
 
-      switch (item) {
-        case 'armaduraLigera': // TODO: Arreglar estadisticas de Armadura Ligera
-          equipo.nombre = "Armadura Ligera"
-          equipo.icono = "img/armaduraligera.png"
-          equipo.descripcion = ""
-          equipo.nivel = 1
-          equipo.ataque = 0
-          equipo.esquiva = 1
-          equipo.bloqueo = 0
-          equipo.velocidad = 0
-          equipo.vidaMaxima = 0
-          equipo.poderMaximo = 0
+      // switch (item) {
+      //   case 'armaduraLigera': // TODO: Arreglar estadisticas de Armadura Ligera
+      //     equipo.nombre = "Armadura Ligera"
+      //     equipo.icono = "img/armaduraligera.png"
+      //     equipo.descripcion = ""
+      //     equipo.nivel = 1
+      //     equipo.ataque = 0
+      //     equipo.esquiva = 1
+      //     equipo.bloqueo = 0
+      //     equipo.velocidad = 0
+      //     equipo.vidaMaxima = 0
+      //     equipo.poderMaximo = 0
 
-          break;
+      //     break;
 
-        // TODO: Agregar los demas items
+      //   // TODO: Agregar los demas items
 
-        default:
-          break;
-      }
+      //   default:
+      //     break;
+      // }
+
+      Object.assign(equipo, equiposDict[item])
 
       imprimirPersonaje()
       cerrarEdicion()
@@ -1648,119 +1788,6 @@ let estadisticaSeleccionada
         else accionEsbirroAtributo(slotEstadisticaSeleccionada)
       }
     })
-  }
-}
-
-{ // * helpers, funciones varias
-  /* 
-      * @text: sring
-  */
-  // ? Elimina los acentos de un string
-  function quitarAcentos(text) {
-    return text
-      .normalize('NFD') // decompose accented characters into their base character and accent character
-      .replace(/[\u0300-\u036f]/g, '') // remove the accent characters
-      .toUpperCase()
-  }
-
-  // ? Limpia la consola
-  consolaBtn.addEventListener('click', () => {
-    if (edicion == 0 && (estadisticaSeleccionada !== "vida" && estadisticaSeleccionada !== "poder")) {
-      contenConsola("")
-    }
-  })
-
-  // ? Oculta los botones de edición, y cambia la var edición a 0
-  function cerrarEdicion() {
-    edicion = 0
-    editarImg.src = "img/editar.png"
-
-    ocultarBtnArrivaAbajo()
-    experienciaTxt.style.display = "none"
-
-  }
-  /* 
-      * @estadistica: string
-  */
-  // ? Muestra la estadistica
-  function mostrarEstadistica(tipo, estadistica) {
-    let data
-
-    if (tipo === "personaje") data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
-    else data = `${capitalizarPrimeraLetra(estadistica)} ${esbirroSeleccionado[estadistica]}`
-
-    // * Para la funcion accion()
-    switch (estadistica) {
-      case "ataque":
-        slotEstadisticaSeleccionada = 1
-        break
-      case "esquiva":
-        slotEstadisticaSeleccionada = 2
-        break
-      case "bloqueo":
-        slotEstadisticaSeleccionada = 3
-        break
-      case "velocidad":
-        slotEstadisticaSeleccionada = 4
-        break
-      default:
-        break
-    }
-    objetoAccion = "estadistica"
-
-    contenConsola(data)
-  }
-
-  /* 
-      * @val: string
-  */
-  // ? Modifica el contenido de la consola
-  function contenConsola(val) {
-    consolaBtn.innerHTML = val
-
-    arribaBtn.style.display = "none"
-    abajoBtn.style.display = "none"
-  }
-
-  /* 
-      * @slot: number
-  */
-  // ? Muestra descripcion de arma
-  function mostrarDescripcionArma(slot) {
-    let seleccion = slot == 1 ? arma1 : arma2
-    contenConsola(seleccion.descripcion)
-  }
-
-  // ? Muestra los botones de incremento y decremento
-  function mostrarBtnArribaAbajo() {
-    arribaBtn.style.display = "block"
-    abajoBtn.style.display = "block"
-  }
-
-  // ? Oculta los botones de incremento y decremento
-  function ocultarBtnArrivaAbajo() {
-    arribaBtn.style.display = "none"
-    abajoBtn.style.display = "none"
-  }
-
-  /**
-   * ? Capitaliza la primera letra de un string.
-   *
-   * @param {string} texto - El string que se va a capitalizar.
-   * @returns {string} - El string con la primera letra en mayúscula.
-   */
-  function capitalizarPrimeraLetra(texto) {
-    // Verifica si el texto está vacío o es nulo y devuelve el mismo texto sin cambios
-    if (!texto) {
-      return texto;
-    }
-
-    // Capitaliza la primera letra del texto y la concatena con el resto del texto en minúsculas
-    return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
-  }
-
-  function quitarEspacios(texto){
-    return texto.split(" ").join("")
   }
 }
 
@@ -2004,9 +2031,9 @@ function mostrarEsbirroSeleccionado() {
       poderMaximo: 0,
     }
 
-    if (esbirroSeleccionado.equipo1 in equipamientoDic) eq1 = equipamientoDic[esbirroSeleccionado.equipo1]
-    if (esbirroSeleccionado.equipo2 in equipamientoDic) eq2 = equipamientoDic[esbirroSeleccionado.equipo2]
-    if (esbirroSeleccionado.equipo3 in equipamientoDic) eq3 = equipamientoDic[esbirroSeleccionado.equipo3]
+    if (esbirroSeleccionado.equipo1 in equiposDict) eq1 = equiposDict[esbirroSeleccionado.equipo1]
+    if (esbirroSeleccionado.equipo2 in equiposDict) eq2 = equiposDict[esbirroSeleccionado.equipo2]
+    if (esbirroSeleccionado.equipo3 in equiposDict) eq3 = equiposDict[esbirroSeleccionado.equipo3]
 
     ataqueTxt.textContent = esbirroSeleccionado.ataque + eq1.ataque + eq2.ataque + eq3.ataque
     esquivaTxt.textContent = esbirroSeleccionado.esquiva + eq1.esquiva + eq2.esquiva + eq3.esquiva
@@ -2375,24 +2402,6 @@ function mostrarEsbirroSeleccionado() {
 
 { // * Equipamiento de esbirros
   { // * Funciones
-    var equipamientoDic = {
-      'armaduraLigera': {
-        // TODO: Arreglar armadura ligera
-        nombre: "Armadura Ligera",
-        icono: "img/armaduraligera.png",
-        descripcion: "",
-        nivel: 1,
-        ataque: 1000,
-        esquiva: 1000,
-        bloqueo: 1000,
-        velocidad: 1000,
-        vidaMaxima: 1000,
-        poderMaximo: 1000,
-      }
-
-      // TODO: Agregar el resto de equipamiento
-    }
-
     function cambiarEquipamientoEsbirro(item) {
       esbirroSeleccionado.configurarEquipamiento(equipamientoSeleccionado, item)
       mostrarEsbirroSeleccionado()
