@@ -132,7 +132,7 @@ document.body.addEventListener('dragstart', (e) => {
 
 
 // ? Objeto para almacenar información de las armas
-// TODO: Cada arma debe contener una propiedad para el daño y su descripción
+// TODO: Agregar las demas armas
 var armasDict = {
   // * Armas de personaje
   "punno": {
@@ -239,6 +239,7 @@ var armasDict = {
 }
 
 // ? Objeto para almacenar información de los esbirros
+// TODO: Agregar los demas esbirros
 var esbirrosDict = {
   "lobo": {
     nombre: "LOBO",
@@ -457,6 +458,7 @@ var esbirrosDict = {
 }
 
 // ? Objeto para almecenar información de los esbirros
+// TODO: Agregar los demas personajes
 var personajesDict = {
   "barbaro": {
     nombre: "barbaro",
@@ -580,6 +582,7 @@ var personajesDict = {
 }
 
 // ? Objeto para almacenar información de los distintos equipamientos
+// TODO: Agregar los demas items
 var equiposDict = {
   'armaduraLigera': {
     // TODO: Arreglar armadura ligera
@@ -594,9 +597,11 @@ var equiposDict = {
     vidaMaxima: 1000,
     poderMaximo: 1000,
   }
-  // TODO: Agregar los demas items
 }
+
+// ? Bandera que indica si el juego esta en modo edicion o no, valores posibles 0 o 1
 var edicion = 0
+// ? Bandera que indica si se esta editanto el personaje principal o el esbirro, valores posibles 'personaje' o 'esbirro'
 var tipoEdicion = 'personaje'
 
 var personaje = {
@@ -1998,7 +2003,7 @@ function mostrarEsbirroSeleccionado() {
       nombre: "",
       icono: "img/nada.png",
       descripcion: "",
-      nivel: 1,
+      nivel: 0,
       ataque: 0,
       esquiva: 0,
       bloqueo: 0,
@@ -2010,7 +2015,7 @@ function mostrarEsbirroSeleccionado() {
       nombre: "",
       icono: "img/nada.png",
       descripcion: "",
-      nivel: 1,
+      nivel: 0,
       ataque: 0,
       esquiva: 0,
       bloqueo: 0,
@@ -2022,7 +2027,7 @@ function mostrarEsbirroSeleccionado() {
       nombre: "",
       icono: "img/nada.png",
       descripcion: "",
-      nivel: 1,
+      nivel: 0,
       ataque: 0,
       esquiva: 0,
       bloqueo: 0,
