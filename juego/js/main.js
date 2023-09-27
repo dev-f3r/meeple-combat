@@ -86,6 +86,10 @@ document.body.addEventListener('dragstart', (e) => {
 
     arribaBtn.style.display = "none"
     abajoBtn.style.display = "none"
+    if (!esPersonaje) {
+      izquierdaBtn.style.display = "none"
+      derechaBtn.style.display = "none"
+    }
   }
 
   /* 
@@ -887,9 +891,15 @@ portadaBtn.addEventListener('click', function () {
   if (!edicion && !esPersonaje && !flagControlesCambioEsbirro) {
     flagControlesCambioEsbirro = true
     mostrarControlesCambioEsbirro()
+
+    ocultarBtnArrivaAbajo()
+    consolaBtn.textContent = ""
   } else if (!edicion && !esPersonaje && flagControlesCambioEsbirro) {
     flagControlesCambioEsbirro = false
     ocultarControlesCambioEsbirro()
+
+    ocultarBtnArrivaAbajo()
+    consolaBtn.textContent = ""
   }
 
 })
@@ -2431,6 +2441,16 @@ function mostrarEsbirroSeleccionado() {
           else
             contenConsola(`Huye<br>${dado + esbirroSeleccionado.esquiva}`)
           break;
+          case 5:
+          case 6: // * Tirada limpia
+            // TODO: Retocar tirada limpia
+            if (dado == 20)
+              contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+            else if (dado == 1)
+              contenConsola(`Tirada limpia<br>¡PIFIA!`)
+            else
+              contenConsola(`Tirada limpia<br>${dado + esbirroSeleccionado.esquiva}`)
+            break;
         default:
           break;
       }
