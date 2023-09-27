@@ -18,6 +18,7 @@ document.body.addEventListener('dragstart', (e) => {
 });
 
 { // * helpers, funciones varias
+
   /* 
       * @text: sring
   */
@@ -32,7 +33,9 @@ document.body.addEventListener('dragstart', (e) => {
   // ? Limpia la consola
   consolaBtn.addEventListener('click', () => {
     if (edicion == 0 && (estadisticaSeleccionada !== "vida" && estadisticaSeleccionada !== "poder")) {
-      contenConsola("")
+      consolaBtn.innerHTML = ""
+    } else if (edicion) {
+      ingresarComando()
     }
   })
 
@@ -105,6 +108,8 @@ document.body.addEventListener('dragstart', (e) => {
   function mostrarBtnArribaAbajo() {
     arribaBtn.style.display = "block"
     abajoBtn.style.display = "block"
+    ocultarControlesCambioEsbirro()
+    flagControlesCambioEsbirro = false
   }
 
   // ? Oculta los botones de incremento y decremento
@@ -132,6 +137,10 @@ document.body.addEventListener('dragstart', (e) => {
   function quitarEspacios(texto) {
     return texto.split(" ").join("")
   }
+}
+
+function ingresarComando() {
+
 }
 
 // ? Objeto para almacenar información de las habilidades
@@ -893,13 +902,13 @@ portadaBtn.addEventListener('click', function () {
     mostrarControlesCambioEsbirro()
 
     ocultarBtnArrivaAbajo()
-    consolaBtn.textContent = ""
+    consolaBtn.innerHTML = esbirroSeleccionado.descripcion
   } else if (!edicion && !esPersonaje && flagControlesCambioEsbirro) {
     flagControlesCambioEsbirro = false
     ocultarControlesCambioEsbirro()
 
     ocultarBtnArrivaAbajo()
-    consolaBtn.textContent = ""
+    consolaBtn.innerHTML = esbirroSeleccionado.descripcion
   }
 
 })
@@ -1378,7 +1387,7 @@ let estadisticaSeleccionada
           if (tipoEdicion === "personaje") masMenosVidaPoder(accionBtn)
           else modificarVidaPoderActualEsbirro(accionBtn)
         }
-        console.log(accionBtn, edicion, tipoEdicion)
+        // console.log(accionBtn, edicion, tipoEdicion)
       })
     })
   }
@@ -1445,8 +1454,18 @@ let estadisticaSeleccionada
           let val = prompt("Nuevo nombre")
           personaje.nombre = val
           imprimirPersonaje()
+          cerrarEdicion()
         } else if (esPersonaje) {
           contenConsola(personaje.descripcion)
+        }
+      } else {
+        if (edicion) {
+          let val = prompt("Nuevo nombre")
+          esbirroSeleccionado.nombre = val
+          mostrarEsbirroSeleccionado()
+          cerrarEdicion()
+        } else if (!esPersonaje) {
+          contenConsola(esbirroSeleccionado.descripcion)
         }
       }
     })
@@ -2134,10 +2153,10 @@ function mostrarEsbirroSeleccionado() {
   }
 
   // ? Trigger de cambio de esbirro
-  nombreBtn.addEventListener('click', () => {
-    if (edicion && !esPersonaje) cambiarEsbirro(null)
-    else if (!edicion && !esPersonaje) contenConsola(esbirroSeleccionado.descripcion)
-  })
+  // nombreBtn.addEventListener('click', () => {
+  //   if (edicion && !esPersonaje) cambiarEsbirro(null)
+  //   else if (!edicion && !esPersonaje) contenConsola(esbirroSeleccionado.descripcion)
+  // })
 }
 
 { // * Edición de atributos de esbirro
@@ -2361,6 +2380,8 @@ function mostrarEsbirroSeleccionado() {
     function mostrarControlesCambioEsbirro() {
       izquierdaBtn.style.display = "block"
       derechaBtn.style.display = "block"
+
+      ocultarBtnArrivaAbajo()
     }
 
     function ocultarControlesCambioEsbirro() {
@@ -2375,14 +2396,16 @@ function mostrarEsbirroSeleccionado() {
       if (i < 0) i = esbirros.length - 1
       esbirroSeleccionado = esbirros[i]
       mostrarEsbirroSeleccionado()
-      contenConsola(esbirroSeleccionado.descripcion)
+
+      consolaBtn.textContent = esbirroSeleccionado.descripcion
     })
     derechaBtn.addEventListener('click', () => {
       i++
       if (i > esbirros.length - 1) i = 0
       esbirroSeleccionado = esbirros[i]
       mostrarEsbirroSeleccionado()
-      contenConsola(esbirroSeleccionado.descripcion)
+
+      consolaBtn.textContent = esbirroSeleccionado.descripcion
     })
   }
 }
@@ -2441,16 +2464,16 @@ function mostrarEsbirroSeleccionado() {
           else
             contenConsola(`Huye<br>${dado + esbirroSeleccionado.esquiva}`)
           break;
-          case 5:
-          case 6: // * Tirada limpia
-            // TODO: Retocar tirada limpia
-            if (dado == 20)
-              contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
-            else if (dado == 1)
-              contenConsola(`Tirada limpia<br>¡PIFIA!`)
-            else
-              contenConsola(`Tirada limpia<br>${dado + esbirroSeleccionado.esquiva}`)
-            break;
+        case 5:
+        case 6: // * Tirada limpia
+          // TODO: Retocar tirada limpia
+          if (dado == 20)
+            contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+          else if (dado == 1)
+            contenConsola(`Tirada limpia<br>¡PIFIA!`)
+          else
+            contenConsola(`Tirada limpia<br>${dado + esbirroSeleccionado.esquiva}`)
+          break;
         default:
           break;
       }
