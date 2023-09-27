@@ -130,11 +130,68 @@ document.body.addEventListener('dragstart', (e) => {
   }
 }
 
+// ? Objeto para almacenar información de las habilidades
+// TODO: Agregar habilidades restantes, y revisar existentes
+const habilidadesDict = {
+  "habilidad 1": "Habildad 1 sin descripción",
+  "habilidad 2": "Habildad 2 sin descripción",
+  "habilidad 3": "Habildad 3 sin descripción",
+  "machacar": "Impacta en el objetivo generando daño crítico y quitándole mitigación durante 1 turno <br> Poder min(6)",
+  "ira ciega": "Al matar un enemigo, puedes atacar a cualquier criatura o personaje que esté a tu alcance, sin necesidad de acciones <br> Poder min(1)",
+  "masestro de armas": "Eres competente con todas las armas, al matar un enemigo puedes hacerte con la suya <br> Habilidad Pasiva",
+  "duelo": "En combate 1 vs 1 obtienes +3 a la esquiva y ataque <br> Habilidad Pasiva",
+  "corte profundo": "Daña al objetivo y deja un sangrado que genera 3 puntos de daño por turno durante 3 turnos (no mitigables) <br> Poder min(6)",
+  "ataque rapido": "Avanza hacia el objetivo y lo ataca en una acción combinada / distancia máx(velocidad x 2) <br> Poder min(3) / Acciones(Arma)",
+  "cobertura": "Aumenta 300% la mitigación ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo",
+  "embestida con escudo": "Golpeas al objetivo generándole 200% daño físico y derribándolo<br> Poder(3) / Requiere Escudo",
+  "ataque poderoso": "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos",
+  "ataque multiple": "Una serie de golpes, los cuales suman todo su daño, generándolo de manera explosiva al finalizar la habilidad <br> Poder min(3)",
+  "golpe de chi": "Un poderoso empujón cargado de energía, que genera daño físico, aturde al objetivo 1 turno y lo hace retroceder (ataque x casilleros)<br> Poder min(6)",
+  "patada voladora": "Te lanzas hacia el objetivo a una distancia máxima de (velocidad x casilleros), al golpearlo generas 200% de daño físico + 1 punto de daño por metro recorrido.<br> Poder min(3) / Sin Requisitos",
+  "desarmar": "Desarmas al objetivo, dejando caer su arma a 1 casillero de distancia a elección.<br> Poder(3)",
+  "sigilo": "Si tu objetivo se encuentra en combate con otro personaje o criatura, obtienes + 3 al ataque.<br> Pasiva",
+  "torbellino": "Giras tu con tu arma generando 50% de daño a todos los objetivos en tu rango de alcance, puedes caminar mientras la habilidad está activa.<br> Poder min(6)",
+  "flechas multiples": "Lanzas 3 flechas juntas, las cuales harán 50% de daño de manera acumulativa si más de un proyectil impacta en el mismo objetivo.( se debe realizar una tirada por cada flecha)<br> Poder(3) / Requiere arco",
+  "flecha energizada": "Cargas con energía tus flechas aumentando su daño.<br> Poder min(1) / Requiere arco",
+  "flecha elemental": "Cambia el tipo de daño elemental que produce tu flecha.<br> Poder (3) / Requiere arco",
+  "invocar": "Ahora puedes manifestar criaturas elementales.",
+  "golpe vampirico": "Absorbes vida del objetivo para ti mismo. <br> Poder min(6).",
+  "incansable": "Habilidad pasiva que brinda +1 acción.",
+  "ataque doble": "Realiza dos ataques, con armas gemelas en la misma cantidad de acciones. <br> Poder min(3)",
+  // Habilidades mágicas
+  "exorcismo": "Genera daño sagrado y aturde al objetivo durante 1 turno <br> Poder min(3)",
+  "bola de fuego": "Genera daño de fuego. Los golpes críticos incendian al objetivo, lo que le genera 3 puntos de daño no mitigable, durante 3 turnos. <br> Poder min(3)",
+  "bola de hielo": "Genera daño de hielo. Los golpes críticos congelan al objetivo, quitándole mitad de velocidad y toda mitigación hacia este elemento, durante 3 turnos. <br> Poder min(3)",
+  "sentencia": "El objetivo pierde toda mitigación durante 3 turno <br> Poder(3)",
+  "sanar": "Restaura al objetivo 1 x 1 puntos de salud <br> Poder min(1)",
+  "misil arcano": "Genera daño etéreo<br> Poder min(1)",
+  "explosion de escarcha": "Una onda expansiva que congela a todos los enemigos en un radio de (ataque x casillero) / lo que les reduce a la mitad su velocidad y los deja sin mitigación hacia este elemento, durante 3 turnos.<br> Poder min(6)",
+  "invisibilidad": "Te vuelves indetectable para los demás durante 3 turnos, al atacar pierdes el efecto.<br> Poder min(6)",
+  "enraizar": "Unas poderosas raíces surgen del suelo sujetando al objetivo e impidiéndole moverse del lugar durante 3 turnos.<br> Poder min(3) / El objetivo aún puede atacar, e incluso atacar a las raíces, las cuales tienen 50 puntos de vida.",
+  "envenenar": "Envenenas al objetivo generándole 100% de daño mágico durante 3 turnos.<br> Poder (6)",
+  "licantropia": "Puedes tener garras y colmillos como armas naturales durante 3 turnos.<br> Poder o Poder(3) <br> Escribe el comando: /licántropo",
+  "terremoto": "Vuelves inestable un área de (ataque x casilleros) durante 3 turnos que se renuevan con cada lanzamiento. Atravesar este terreno cuesta doble de movimiento, podrás lanzar el ataque nuevamente cada vez que alguien pase sobre el área, en caso de acertar este se caerá. Los golpes críticos de terremoto en áreas inestables inmovilizan al objetivo. <br> Poder(3)",
+  "relampago": "Genera daño de electricidad y rebota en hasta 3 objetivos que no estén separados por más de (ataque x casilleros), los golpes críticos dejan al objetivo electrificado.<br> Poder min(3)",
+  "sobrecarga": "Sobrecargas un objetivo que se encuentre electrificado generando 500% de daño mágico.<br> Poder min(3)",
+  "control mental": "Controlas el personaje o npc durante 1 turno. <br> Poder min(9)",
+  "confundir": "Confunde al objetivo, haciendo que cualquier ataque que este haga y falle, durante 3 turno, sea un golpe certero hacia el mismo o un aliado cercano. Una pifia se considera crítico para la víctima.<br> Poder min(6)",
+  "miedo": "El objetivo gasta todas sus acciones corriendo en dirección aleatoria, siempre alejándose de quien lanzó el hechizo. En caso de un escenario cerrado, correrá y quedará en la esquina más lejana.<br> Poder min(6)",
+  "tsunami": "Una poderosa ola en forma de cono que se expande hasta 1 casillero x ataque. Empuja todo a su paso a una distancia igual a la mitad del ataque y genera daño mágico de agua.<br> Poder min(9)",
+  "drenar": "Transfiere vida, energía o maná del objetivo al conjurador, puedes apostar una de estas poders para aumentar el efecto, la cual solo se consumirá si fallas el ataque.<br> Poder min(0)",
+  "transmutar": "Convierte vida energía o maná en cualquiera de ellas, puede usarse sobre si mismo o sobre otros personajes.<br> Poder min(1)",
+  "derribo": "Derriba al objetivo.<br> Poder(3)",
+  "desgarro": "Una herida que genera 3 puntos de daño no mitigable durante 3 turnos.<br> Poder(6)",
+  "triturar": "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo.<br> Poder(6)",
+  "petrificar": "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo, una vez sin velocidad el objetivo recibe doble de daño.<br> Poder(6)"
+}
 
 // ? Objeto para almacenar información de las armas
 // TODO: Agregar las demas armas
 var armasDict = {
-  // * Armas de personaje
+  "nada": {
+    danno: 0,
+    descripcion: "Arma sin descripción"
+  },
   "punno": {
     danno: 0.75,
     descripcion: "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
@@ -187,7 +244,6 @@ var armasDict = {
     danno: 1,
     descripcion: "Arma mixta <br> 1 casillero x ataque / 2 Acciones / 100% de ataque como daño físico o mágico"
   },
-  // * Armas de esbirros
   "mordisco": {
     danno: 1.5,
     descripcion: "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño físico"
@@ -579,6 +635,25 @@ var personajesDict = {
   // TODO: paladinoscuro
   // TODO: nigromante
   // TODO: guardiarunico
+  "nuevopj": {
+    nombre: "Nuevo Personaje",
+    imagen: "img/new.png",
+    descripcion: "",
+    experiencia: 200,
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+    arma1: "nada",
+    arma2: "nada",
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3"
+  }
 }
 
 // ? Objeto para almacenar información de los distintos equipamientos
@@ -602,12 +677,13 @@ var equiposDict = {
 // ? Bandera que indica si el juego esta en modo edicion o no, valores posibles 0 o 1
 var edicion = 0
 // ? Bandera que indica si se esta editanto el personaje principal o el esbirro, valores posibles 'personaje' o 'esbirro'
-var tipoEdicion = 'personaje'
+var tipoEdicion = 'personaje' // TODO: Descartar
 
 var personaje = {
 
   nombre: "BIENVENIDO",
   meeple: "img/logo-meeple-combat.png",
+  imagen: "img/logo-meeple-combat.png",
   descripcion: "Descripcion personaje default",
 
   experiencia: 0,
@@ -645,59 +721,6 @@ const valorExperiencia = {
   velocidad: 6,
   vidaMaxima: 1,
   poderMaximo: 1
-}
-
-const habilidadesDict = {
-  "habilidad 1": "Habildad 1 sin descripción",
-  "habilidad 2": "Habildad 2 sin descripción",
-  "habilidad 3": "Habildad 3 sin descripción",
-  "machacar": "Impacta en el objetivo generando daño crítico y quitándole mitigación durante 1 turno <br> Poder min(6)",
-  "ira ciega": "Al matar un enemigo, puedes atacar a cualquier criatura o personaje que esté a tu alcance, sin necesidad de acciones <br> Poder min(1)",
-  "masestro de armas": "Eres competente con todas las armas, al matar un enemigo puedes hacerte con la suya <br> Habilidad Pasiva",
-  "duelo": "En combate 1 vs 1 obtienes +3 a la esquiva y ataque <br> Habilidad Pasiva",
-  "corte profundo": "Daña al objetivo y deja un sangrado que genera 3 puntos de daño por turno durante 3 turnos (no mitigables) <br> Poder min(6)",
-  "ataque rapido": "Avanza hacia el objetivo y lo ataca en una acción combinada / distancia máx(velocidad x 2) <br> Poder min(3) / Acciones(Arma)",
-  "cobertura": "Aumenta 300% la mitigación ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo",
-  "embestida con escudo": "Golpeas al objetivo generándole 200% daño físico y derribándolo<br> Poder(3) / Requiere Escudo",
-  "ataque poderoso": "Carga tu golpe con energía<br> Poder min(1) / Sin Requerimentos",
-  "ataque multiple": "Una serie de golpes, los cuales suman todo su daño, generándolo de manera explosiva al finalizar la habilidad <br> Poder min(3)",
-  "golpe de chi": "Un poderoso empujón cargado de energía, que genera daño físico, aturde al objetivo 1 turno y lo hace retroceder (ataque x casilleros)<br> Poder min(6)",
-  "patada voladora": "Te lanzas hacia el objetivo a una distancia máxima de (velocidad x casilleros), al golpearlo generas 200% de daño físico + 1 punto de daño por metro recorrido.<br> Poder min(3) / Sin Requisitos",
-  "desarmar": "Desarmas al objetivo, dejando caer su arma a 1 casillero de distancia a elección.<br> Poder(3)",
-  "sigilo": "Si tu objetivo se encuentra en combate con otro personaje o criatura, obtienes + 3 al ataque.<br> Pasiva",
-  "torbellino": "Giras tu con tu arma generando 50% de daño a todos los objetivos en tu rango de alcance, puedes caminar mientras la habilidad está activa.<br> Poder min(6)",
-  "flechas multiples": "Lanzas 3 flechas juntas, las cuales harán 50% de daño de manera acumulativa si más de un proyectil impacta en el mismo objetivo.( se debe realizar una tirada por cada flecha)<br> Poder(3) / Requiere arco",
-  "flecha energizada": "Cargas con energía tus flechas aumentando su daño.<br> Poder min(1) / Requiere arco",
-  "flecha elemental": "Cambia el tipo de daño elemental que produce tu flecha.<br> Poder (3) / Requiere arco",
-  "invocar": "Ahora puedes manifestar criaturas elementales.",
-  "golpe vampirico": "Absorbes vida del objetivo para ti mismo. <br> Poder min(6).",
-  "incansable": "Habilidad pasiva que brinda +1 acción.",
-  "ataque doble": "Realiza dos ataques, con armas gemelas en la misma cantidad de acciones. <br> Poder min(3)",
-  // Habilidades mágicas
-  "exorcismo": "Genera daño sagrado y aturde al objetivo durante 1 turno <br> Poder min(3)",
-  "bola de fuego": "Genera daño de fuego. Los golpes críticos incendian al objetivo, lo que le genera 3 puntos de daño no mitigable, durante 3 turnos. <br> Poder min(3)",
-  "bola de hielo": "Genera daño de hielo. Los golpes críticos congelan al objetivo, quitándole mitad de velocidad y toda mitigación hacia este elemento, durante 3 turnos. <br> Poder min(3)",
-  "sentencia": "El objetivo pierde toda mitigación durante 3 turno <br> Poder(3)",
-  "sanar": "Restaura al objetivo 1 x 1 puntos de salud <br> Poder min(1)",
-  "misil arcano": "Genera daño etéreo<br> Poder min(1)",
-  "explosion de escarcha": "Una onda expansiva que congela a todos los enemigos en un radio de (ataque x casillero) / lo que les reduce a la mitad su velocidad y los deja sin mitigación hacia este elemento, durante 3 turnos.<br> Poder min(6)",
-  "invisibilidad": "Te vuelves indetectable para los demás durante 3 turnos, al atacar pierdes el efecto.<br> Poder min(6)",
-  "enraizar": "Unas poderosas raíces surgen del suelo sujetando al objetivo e impidiéndole moverse del lugar durante 3 turnos.<br> Poder min(3) / El objetivo aún puede atacar, e incluso atacar a las raíces, las cuales tienen 50 puntos de vida.",
-  "envenenar": "Envenenas al objetivo generándole 100% de daño mágico durante 3 turnos.<br> Poder (6)",
-  "licantropia": "Puedes tener garras y colmillos como armas naturales durante 3 turnos.<br> Poder o Poder(3) <br> Escribe el comando: /licántropo",
-  "terremoto": "Vuelves inestable un área de (ataque x casilleros) durante 3 turnos que se renuevan con cada lanzamiento. Atravesar este terreno cuesta doble de movimiento, podrás lanzar el ataque nuevamente cada vez que alguien pase sobre el área, en caso de acertar este se caerá. Los golpes críticos de terremoto en áreas inestables inmovilizan al objetivo. <br> Poder(3)",
-  "relampago": "Genera daño de electricidad y rebota en hasta 3 objetivos que no estén separados por más de (ataque x casilleros), los golpes críticos dejan al objetivo electrificado.<br> Poder min(3)",
-  "sobrecarga": "Sobrecargas un objetivo que se encuentre electrificado generando 500% de daño mágico.<br> Poder min(3)",
-  "control mental": "Controlas el personaje o npc durante 1 turno. <br> Poder min(9)",
-  "confundir": "Confunde al objetivo, haciendo que cualquier ataque que este haga y falle, durante 3 turno, sea un golpe certero hacia el mismo o un aliado cercano. Una pifia se considera crítico para la víctima.<br> Poder min(6)",
-  "miedo": "El objetivo gasta todas sus acciones corriendo en dirección aleatoria, siempre alejándose de quien lanzó el hechizo. En caso de un escenario cerrado, correrá y quedará en la esquina más lejana.<br> Poder min(6)",
-  "tsunami": "Una poderosa ola en forma de cono que se expande hasta 1 casillero x ataque. Empuja todo a su paso a una distancia igual a la mitad del ataque y genera daño mágico de agua.<br> Poder min(9)",
-  "drenar": "Transfiere vida, energía o maná del objetivo al conjurador, puedes apostar una de estas poders para aumentar el efecto, la cual solo se consumirá si fallas el ataque.<br> Poder min(0)",
-  "transmutar": "Convierte vida energía o maná en cualquiera de ellas, puede usarse sobre si mismo o sobre otros personajes.<br> Poder min(1)",
-  "derribo": "Derriba al objetivo.<br> Poder(3)",
-  "desgarro": "Una herida que genera 3 puntos de daño no mitigable durante 3 turnos.<br> Poder(6)",
-  "triturar": "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo.<br> Poder(6)",
-  "petrificar": "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo, una vez sin velocidad el objetivo recibe doble de daño.<br> Poder(6)"
 }
 
 // ? Indica el arma seleccionada para ejecutar la función acción(), rango 1..2
@@ -797,7 +820,7 @@ var habilidad3 = {
 */
 function imprimirPersonaje() {
 
-  portadaImg.src = personaje.meeple
+  portadaImg.src = personaje.imagen
   // portadaImg.src = `img/${quitarEspacios(personaje.nombre)}.png`
 
   nombreTxt.textContent = personaje.nombre.toUpperCase()
@@ -1017,7 +1040,8 @@ function avatar(meeple) {
   "barbaro", "guerrero", "paladin",
   "picaro", "monje", "cazador",
   "druida", "chaman", "mago",
-  "paladinoscuro", "nigromante", "guardiarunico"
+  "paladinoscuro", "nigromante", "guardiarunico",
+  "nuevopj"
 ].forEach(key => {
   const boton = document.getElementById(`${key}Btn`)
   boton.addEventListener('click', () => {
@@ -1333,17 +1357,18 @@ let estadisticaSeleccionada
     ['arriba', 'abajo'].forEach(key => {
       const boton = document.getElementById(`${key}Btn`)
       boton.addEventListener('click', () => {
-        let accion = key === 'arriba'
+        let accionBtn = key === 'arriba'
           ? 'mas'
           : 'menos'
         if (edicion) {
-          if (tipoEdicion === "personaje") modificarValores(accion, estadisticaSeleccionada)
-          else modificarAtributosEsbirro(accion, estadisticaSeleccionada)
+          if (tipoEdicion === "personaje") modificarValores(accionBtn, estadisticaSeleccionada)
+          else modificarAtributosEsbirro(accionBtn, estadisticaSeleccionada)
         }
         else {
-          if (tipoEdicion === "personaje") masMenosVidaPoder(accion)
-          else modificarVidaPoderActualEsbirro(accion)
+          if (tipoEdicion === "personaje") masMenosVidaPoder(accionBtn)
+          else modificarVidaPoderActualEsbirro(accionBtn)
         }
+        console.log(accionBtn, edicion, tipoEdicion)
       })
     })
   }
@@ -1652,6 +1677,7 @@ let estadisticaSeleccionada
 
 }
 
+// ! Descartado
 { // * Creación de personaje nuevo
   { // * Funciones para creación de un nuevo personaje
     function nuevoPersonaje() {
@@ -1700,9 +1726,9 @@ let estadisticaSeleccionada
     }
   }
   { // * eventListener de personaje nuevo
-    nuevopjBtn.addEventListener('click', () => {
-      nuevoPersonaje()
-    })
+    // nuevopjBtn.addEventListener('click', () => {
+    //   nuevoPersonaje()
+    // })
   }
 }
 
@@ -1970,13 +1996,19 @@ esbirrosBtn.addEventListener('click', () => {
     // Si se estaba mostrando el personaje, cambia a mostrar el esbirro
     esPersonaje = false;
 
+    tipoEdicion = 'esbirro'
+
     // Llama a la función para mostrar la información del esbirro seleccionado
     mostrarEsbirroSeleccionado();
 
     contenConsola(esbirroSeleccionado.descripcion)
+
+    esbirrosImg.src = "img/team.png"
   } else {
     // Si se estaba mostrando un esbirro, cambia a mostrar el personaje
     esPersonaje = true;
+
+    tipoEdicion = 'personaje'
 
     // Oculta los boton de izquierda y derecha
     ocultarControlesCambioEsbirro()
@@ -1985,6 +2017,8 @@ esbirrosBtn.addEventListener('click', () => {
     // Llama a la función para mostrar la información del personaje
     imprimirPersonaje()
     contenConsola(personaje.descripcion)
+
+    esbirrosImg.src = "img/singlePlayer.svg"
   }
 });
 
@@ -2151,7 +2185,6 @@ function mostrarEsbirroSeleccionado() {
         }
       }
       // Actualizar la información del esbirro en la interfaz
-      // console.log('actualizar')
       mostrarEsbirroSeleccionado()
     }
 
@@ -2162,7 +2195,7 @@ function mostrarEsbirroSeleccionado() {
         } else { // ? Decremento de vida
           if (esbirroSeleccionado.vida > 0) esbirroSeleccionado.vida--
         }
-        // contenConsola(`Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`)
+
         consolaBtn.textContent = `Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`
       } else if (estadisticaSeleccionada === "poder") {
         if (accion === "mas") { // ? Incremento de poder
@@ -2170,7 +2203,7 @@ function mostrarEsbirroSeleccionado() {
         } else { // ? Decremento de poder
           if (esbirroSeleccionado.poder > 0) esbirroSeleccionado.poder--
         }
-        // contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`)
+
         consolaBtn.textContent = `Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`
       }
 
