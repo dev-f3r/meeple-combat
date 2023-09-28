@@ -140,7 +140,26 @@ document.body.addEventListener('dragstart', (e) => {
 }
 
 function ingresarComando() {
+  let comando = prompt("Ingrese comando")
 
+  // ? Cambio de personaje con '/' + nombre
+  if (/^\//.test(comando)) {
+    if (esPersonaje) { // ? Cambio de personaje principal
+      let nombrePersonaje = comando.match(/^\/(.*)/)[1]
+
+      if (nombrePersonaje in personajesDict) avatar(nombrePersonaje)
+
+      else contenConsola("Personaje incorrecto")
+    } else { // ? Cambio de esbirro
+      let nombreEsbirro = comando.match(/^\/(.*)/)[1]
+
+      if (nombreEsbirro in personajesDict) cambiarEsbirro(nombreEsbirro)
+      else if (nombreEsbirro in esbirrosDict) cambiarEsbirro(nombreEsbirro)
+
+      else contenConsola("Personaje incorrecto")
+    }
+  }
+  // TODO: Agregar los demas comandos
 }
 
 // ? Objeto para almacenar información de las habilidades
@@ -2135,17 +2154,20 @@ function mostrarEsbirroSeleccionado() {
    */
   function cambiarEsbirro(nombre) {
     console.log("cambiarEsbirro", nombre)
-    if (nombre) { // * Esbirro por personaje
-      esbirroSeleccionado.actualizarPropiedades(personajesDict[nombre])
-    } else { // * Esbirro por esbirro
-      let val = prompt("Ingrese comando")
+    // if (nombre) { // * Esbirro por personaje
+    //   esbirroSeleccionado.actualizarPropiedades(personajesDict[nombre])
+    // } else { // * Esbirro por esbirro
+    //   let val = prompt("Ingrese comando")
 
-      if (val in esbirrosDict) {
-        esbirroSeleccionado.actualizarPropiedades(esbirrosDict[val])
-      } else {
-        contenConsola("COMANDO INCORRECTO")
-      }
-    }
+    //   if (val in esbirrosDict) {
+    //     esbirroSeleccionado.actualizarPropiedades(esbirrosDict[val])
+    //   } else {
+    //     contenConsola("COMANDO INCORRECTO")
+    //   }
+    // }
+
+    if (nombre in personajesDict) esbirroSeleccionado.actualizarPropiedades(personajesDict[nombre])
+    if (nombre in esbirrosDict) esbirroSeleccionado.actualizarPropiedades(esbirrosDict[nombre])
 
     mostrarEsbirroSeleccionado()
     cerrarEdicion()
