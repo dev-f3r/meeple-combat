@@ -33,7 +33,10 @@ document.body.addEventListener('dragstart', (e) => {
   // ? Limpia la consola
   consolaBtn.addEventListener('click', () => {
     if (edicion == 0 && (estadisticaSeleccionada !== "vida" && estadisticaSeleccionada !== "poder")) {
+      console.log("Clear")
       consolaBtn.innerHTML = ""
+      ocultarControlesCambioEsbirro()
+      flagControlesCambioEsbirro = false
     } else if (edicion) {
       ingresarComando()
     }
@@ -857,10 +860,10 @@ function imprimirPersonaje() {
 
   nombreTxt.textContent = personaje.nombre.toUpperCase()
 
-  ataqueTxt.textContent = personaje.ataque + equipo1.ataque + equipo2.ataque + equipo3.ataque
-  esquivaTxt.textContent = personaje.esquiva + equipo1.esquiva + equipo2.esquiva + equipo3.esquiva
-  bloqueoTxt.textContent = personaje.bloqueo + equipo1.bloqueo + equipo2.bloqueo + equipo3.bloqueo
-  velocidadTxt.textContent = personaje.velocidad + equipo1.velocidad + equipo2.velocidad + equipo3.velocidad
+  ataqueTxt.textContent = personaje.ataque
+  esquivaTxt.textContent = personaje.esquiva
+  bloqueoTxt.textContent = personaje.bloqueo
+  velocidadTxt.textContent = personaje.velocidad
 
   vidaTxt.textContent = personaje.vida
 
@@ -1229,13 +1232,20 @@ let estadisticaSeleccionada
       let data;
 
       if (tipoEdicion === "personaje") {
-        data = `${capitalizarPrimeraLetra(atributo)} ${personaje[atributo]}`;
+        if (atributo === 'vidaMaxima') {
+          data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+        } else if (atributo === 'poderMaximo') {
+          data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+        } else data = `${capitalizarPrimeraLetra(atributo)} ${personaje[atributo]}`;
       } else {
-        data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`;
+        if (atributo === 'vidaMaxima') {
+          data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+        } else if (atributo === 'poderMaximo') {
+          data = `Vida ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+        } else data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`;
       }
 
-      // contenConsola(data);
-      consolaBtn.textContent = data
+      consolaBtn.innerHTML = data
     }
 
 
@@ -1260,11 +1270,14 @@ let estadisticaSeleccionada
       if (accion === 'mas') {
         if (personaje.experiencia >= valor) {
           personaje[estadistica]++
-          data = `${estadistica
-            .charAt(0)
-            .toUpperCase()
-            + estadistica
-              .slice(1)} ${personaje[estadistica]}`
+
+          if (estadistica === 'vidaMaxima') {
+            data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+          } else if (estadistica === 'poderMaximo') {
+            data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+          } else {
+            data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
+          }
 
           // * decrementar exp
           aumentarDisminuirExperiencia("personaje", 'menos', estadistica)
@@ -1291,11 +1304,14 @@ let estadisticaSeleccionada
           aumentarDisminuirExperiencia('personaje', 'mas', estadistica)
 
           // * cambiar contenido mostrado
-          data = `${estadistica
-            .charAt(0)
-            .toUpperCase()
-            + estadistica
-              .slice(1)} ${personaje[estadistica]}`
+          if (estadistica === 'vidaMaxima') {
+            data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+          } else if (estadistica === 'poderMaximo') {
+            data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+          } else {
+            data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
+          }
+
           consola.innerHTML = data
           imprimirPersonaje()
         }
@@ -1314,7 +1330,7 @@ let estadisticaSeleccionada
           if (personaje.vida > 0) personaje.vida--
         }
         // contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
-        consolaBtn.textContent = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
+        consolaBtn.innerHTML = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
       } else if (estadisticaSeleccionada === "poder") {
         if (accion === "mas") { // ? Incremento de poder
           if (personaje.poder < personaje.poderMaximo) personaje.poder++
@@ -1322,7 +1338,7 @@ let estadisticaSeleccionada
           if (personaje.poder > 0) personaje.poder--
         }
         // contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
-        consolaBtn.textContent = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
+        consolaBtn.innerHTML = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
       }
       imprimirPersonaje()
     }
@@ -1371,7 +1387,7 @@ let estadisticaSeleccionada
         objetoAccion = "estadistica"
 
 
-        consolaBtn.textContent = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
+        consolaBtn.innerHTML = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
       }
     })
     poderBtn.addEventListener('click', () => {
@@ -1386,7 +1402,7 @@ let estadisticaSeleccionada
         slotEstadisticaSeleccionada = 6
         objetoAccion = "estadistica"
 
-        consolaBtn.textContent = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
+        consolaBtn.innerHTML = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
       }
     })
   }
@@ -1679,28 +1695,36 @@ let estadisticaSeleccionada
           break
       }
 
-      // switch (item) {
-      //   case 'armaduraLigera': // TODO: Arreglar estadisticas de Armadura Ligera
-      //     equipo.nombre = "Armadura Ligera"
-      //     equipo.icono = "img/armaduraligera.png"
-      //     equipo.descripcion = ""
-      //     equipo.nivel = 1
-      //     equipo.ataque = 0
-      //     equipo.esquiva = 1
-      //     equipo.bloqueo = 0
-      //     equipo.velocidad = 0
-      //     equipo.vidaMaxima = 0
-      //     equipo.poderMaximo = 0
-
-      //     break;
-
-      //   // TODO: Agregar los demas items
-
-      //   default:
-      //     break;
-      // }
+      for (const clave in equipo) {
+        if (
+          clave === 'ataque' ||
+          clave === 'esquiva' ||
+          clave === 'bloqueo' ||
+          clave === 'velocidad' ||
+          clave === 'vidaMaxima' ||
+          clave === 'poderMaximo'
+        ) {
+          console.log(clave, equipo[clave])
+          personaje[clave] -= equipo[clave]
+        }
+      }
 
       Object.assign(equipo, equiposDict[item])
+
+      for (const clave in equipo) {
+        console.log(clave)
+        if (
+          clave === 'ataque' ||
+          clave === 'esquiva' ||
+          clave === 'bloqueo' ||
+          clave === 'velocidad' ||
+          clave === 'vidaMaxima' ||
+          clave === 'poderMaximo'
+        ) {
+          console.log(clave, equipo[clave])
+          personaje[clave] += equipo[clave]
+        }
+      }
 
       imprimirPersonaje()
       cerrarEdicion()
@@ -1787,68 +1811,83 @@ let estadisticaSeleccionada
         * @slot: number
     */
     function accion(slot) {
-      console.log(slot)
+      let ataque = personaje.ataque,
+        esquiva = personaje.esquiva,
+        bloqueo = personaje.bloqueo,
+        velocidad = personaje.velocidad,
+        vidaMaxima = personaje.vidaMaxima,
+        poderMaximo = personaje.poderMaximo
+
+
       let dado = Math.ceil((Math.random() * 20) + 0)
 
       if (objetoAccion == "arma") {
         // ? Crea una referencia a arma1 o arma2 dependiendo del valor de slot
         let arma = slot == 1 ? arma1 : arma2
 
-        // TODO: Completar el funcionamiento de tirada
+        // TODO: Completar el funcionamiento de tirada con arma
         if (dado == 20)
-          contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * personaje.ataque * 2)}`)
+          contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * ataque * 2)}`)
         else if (dado == 1)
           contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
         else
-          contenConsola(`Ataque con ${arma.nombre}<br>${dado + personaje.ataque}<br>Daño base ${Math.floor(arma.danno * personaje.ataque)}`)
+          contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque}<br>Daño base ${Math.floor(arma.danno * ataque)}`)
       } else {
-        // let estadistica
+        // ? Tirada con atributo
         switch (slot) {
           case 1: // * Ataque
             // TODO: Retocar el ataque limpio
             if (dado == 20)
-              contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(personaje.ataque * 2)}`)
+              contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(ataque * 2)}`)
             else if (dado == 1)
               contenConsola(`Ataque limpio<br>¡PIFIA!<br>Daño base 0`)
             else
-              contenConsola(`Ataque limpio<br>${dado + personaje.ataque}<br>Daño base ${Math.floor(personaje.ataque)}`)
+              contenConsola(`Ataque limpio<br>${dado + ataque}<br>Daño base ${Math.floor(ataque)}`)
             break;
           case 2: // * Esquiva
             // TODO: Retocar esquiva
             if (dado == 20)
-              contenConsola(`Esquiva<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
+              contenConsola(`Esquiva<br>¡CRITICO!<br>${Math.floor(velocidad * 2)}`)
             else if (dado == 1)
               contenConsola(`Esquiva<br>¡PIFIA!`)
             else
-              contenConsola(`Esquiva<br>${dado + personaje.esquiva}`)
+              contenConsola(`Esquiva<br>${dado + esquiva}`)
             break;
           case 3: // * Bloquea
             // TODO: Retocar bloqueo
             if (dado == 20)
-              contenConsola(`Bloquea<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
+              contenConsola(`Bloquea<br>¡CRITICO!<br>${Math.floor(bloqueo * 2)}`)
             else if (dado == 1)
               contenConsola(`Bloquea<br>¡PIFIA!`)
             else
-              contenConsola(`Bloquea<br>${dado + personaje.esquiva}`)
+              contenConsola(`Bloquea<br>${dado + bloqueo}`)
             break;
           case 4: // * Huye
             // TODO: Retocar huye
             if (dado == 20)
-              contenConsola(`Huye<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
+              contenConsola(`Huye<br>¡CRITICO!<br>${Math.floor(velocidad * 2)}`)
             else if (dado == 1)
               contenConsola(`Huye<br>¡PIFIA!`)
             else
-              contenConsola(`Huye<br>${dado + personaje.esquiva}`)
+              contenConsola(`Huye<br>${dado + velocidad}`)
             break;
-          case 5:
-          case 6: // * Tirada limpia
+          case 5: // * Tirada limpia vida
             // TODO: Retocar tirada limpia
             if (dado == 20)
-              contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(personaje.velocidad * 2)}`)
+              contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(vidaMaxima * 2)}`)
             else if (dado == 1)
               contenConsola(`Tirada limpia<br>¡PIFIA!`)
             else
-              contenConsola(`Tirada limpia<br>${dado + personaje.esquiva}`)
+              contenConsola(`Tirada limpia<br>${dado + vidaMaxima}`)
+            break;
+          case 6: // * Tirada limpia poder
+            // TODO: Retocar tirada limpia
+            if (dado == 20)
+              contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(poderMaximo * 2)}`)
+            else if (dado == 1)
+              contenConsola(`Tirada limpia<br>¡PIFIA!`)
+            else
+              contenConsola(`Tirada limpia<br>${dado + poderMaximo}`)
             break;
           default:
             break;
@@ -1925,12 +1964,42 @@ let estadisticaSeleccionada
       arma2 = { nombre: "wp 2", danno: 0, descripcion: "dc wp 2" },
 
       // Equipamiento de esbirro
-      // equipo1 = { nombre: "eq 1", descripcion: "dc eq 1" },
-      equipo1 = "eq 1",
-      // equipo2 = { nombre: "eq 2", descripcion: "dc eq 2" },
-      equipo2 = "eq 2",
-      // equipo3 = { nombre: "eq 3", descripcion: "dc eq 3" },
-      equipo3 = "eq 3",
+      equipo1 = {
+        nombre: "Nada",
+        icono: "img/nada.png",
+        descripcion: "Sin descripcion",
+        nivel: 0,
+        ataque: 0,
+        esquiva: 0,
+        bloqueo: 0,
+        velocidad: 0,
+        vidaMaxima: 0,
+        poderMaximo: 0
+      },
+      equipo2 = {
+        nombre: "Nada",
+        icono: "img/nada.png",
+        descripcion: "Sin descripcion",
+        nivel: 0,
+        ataque: 0,
+        esquiva: 0,
+        bloqueo: 0,
+        velocidad: 0,
+        vidaMaxima: 0,
+        poderMaximo: 0
+      },
+      equipo3 = {
+        nombre: "Nada",
+        icono: "img/nada.png",
+        descripcion: "Sin descripcion",
+        nivel: 0,
+        ataque: 0,
+        esquiva: 0,
+        bloqueo: 0,
+        velocidad: 0,
+        vidaMaxima: 0,
+        poderMaximo: 0
+      },
 
       // Habilidades de esbirro
       habilidad1 = { nombre: "sk 1", descripcion: "dc sk 1" },
@@ -1959,9 +2028,9 @@ let estadisticaSeleccionada
       this.arma2 = arma2;
 
       // * Equipamiento de esbirro
-      this.equipo1 = equipo1;
-      this.equipo2 = equipo2;
-      this.equipo3 = equipo3;
+      this.equipo1 = equipo1
+      this.equipo2 = equipo2
+      this.equipo3 = equipo3
 
       // * Habilidades de esbirro
       this.habilidad1 = habilidad1;
@@ -1982,9 +2051,9 @@ let estadisticaSeleccionada
       this.configurarHabilidad(2, this.habilidad2)
       this.configurarHabilidad(3, this.habilidad3)
 
-      this.configurarEquipamiento(1, this.equipo1)
-      this.configurarEquipamiento(2, this.equipo2)
-      this.configurarEquipamiento(3, this.equipo3)
+      // this.configurarEquipamiento(1, this.equipo1)
+      // this.configurarEquipamiento(2, this.equipo2)
+      // this.configurarEquipamiento(3, this.equipo3)
     }
 
     /**
@@ -1998,7 +2067,35 @@ let estadisticaSeleccionada
     }
 
     configurarEquipamiento(ranura, nombre) {
-      this[`equipo${ranura}`] = nombre
+      // * Restar atributos del equipamiento pasado
+      for (const clave in this[`equipo${ranura}`]) {
+        if (
+          clave === 'ataque' ||
+          clave === 'esquiva' ||
+          clave === 'bloqueo' ||
+          clave === 'velocidad' ||
+          clave === 'vidaMaxima' ||
+          clave === 'poderMaximo'
+        ) {
+          this[clave] -= this[`equipo${ranura}`][clave]
+        }
+      }
+
+      this[`equipo${ranura}`] = equiposDict[nombre]
+
+      // * Sumar atributos del equipamiento nuevo
+      for (const clave in this[`equipo${ranura}`]) {
+        if (
+          clave === 'ataque' ||
+          clave === 'esquiva' ||
+          clave === 'bloqueo' ||
+          clave === 'velocidad' ||
+          clave === 'vidaMaxima' ||
+          clave === 'poderMaximo'
+        ) {
+          this[clave] += this[`equipo${ranura}`][clave]
+        }
+      }
     }
 
     /**
@@ -2051,6 +2148,8 @@ esbirrosBtn.addEventListener('click', () => {
 
     contenConsola(esbirroSeleccionado.descripcion)
 
+    mostrarControlesCambioEsbirro()
+
     esbirrosImg.src = "img/team.png"
   } else {
     // Si se estaba mostrando un esbirro, cambia a mostrar el personaje
@@ -2081,61 +2180,65 @@ function mostrarEsbirroSeleccionado() {
 
 
   { // * Dependientes de equipamiento
-    let eq1 = {
-      nombre: "",
-      icono: "img/nada.png",
-      descripcion: "",
-      nivel: 0,
-      ataque: 0,
-      esquiva: 0,
-      bloqueo: 0,
-      velocidad: 0,
-      vidaMaxima: 0,
-      poderMaximo: 0,
-    }
-    let eq2 = {
-      nombre: "",
-      icono: "img/nada.png",
-      descripcion: "",
-      nivel: 0,
-      ataque: 0,
-      esquiva: 0,
-      bloqueo: 0,
-      velocidad: 0,
-      vidaMaxima: 0,
-      poderMaximo: 0,
-    }
-    let eq3 = {
-      nombre: "",
-      icono: "img/nada.png",
-      descripcion: "",
-      nivel: 0,
-      ataque: 0,
-      esquiva: 0,
-      bloqueo: 0,
-      velocidad: 0,
-      vidaMaxima: 0,
-      poderMaximo: 0,
-    }
+    // let eq1 = {
+    //   nombre: "",
+    //   icono: "img/nada.png",
+    //   descripcion: "",
+    //   nivel: 0,
+    //   ataque: 0,
+    //   esquiva: 0,
+    //   bloqueo: 0,
+    //   velocidad: 0,
+    //   vidaMaxima: 0,
+    //   poderMaximo: 0,
+    // }
+    // let eq2 = {
+    //   nombre: "",
+    //   icono: "img/nada.png",
+    //   descripcion: "",
+    //   nivel: 0,
+    //   ataque: 0,
+    //   esquiva: 0,
+    //   bloqueo: 0,
+    //   velocidad: 0,
+    //   vidaMaxima: 0,
+    //   poderMaximo: 0,
+    // }
+    // let eq3 = {
+    //   nombre: "",
+    //   icono: "img/nada.png",
+    //   descripcion: "",
+    //   nivel: 0,
+    //   ataque: 0,
+    //   esquiva: 0,
+    //   bloqueo: 0,
+    //   velocidad: 0,
+    //   vidaMaxima: 0,
+    //   poderMaximo: 0,
+    // }
 
-    if (esbirroSeleccionado.equipo1 in equiposDict) eq1 = equiposDict[esbirroSeleccionado.equipo1]
-    if (esbirroSeleccionado.equipo2 in equiposDict) eq2 = equiposDict[esbirroSeleccionado.equipo2]
-    if (esbirroSeleccionado.equipo3 in equiposDict) eq3 = equiposDict[esbirroSeleccionado.equipo3]
+    // if (esbirroSeleccionado.equipo1 in equiposDict) eq1 = equiposDict[esbirroSeleccionado.equipo1]
+    // if (esbirroSeleccionado.equipo2 in equiposDict) eq2 = equiposDict[esbirroSeleccionado.equipo2]
+    // if (esbirroSeleccionado.equipo3 in equiposDict) eq3 = equiposDict[esbirroSeleccionado.equipo3]
 
-    ataqueTxt.textContent = esbirroSeleccionado.ataque + eq1.ataque + eq2.ataque + eq3.ataque
-    esquivaTxt.textContent = esbirroSeleccionado.esquiva + eq1.esquiva + eq2.esquiva + eq3.esquiva
-    bloqueoTxt.textContent = esbirroSeleccionado.bloqueo + eq1.bloqueo + eq2.bloqueo + eq3.bloqueo
-    velocidadTxt.textContent = esbirroSeleccionado.velocidad + eq1.velocidad + eq2.velocidad + eq3.velocidad
+    // ataqueTxt.textContent = esbirroSeleccionado.ataque + eq1.ataque + eq2.ataque + eq3.ataque
+    ataqueTxt.textContent = esbirroSeleccionado.ataque
+    // esquivaTxt.textContent = esbirroSeleccionado.esquiva + eq1.esquiva + eq2.esquiva + eq3.esquiva
+    esquivaTxt.textContent = esbirroSeleccionado.esquiva
+    // bloqueoTxt.textContent = esbirroSeleccionado.bloqueo + eq1.bloqueo + eq2.bloqueo + eq3.bloqueo
+    bloqueoTxt.textContent = esbirroSeleccionado.bloqueo
+    // velocidadTxt.textContent = esbirroSeleccionado.velocidad + eq1.velocidad + eq2.velocidad + eq3.velocidad
+    velocidadTxt.textContent = esbirroSeleccionado.velocidad
     vidaTxt.textContent = esbirroSeleccionado.vida
     poderTxt.textContent = esbirroSeleccionado.poder
 
-    equipo1Txt.textContent = eq1.nivel
-    equipo2Txt.textContent = eq2.nivel
-    equipo3Txt.textContent = eq3.nivel
+    equipo1Txt.textContent = esbirroSeleccionado.equipo1.nivel
+    equipo2Txt.textContent = esbirroSeleccionado.equipo2.nivel
+    equipo3Txt.textContent = esbirroSeleccionado.equipo3.nivel
 
-    equipo1Img.src = eq1.icono
-    equipo2Img.src = eq2.icono
-    equipo3Img.src = eq3.icono
+    equipo1Img.src = esbirroSeleccionado.equipo1.icono
+    equipo2Img.src = esbirroSeleccionado.equipo2.icono
+    equipo3Img.src = esbirroSeleccionado.equipo3.icono
   }
   arma1Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma1.nombre)
   arma1Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma1.nombre)}.png`
@@ -2201,18 +2304,23 @@ function mostrarEsbirroSeleccionado() {
         if (esbirroSeleccionado.experiencia >= valor) {
           // Incrementar el atributo
           esbirroSeleccionado[atributo]++
-          data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
+
+          if (atributo === 'vidaMaxima') {
+            data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+          } else if (atributo === 'poderMaximo') {
+            data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+          } else {
+            data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
+          }
 
           // Decrementar experiencia
           aumentarDisminuirExperiencia("esbirroSeleccionado", 'menos', atributo)
+
           // Cambiar contenido mostrado en la consola
-          // contenConsola(data)
-          consolaBtn.textContent = data
-          // Actualizar la información del esbirro en la interfaz
-          // mostrarEsbirroSeleccionado()
+          consolaBtn.innerHTML = data
         } else {
           // contenConsola("Experiencia insuficiente")
-          consolaBtn.textContent = "Experiencia insuficiente"
+          consolaBtn.innerHTML = "Experiencia insuficiente"
         }
       } else {
         if (esbirroSeleccionado[atributo] > 0) {
@@ -2229,10 +2337,17 @@ function mostrarEsbirroSeleccionado() {
 
           // Incrementar experiencia
           aumentarDisminuirExperiencia('esbirroSeleccionado', 'mas', atributo)
+
           // Cambiar contenido mostrado en la consola
-          data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
-          // contenConsola(data)
-          consolaBtn.textContent = data
+          if (atributo === 'vidaMaxima') {
+            data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+          } else if (atributo === 'poderMaximo') {
+            data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+          } else {
+            data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
+          }
+
+          consolaBtn.innerHTML = data
         }
       }
       // Actualizar la información del esbirro en la interfaz
@@ -2247,7 +2362,7 @@ function mostrarEsbirroSeleccionado() {
           if (esbirroSeleccionado.vida > 0) esbirroSeleccionado.vida--
         }
 
-        consolaBtn.textContent = `Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`
+        consolaBtn.innerHTML = `Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`
       } else if (estadisticaSeleccionada === "poder") {
         if (accion === "mas") { // ? Incremento de poder
           if (esbirroSeleccionado.poder < esbirroSeleccionado.poderMaximo) esbirroSeleccionado.poder++
@@ -2255,7 +2370,7 @@ function mostrarEsbirroSeleccionado() {
           if (esbirroSeleccionado.poder > 0) esbirroSeleccionado.poder--
         }
 
-        consolaBtn.textContent = `Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`
+        consolaBtn.innerHTML = `Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`
       }
 
       mostrarEsbirroSeleccionado()
@@ -2308,7 +2423,7 @@ function mostrarEsbirroSeleccionado() {
 
           // Mostrar información de la estadística de vida actual y máxima en la consola
           // contenConsola(`Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`);
-          consolaBtn.textContent = `Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`
+          consolaBtn.innerHTML = `Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`
         }
       });
 
@@ -2332,7 +2447,7 @@ function mostrarEsbirroSeleccionado() {
 
           // Mostrar información de la estadística de poder actual y máximo en la consola
           // contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`)
-          consolaBtn.textContent = `Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`
+          consolaBtn.innerHTML = `Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`
         }
       });
     }
@@ -2419,7 +2534,7 @@ function mostrarEsbirroSeleccionado() {
       esbirroSeleccionado = esbirros[i]
       mostrarEsbirroSeleccionado()
 
-      consolaBtn.textContent = esbirroSeleccionado.descripcion
+      consolaBtn.innerHTML = esbirroSeleccionado.descripcion
     })
     derechaBtn.addEventListener('click', () => {
       i++
@@ -2427,7 +2542,7 @@ function mostrarEsbirroSeleccionado() {
       esbirroSeleccionado = esbirros[i]
       mostrarEsbirroSeleccionado()
 
-      consolaBtn.textContent = esbirroSeleccionado.descripcion
+      consolaBtn.innerHTML = esbirroSeleccionado.descripcion
     })
   }
 }
