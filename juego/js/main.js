@@ -32,10 +32,11 @@ document.body.addEventListener('dragstart', (e) => {
 
   // ? Limpia la consola
   consolaBtn.addEventListener('click', () => {
-    if (edicion == 0 && (estadisticaSeleccionada !== "vida" && estadisticaSeleccionada !== "poder")) {
+    if (!edicion) {
       console.log("Clear")
       consolaBtn.innerHTML = ""
       ocultarControlesCambioEsbirro()
+      ocultarBtnArrivaAbajo()
       flagControlesCambioEsbirro = false
     } else if (edicion) {
       ingresarComando()
