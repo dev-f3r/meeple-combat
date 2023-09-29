@@ -1118,10 +1118,18 @@ let estadisticaSeleccionada
 { // * Cambio en las estadisticas del personaje
   { // * Funciones para manipulación de la experiencia
     function establecerExperiencia() {
-      let valor = prompt("CANTIDAD")
+      let valor = Number(prompt("CANTIDAD"))
 
-      personaje.experiencia = Number(valor)
-      imprimirPersonaje()
+      if (!valor) valor = 0
+
+      if (esPersonaje) {
+        personaje.experiencia += valor
+        imprimirPersonaje()
+      } else {
+        esbirroSeleccionado.experiencia += valor
+        mostrarEsbirroSeleccionado()
+      }
+
       cerrarEdicion()
     }
 
@@ -1176,7 +1184,8 @@ let estadisticaSeleccionada
         establecerExperiencia()
       } else {
         ocultarBtnArrivaAbajo()
-        contenConsola(`Experiencia: ${personaje.experiencia}`)
+        if (esPersonaje) contenConsola(`Experiencia: ${personaje.experiencia}`)
+        else contenConsola(`Experiencia: ${esbirroSeleccionado.experiencia}`)
       }
     })
   }
@@ -2032,7 +2041,7 @@ let estadisticaSeleccionada
      * @param {string} nombre - El nombre del arma.
      */
     configurarArma(ranura, nombre) {
-      if (nombre in armasDict) 
+      if (nombre in armasDict)
         this[`arma${ranura}`] = { nombre, danno: armasDict[nombre].danno, descripcion: armasDict[nombre].descripcion }
       else
         this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
@@ -2115,6 +2124,8 @@ esbirrosBtn.addEventListener('click', () => {
 
     tipoEdicion = 'esbirro'
 
+    cerrarEdicion()
+
     // Llama a la función para mostrar la información del esbirro seleccionado
     mostrarEsbirroSeleccionado();
 
@@ -2128,6 +2139,8 @@ esbirrosBtn.addEventListener('click', () => {
     esPersonaje = true;
 
     tipoEdicion = 'personaje'
+
+    cerrarEdicion()
 
     // Oculta los boton de izquierda y derecha
     ocultarControlesCambioEsbirro()
