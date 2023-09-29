@@ -30,7 +30,7 @@ document.body.addEventListener('dragstart', (e) => {
       .toUpperCase()
   }
 
-  // ? Limpia la consola
+  // ? Limpia la consola si no esta en modo edición, caso contrario habre el promt de comandos
   consolaBtn.addEventListener('click', () => {
     if (!edicion) {
       console.log("Clear")
@@ -790,7 +790,7 @@ var equipo1 = {
   icono: "img/nada.png",
   descripcion: "",
 
-  nivel: 1,
+  nivel: 0,
 
   ataque: 0,
   esquiva: 0,
@@ -807,7 +807,7 @@ var equipo2 = {
   icono: "img/nada.png",
   descripcion: "",
 
-  nivel: 1,
+  nivel: 0,
 
   ataque: 0,
   esquiva: 0,
@@ -824,7 +824,7 @@ var equipo3 = {
   icono: "img/nada.png",
   descripcion: "",
 
-  nivel: 1,
+  nivel: 0,
 
   ataque: 0,
   esquiva: 0,
@@ -2032,8 +2032,10 @@ let estadisticaSeleccionada
      * @param {string} nombre - El nombre del arma.
      */
     configurarArma(ranura, nombre) {
-      if (nombre in armasDict) this[`arma${ranura}`] = { nombre, danno: armasDict[nombre].danno, descripcion: armasDict[nombre].descripcion }
-      else this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
+      if (nombre in armasDict) 
+        this[`arma${ranura}`] = { nombre, danno: armasDict[nombre].danno, descripcion: armasDict[nombre].descripcion }
+      else
+        this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
     }
 
     configurarEquipamiento(ranura, nombre) {
