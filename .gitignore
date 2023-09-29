@@ -1,2 +1,4 @@
 **/*.png
 juego/js/temp.js
+pedidos.txt
+.gitignore
