@@ -869,9 +869,9 @@ function imprimirPersonaje() {
 
   poderTxt.textContent = personaje.poder
 
-  equipo1Txt.textContent = personaje.equipo1
-  equipo2Txt.textContent = personaje.equipo2
-  equipo3Txt.textContent = personaje.equipo3
+  equipo1Txt.textContent = equipo1.nivel
+  equipo2Txt.textContent = equipo2.nivel
+  equipo3Txt.textContent = equipo3.nivel
 
   equipo1Img.src = equipo1.icono
   equipo2Img.src = equipo2.icono
@@ -1012,47 +1012,6 @@ arma2TxtBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
 // ? Funcion para cambio de personaje
 function avatar(meeple) {
   esPersonaje = true
-  // if (meeple == "GUERRERO") {
-
-  //   edicionTotal = 0
-
-  //   personaje.experiencia = 0
-
-  //   personaje.nombre = "GUERRERO"
-  //   personaje.meeple = "img/guerrero.png"
-  //   personaje.descripcion = "Descripción gerrero"
-
-  //   personaje.ataque = 4
-  //   personaje.esquiva = 2
-  //   personaje.bloqueo = 5
-  //   personaje.velocidad = 3
-  //   personaje.vida = 40
-  //   personaje.vidaMaxima = 40
-  //   personaje.poder = 40
-  //   personaje.poderMaximo = 40
-
-  //   personaje.equipo1 = ""
-  //   personaje.equipo2 = ""
-  //   personaje.equipo3 = ""
-
-  //   personaje.arma1 = "Una Mano"
-  //   personaje.arma2 = "Escudo"
-
-  //   habilidad1.nombre = "EMBESTIDA CON ESCUDO"
-  //   habilidad1.descripcion = habilidadesDict[habilidad1.nombre.toLowerCase()]
-  //   habilidad2.nombre = "COBERTURA"
-  //   habilidad2.descripcion = habilidadesDict[habilidad2.nombre.toLowerCase()]
-  //   habilidad3.nombre = "ATAQUE PODEROSO"
-  //   habilidad3.descripcion = habilidadesDict[habilidad3.nombre.toLowerCase()]
-
-  //   descripcionHabilidad(1)
-  //   descripcionHabilidad(2)
-  //   descripcionHabilidad(3)
-
-  //   cambiarArma("daga", 1)
-  //   cambiarArma("escudo", 2)
-
-  // }
 
   Object.assign(personaje, personajesDict[meeple])
   personaje.meeple = `img/${quitarEspacios(personaje.nombre)}.png`
@@ -1069,7 +1028,10 @@ function avatar(meeple) {
   habilidad2 = { nombre: personaje.habilidad2, descripcion: habilidadesDict[personaje.habilidad2] }
   habilidad3 = { nombre: personaje.habilidad3, descripcion: habilidadesDict[personaje.habilidad3] }
 
-  // TODO: Agregar los demas personajes
+  equipo1 = reiniciarEquipamiento(1)
+  equipo2 = reiniciarEquipamiento(2)
+  equipo3 = reiniciarEquipamiento(3)
+
   imprimirPersonaje()
   cerrarModal("personajes")
   cerrarEdicion()
@@ -1675,6 +1637,23 @@ let estadisticaSeleccionada
 
 { // * Cambio de equipamiento
   { // * Funciones para cambiar el equipamiento
+    function reiniciarEquipamiento(slot) {
+      return {
+        nombre: `Equipo ${slot}`,
+        icono: "img/nada.png",
+        descripcion: "",
+
+        nivel: 1,
+
+        ataque: 0,
+        esquiva: 0,
+        bloqueo: 0,
+        velocidad: 0,
+        vidaMaxima: 0,
+        poderMaximo: 0,
+      }
+    }
+
     function cambiarEquipamiento(item) {
       let equipo
 
@@ -1704,7 +1683,6 @@ let estadisticaSeleccionada
           clave === 'vidaMaxima' ||
           clave === 'poderMaximo'
         ) {
-          console.log(clave, equipo[clave])
           personaje[clave] -= equipo[clave]
         }
       }
@@ -1721,7 +1699,6 @@ let estadisticaSeleccionada
           clave === 'vidaMaxima' ||
           clave === 'poderMaximo'
         ) {
-          console.log(clave, equipo[clave])
           personaje[clave] += equipo[clave]
         }
       }
@@ -1872,22 +1849,14 @@ let estadisticaSeleccionada
               contenConsola(`Huye<br>${dado + velocidad}`)
             break;
           case 5: // * Tirada limpia vida
-            // TODO: Retocar tirada limpia
-            if (dado == 20)
-              contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(vidaMaxima * 2)}`)
-            else if (dado == 1)
-              contenConsola(`Tirada limpia<br>¡PIFIA!`)
-            else
-              contenConsola(`Tirada limpia<br>${dado + vidaMaxima}`)
-            break;
           case 6: // * Tirada limpia poder
             // TODO: Retocar tirada limpia
             if (dado == 20)
-              contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(poderMaximo * 2)}`)
+              contenConsola(`Tirada limpia<br>¡CRITICO!<br>${dado}`)
             else if (dado == 1)
               contenConsola(`Tirada limpia<br>¡PIFIA!`)
             else
-              contenConsola(`Tirada limpia<br>${dado + poderMaximo}`)
+              contenConsola(`Tirada limpia<br>${dado}`)
             break;
           default:
             break;
@@ -2605,11 +2574,11 @@ function mostrarEsbirroSeleccionado() {
         case 6: // * Tirada limpia
           // TODO: Retocar tirada limpia
           if (dado == 20)
-            contenConsola(`Tirada limpia<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+            contenConsola(`Tirada limpia<br>¡CRITICO!<br>${dado}`)
           else if (dado == 1)
             contenConsola(`Tirada limpia<br>¡PIFIA!`)
           else
-            contenConsola(`Tirada limpia<br>${dado + esbirroSeleccionado.esquiva}`)
+            contenConsola(`Tirada limpia<br>${dado}`)
           break;
         default:
           break;
