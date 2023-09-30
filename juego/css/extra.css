@@ -73,22 +73,24 @@ span.experiencia-item {
     font-family: Titillium Web;
 }
 
+
+/* * Estilos de input */
 .contenedor-input {
     font-family: Titillium Web;
-    display: none;
+    display: flex;
     position: absolute;
     background-color: #fff;
     top: 40%;
     height: 80px;
     width: 300px;
-    z-index: 1000;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     outline: solid 1.5px #000000;
+    z-index: 100;
 }
 
-.contenedor-input .exp-input {
+.contenedor-input .exp-input,.contenedor-input .comandos-input {
     outline: solid 1.5px #000000;
     border:none;
 }

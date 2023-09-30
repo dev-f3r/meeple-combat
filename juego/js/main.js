@@ -39,7 +39,8 @@ document.body.addEventListener('dragstart', (e) => {
       ocultarBtnArrivaAbajo()
       flagControlesCambioEsbirro = false
     } else if (edicion) {
-      ingresarComando()
+      mostrarInputComandos()
+      esIngresarComando = true
     }
   })
 
@@ -51,6 +52,7 @@ document.body.addEventListener('dragstart', (e) => {
     ocultarBtnArrivaAbajo()
     experienciaTxt.style.display = "none"
     ocultarInputExperiencia()
+    ocultarInputComandos()
   }
   /* 
       * @estadistica: string
@@ -143,27 +145,58 @@ document.body.addEventListener('dragstart', (e) => {
   }
 }
 
-function ingresarComando() {
-  let comando = prompt("Ingrese comando")
 
-  // ? Cambio de personaje con '/' + nombre
-  if (/^\//.test(comando)) {
-    if (esPersonaje) { // ? Cambio de personaje principal
-      let nombrePersonaje = comando.match(/^\/(.*)/)[1]
-
-      if (nombrePersonaje in personajesDict) avatar(nombrePersonaje)
-
-      else contenConsola("Personaje incorrecto")
-    } else { // ? Cambio de esbirro
-      let nombreEsbirro = comando.match(/^\/(.*)/)[1]
-
-      if (nombreEsbirro in personajesDict) cambiarEsbirro(nombreEsbirro)
-      else if (nombreEsbirro in esbirrosDict) cambiarEsbirro(nombreEsbirro)
-
-      else contenConsola("Personaje incorrecto")
-    }
+{ // * Ingreso de comandos
+  // ? Flag que indica si el input se esta usando para ingresar un comando o el nombre de una habilidad
+  var esIngresarComando = true
+  function mostrarInputComandos() {
+    ocultarInputExperiencia()
+    contenedorInputComandos.style.display = "flex"
+    if (esIngresarComando) inputLabelComandos.textContent = "Ingrese comando"
+    else inputLabelComandos.textContent = "Ingrese nombre de habilidad"
   }
-  // TODO: Agregar los demas comandos
+
+  function ocultarInputComandos() {
+    contenedorInputComandos.style.display = "none"
+  }
+
+  comandosValor.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      if (esIngresarComando) ingresarComando(comandosValor.value)
+      else if (!esIngresarComando && esPersonaje) cambiarHabilidad(comandosValor.value)
+      else if (!esIngresarComando && !esPersonaje) editarHabilidadEsbirro(comandosValor.value)
+      ocultarInputComandos()
+    }
+  })
+  ingresarComandos.addEventListener("click", function () {
+    if (esIngresarComando) ingresarComando(comandosValor.value)
+    else if (!esIngresarComando && esPersonaje) cambiarHabilidad(comandosValor.value)
+    else if (!esIngresarComando && !esPersonaje) editarHabilidadEsbirro(comandosValor.value)
+    ocultarInputComandos()
+  })
+
+  function ingresarComando(comando) {
+    // let comando = prompt("Ingrese comando")
+    console.log(comando)
+    // ? Cambio de personaje con '/' + nombre
+    if (/^\//.test(comando)) {
+      if (esPersonaje) { // ? Cambio de personaje principal
+        let nombrePersonaje = comando.match(/^\/(.*)/)[1]
+
+        if (nombrePersonaje in personajesDict) avatar(nombrePersonaje)
+
+        else contenConsola("Personaje incorrecto")
+      } else { // ? Cambio de esbirro
+        let nombreEsbirro = comando.match(/^\/(.*)/)[1]
+
+        if (nombreEsbirro in personajesDict) cambiarEsbirro(nombreEsbirro)
+        else if (nombreEsbirro in esbirrosDict) cambiarEsbirro(nombreEsbirro)
+
+        else contenConsola("Personaje incorrecto")
+      }
+    }
+    // TODO: Agregar los demas comandos
+  }
 }
 
 // ? Objeto para almacenar información de las habilidades
@@ -1118,25 +1151,26 @@ let estadisticaSeleccionada
 { // * Cambio en las estadisticas del personaje
   { // * Funciones para manipulación de la experiencia
     function mostrarInputExperiencia() {
+      ocultarInputComandos()
       contenedorInputExperiencia.style.display = "flex"
       experienciaValor.autofocus = true
     }
     function ocultarInputExperiencia() {
       contenedorInputExperiencia.style.display = "none"
     }
-    experienciaValor.addEventListener('keydown', function(event) {
+    experienciaValor.addEventListener('keydown', function (event) {
       if (event.key === 'Enter') {
         establecerExperiencia(Number(experienciaValor.value))
         ocultarInputExperiencia()
       }
     })
-    cerrarExperienciaInput.addEventListener("click", function() {
+    cerrarExperienciaInput.addEventListener("click", function () {
       establecerExperiencia(Number(experienciaValor.value))
       ocultarInputExperiencia()
     })
 
     function establecerExperiencia(valor) {
-      if(!valor) valor = 0
+      if (!valor) valor = 0
 
       if (esPersonaje) {
         personaje.experiencia += valor
@@ -1427,15 +1461,15 @@ let estadisticaSeleccionada
     }
   }
   { // * Funcion para cambio de habilidad
+    var habilidadSeleccionada = {}
     /* 
         * @habilidad:  Obj
      */
-    function cambiarHabilidad(habilidad) {
-      let nuevoNombre = prompt("Ingrese habilidad")
-      habilidad.nombre = quitarAcentos(nuevoNombre)
+    function cambiarHabilidad(nombre) {
+      nombre = quitarAcentos(nombre).toLowerCase()
+      habilidadSeleccionada.nombre = nombre
 
-
-      habilidad.descripcion = habilidadesDict[habilidad.nombre.toLowerCase()]
+      habilidadSeleccionada.descripcion = habilidadesDict[nombre]
 
       cerrarEdicion()
       imprimirPersonaje()
@@ -1445,7 +1479,10 @@ let estadisticaSeleccionada
     habilidad1Btn.addEventListener('click', () => {
       // ? Personalizar habilidad
       if (edicion && esPersonaje) {
-        cambiarHabilidad(habilidad1)
+        // cambiarHabilidad(habilidad1)
+        habilidadSeleccionada = habilidad1
+        esIngresarComando = false
+        mostrarInputComandos()
       } else if (esPersonaje) {
         // ? Motrar descripción de habilidad 
         descripcionHabilidad(habilidad1)
@@ -2142,6 +2179,7 @@ esbirrosBtn.addEventListener('click', () => {
 
     cerrarEdicion()
     ocultarInputExperiencia()
+    ocultarInputComandos()
 
     // Llama a la función para mostrar la información del esbirro seleccionado
     mostrarEsbirroSeleccionado();
@@ -2159,6 +2197,7 @@ esbirrosBtn.addEventListener('click', () => {
 
     cerrarEdicion()
     ocultarInputExperiencia()
+    ocultarInputComandos()
 
     // Oculta los boton de izquierda y derecha
     ocultarControlesCambioEsbirro()
@@ -2459,9 +2498,11 @@ function mostrarEsbirroSeleccionado() {
 
 { // * Modificación y descripción de habildades
   { // * Funciones
-    function editarHabilidadEsbirro(ranura) {
-      let nombre = prompt('Ingrese habilidad')
-      esbirroSeleccionado.configurarHabilidad(ranura, quitarAcentos(nombre))
+    function editarHabilidadEsbirro(nombre) {
+      nombre = quitarAcentos(nombre).toLowerCase()
+      habilidadSeleccionada.nombre = nombre
+
+      habilidadSeleccionada.descripcion = habilidadesDict[nombre]
 
       mostrarEsbirroSeleccionado()
       cerrarEdicion()
@@ -2475,7 +2516,12 @@ function mostrarEsbirroSeleccionado() {
     for (let i = 1; i <= 3; i++) {
       const boton = document.getElementById(`habilidad${i}Btn`)
       boton.addEventListener('click', () => {
-        if (edicion && !esPersonaje) editarHabilidadEsbirro(i)
+        if (edicion && !esPersonaje) {
+          esIngresarComando = false
+          habilidadSeleccionada = esbirroSeleccionado[`habilidad${i}`]
+          // editarHabilidadEsbirro(i)
+          mostrarInputComandos()
+        }
         else if (!esPersonaje) descripcionHabilidadEsbirro(i)
       })
     }
