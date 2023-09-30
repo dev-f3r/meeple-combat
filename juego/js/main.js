@@ -50,7 +50,7 @@ document.body.addEventListener('dragstart', (e) => {
 
     ocultarBtnArrivaAbajo()
     experienciaTxt.style.display = "none"
-
+    ocultarInputExperiencia()
   }
   /* 
       * @estadistica: string
@@ -1117,10 +1117,26 @@ let estadisticaSeleccionada
 
 { // * Cambio en las estadisticas del personaje
   { // * Funciones para manipulación de la experiencia
-    function establecerExperiencia() {
-      let valor = Number(prompt("CANTIDAD"))
+    function mostrarInputExperiencia() {
+      contenedorInputExperiencia.style.display = "flex"
+      experienciaValor.autofocus = true
+    }
+    function ocultarInputExperiencia() {
+      contenedorInputExperiencia.style.display = "none"
+    }
+    experienciaValor.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        establecerExperiencia(Number(experienciaValor.value))
+        ocultarInputExperiencia()
+      }
+    })
+    cerrarExperienciaInput.addEventListener("click", function() {
+      establecerExperiencia(Number(experienciaValor.value))
+      ocultarInputExperiencia()
+    })
 
-      if (!valor) valor = 0
+    function establecerExperiencia(valor) {
+      if(!valor) valor = 0
 
       if (esPersonaje) {
         personaje.experiencia += valor
@@ -1181,7 +1197,7 @@ let estadisticaSeleccionada
   { // * eventListeners del boton de experiencia
     experienciaBtn.addEventListener('click', () => {
       if (edicion) {
-        establecerExperiencia()
+        mostrarInputExperiencia()
       } else {
         ocultarBtnArrivaAbajo()
         if (esPersonaje) contenConsola(`Experiencia: ${personaje.experiencia}`)
@@ -2125,6 +2141,7 @@ esbirrosBtn.addEventListener('click', () => {
     tipoEdicion = 'esbirro'
 
     cerrarEdicion()
+    ocultarInputExperiencia()
 
     // Llama a la función para mostrar la información del esbirro seleccionado
     mostrarEsbirroSeleccionado();
@@ -2141,6 +2158,7 @@ esbirrosBtn.addEventListener('click', () => {
     tipoEdicion = 'personaje'
 
     cerrarEdicion()
+    ocultarInputExperiencia()
 
     // Oculta los boton de izquierda y derecha
     ocultarControlesCambioEsbirro()

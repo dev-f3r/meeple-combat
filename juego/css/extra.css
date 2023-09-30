@@ -72,3 +72,31 @@ span.experiencia-item {
     align-items: center;
     font-family: Titillium Web;
 }
+
+.contenedor-input {
+    font-family: Titillium Web;
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    top: 40%;
+    height: 80px;
+    width: 300px;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    outline: solid 1.5px #000000;
+}
+
+.contenedor-input .exp-input {
+    outline: solid 1.5px #000000;
+    border:none;
+}
+
+.contenedor-input .input-button {
+    margin-top: 5px;
+    width: 80px;
+    color: #fff;
+    background-color: #000000;
+    border: none;
+}
