@@ -256,7 +256,7 @@ const habilidadesDict = {
 
 // ? Objeto para almacenar información de las armas
 // TODO: Agregar las demas armas
-var armasDict = {
+const armasDict = {
   "nada": {
     danno: 0,
     descripcion: "Arma sin descripción"
@@ -365,7 +365,7 @@ var armasDict = {
 
 // ? Objeto para almacenar información de los esbirros
 // TODO: Agregar los demas esbirros
-var esbirrosDict = {
+const esbirrosDict = {
   "lobo": {
     nombre: "LOBO",
     imagen: "img/lobo.png",
@@ -584,7 +584,7 @@ var esbirrosDict = {
 
 // ? Objeto para almecenar información de los esbirros
 // TODO: Agregar los demas personajes
-var personajesDict = {
+const personajesDict = {
   "barbaro": {
     nombre: "barbaro",
     imagen: "img/barbaro.png",
@@ -727,7 +727,7 @@ var personajesDict = {
 
 // ? Objeto para almacenar información de los distintos equipamientos
 // TODO: Agregar los demas items
-var equiposDict = {
+const equiposDict = {
   'armaduraLigera': {
     // TODO: Arreglar armadura ligera
     nombre: "Armadura Ligera",
@@ -741,6 +741,11 @@ var equiposDict = {
     vidaMaxima: 1000,
     poderMaximo: 1000,
   }
+}
+
+const equipPersonaje = {
+  'guerrero': ['armaduraLigera', 'armaduraLigera', 'armaduraLigera'],
+  'lobo': ['armaduraLigera', 'armaduraLigera', 'armaduraLigera'],
 }
 
 // ? Bandera que indica si el juego esta en modo edicion o no, valores posibles 0 o 1
@@ -1065,6 +1070,15 @@ function avatar(meeple) {
   equipo1 = reiniciarEquipamiento(1)
   equipo2 = reiniciarEquipamiento(2)
   equipo3 = reiniciarEquipamiento(3)
+
+  if (personaje.nombre in equipPersonaje) {
+    equipamientoSeleccionado = 1
+    cambiarEquipamiento(equipPersonaje[personaje.nombre][0])
+    equipamientoSeleccionado = 2
+    cambiarEquipamiento(equipPersonaje[personaje.nombre][1])
+    equipamientoSeleccionado = 3
+    cambiarEquipamiento(equipPersonaje[personaje.nombre][2])
+  } else console.log(`Agregar ${personaje.nombre} a equipPersonaje`)
 
   imprimirPersonaje()
   cerrarModal("personajes")
@@ -1753,7 +1767,6 @@ let estadisticaSeleccionada
       Object.assign(equipo, equiposDict[item])
 
       for (const clave in equipo) {
-        console.log(clave)
         if (
           clave === 'ataque' ||
           clave === 'esquiva' ||
@@ -2083,9 +2096,13 @@ let estadisticaSeleccionada
       this.configurarHabilidad(2, this.habilidad2)
       this.configurarHabilidad(3, this.habilidad3)
 
-      // this.configurarEquipamiento(1, this.equipo1)
-      // this.configurarEquipamiento(2, this.equipo2)
-      // this.configurarEquipamiento(3, this.equipo3)
+      let nombre = this.nombre.toLowerCase()
+      if(nombre in equipPersonaje) {
+        console.log("SI")
+        this.configurarEquipamiento(1, equipPersonaje[nombre][0])
+        this.configurarEquipamiento(2, equipPersonaje[nombre][1])
+        this.configurarEquipamiento(3, equipPersonaje[nombre][2])
+      } else console.log(`Agregar ${nombre} a equipPersonaje`)
     }
 
     /**
@@ -2298,21 +2315,21 @@ function mostrarEsbirroSeleccionado() {
    * ? Función para cambiar el esbirro al de la izquierda o derecha
    */
   function cambiarEsbirro(nombre) {
-    console.log("cambiarEsbirro", nombre)
-    // if (nombre) { // * Esbirro por personaje
-    //   esbirroSeleccionado.actualizarPropiedades(personajesDict[nombre])
-    // } else { // * Esbirro por esbirro
-    //   let val = prompt("Ingrese comando")
-
-    //   if (val in esbirrosDict) {
-    //     esbirroSeleccionado.actualizarPropiedades(esbirrosDict[val])
-    //   } else {
-    //     contenConsola("COMANDO INCORRECTO")
-    //   }
-    // }
-
-    if (nombre in personajesDict) esbirroSeleccionado.actualizarPropiedades(personajesDict[nombre])
+    if (nombre in personajesDict) {
+      esbirroSeleccionado.actualizarPropiedades(personajesDict[nombre])
+    }
     if (nombre in esbirrosDict) esbirroSeleccionado.actualizarPropiedades(esbirrosDict[nombre])
+
+    // if (nombre === 'lobo') {
+    //   esbirroSeleccionado.configurarEquipamiento(1, 'armaduraLigera')
+    //   esbirroSeleccionado.configurarEquipamiento(2, 'armaduraLigera')
+    //   esbirroSeleccionado.configurarEquipamiento(3, 'armaduraLigera')
+    // }
+    // if (nombre === 'esqueleto') {
+    //   esbirroSeleccionado.configurarEquipamiento(1, 'armaduraLigera')
+    //   esbirroSeleccionado.configurarEquipamiento(2, 'armaduraLigera')
+    //   esbirroSeleccionado.configurarEquipamiento(3, 'armaduraLigera')
+    // }
 
     mostrarEsbirroSeleccionado()
     cerrarEdicion()
@@ -2676,3 +2693,8 @@ function mostrarEsbirroSeleccionado() {
     }
   }
 }
+
+
+// * Ejemplo
+// * Cambiar el personaje principal por Guerrero
+// avatar('guerrero')
