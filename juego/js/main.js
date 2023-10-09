@@ -17,6 +17,23 @@ document.body.addEventListener('dragstart', (e) => {
   return false;
 });
 
+// ? Indica el arma seleccionada para ejecutar la función acción(), rango 1..2
+let slotArmaSeleccionada = 1
+// ? Indica el atributo seleccionado para ejecutar la función acción(), rango 1..6
+let slotEstadisticaSeleccionada = 1
+// ? Indica si selecciono un arma o un atributo para ejecutar la función acción(), valor "arma" || "estadistica"
+let objetoAccion = "arma"
+// ? Indica si el juego esta en modo edicion o no, valores posibles 0 o 1
+var edicion = 0
+// ? Indica si se esta editanto el personaje principal o el esbirro, valores posibles 'personaje' o 'esbirro'
+var tipoEdicion = 'personaje' // TODO: Descartar
+// ? Indica si se estan mostrando los botones de subir y bajar
+let flagControlesCambioEsbirro = false
+// ? Indica que ranura de equipamiento se esta editando, rango 1..3
+let equipamientoSeleccionado = 1
+// ? Contiene el nombre de la estadistica que se esta modificando
+let estadisticaSeleccionada
+
 { // * helpers, funciones varias
 
   /* 
@@ -179,29 +196,43 @@ document.body.addEventListener('dragstart', (e) => {
     // let comando = prompt("Ingrese comando")
     console.log(comando)
     // ? Cambio de personaje con '/' + nombre
-    if (/^\//.test(comando)) {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        let nombrePersonaje = comando.match(/^\/(.*)/)[1]
+    // if (/^\//.test(comando)) {
+    //   if (esPersonaje) { // ? Cambio de personaje principal
+    //     let nombrePersonaje = comando.match(/^\/(.*)/)[1]
 
-        if (nombrePersonaje in personajesDict) avatar(nombrePersonaje)
+    //     if (nombrePersonaje in personajesDict) avatar(nombrePersonaje)
 
-        else contenConsola("Personaje incorrecto")
-      } else { // ? Cambio de esbirro
-        let nombreEsbirro = comando.match(/^\/(.*)/)[1]
+    //     else contenConsola("Personaje incorrecto")
+    //   } else { // ? Cambio de esbirro
+    //     let nombreEsbirro = comando.match(/^\/(.*)/)[1]
 
-        if (nombreEsbirro in personajesDict) cambiarEsbirro(nombreEsbirro)
-        else if (nombreEsbirro in esbirrosDict) cambiarEsbirro(nombreEsbirro)
+    //     if (nombreEsbirro in personajesDict) cambiarEsbirro(nombreEsbirro)
+    //     else if (nombreEsbirro in esbirrosDict) cambiarEsbirro(nombreEsbirro)
 
-        else contenConsola("Personaje incorrecto")
-      }
-    }
+    //     else contenConsola("Personaje incorrecto")
+    //   }
+    // }
     // TODO: Agregar los demas comandos
+    switch (comando) {
+      case '/guerrero':
+        if (esPersonaje) {
+          if (nombrePersonaje in personajesDict) avatar('guerrero')
+        } else {
+          if (nombreEsbirro in personajesDict) cambiarEsbirro(nombreEsbirro)
+          else if (nombreEsbirro in esbirrosDict) cambiarEsbirro(nombreEsbirro)
+        }
+        break;
+
+      default:
+        contenConsola("Comando incorrecto")
+        break;
+    }
   }
 }
 
 // ? Objeto para almacenar información de las habilidades
 // TODO: Agregar habilidades restantes, y revisar existentes
-const habilidadesDict = {
+const descartadohabilidadesDict = {
   "habilidad 1": "Habildad 1 sin descripción",
   "habilidad 2": "Habildad 2 sin descripción",
   "habilidad 3": "Habildad 3 sin descripción",
@@ -253,10 +284,18 @@ const habilidadesDict = {
   "triturar": "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo.<br> Poder(6)",
   "petrificar": "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo, una vez sin velocidad el objetivo recibe doble de daño.<br> Poder(6)"
 }
+// TODOME: Completar
+const habilidadesDict = {
+  "machacar": {
+    nombre: "machacar",
+    coste: 1,
+    descripcion: "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
+  }
+}
 
 // ? Objeto para almacenar información de las armas
 // TODO: Agregar las demas armas
-const armasDict = {
+const descartadoarmasDict = {
   "nada": {
     danno: 0,
     descripcion: "Arma sin descripción"
@@ -362,6 +401,19 @@ const armasDict = {
     descripcion: "TENTACULOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   }
 }
+
+// TODOME: Completar
+const armasDict = {
+  "punno": {
+
+    nombre: "puño",
+    icono: "img/punno.png",
+    danno: 0.75,
+    descripcion: "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
+
+  },
+}
+
 
 // ? Objeto para almacenar información de los esbirros
 // TODO: Agregar los demas esbirros
@@ -584,7 +636,7 @@ const esbirrosDict = {
 
 // ? Objeto para almecenar información de los esbirros
 // TODO: Agregar los demas personajes
-const personajesDict = {
+const descartadopersonajesDict = {
   "barbaro": {
     nombre: "barbaro",
     imagen: "img/barbaro.png",
@@ -724,6 +776,37 @@ const personajesDict = {
     habilidad3: "habilidad 3"
   }
 }
+// TODOME: Completar
+const personajesDict = {
+  "guerrero": {
+
+    nombre: "guerrero",
+    portada: "img/guerrero.png",
+    icono: "",
+    descripcion: "combatiente cuerpo a cuerpo, con mucha resistencia pero muy poco daño base.",
+
+    ataque: 4,
+    esquiva: 2,
+    bloqueo: 5,
+    velocidad: 3,
+    vida: 40,
+    vidaMaxima: 40,
+    poder: 40,
+    poderMaximo: 40,
+
+    arma1: "espada",
+    arma2: "escudo",
+
+    equipo1: "armadurapesada",
+    equipo2: "",
+    equipo3: "",
+
+    habilidad1: "embestida con escudo",
+    habilidad2: "cobertura",
+    habilidad3: "ataque poderoso",
+
+  }
+}
 
 // ? Objeto para almacenar información de los distintos equipamientos
 // TODO: Agregar los demas items
@@ -748,10 +831,7 @@ const equipPersonaje = {
   'lobo': ['armaduraLigera', 'armaduraLigera', 'armaduraLigera'],
 }
 
-// ? Bandera que indica si el juego esta en modo edicion o no, valores posibles 0 o 1
-var edicion = 0
-// ? Bandera que indica si se esta editanto el personaje principal o el esbirro, valores posibles 'personaje' o 'esbirro'
-var tipoEdicion = 'personaje' // TODO: Descartar
+
 
 var personaje = {
 
@@ -796,13 +876,6 @@ const valorExperiencia = {
   vidaMaxima: 1,
   poderMaximo: 1
 }
-
-// ? Indica el arma seleccionada para ejecutar la función acción(), rango 1..2
-let slotArmaSeleccionada = 1
-// ? Indica el atributo seleccionado para ejecutar la función acción(), rango 1..6
-let slotEstadisticaSeleccionada = 1
-// ? Indica si selecciono un arma o un atributo para ejecutar la función acción(), valor "arma" || "estadistica"
-let objetoAccion = "arma"
 
 var arma1 = {
 
@@ -951,7 +1024,6 @@ editarBtn.addEventListener('click', function () {
 
 })
 
-let flagControlesCambioEsbirro = false
 portadaBtn.addEventListener('click', function () {
   if (edicion == 1) {
     modalPersonaje.style.display = "grid"
@@ -1107,8 +1179,7 @@ function avatar(meeple) {
 function atributos() { }
 
 
-// ? Indica que ranura de equipamiento se esta editando, rango 1..3
-let equipamientoSeleccionado = 1
+
 
 /**
  * ? Funcion para mostrar el modal de equipamiento
@@ -1159,8 +1230,7 @@ function habilidades() { }
 // !!!!!!! CODIGO FERNANDO !!!!!!!
 // ! Instalar Better Comments !
 
-// * variable global para guardar estadistica que se esta modificando
-let estadisticaSeleccionada
+
 
 { // * Cambio en las estadisticas del personaje
   { // * Funciones para manipulación de la experiencia
@@ -2097,7 +2167,7 @@ let estadisticaSeleccionada
       this.configurarHabilidad(3, this.habilidad3)
 
       let nombre = this.nombre.toLowerCase()
-      if(nombre in equipPersonaje) {
+      if (nombre in equipPersonaje) {
         console.log("SI")
         this.configurarEquipamiento(1, equipPersonaje[nombre][0])
         this.configurarEquipamiento(2, equipPersonaje[nombre][1])
@@ -2320,27 +2390,10 @@ function mostrarEsbirroSeleccionado() {
     }
     if (nombre in esbirrosDict) esbirroSeleccionado.actualizarPropiedades(esbirrosDict[nombre])
 
-    // if (nombre === 'lobo') {
-    //   esbirroSeleccionado.configurarEquipamiento(1, 'armaduraLigera')
-    //   esbirroSeleccionado.configurarEquipamiento(2, 'armaduraLigera')
-    //   esbirroSeleccionado.configurarEquipamiento(3, 'armaduraLigera')
-    // }
-    // if (nombre === 'esqueleto') {
-    //   esbirroSeleccionado.configurarEquipamiento(1, 'armaduraLigera')
-    //   esbirroSeleccionado.configurarEquipamiento(2, 'armaduraLigera')
-    //   esbirroSeleccionado.configurarEquipamiento(3, 'armaduraLigera')
-    // }
-
     mostrarEsbirroSeleccionado()
     cerrarEdicion()
     cerrarModal('personajes')
   }
-
-  // ? Trigger de cambio de esbirro
-  // nombreBtn.addEventListener('click', () => {
-  //   if (edicion && !esPersonaje) cambiarEsbirro(null)
-  //   else if (!edicion && !esPersonaje) contenConsola(esbirroSeleccionado.descripcion)
-  // })
 }
 
 { // * Edición de atributos de esbirro
@@ -2693,8 +2746,3 @@ function mostrarEsbirroSeleccionado() {
     }
   }
 }
-
-
-// * Ejemplo
-// * Cambiar el personaje principal por Guerrero
-// avatar('guerrero')
