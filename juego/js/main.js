@@ -728,6 +728,18 @@ const personajesDict = {
 // ? Objeto para almacenar información de los distintos equipamientos
 // TODO: Agregar los demas items
 const equiposDict = {
+  'nada': {
+    nombre: "Nada",
+    icono: "img/nada.png",
+    descripcion: "Descripción de nada",
+    nivel: 0,
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vidaMaxima: 0,
+    poderMaximo: 0,
+  },
   'armaduraLigera': {
     // TODO: Arreglar armadura ligera
     nombre: "Armadura Ligera",
@@ -740,12 +752,25 @@ const equiposDict = {
     velocidad: 1000,
     vidaMaxima: 1000,
     poderMaximo: 1000,
-  }
+  },
+  'armaduraPesada': {
+    // TODO: Arreglar armadura ligera
+    nombre: "Armadura Pesada",
+    icono: "img/armadurapesada.png",
+    descripcion: "Descripción de Armadura Pesada",
+    nivel: 1,
+    ataque: 100,
+    esquiva: 100,
+    bloqueo: 100,
+    velocidad: 100,
+    vidaMaxima: 100,
+    poderMaximo: 100,
+  },
 }
 
 const equipPersonaje = {
-  'guerrero': ['armaduraLigera', 'armaduraLigera', 'armaduraLigera'],
-  'lobo': ['armaduraLigera', 'armaduraLigera', 'armaduraLigera'],
+  'guerrero': ['armaduraPesada', 'nada', 'nada'],
+  'lobo': ['armaduraLigera', 'nada', 'nada'],
 }
 
 // ? Bandera que indica si el juego esta en modo edicion o no, valores posibles 0 o 1
@@ -893,16 +918,30 @@ var habilidad3 = {
         portada, nombre, estadisticas (ataque, esquiva, etc), equipamiento, arma slot 1, arma slot 2, habilidades
 */
 function imprimirPersonaje() {
+  let atributosPersonaje = {
+    ataque: personaje.ataque,
+    esquiva: personaje.esquiva,
+    bloqueo: personaje.bloqueo,
+    velocidad: personaje.velocidad,
+    vidaMaxima: personaje.vidaMaxima,
+    poderMaximo: personaje.poderMaximo
+  }
+
+  for(const key in atributosPersonaje) {
+    if(equipo1[key]) atributosPersonaje[key] += equipo1[key]
+    if(equipo2[key]) atributosPersonaje[key] += equipo2[key]
+    if(equipo3[key]) atributosPersonaje[key] += equipo3[key]
+  }
 
   portadaImg.src = personaje.imagen
   // portadaImg.src = `img/${quitarEspacios(personaje.nombre)}.png`
 
   nombreTxt.textContent = personaje.nombre.toUpperCase()
 
-  ataqueTxt.textContent = personaje.ataque
-  esquivaTxt.textContent = personaje.esquiva
-  bloqueoTxt.textContent = personaje.bloqueo
-  velocidadTxt.textContent = personaje.velocidad
+  ataqueTxt.textContent = atributosPersonaje.ataque
+  esquivaTxt.textContent = atributosPersonaje.esquiva
+  bloqueoTxt.textContent = atributosPersonaje.bloqueo
+  velocidadTxt.textContent = atributosPersonaje.velocidad
 
   vidaTxt.textContent = personaje.vida
 
@@ -1261,7 +1300,8 @@ let estadisticaSeleccionada
      * @param {string} atributo - El nombre del atributo a modificar.
      */
     function modificarEstadistica(atributo) {
-      mostrarBtnArribaAbajo();
+      
+      mostrarBtnArribaAbajo()
 
       estadisticaSeleccionada = atributo;
 
@@ -1359,22 +1399,29 @@ let estadisticaSeleccionada
     */
     // ? Modifica la vida o el poder actual de personaje
     function masMenosVidaPoder(accion) {
+      let vidaMaxima = personaje.vidaMaxima + equipo1.vidaMaxima + equipo2.vidaMaxima + equipo3.vidaMaxima
+      let poderMaximo = personaje.poderMaximo + equipo1.poderMaximo + equipo2.poderMaximo + equipo3.poderMaximo
+
       if (estadisticaSeleccionada === "vida") {
         if (accion === "mas") { // ? Incremento de vida
-          if (personaje.vida < personaje.vidaMaxima) personaje.vida++
+          // if (personaje.vida < personaje.vidaMaxima) personaje.vida++
+          if (personaje.vida < vidaMaxima) personaje.vida++
         } else { // ? Decremento de vida
           if (personaje.vida > 0) personaje.vida--
         }
         // contenConsola(`Vida ${personaje.vida} / ${personaje.vidaMaxima}`)
-        consolaBtn.innerHTML = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
+        // consolaBtn.innerHTML = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
+        consolaBtn.innerHTML = `Vida ${personaje.vida} / ${vidaMaxima}`
       } else if (estadisticaSeleccionada === "poder") {
         if (accion === "mas") { // ? Incremento de poder
-          if (personaje.poder < personaje.poderMaximo) personaje.poder++
+          // if (personaje.poder < personaje.poderMaximo) personaje.poder++
+          if (personaje.poder < poderMaximo) personaje.poder++
         } else { // ? Decremento de poder
           if (personaje.poder > 0) personaje.poder--
         }
         // contenConsola(`Poder ${personaje.poder} / ${personaje.poderMaximo}`)
-        consolaBtn.innerHTML = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
+        // consolaBtn.innerHTML = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
+        consolaBtn.innerHTML = `Poder ${personaje.poder} / ${poderMaximo}`
       }
       imprimirPersonaje()
     }
@@ -1422,8 +1469,8 @@ let estadisticaSeleccionada
         slotEstadisticaSeleccionada = 5
         objetoAccion = "estadistica"
 
-
-        consolaBtn.innerHTML = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
+        let vidaMaxima = personaje.vidaMaxima + equipo1.vidaMaxima + equipo2.vidaMaxima + equipo3.vidaMaxima
+        consolaBtn.innerHTML = `Vida ${personaje.vida} / ${vidaMaxima}`
       }
     })
     poderBtn.addEventListener('click', () => {
@@ -1438,7 +1485,8 @@ let estadisticaSeleccionada
         slotEstadisticaSeleccionada = 6
         objetoAccion = "estadistica"
 
-        consolaBtn.innerHTML = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
+        let poderMaximo = personaje.poderMaximo + equipo1.poderMaximo + equipo2.poderMaximo + equipo3.poderMaximo
+        consolaBtn.innerHTML = `Poder ${personaje.poder} / ${poderMaximo}`
       }
     })
   }
@@ -1751,33 +1799,13 @@ let estadisticaSeleccionada
           break
       }
 
-      for (const clave in equipo) {
-        if (
-          clave === 'ataque' ||
-          clave === 'esquiva' ||
-          clave === 'bloqueo' ||
-          clave === 'velocidad' ||
-          clave === 'vidaMaxima' ||
-          clave === 'poderMaximo'
-        ) {
-          personaje[clave] -= equipo[clave]
-        }
-      }
+      personaje.vida -= equipo.vidaMaxima
+      personaje.poder -= equipo.poderMaximo
 
       Object.assign(equipo, equiposDict[item])
 
-      for (const clave in equipo) {
-        if (
-          clave === 'ataque' ||
-          clave === 'esquiva' ||
-          clave === 'bloqueo' ||
-          clave === 'velocidad' ||
-          clave === 'vidaMaxima' ||
-          clave === 'poderMaximo'
-        ) {
-          personaje[clave] += equipo[clave]
-        }
-      }
+      personaje.vida += equipo.vidaMaxima
+      personaje.poder += equipo.poderMaximo
 
       imprimirPersonaje()
       cerrarEdicion()
@@ -2118,7 +2146,11 @@ let estadisticaSeleccionada
     }
 
     configurarEquipamiento(ranura, nombre) {
+      this.vida -= this[`equipo${ranura}`].vidaMaxima
+      this.poder -= this[`equipo${ranura}`].poderMaximo
+
       this[`equipo${ranura}`] = equiposDict[nombre]
+
       this.vida += this[`equipo${ranura}`].vidaMaxima
       this.poder += this[`equipo${ranura}`].poderMaximo
     }
