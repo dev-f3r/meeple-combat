@@ -1365,7 +1365,7 @@ function avatar(meeple) {
     cambiarEquipamiento(equipPersonaje[personaje.nombre][1])
     equipamientoSeleccionado = 3
     cambiarEquipamiento(equipPersonaje[personaje.nombre][2])
-  } else console.log(`Agregar ${personaje.nombre} a equipPersonaje`)
+  } else console.error(`Agregar ${personaje.nombre} a equipPersonaje`)
 
   imprimirPersonaje()
   cerrarModal("personajes")
@@ -2376,7 +2376,6 @@ let estadisticaSeleccionada
      * @param {Object} props - Un objeto con las propiedades a actualizar.
      */
     actualizarPropiedades(props) {
-      console.log(props)
       Object.assign(this, props);
       this.configurarArma(1, this.arma1)
       this.configurarArma(2, this.arma2)
@@ -2387,11 +2386,10 @@ let estadisticaSeleccionada
 
       let nombre = this.nombre.toLowerCase()
       if (nombre in equipPersonaje) {
-        console.log("SI")
         this.configurarEquipamiento(1, equipPersonaje[nombre][0])
         this.configurarEquipamiento(2, equipPersonaje[nombre][1])
         this.configurarEquipamiento(3, equipPersonaje[nombre][2])
-      } else console.log(`Agregar ${nombre} a equipPersonaje`)
+      } else console.error(`Esbirro: ${nombre} no esta en equipPersonaje`)
     }
 
     /**
@@ -2401,7 +2399,7 @@ let estadisticaSeleccionada
      */
     configurarArma(ranura, nombre) {
       if (nombre in armasDict) {
-        if (!armasDict[nombre].icono) console.log(`Esbirro: Agregar propiedad icono de ${nombre} en armasDict`)
+        if (!armasDict[nombre].icono) console.error(`Esbirro: Agregar propiedad icono de ${nombre} en armasDict`)
         this[`arma${ranura}`] = armasDict[nombre]
       }
       else
@@ -2424,14 +2422,14 @@ let estadisticaSeleccionada
      * @param {string} nombre - El nombre de la habilidad.
      */
     configurarHabilidad(ranura, nombre) {
-      console.log(ranura, nombre)
       this[`habilidad${ranura}`] = {}
       if (nombre in habilidadesDict) {
         // this[`habilidad${ranura}`] = { nombre, descripcion: habilidadesDict[nombre.toLowerCase()] }
         Object.assign(this[`habilidad${ranura}`], habilidadesDict[nombre])
       }
       else {
-        // this[`habilidad${ranura}`] = { nombre, descripcion: "Habilidad sin descripción" }
+        Object.assign(this[`habilidad${ranura}`], { nombre, descripcion: "Habilidad sin descripción" })
+
         console.error(`Esbirro: Agregar habilidad ${nombre} a habilidadesDict`)
       }
     }
@@ -2555,11 +2553,8 @@ function mostrarEsbirroSeleccionado() {
   // arma2Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma2.nombre)}.png`
   arma2Img.src = esbirroSeleccionado.arma2.icono
 
-  console.log(esbirroSeleccionado.habilidad1)
   habilidad1Txt.textContent = esbirroSeleccionado.habilidad1.nombre.toUpperCase()
-  console.log(esbirroSeleccionado.habilidad2)
   habilidad2Txt.textContent = esbirroSeleccionado.habilidad2.nombre.toUpperCase()
-  console.log(esbirroSeleccionado.habilidad3)
   habilidad3Txt.textContent = esbirroSeleccionado.habilidad3.nombre.toUpperCase()
 }
 
@@ -2682,7 +2677,6 @@ function mostrarEsbirroSeleccionado() {
       if (esbirroSeleccionado.equipo1.poderMaximo) poderMaximo += esbirroSeleccionado.equipo1.poderMaximo
       if (esbirroSeleccionado.equipo2.poderMaximo) poderMaximo += esbirroSeleccionado.equipo2.poderMaximo
       if (esbirroSeleccionado.equipo3.poderMaximo) poderMaximo += esbirroSeleccionado.equipo3.poderMaximo
-      console.log(vidaMaxima, poderMaximo)
 
       if (estadisticaSeleccionada === 'vida') {
         if (accion === "mas") { // ? Incremento de vida
