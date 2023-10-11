@@ -973,7 +973,7 @@ const personajesDict = {
 }
 
 // ? Objeto para almacenar información de los distintos equipamientos
-// TODO: Agregar los demas items
+// TODO: Revisar atributos de cada item
 const equiposDict = {
   'nada': {
     nombre: "Nada",
@@ -988,10 +988,9 @@ const equiposDict = {
     poderMaximo: 0,
   },
   'armaduraLigera': {
-
     nombre: "Armadura Ligera",
     icono: "img/armaduraligera.png",
-    descripcion: "Descripción de Armadura ligera",
+    descripcion: "Descripción de Armadura Ligera",
     nivel: 1,
     ataque: 1,
     esquiva: 1,
@@ -999,22 +998,69 @@ const equiposDict = {
     velocidad: 1,
     vidaMaxima: 1,
     poderMaximo: 1,
-
+  },
+  'armaduraMedia': {
+    nombre: "Armadura Media",
+    icono: "img/armaduramedia.png",
+    descripcion: "Descripción de Armadura Media",
+    nivel: 1,
+    ataque: 1,
+    esquiva: 1,
+    bloqueo: 1,
+    velocidad: 1,
+    vidaMaxima: 1,
+    poderMaximo: 1,
   },
   'armaduraPesada': {
-    // TODO: Arreglar armadura ligera
     nombre: "Armadura Pesada",
     icono: "img/armadurapesada.png",
-    descripcion: "Descripción de Armadura Pesada",
+    descripcion: "Una resistente armadura que proporciona una gran protección.",
     nivel: 1,
-    ataque: 100,
-    esquiva: 100,
-    bloqueo: 100,
-    velocidad: 100,
-    vidaMaxima: 100,
-    poderMaximo: 100,
+    ataque: 0,
+    esquiva: 1,
+    bloqueo: 5,
+    velocidad: 0,
+    vidaMaxima: 20,
+    poderMaximo: 0,
+  },  
+  'anillo': {
+    nombre: "Anillo",
+    icono: "img/anillo.png",
+    descripcion: "Descripción del Anillo",
+    nivel: 1,
+    ataque: 5,
+    esquiva: 3,
+    bloqueo: 2,
+    velocidad: 4,
+    vidaMaxima: 10,
+    poderMaximo: 12,
+  },
+  'collar': {
+    nombre: "Collar",
+    icono: "img/collar.png",
+    descripcion: "Descripción del Collar",
+    nivel: 1,
+    ataque: 3,
+    esquiva: 5,
+    bloqueo: 2,
+    velocidad: 4,
+    vidaMaxima: 8,
+    poderMaximo: 15,
+  },
+  'brazal': {
+    nombre: "Brazal",
+    icono: "img/brazal.png",
+    descripcion: "Descripción del Brazal",
+    nivel: 1,
+    ataque: 4,
+    esquiva: 2,
+    bloqueo: 4,
+    velocidad: 3,
+    vidaMaxima: 12,
+    poderMaximo: 10,
   },
 }
+
 
 const equipPersonaje = {
   'guerrero': ['armaduraPesada', 'nada', 'nada'],
@@ -2062,7 +2108,8 @@ let estadisticaSeleccionada
       personaje.vida -= equipo.vidaMaxima
       personaje.poder -= equipo.poderMaximo
 
-      Object.assign(equipo, equiposDict[item])
+      if (item in equiposDict) Object.assign(equipo, equiposDict[item])
+      else console.error(`Personaje: ${item} no esta en equiposDict`)
 
       personaje.vida += equipo.vidaMaxima
       personaje.poder += equipo.poderMaximo
@@ -2077,9 +2124,28 @@ let estadisticaSeleccionada
     armaduraligeraBtn.addEventListener('click', () => {
       if (esPersonaje) cambiarEquipamiento('armaduraLigera')
       else cambiarEquipamientoEsbirro('armaduraLigera')
-    }
-    )
+    })
     // TODO: Agregar los demas listeners para los items restantes
+    armaduramediaBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarEquipamiento('armaduraMedia')
+      else cambiarEquipamientoEsbirro('armaduraMedia')
+    })
+    armadurapesadaBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarEquipamiento('armaduraPesada')
+      else cambiarEquipamientoEsbirro('armaduraPesada')
+    })
+    anilloBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarEquipamiento('anillo')
+      else cambiarEquipamientoEsbirro('anillo')
+    })
+    collarBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarEquipamiento('collar')
+      else cambiarEquipamientoEsbirro('collar')
+    })
+    brazalBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarEquipamiento('brazal')
+      else cambiarEquipamientoEsbirro('brazal')
+    })
   }
 }
 
@@ -2407,13 +2473,17 @@ let estadisticaSeleccionada
     }
 
     configurarEquipamiento(ranura, nombre) {
-      this.vida -= this[`equipo${ranura}`].vidaMaxima
-      this.poder -= this[`equipo${ranura}`].poderMaximo
+      if (nombre in equiposDict) {
+        this.vida -= this[`equipo${ranura}`].vidaMaxima
+        this.poder -= this[`equipo${ranura}`].poderMaximo
 
-      this[`equipo${ranura}`] = equiposDict[nombre]
+        this[`equipo${ranura}`] = equiposDict[nombre]
 
-      this.vida += this[`equipo${ranura}`].vidaMaxima
-      this.poder += this[`equipo${ranura}`].poderMaximo
+        this.vida += this[`equipo${ranura}`].vidaMaxima
+        this.poder += this[`equipo${ranura}`].poderMaximo
+
+      } else console.error(`Esbirro: ${nombre} no esta en equiposDict`)
+
     }
 
     /**
@@ -2965,6 +3035,7 @@ function mostrarEsbirroSeleccionado() {
 { // * Equipamiento de esbirros
   { // * Funciones
     function cambiarEquipamientoEsbirro(item) {
+      console.log(equipamientoSeleccionado, item)
       esbirroSeleccionado.configurarEquipamiento(equipamientoSeleccionado, item)
       mostrarEsbirroSeleccionado()
       cerrarModal('equipamiento')
