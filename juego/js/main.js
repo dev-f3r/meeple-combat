@@ -1309,15 +1309,19 @@ let estadisticaSeleccionada
 
       if (tipoEdicion === "personaje") {
         if (atributo === 'vidaMaxima') {
-          data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+          // data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+          data = `Vida maxima ${personaje['vidaMaxima']}`
         } else if (atributo === 'poderMaximo') {
-          data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+          // data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+          data = `Poder maximo ${personaje['poderMaximo']}`
         } else data = `${capitalizarPrimeraLetra(atributo)} ${personaje[atributo]}`;
       } else {
         if (atributo === 'vidaMaxima') {
-          data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+          // data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+          data = `Vida maxima ${esbirroSeleccionado['vidaMaxima']}`
         } else if (atributo === 'poderMaximo') {
-          data = `Vida ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+          // data = `Vida ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+          data = `Poder maximo ${esbirroSeleccionado['poderMaximo']}`
         } else data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`;
       }
 
@@ -1348,9 +1352,11 @@ let estadisticaSeleccionada
           personaje[estadistica]++
 
           if (estadistica === 'vidaMaxima') {
-            data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+            // data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+            data = `Vida maxima ${personaje.vidaMaxima}`
           } else if (estadistica === 'poderMaximo') {
-            data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+            // data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+            data = `Poder ${personaje.poderMaximo}`
           } else {
             data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
           }
@@ -1368,22 +1374,26 @@ let estadisticaSeleccionada
         if (personaje[estadistica] > 0) {
           personaje[estadistica]--
 
-          if (estadistica === "vidaMaxima" && personaje.vidaMaxima < personaje.vida) {
-            personaje.vida = personaje.vidaMaxima
-          }
+          // if (estadistica === "vidaMaxima" && personaje.vidaMaxima < personaje.vida) {
+          //   personaje.vida = personaje.vidaMaxima
+          // }
 
-          if (estadistica === "poderMaximo" && personaje.poderMaximo < personaje.poder) {
-            personaje.poder = personaje.poderMaximo
-          }
+          // if (estadistica === "poderMaximo" && personaje.poderMaximo < personaje.poder) {
+          //   personaje.poder = personaje.poderMaximo
+          // }
 
           // * Incrementar exp
           aumentarDisminuirExperiencia('personaje', 'mas', estadistica)
 
           // * cambiar contenido mostrado
           if (estadistica === 'vidaMaxima') {
-            data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+            // data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+            personaje.vida--
+            data = `Vida maxima ${personaje.vidaMaxima}`
           } else if (estadistica === 'poderMaximo') {
-            data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+            // data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+            personaje.poder--
+            data = `Poder ${personaje.poderMaximo}`
           } else {
             data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
           }
@@ -2342,9 +2352,11 @@ function mostrarEsbirroSeleccionado() {
           esbirroSeleccionado[atributo]++
 
           if (atributo === 'vidaMaxima') {
-            data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+            // data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+            data = `Vida maxima ${esbirroSeleccionado['vidaMaxima']}`
           } else if (atributo === 'poderMaximo') {
-            data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+            // data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+            data = `Poder maximo ${esbirroSeleccionado['poderMaximo']}`
           } else {
             data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
           }
@@ -2364,21 +2376,25 @@ function mostrarEsbirroSeleccionado() {
           esbirroSeleccionado[atributo]--
 
           // Ajustar atributos de vida y poder si es necesario
-          if (atributo === "vidaMaxima" && esbirroSeleccionado.vidaMaxima < esbirroSeleccionado.vida) {
-            esbirroSeleccionado.vida = esbirroSeleccionado.vidaMaxima
-          }
-          if (atributo === "poderMaximo" && esbirroSeleccionado.poderMaximo < esbirroSeleccionado.poder) {
-            esbirroSeleccionado.poder = esbirroSeleccionado.poderMaximo
-          }
+          // if (atributo === "vidaMaxima" && esbirroSeleccionado.vidaMaxima < esbirroSeleccionado.vida) {
+          //   esbirroSeleccionado.vida = esbirroSeleccionado.vidaMaxima
+          // }
+          // if (atributo === "poderMaximo" && esbirroSeleccionado.poderMaximo < esbirroSeleccionado.poder) {
+          //   esbirroSeleccionado.poder = esbirroSeleccionado.poderMaximo
+          // }
 
           // Incrementar experiencia
           aumentarDisminuirExperiencia('esbirroSeleccionado', 'mas', atributo)
 
           // Cambiar contenido mostrado en la consola
           if (atributo === 'vidaMaxima') {
-            data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+            // data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+            esbirroSeleccionado.vida--
+            data = `Vida maxima ${esbirroSeleccionado['vidaMaxima']}`
           } else if (atributo === 'poderMaximo') {
-            data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+            // data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+            esbirroSeleccionado.poder--
+            data = `Poder maximo ${esbirroSeleccionado['poderMaximo']}`
           } else {
             data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
           }
