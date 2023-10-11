@@ -500,9 +500,9 @@ const armasDict = {
     danno: 0.5,
     descripcion: "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
   },
-  "mano": {
-    nombre: "mano",
-    icono: "img/mano.png",
+  "palma": {
+    nombre: "palma",
+    icono: "img/magia.png",
     danno: 1,
     descripcion: "Arma a distancia <br> 1 casillero x ataque / 1 Acción / 100% de ataque como daño mágico"
   },
@@ -614,8 +614,8 @@ const armasDict = {
 // TODO: Agregar los demas esbirros
 const esbirrosDict = {
   "lobo": {
-    nombre: "LOBO",
-    imagen: "img/lobo.png",
+    nombre: "lobo",
+    portada: "img/lobo.png",
     icono: "",
 
     ataque: 3,
@@ -634,11 +634,15 @@ const esbirrosDict = {
     habilidad2: "desgarro",
     habilidad3: "habilidad 3",
 
-    descripcion: "LOBO <br> Criatura de Sangre <br> Coste de invocación: 20"
+    descripcion: "LOBO <br> Criatura de Sangre <br> Coste de invocación: 20",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "esqueleto": {
-    nombre: "ESQUELETO",
-    imagen: "img/esqueleto.png",
+    nombre: "esqueleto",
+    portada: "img/esqueleto.png",
     icono: "",
     ataque: 4,
     esquiva: 2,
@@ -653,11 +657,14 @@ const esbirrosDict = {
     habilidad1: "derribo",
     habilidad2: "desgarro",
     habilidad3: "habilidad 3",
-    descripcion: "ESQUELETO <br> Criatura de Vida y Éter <br> Coste de invocación: 15"
+    descripcion: "ESQUELETO <br> Criatura de Vida y Éter <br> Coste de invocación: 15",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "kardanto": {
-    nombre: "KARDANTO",
-    imagen: "img/kardanto.png",
+    nombre: "kardanto",
+    portada: "img/kardanto.png",
     icono: "",
     ataque: 4,
     esquiva: 2,
@@ -672,11 +679,14 @@ const esbirrosDict = {
     habilidad1: "enraizar",
     habilidad2: "envenenar",
     habilidad3: "habilidad 3",
-    descripcion: "KARDANTO <br> Elemental de Vida <br> Coste de invocación: 20"
+    descripcion: "KARDANTO <br> Elemental de Vida <br> Coste de invocación: 20",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "momontu": {
-    nombre: "MOMONTU",
-    imagen: "img/momontu.png",
+    nombre: "momontu",
+    portada: "img/momontu.png",
     icono: "",
     ataque: 5,
     esquiva: 3,
@@ -686,16 +696,19 @@ const esbirrosDict = {
     vidaMaxima: 20,
     poder: 51,
     poderMaximo: 51,
-    arma1: "mano",
+    arma1: "palma",
     arma2: "garras",
     habilidad1: "bola de fuego",
     habilidad2: "desgarro",
     habilidad3: "habilidad 3",
-    descripcion: "MOMONTU <br> Elemental de Fuego <br> Coste de invocación: 20"
+    descripcion: "MOMONTU <br> Elemental de Fuego <br> Coste de invocación: 20",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "tortakla": {
-    nombre: "TORTAKLA",
-    imagen: "img/tortakla.png",
+    nombre: "tortakla",
+    portada: "img/tortakla.png",
     icono: "",
     ataque: 4,
     esquiva: 1,
@@ -710,11 +723,14 @@ const esbirrosDict = {
     habilidad1: "tsunami",
     habilidad2: "triturar",
     habilidad3: "habilidad 3",
-    descripcion: "TORTAKLA <br> Elemental de Agua <br> Coste de invocación: 20"
+    descripcion: "TORTAKLA <br> Elemental de Agua <br> Coste de invocación: 20",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "ghalidos": {
-    nombre: "GHALIDOS",
-    imagen: "img/ghalidos.png",
+    nombre: "ghalidos",
+    portada: "img/ghalidos.png",
     icono: "",
     ataque: 4,
     esquiva: 4,
@@ -729,11 +745,14 @@ const esbirrosDict = {
     habilidad1: "tornado",
     habilidad2: "desgarro",
     habilidad3: "habilidad 3",
-    descripcion: "GHALIDOS <br> Elemental de Aire <br> Coste de invocación: 20"
+    descripcion: "GHALIDOS <br> Elemental de Aire <br> Coste de invocación: 20",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "terronte": {
-    nombre: "TERRONTE",
-    imagen: "img/terronte.png",
+    nombre: "terronte",
+    portada: "img/terronte.png",
     icono: "",
     ataque: 4,
     esquiva: 1,
@@ -748,11 +767,14 @@ const esbirrosDict = {
     habilidad1: "ataque poderoso",
     habilidad2: "terremoto",
     habilidad3: "habilidad 3",
-    descripcion: "TERRONTE <br> Elemental de Tierra <br> Coste de invocación: 20"
+    descripcion: "TERRONTE <br> Elemental de Tierra <br> Coste de invocación: 20",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "naigaran": {
-    nombre: "NAIGARAN",
-    imagen: "img/naigaran.png",
+    nombre: "naigaran",
+    portada: "img/naigaran.png",
     icono: "",
     ataque: 5,
     esquiva: 3,
@@ -767,11 +789,14 @@ const esbirrosDict = {
     habilidad1: "confundir",
     habilidad2: "desgarro",
     habilidad3: "habilidad 3",
-    descripcion: "NAIGARAN <br> Elemental Etereo <br> Coste de invocación: 20"
+    descripcion: "NAIGARAN <br> Elemental Etereo <br> Coste de invocación: 20",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "sarcomos": {
-    nombre: "SARCOMOS",
-    imagen: "img/sarcomos.png",
+    nombre: "sarcomos",
+    portada: "img/sarcomos.png",
     icono: "",
     ataque: 5,
     esquiva: 4,
@@ -786,11 +811,14 @@ const esbirrosDict = {
     habilidad1: "confundir",
     habilidad2: "desgarro",
     habilidad3: "habilidad 3",
-    descripcion: "SARCOMOS <br> Elemental Psíquico <br> Coste de invocación: 20"
+    descripcion: "SARCOMOS <br> Elemental Psíquico <br> Coste de invocación: 20",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "cinirus": {
-    nombre: "CINIRUS",
-    imagen: "img/cinirus.png",
+    nombre: "cinirus",
+    portada: "img/cinirus.png",
     icono: "",
     ataque: 4,
     esquiva: 3,
@@ -805,11 +833,14 @@ const esbirrosDict = {
     habilidad1: "sanar",
     habilidad2: "sentencia",
     habilidad3: "habilidad 3",
-    descripcion: "CINIRUS <br> Elemental de Luz <br> Coste de invocación: 20"
+    descripcion: "CINIRUS <br> Elemental de Luz <br> Coste de invocación: 20",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   },
   "raizor": {
-    nombre: "RAIZOR",
-    imagen: "img/raizor.png",
+    nombre: "raizor",
+    portada: "img/raizor.png",
     icono: "",
     ataque: 4,
     esquiva: 4,
@@ -824,36 +855,47 @@ const esbirrosDict = {
     habilidad1: "relampago",
     habilidad2: "sobrecarga",
     habilidad3: "habilidad 3",
-    descripcion: "RAIZOR <br> Elemental de Rayo <br> Coste de invocación: 20"
+    descripcion: "RAIZOR <br> Elemental de Rayo <br> Coste de invocación: 20",
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada"
   }
-  // TODO: Agrega los demás esbirros siguiendo el mismo patrón
 }
 
 // ? Objeto para almecenar información de los esbirros
 // TODO: Agregar los demas personajes
 const personajesDict = {
-  "barbaro": {
-    nombre: "barbaro",
-    imagen: "img/barbaro.png",
-    ataque: 6,
-    esquiva: 1,
-    bloqueo: 1,
-    velocidad: 4,
-    vida: 33,
-    vidaMaxima: 33,
-    poder: 38,
-    poderMaximo: 38,
-    arma1: "espada",
-    arma2: "patada",
-    habilidad1: "torbellino",
-    habilidad2: "incansable",
-    habilidad3: "ataque poderoso",
-    descripcion: "combatiente cuerpo a cuerpo que genera el mayor daño posible sin pensar mucho en su seguridad."
+  "nuevopj": {
+    nombre: "nuevo",
+    portada: "img/nuevopj.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
   },
   "guerrero": {
     nombre: "guerrero",
-    imagen: "img/guerrero.png",
+    portada: "img/guerrero.png",
     icono: "",
+    descripcion: "combatiente cuerpo a cuerpo, con mucha resistencia pero muy poco daño base.",
 
     ataque: 4,
     esquiva: 2,
@@ -867,54 +909,20 @@ const personajesDict = {
     arma1: "espada",
     arma2: "escudo",
 
+    equipo1: "armaduraPesada",
+    equipo2: "nada",
+    equipo3: "nada",
+
     habilidad1: "embestida con escudo",
     habilidad2: "cobertura",
     habilidad3: "ataque poderoso",
-
-    descripcion: "combatiente cuerpo a cuerpo, con mucha resistencia pero muy poco daño base."
   },
-  "paladin": {
-    nombre: "paladin",
-    imagen: "img/paladin.png",
-    ataque: 5,
-    esquiva: 3,
-    bloqueo: 4,
-    velocidad: 3,
-    vida: 30,
-    vidaMaxima: 30,
-    poder: 41,
-    poderMaximo: 41,
-    arma1: "hoja runa",
-    arma2: "daga",
-    habilidad1: "sanar",
-    habilidad2: "sentencia",
-    habilidad3: "exorcismo",
-    descripcion: "combatiente mixto, con buen daño cuerpo a cuerpo y control de habilidades mágicas."
-  },
-  "picaro": {
-    nombre: "picaro",
-    imagen: "img/picaro.png",
-    ataque: 4,
-    esquiva: 4,
-    bloqueo: 2,
-    velocidad: 4,
-    vida: 25,
-    vidaMaxima: 25,
-    poder: 46,
-    poderMaximo: 46,
-    arma1: "daga",
-    arma2: "daga",
-    habilidad1: "ataque doble",
-    habilidad2: "sigilo",
-    habilidad3: "desarmar",
-    descripcion: "combatiente sigiloso y rápido, siempre intenta infligir daño sin quedar expuesto."
-  },
-  // TODO: Monje
-  // TODO: Cazador
-  // TODO: Druida
   "chaman": {
     nombre: "chaman",
-    imagen: "img/chaman.png",
+    portada: "img/chaman.png",
+    icono: "",
+    descripcion: "combatiente mágico elemental, utiliza totems para ampliar su área de efectos.",
+
     ataque: 5,
     esquiva: 3,
     bloqueo: 3,
@@ -923,16 +931,76 @@ const personajesDict = {
     vidaMaxima: 40,
     poder: 43,
     poderMaximo: 43,
-    arma1: "mano",
+
+    arma1: "palma",
     arma2: "totem",
-    habilidad1: "relampago",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "relámpago",
     habilidad2: "terremoto",
     habilidad3: "sobrecarga",
-    descripcion: "combatiente mágico elemental, utiliza totems para ampliar su área de efectos."
+  },
+  "barbaro": {
+    nombre: "barbaro",
+    portada: "img/barbaro.png",
+    icono: "",
+    descripcion: "combatiente cuerpo a cuerpo que genera el mayor daño posible sin pensar mucho en su seguridad.",
+
+    ataque: 6,
+    esquiva: 1,
+    bloqueo: 1,
+    velocidad: 4,
+    vida: 33,
+    vidaMaxima: 33,
+    poder: 38,
+    poderMaximo: 38,
+
+    arma1: "espada",
+    arma2: "patada",
+
+    equipo1: "armaduraPesada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "torbellino",
+    habilidad2: "incansable",
+    habilidad3: "ataque poderoso",
+  },
+  "picaro": {
+    nombre: "picaro",
+    portada: "img/picaro.png",
+    icono: "",
+    descripcion: "combatiente sigiloso y rápido, siempre intenta infligir daño sin quedar expuesto.",
+
+    ataque: 4,
+    esquiva: 4,
+    bloqueo: 2,
+    velocidad: 4,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 46,
+    poderMaximo: 46,
+
+    arma1: "daga",
+    arma2: "daga",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "ataque doble",
+    habilidad2: "sigilo",
+    habilidad3: "desarmar",
   },
   "mago": {
     nombre: "mago",
-    imagen: "img/mago.png",
+    portada: "img/mago.png",
+    icono: "",
+    descripcion: "experto en el manejo de armas y habilidades mágicas, mantiene distancia de sus enemigos.",
+
     ataque: 5,
     esquiva: 3,
     bloqueo: 1,
@@ -941,35 +1009,122 @@ const personajesDict = {
     vidaMaxima: 20,
     poder: 54,
     poderMaximo: 54,
+
     arma1: "varita",
     arma2: "daga",
-    habilidad1: "bola de hielo",
-    habilidad2: "explosion de escarcha",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "boladehielo",
+    habilidad2: "explosiondeescarcha",
     habilidad3: "confundir",
-    descripcion: "experto en el manejo de armas y habilidades mágicas, mantiene distancia de sus enemigos."
   },
-  // TODO: paladinoscuro
-  // TODO: nigromante
-  // TODO: guardiarunico
-  "nuevopj": {
-    nombre: "Nuevo Personaje",
-    imagen: "img/new.png",
-    descripcion: "",
-    experiencia: 200,
-    ataque: 0,
-    esquiva: 0,
-    bloqueo: 0,
-    velocidad: 0,
-    vida: 0,
-    vidaMaxima: 0,
-    poder: 0,
-    poderMaximo: 0,
-    arma1: "nada",
-    arma2: "nada",
-    habilidad1: "habilidad 1",
-    habilidad2: "habilidad 2",
-    habilidad3: "habilidad 3"
-  }
+  "paladin": {
+    nombre: "paladin",
+    portada: "img/paladin.png",
+    icono: "",
+    descripcion: "combatiente mixto, con buen daño cuerpo a cuerpo y control de habilidades mágicas.",
+
+    ataque: 5,
+    esquiva: 3,
+    bloqueo: 4,
+    velocidad: 3,
+    vida: 30,
+    vidaMaxima: 30,
+    poder: 41,
+    poderMaximo: 41,
+
+    arma1: "hojaruna",
+    arma2: "daga",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "sanar",
+    habilidad2: "sentencia",
+    habilidad3: "exorcismo",
+  },
+  "cazador": {
+    nombre: "cazador",
+    portada: "img/cazador.png",
+    icono: "",
+    descripcion: "combatiente de larga distancia, utiliza invocaciones a modo de mascotas.",
+
+    ataque: 4,
+    esquiva: 3,
+    bloqueo: 1,
+    velocidad: 5,
+    vida: 20,
+    vidaMaxima: 20,
+    poder: 39,
+    poderMaximo: 39,
+
+    arma1: "arco",
+    arma2: "daga",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "flechasmultiples",
+    habilidad2: "flechaenergizada",
+    habilidad3: "invocar",
+  },
+  "monje": {
+    nombre: "monje",
+    portada: "img/monje.png",
+    icono: "",
+    descripcion: "combatiente cuerpo a cuerpo con armas naturales, aumenta el daño utilizando mucha energía.",
+
+    ataque: 4,
+    esquiva: 4,
+    bloqueo: 3,
+    velocidad: 4,
+    vida: 23,
+    vidaMaxima: 23,
+    poder: 39,
+    poderMaximo: 39,
+
+    arma1: "punno",
+    arma2: "patada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "ataquemultiple",
+    habilidad2: "golpedechi",
+    habilidad3: "desarmar",
+  },
+  "druida": {
+    nombre: "druida",
+    portada: "img/druida.png",
+    icono: "",
+    descripcion: "combatiente mágico con habilidades del Reino Vida, prefiere sanar antes que dañar.",
+
+    ataque: 5,
+    esquiva: 2,
+    bloqueo: 5,
+    velocidad: 3,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 40,
+    poderMaximo: 40,
+
+    arma1: "baculo",
+    arma2: "runa",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "enraizar",
+    habilidad2: "envenenar",
+    habilidad3: "sanar",
+  },
 }
 
 // ? Objeto para almacenar información de los distintos equipamientos
@@ -1022,7 +1177,7 @@ const equiposDict = {
     velocidad: 0,
     vidaMaxima: 20,
     poderMaximo: 0,
-  },  
+  },
   'anillo': {
     nombre: "Anillo",
     icono: "img/anillo.png",
@@ -1061,12 +1216,6 @@ const equiposDict = {
   },
 }
 
-
-const equipPersonaje = {
-  'guerrero': ['armaduraPesada', 'nada', 'nada'],
-  'lobo': ['armaduraLigera', 'nada', 'nada'],
-}
-
 // ? Bandera que indica si el juego esta en modo edicion o no, valores posibles 0 o 1
 var edicion = 0
 // ? Bandera que indica si se esta editanto el personaje principal o el esbirro, valores posibles 'personaje' o 'esbirro'
@@ -1075,8 +1224,8 @@ var tipoEdicion = 'personaje' // TODO: Descartar
 var personaje = {
 
   nombre: "BIENVENIDO",
-  meeple: "img/logo-meeple-combat.png",
-  imagen: "img/logo-meeple-combat.png",
+  // meeple: "img/logo-meeple-combat.png",
+  portada: "img/logo-meeple-combat.png",
   descripcion: "Descripcion personaje default",
 
   experiencia: 0,
@@ -1227,7 +1376,7 @@ function imprimirPersonaje() {
     if (equipo3[key]) atributosPersonaje[key] += equipo3[key]
   }
 
-  portadaImg.src = personaje.imagen
+  portadaImg.src = personaje.portada
   // portadaImg.src = `img/${quitarEspacios(personaje.nombre)}.png`
 
   nombreTxt.textContent = personaje.nombre.toUpperCase()
@@ -1383,18 +1532,19 @@ arma2TxtBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
 */
 // ? Funcion para cambio de personaje
 function avatar(meeple) {
+  if (!(meeple in personajesDict)) {
+    console.error(`Personaje: ${meeple} no esta en personajesDict`)
+    return
+  }
+
   esPersonaje = true
 
   Object.assign(personaje, personajesDict[meeple])
   personaje.meeple = `img/${quitarEspacios(personaje.nombre)}.png`
 
   Object.assign(arma1, armasDict[personaje.arma1])
-  arma1["nombre"] = personaje.arma1
-  arma1["icono"] = `img/${quitarEspacios(personaje.arma1)}.png`
 
   Object.assign(arma2, armasDict[personaje.arma2])
-  arma2["nombre"] = personaje.arma2
-  arma2["icono"] = `img/${quitarEspacios(personaje.arma2)}.png`
 
   habilidad1 = { nombre: personaje.habilidad1, descripcion: habilidadesDict[personaje.habilidad1] }
   habilidad2 = { nombre: personaje.habilidad2, descripcion: habilidadesDict[personaje.habilidad2] }
@@ -1404,14 +1554,9 @@ function avatar(meeple) {
   equipo2 = reiniciarEquipamiento(2)
   equipo3 = reiniciarEquipamiento(3)
 
-  if (personaje.nombre in equipPersonaje) {
-    equipamientoSeleccionado = 1
-    cambiarEquipamiento(equipPersonaje[personaje.nombre][0])
-    equipamientoSeleccionado = 2
-    cambiarEquipamiento(equipPersonaje[personaje.nombre][1])
-    equipamientoSeleccionado = 3
-    cambiarEquipamiento(equipPersonaje[personaje.nombre][2])
-  } else console.error(`Agregar ${personaje.nombre} a equipPersonaje`)
+  Object.assign(equipo1, equiposDict[personajesDict[meeple].equipo1])
+  Object.assign(equipo2, equiposDict[personajesDict[meeple].equipo2])
+  Object.assign(equipo3, equiposDict[personajesDict[meeple].equipo3])
 
   imprimirPersonaje()
   cerrarModal("personajes")
@@ -2319,7 +2464,7 @@ let estadisticaSeleccionada
     /**
      * @param {Object} opciones - Objeto que contiene las propiedades del Esbirro.
      * @param {string} opciones.nombre - El nombre del Esbirro.
-     * @param {string} opciones.imagen - La URL de la imagen del Esbirro.
+     * @param {string} opciones.portada - La URL de la imagen del Esbirro.
      * @param {string} opciones.icono - El icono del Esbirro (sin uso).
      * @param {string} opciones.descripcion - La descripción del Esbirro.
      * @param {number} opciones.experiencia - La experiencia del Esbirro.
@@ -2343,7 +2488,7 @@ let estadisticaSeleccionada
     constructor({
       // Propiedades generales de esbirro
       nombre = "",
-      imagen = "img/nada.png",
+      portada = "img/nada.png",
       icono = "", // Sin Uso
       descripcion = "Selecciona editar y luego el ícono de esta criatura para invocar otra.",
       experiencia = 0,
@@ -2407,7 +2552,7 @@ let estadisticaSeleccionada
     }) {
       // * Propiedades generales de esbirro
       this.nombre = nombre;
-      this.imagen = imagen;
+      this.portada = portada;
       this.icono = icono;
       this.descripcion = descripcion;
       this.experiencia = experiencia;
@@ -2442,6 +2587,7 @@ let estadisticaSeleccionada
      * @param {Object} props - Un objeto con las propiedades a actualizar.
      */
     actualizarPropiedades(props) {
+      console.log(props)
       Object.assign(this, props);
       this.configurarArma(1, this.arma1)
       this.configurarArma(2, this.arma2)
@@ -2450,12 +2596,15 @@ let estadisticaSeleccionada
       this.configurarHabilidad(2, this.habilidad2)
       this.configurarHabilidad(3, this.habilidad3)
 
-      let nombre = this.nombre.toLowerCase()
-      if (nombre in equipPersonaje) {
-        this.configurarEquipamiento(1, equipPersonaje[nombre][0])
-        this.configurarEquipamiento(2, equipPersonaje[nombre][1])
-        this.configurarEquipamiento(3, equipPersonaje[nombre][2])
-      } else console.error(`Esbirro: ${nombre} no esta en equipPersonaje`)
+      this.configurarEquipamiento(1, this.equipo1)
+      this.configurarEquipamiento(2, this.equipo2)
+      this.configurarEquipamiento(3, this.equipo3)
+      // let nombre = this.nombre.toLowerCase()
+      // if (nombre in equipPersonaje) {
+      //   this.configurarEquipamiento(1, equipPersonaje[nombre][0])
+      //   this.configurarEquipamiento(2, equipPersonaje[nombre][1])
+      //   this.configurarEquipamiento(3, equipPersonaje[nombre][2])
+      // } else console.error(`Esbirro: ${nombre} no esta en equipPersonaje`)
     }
 
     /**
@@ -2474,8 +2623,10 @@ let estadisticaSeleccionada
 
     configurarEquipamiento(ranura, nombre) {
       if (nombre in equiposDict) {
-        this.vida -= this[`equipo${ranura}`].vidaMaxima
-        this.poder -= this[`equipo${ranura}`].poderMaximo
+        if (typeof this[`equipo${ranura}`] !== 'string') {
+          this.vida -= this[`equipo${ranura}`].vidaMaxima
+          this.poder -= this[`equipo${ranura}`].poderMaximo
+        }
 
         this[`equipo${ranura}`] = equiposDict[nombre]
 
@@ -2594,7 +2745,7 @@ function mostrarEsbirroSeleccionado() {
   }
 
   nombreTxt.textContent = esbirroSeleccionado.nombre.toUpperCase()
-  portadaImg.src = esbirroSeleccionado.imagen
+  portadaImg.src = esbirroSeleccionado.portada
   experienciaTxt.textContent = esbirroSeleccionado.experiencia
 
   ataqueTxt.textContent = atributosEsbirroSeleccionado.ataque
@@ -3039,6 +3190,7 @@ function mostrarEsbirroSeleccionado() {
       esbirroSeleccionado.configurarEquipamiento(equipamientoSeleccionado, item)
       mostrarEsbirroSeleccionado()
       cerrarModal('equipamiento')
+      cerrarEdicion()
     }
   }
 }
