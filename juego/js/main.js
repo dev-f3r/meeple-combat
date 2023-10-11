@@ -258,106 +258,158 @@ const habilidadesDict = {
 // TODO: Agregar las demas armas
 const armasDict = {
   "nada": {
+    nombre: "nada",
+    icono: "img/nada.png",
     danno: 0,
     descripcion: "Arma sin descripción"
   },
   "punno": {
+    nombre: "puño",
+    icono: "img/punno.png",
     danno: 0.75,
     descripcion: "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
   },
   "patada": {
+    nombre: "patada",
+    icono: "img/patada.png",
     danno: 1,
     descripcion: "Arma natural <br> 2 Acciones / 100% de ataque como daño físico"
   },
   "daga": {
+    nombre: "daga",
+    icono: "img/daga.png",
     danno: 1,
     descripcion: "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
   },
   "espada": {
+    nombre: "espada",
+    icono: "img/espada.png",
     danno: 1.5,
     descripcion: "Arma a dos manos <br> 2 Acciones / 150% de ataque como daño físico"
   },
   "arco": {
+    nombre: "arco",
+    icono: "img/arco.png",
     danno: 1.75,
     descripcion: "Arma a distancia <br> 3 casilleros x ataque / 3 Acciones / 175% de ataque como daño físico"
   },
   "arrojadiza": {
+    nombre: "arrojadiza",
+    icono: "img/arrojadiza.png",
     danno: 0.75,
     descripcion: "Arma arrojadiza <br> 3 casillero x ataque / 2 Acciones / 75% de ataque como daño físico"
   },
   "escudo": {
+    nombre: "escudo",
+    icono: "img/escudo.png",
     danno: 0.5,
     descripcion: "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
   },
   "mano": {
+    nombre: "mano",
+    icono: "img/mano.png",
     danno: 1,
     descripcion: "Arma a distancia <br> 1 casillero x ataque / 1 Acción / 100% de ataque como daño mágico"
   },
   "varita": {
+    nombre: "varita",
+    icono: "img/varita.png",
     danno: 1,
     descripcion: "Arma a distancia <br> 3 casilleros x ataque / 1 Accion / 100% de ataque como daño mágico"
   },
   "baculo": {
+    nombre: "baculo",
+    icono: "img/baculo.png",
     danno: 1.5,
     descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 150% de ataque como daño mágico"
   },
   "runa": {
+    nombre: "runa",
+    icono: "img/runa.png",
     danno: 0.75,
     descripcion: "Arma a distancia <br> 3 casilleros x ataque / 2 Acciones / 75% de ataque como daño mágico"
   },
   "totem": {
+    nombre: "totem",
+    icono: "img/totem.png",
     danno: 1,
     descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
   },
   "hoja runa": {
+    nombre: "hoja runa",
+    icono: "img/hoja_runa.png",
     danno: 1,
     descripcion: "Arma mixta <br> 1 casillero x ataque / 2 Acciones / 100% de ataque como daño físico o mágico"
   },
   "mordisco": {
+    nombre: "mordisco",
+    icono: "img/mordisco.png",
     danno: 1.5,
     descripcion: "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño físico"
   },
   "garras": {
+    nombre: "garras",
+    icono: "img/garras.png",
     danno: 1,
     descripcion: "Garras <br> / 1 Accion / 100% de ataque como daño físico"
   },
   "aliento": {
+    nombre: "aliento",
+    icono: "img/aliento.png",
     danno: 2.5,
-    descripcion: "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima de 1 casillero x punto de ataque"
+    descripcion: "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima of 1 casillero x punto de ataque"
   },
   "pinzas": {
+    nombre: "pinzas",
+    icono: "img/pinzas.png",
     danno: 1.75,
     descripcion: "PINZAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 175% de ataque como daño físico"
   },
   "mente": {
+    nombre: "mente",
+    icono: "img/mente.png",
     danno: 1,
-    descripcion: "MENTE <br> Arma a distancia / 1 Accion <br> 100% de ataque como daño mágico. <br> Distancia máxima de 2 casillero x punto de ataque"
+    descripcion: "MENTE <br> Arma a distancia / 1 Accion <br> 100% de ataque como daño mágico. <br> Distancia máxima of 2 casillero x punto de ataque"
   },
   "ramas": {
+    nombre: "ramas",
+    icono: "img/ramas.png",
     danno: 1.25,
     descripcion: "RAMAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
   },
   "esporas": {
+    nombre: "esporas",
+    icono: "img/esporas.png",
     danno: 1.25,
-    descripcion: "ESPORAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
+    descripcion: "ESPORAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima of 1 casillero x punto de ataque"
   },
   "alas": {
+    nombre: "alas",
+    icono: "img/alas.png",
     danno: 1.25,
     descripcion: "ALAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
   },
   "mirada": {
+    nombre: "mirada",
+    icono: "img/mirada.png",
     danno: 1.25,
     descripcion: "MIRADA <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 2 casilleros x punto de ataque"
   },
   "cuernos": {
+    nombre: "cuernos",
+    icono: "img/cuernos.png",
     danno: 1.25,
     descripcion: "CUERNOS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
   },
   "cascos": {
+    nombre: "cascos",
+    icono: "img/cascos.png",
     danno: 1.25,
     descripcion: "CASCOS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
   },
   "tentaculos": {
+    nombre: "tentaculos",
+    icono: "img/tentaculos.png",
     danno: 1.25,
     descripcion: "TENTACULOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   }
@@ -741,17 +793,18 @@ const equiposDict = {
     poderMaximo: 0,
   },
   'armaduraLigera': {
-    // TODO: Arreglar armadura ligera
+
     nombre: "Armadura Ligera",
     icono: "img/armaduraligera.png",
     descripcion: "Descripción de Armadura ligera",
     nivel: 1,
-    ataque: 1000,
-    esquiva: 1000,
-    bloqueo: 1000,
-    velocidad: 1000,
-    vidaMaxima: 1000,
-    poderMaximo: 1000,
+    ataque: 1,
+    esquiva: 1,
+    bloqueo: 1,
+    velocidad: 1,
+    vidaMaxima: 1,
+    poderMaximo: 1,
+
   },
   'armaduraPesada': {
     // TODO: Arreglar armadura ligera
@@ -927,10 +980,10 @@ function imprimirPersonaje() {
     poderMaximo: personaje.poderMaximo
   }
 
-  for(const key in atributosPersonaje) {
-    if(equipo1[key]) atributosPersonaje[key] += equipo1[key]
-    if(equipo2[key]) atributosPersonaje[key] += equipo2[key]
-    if(equipo3[key]) atributosPersonaje[key] += equipo3[key]
+  for (const key in atributosPersonaje) {
+    if (equipo1[key]) atributosPersonaje[key] += equipo1[key]
+    if (equipo2[key]) atributosPersonaje[key] += equipo2[key]
+    if (equipo3[key]) atributosPersonaje[key] += equipo3[key]
   }
 
   portadaImg.src = personaje.imagen
@@ -1300,7 +1353,7 @@ let estadisticaSeleccionada
      * @param {string} atributo - El nombre del atributo a modificar.
      */
     function modificarEstadistica(atributo) {
-      
+
       mostrarBtnArribaAbajo()
 
       estadisticaSeleccionada = atributo;
@@ -1619,85 +1672,87 @@ let estadisticaSeleccionada
       // ? crea una referencia al objeto arma1 o arma2, se basa en slotArmaSeleccionada, revisar función armas()
       else seleccion = slotArmaSeleccionada === 1 ? arma1 : arma2
 
-      switch (arma) {
-        case 'daga':
-          // cambiar objeto arma1 o arma2
-          seleccion.nombre = "Daga"
-          seleccion.icono = "img/daga.png"
-          seleccion.danno = 1
-          seleccion.descripcion = "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
+      // switch (arma) {
+      //   case 'daga':
+      //     // cambiar objeto arma1 o arma2
+      //     seleccion.nombre = "Daga"
+      //     seleccion.icono = "img/daga.png"
+      //     seleccion.danno = 1
+      //     seleccion.descripcion = "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
 
-          break;
-        case 'espada':
-          seleccion.nombre = "Espada"
-          seleccion.icono = "img/espada.png"
-          seleccion.danno = 1.5
-          seleccion.descripcion = "Arma a dos manos <br> 2 Acciones / 150% de ataque como daño físico"
-          break;
-        case 'arco':
-          seleccion.nombre = "Arco"
-          seleccion.icono = "img/arco.png"
-          seleccion.danno = 1.75
-          seleccion.descripcion = "Arma a distancia <br>  3 casilleros x ataque / 3 Acciones / 175% de ataque como daño físico"
-          break;
-        case 'arrojadiza':
-          seleccion.nombre = "Arrojadiza"
-          seleccion.icono = "img/arrojadiza.png"
-          seleccion.danno = 0.75
-          seleccion.descripcion = "Arma arrojadiza <br> 3 casillero x ataque / 2 Acciones / 75% de ataque como daño físico"
-          break;
-        case 'punno':
-          seleccion.nombre = "Puños"
-          seleccion.icono = "img/punno.png"
-          seleccion.danno = 0.75
-          seleccion.descripcion = "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
-          break;
-        case 'escudo':
-          seleccion.nombre = "Escudo"
-          seleccion.icono = "img/escudo.png"
-          seleccion.danno = 0.5
-          seleccion.descripcion = "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
-          break;
-        case 'magia':
-          seleccion.nombre = "Mano"
-          seleccion.icono = "img/magia.png"
-          seleccion.danno = 1
-          seleccion.descripcion = "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
-          break;
-        case 'varita':
-          seleccion.nombre = "Varita"
-          seleccion.icono = "img/varita.png"
-          seleccion.danno = 1
-          seleccion.descripcion = "Arma a distancia <br>  3 casilleros x ataque / 1 Accion / 100% de ataque como daño mágico"
-          break;
-        case 'baculo':
-          seleccion.nombre = "Baculo"
-          seleccion.icono = "img/baculo.png"
-          seleccion.danno = 1.5
-          seleccion.descripcion = "Arma a distancia <br>  2 casilleros x ataque / 2 Acciones / 150% de ataque como daño mágico"
-          break;
-        case 'totem':
-          seleccion.nombre = "Totem"
-          seleccion.icono = "img/totem.png"
-          seleccion.danno = 1
-          seleccion.descripcion = "Arma a distancia <br>  2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
-          break;
-        case 'runa':
-          seleccion.nombre = "Runa"
-          seleccion.icono = "img/runa.png"
-          seleccion.danno = 0.75
-          seleccion.descripcion = "Arma a distancia <br> 3 casilleros x ataque / 2 Acciones / 75% de ataque como daño mágico"
-          break;
-        case 'hojaruna':
-          seleccion.nombre = "Hoja Runa"
-          seleccion.icono = "img/hojaruna.png"
-          seleccion.danno = 1
-          seleccion.descripcion = "Arma mixta <br>  1 casilleros x ataque / 2 Acciones / 100% de ataque como daño fíisico o mágico"
-          break;
+      //     break;
+      //   case 'espada':
+      //     seleccion.nombre = "Espada"
+      //     seleccion.icono = "img/espada.png"
+      //     seleccion.danno = 1.5
+      //     seleccion.descripcion = "Arma a dos manos <br> 2 Acciones / 150% de ataque como daño físico"
+      //     break;
+      //   case 'arco':
+      //     seleccion.nombre = "Arco"
+      //     seleccion.icono = "img/arco.png"
+      //     seleccion.danno = 1.75
+      //     seleccion.descripcion = "Arma a distancia <br>  3 casilleros x ataque / 3 Acciones / 175% de ataque como daño físico"
+      //     break;
+      //   case 'arrojadiza':
+      //     seleccion.nombre = "Arrojadiza"
+      //     seleccion.icono = "img/arrojadiza.png"
+      //     seleccion.danno = 0.75
+      //     seleccion.descripcion = "Arma arrojadiza <br> 3 casillero x ataque / 2 Acciones / 75% de ataque como daño físico"
+      //     break;
+      //   case 'punno':
+      //     seleccion.nombre = "Puños"
+      //     seleccion.icono = "img/punno.png"
+      //     seleccion.danno = 0.75
+      //     seleccion.descripcion = "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
+      //     break;
+      //   case 'escudo':
+      //     seleccion.nombre = "Escudo"
+      //     seleccion.icono = "img/escudo.png"
+      //     seleccion.danno = 0.5
+      //     seleccion.descripcion = "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
+      //     break;
+      //   case 'magia':
+      //     seleccion.nombre = "Mano"
+      //     seleccion.icono = "img/magia.png"
+      //     seleccion.danno = 1
+      //     seleccion.descripcion = "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
+      //     break;
+      //   case 'varita':
+      //     seleccion.nombre = "Varita"
+      //     seleccion.icono = "img/varita.png"
+      //     seleccion.danno = 1
+      //     seleccion.descripcion = "Arma a distancia <br>  3 casilleros x ataque / 1 Accion / 100% de ataque como daño mágico"
+      //     break;
+      //   case 'baculo':
+      //     seleccion.nombre = "Baculo"
+      //     seleccion.icono = "img/baculo.png"
+      //     seleccion.danno = 1.5
+      //     seleccion.descripcion = "Arma a distancia <br>  2 casilleros x ataque / 2 Acciones / 150% de ataque como daño mágico"
+      //     break;
+      //   case 'totem':
+      //     seleccion.nombre = "Totem"
+      //     seleccion.icono = "img/totem.png"
+      //     seleccion.danno = 1
+      //     seleccion.descripcion = "Arma a distancia <br>  2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
+      //     break;
+      //   case 'runa':
+      //     seleccion.nombre = "Runa"
+      //     seleccion.icono = "img/runa.png"
+      //     seleccion.danno = 0.75
+      //     seleccion.descripcion = "Arma a distancia <br> 3 casilleros x ataque / 2 Acciones / 75% de ataque como daño mágico"
+      //     break;
+      //   case 'hojaruna':
+      //     seleccion.nombre = "Hoja Runa"
+      //     seleccion.icono = "img/hojaruna.png"
+      //     seleccion.danno = 1
+      //     seleccion.descripcion = "Arma mixta <br>  1 casilleros x ataque / 2 Acciones / 100% de ataque como daño fíisico o mágico"
+      //     break;
 
-        default:
-          break;
-      }
+      //   default:
+      //     break;
+      // }
+
+      Object.assign(seleccion, armasDict[arma])
 
       // reflejar cambios
       modalArmas.style.display = "none"
@@ -2043,8 +2098,8 @@ let estadisticaSeleccionada
       poderMaximo = 0,
 
       // Armas de esbirro
-      arma1 = { nombre: "wp 1", danno: 0, descripcion: "dc wp 1" },
-      arma2 = { nombre: "wp 2", danno: 0, descripcion: "dc wp 2" },
+      arma1 = { nombre: "wp 1", icono: "img/nada.png", danno: 0, descripcion: "dc wp 1" },
+      arma2 = { nombre: "wp 2", icono: "img/nada.png", danno: 0, descripcion: "dc wp 2" },
 
       // Equipamiento de esbirro
       equipo1 = {
@@ -2149,8 +2204,10 @@ let estadisticaSeleccionada
      * @param {string} nombre - El nombre del arma.
      */
     configurarArma(ranura, nombre) {
-      if (nombre in armasDict)
-        this[`arma${ranura}`] = { nombre, danno: armasDict[nombre].danno, descripcion: armasDict[nombre].descripcion }
+      if (nombre in armasDict) {
+        if (!armasDict[nombre].icono) console.log(`Esbirro: Agregar propiedad icono de ${nombre} en armasDict`)
+        this[`arma${ranura}`] = armasDict[nombre]
+      }
       else
         this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
     }
@@ -2258,10 +2315,10 @@ function mostrarEsbirroSeleccionado() {
     poderMaximo: esbirroSeleccionado.poderMaximo
   }
 
-  for(const key in atributosEsbirroSeleccionado) {
-    if(esbirroSeleccionado.equipo1[key]) atributosEsbirroSeleccionado[key] += esbirroSeleccionado.equipo1[key]
-    if(esbirroSeleccionado.equipo2[key]) atributosEsbirroSeleccionado[key] += esbirroSeleccionado.equipo2[key]
-    if(esbirroSeleccionado.equipo3[key]) atributosEsbirroSeleccionado[key] += esbirroSeleccionado.equipo3[key]
+  for (const key in atributosEsbirroSeleccionado) {
+    if (esbirroSeleccionado.equipo1[key]) atributosEsbirroSeleccionado[key] += esbirroSeleccionado.equipo1[key]
+    if (esbirroSeleccionado.equipo2[key]) atributosEsbirroSeleccionado[key] += esbirroSeleccionado.equipo2[key]
+    if (esbirroSeleccionado.equipo3[key]) atributosEsbirroSeleccionado[key] += esbirroSeleccionado.equipo3[key]
   }
 
   nombreTxt.textContent = esbirroSeleccionado.nombre.toUpperCase()
@@ -2287,10 +2344,12 @@ function mostrarEsbirroSeleccionado() {
   equipo3Img.src = esbirroSeleccionado.equipo3.icono
 
   arma1Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma1.nombre)
-  arma1Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma1.nombre)}.png`
+  // arma1Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma1.nombre)}.png`
+  arma1Img.src = esbirroSeleccionado.arma1.icono
 
   arma2Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma2.nombre)
-  arma2Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma2.nombre)}.png`
+  // arma2Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma2.nombre)}.png`
+  arma2Img.src = esbirroSeleccionado.arma2.icono
 
   habilidad1Txt.textContent = esbirroSeleccionado.habilidad1.nombre.toUpperCase()
   habilidad2Txt.textContent = esbirroSeleccionado.habilidad2.nombre.toUpperCase()
@@ -2408,14 +2467,14 @@ function mostrarEsbirroSeleccionado() {
 
     function modificarVidaPoderActualEsbirro(accion) {
       let vidaMaxima = esbirroSeleccionado.vidaMaxima
-      if(esbirroSeleccionado.equipo1.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo1.vidaMaxima
-      if(esbirroSeleccionado.equipo2.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo2.vidaMaxima
-      if(esbirroSeleccionado.equipo3.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo3.vidaMaxima
+      if (esbirroSeleccionado.equipo1.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo1.vidaMaxima
+      if (esbirroSeleccionado.equipo2.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo2.vidaMaxima
+      if (esbirroSeleccionado.equipo3.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo3.vidaMaxima
 
       let poderMaximo = esbirroSeleccionado.poderMaximo
-      if(esbirroSeleccionado.equipo1.poderMaximo) poderMaximo += esbirroSeleccionado.equipo1.poderMaximo
-      if(esbirroSeleccionado.equipo2.poderMaximo) poderMaximo += esbirroSeleccionado.equipo2.poderMaximo
-      if(esbirroSeleccionado.equipo3.poderMaximo) poderMaximo += esbirroSeleccionado.equipo3.poderMaximo
+      if (esbirroSeleccionado.equipo1.poderMaximo) poderMaximo += esbirroSeleccionado.equipo1.poderMaximo
+      if (esbirroSeleccionado.equipo2.poderMaximo) poderMaximo += esbirroSeleccionado.equipo2.poderMaximo
+      if (esbirroSeleccionado.equipo3.poderMaximo) poderMaximo += esbirroSeleccionado.equipo3.poderMaximo
       console.log(vidaMaxima, poderMaximo)
 
       if (estadisticaSeleccionada === 'vida') {
@@ -2490,9 +2549,9 @@ function mostrarEsbirroSeleccionado() {
 
           // Mostrar información de la estadística de vida actual y máxima en la consola
           let vidaMaxima = esbirroSeleccionado.vidaMaxima
-          if(esbirroSeleccionado.equipo1.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo1.vidaMaxima
-          if(esbirroSeleccionado.equipo2.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo2.vidaMaxima
-          if(esbirroSeleccionado.equipo3.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo3.vidaMaxima
+          if (esbirroSeleccionado.equipo1.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo1.vidaMaxima
+          if (esbirroSeleccionado.equipo2.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo2.vidaMaxima
+          if (esbirroSeleccionado.equipo3.vidaMaxima) vidaMaxima += esbirroSeleccionado.equipo3.vidaMaxima
 
           consolaBtn.innerHTML = `Vida ${esbirroSeleccionado.vida} / ${vidaMaxima}`
         }
@@ -2519,9 +2578,9 @@ function mostrarEsbirroSeleccionado() {
           // Mostrar información de la estadística de poder actual y máximo en la consola
           // contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`)
           let poderMaximo = esbirroSeleccionado.poderMaximo
-          if(esbirroSeleccionado.equipo1.poderMaximo) poderMaximo += esbirroSeleccionado.equipo1.poderMaximo
-          if(esbirroSeleccionado.equipo2.poderMaximo) poderMaximo += esbirroSeleccionado.equipo2.poderMaximo
-          if(esbirroSeleccionado.equipo3.poderMaximo) poderMaximo += esbirroSeleccionado.equipo3.poderMaximo
+          if (esbirroSeleccionado.equipo1.poderMaximo) poderMaximo += esbirroSeleccionado.equipo1.poderMaximo
+          if (esbirroSeleccionado.equipo2.poderMaximo) poderMaximo += esbirroSeleccionado.equipo2.poderMaximo
+          if (esbirroSeleccionado.equipo3.poderMaximo) poderMaximo += esbirroSeleccionado.equipo3.poderMaximo
 
           consolaBtn.innerHTML = `Poder ${esbirroSeleccionado.poder} / ${poderMaximo}`
         }
