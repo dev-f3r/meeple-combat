@@ -1787,9 +1787,9 @@ let estadisticaSeleccionada
      */
     function cambiarHabilidad(nombre) {
       nombre = quitarAcentos(nombre).toLowerCase()
-      habilidadSeleccionada.nombre = nombre
-
-      habilidadSeleccionada.descripcion = habilidadesDict[nombre]
+      // habilidadSeleccionada.nombre = nombre
+      // habilidadSeleccionada = habilidadesDict[nombre]
+      Object.assign(habilidadSeleccionada, habilidadesDict[nombre])
 
       cerrarEdicion()
       imprimirPersonaje()
@@ -2335,9 +2335,9 @@ let estadisticaSeleccionada
       },
 
       // Habilidades de esbirro
-      habilidad1 = { nombre: "sk 1", descripcion: "dc sk 1" },
-      habilidad2 = { nombre: "sk 2", descripcion: "dc sk 2" },
-      habilidad3 = { nombre: "sk 3", descripcion: "dc sk 3" },
+      habilidad1 = { nombre: "sk 1", coste: 0, descripcion: "dc sk 1" },
+      habilidad2 = { nombre: "sk 2", coste: 0, descripcion: "dc sk 2" },
+      habilidad3 = { nombre: "sk 3", coste: 0, descripcion: "dc sk 3" },
     }) {
       // * Propiedades generales de esbirro
       this.nombre = nombre;
@@ -2376,6 +2376,7 @@ let estadisticaSeleccionada
      * @param {Object} props - Un objeto con las propiedades a actualizar.
      */
     actualizarPropiedades(props) {
+      console.log(props)
       Object.assign(this, props);
       this.configurarArma(1, this.arma1)
       this.configurarArma(2, this.arma2)
@@ -2423,8 +2424,16 @@ let estadisticaSeleccionada
      * @param {string} nombre - El nombre de la habilidad.
      */
     configurarHabilidad(ranura, nombre) {
-      if (nombre in habilidadesDict) this[`habilidad${ranura}`] = { nombre, descripcion: habilidadesDict[nombre.toLowerCase()] }
-      else this[`habilidad${ranura}`] = { nombre, descripcion: "Habilidad sin descripción" }
+      console.log(ranura, nombre)
+      this[`habilidad${ranura}`] = {}
+      if (nombre in habilidadesDict) {
+        // this[`habilidad${ranura}`] = { nombre, descripcion: habilidadesDict[nombre.toLowerCase()] }
+        Object.assign(this[`habilidad${ranura}`], habilidadesDict[nombre])
+      }
+      else {
+        // this[`habilidad${ranura}`] = { nombre, descripcion: "Habilidad sin descripción" }
+        console.error(`Esbirro: Agregar habilidad ${nombre} a habilidadesDict`)
+      }
     }
   }
 
@@ -2546,8 +2555,11 @@ function mostrarEsbirroSeleccionado() {
   // arma2Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma2.nombre)}.png`
   arma2Img.src = esbirroSeleccionado.arma2.icono
 
+  console.log(esbirroSeleccionado.habilidad1)
   habilidad1Txt.textContent = esbirroSeleccionado.habilidad1.nombre.toUpperCase()
+  console.log(esbirroSeleccionado.habilidad2)
   habilidad2Txt.textContent = esbirroSeleccionado.habilidad2.nombre.toUpperCase()
+  console.log(esbirroSeleccionado.habilidad3)
   habilidad3Txt.textContent = esbirroSeleccionado.habilidad3.nombre.toUpperCase()
 }
 
@@ -2788,9 +2800,10 @@ function mostrarEsbirroSeleccionado() {
   { // * Funciones
     function editarHabilidadEsbirro(nombre) {
       nombre = quitarAcentos(nombre).toLowerCase()
-      habilidadSeleccionada.nombre = nombre
+      // habilidadSeleccionada.nombre = nombre
 
-      habilidadSeleccionada.descripcion = habilidadesDict[nombre]
+      // habilidadSeleccionada.descripcion = habilidadesDict[nombre]
+      Object.assign(habilidadSeleccionada, habilidadesDict[nombre])
 
       mostrarEsbirroSeleccionado()
       cerrarEdicion()
