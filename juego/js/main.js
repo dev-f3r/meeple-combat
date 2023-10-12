@@ -1357,18 +1357,20 @@ var equipo3 = {
 
 var habilidad1 = {
   nombre: "Nombre habilidad 1",
+  coste: 0,
   descripcion: "Descripción de habilidad 1"
 }
 
 var habilidad2 = {
   nombre: "Nombre habilidad 2",
+  coste: 0,
   descripcion: "Descripción de habilidad 2"
 }
 
 var habilidad3 = {
   nombre: "Nombre habilidad 3",
+  coste: 0,
   descripcion: "Descripción de habilidad 3"
-
 }
 /* 
     ? Refresca el texto y la imagen de los siguientes componentes:
@@ -1560,9 +1562,12 @@ function avatar(meeple) {
 
   Object.assign(arma2, armasDict[personaje.arma2])
 
-  habilidad1 = { nombre: personaje.habilidad1, descripcion: habilidadesDict[personaje.habilidad1] }
-  habilidad2 = { nombre: personaje.habilidad2, descripcion: habilidadesDict[personaje.habilidad2] }
-  habilidad3 = { nombre: personaje.habilidportadaad3, descripcion: habilidadesDict[personaje.habilidad3] }
+  // habilidad1 = { nombre: personaje.habilidad1, descripcion: habilidadesDict[personaje.habilidad1] }
+  // habilidad2 = { nombre: personaje.habilidad2, descripcion: habilidadesDict[personaje.habilidad2] }
+  // habilidad3 = { nombre: personaje.habilidportadaad3, descripcion: habilidadesDict[personaje.habilidad3] }
+  Object.assign(habilidad1, habilidadesDict[personaje.habilidad1])
+  Object.assign(habilidad2, habilidadesDict[personaje.habilidad2])
+  Object.assign(habilidad3, habilidadesDict[personaje.habilidad3])
 
   equipo1 = reiniciarEquipamiento(1)
   equipo2 = reiniciarEquipamiento(2)
@@ -1991,6 +1996,7 @@ let estadisticaSeleccionada
         * @habilidad:  Obj
      */
     function cambiarHabilidad(nombre) {
+      console.log(nombre)
       nombre = quitarAcentos(nombre).toLowerCase()
       // habilidadSeleccionada.nombre = nombre
       // habilidadSeleccionada = habilidadesDict[nombre]
