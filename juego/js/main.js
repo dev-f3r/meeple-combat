@@ -1225,8 +1225,37 @@ const equiposDict = {
 // ? Bandera que indica si el juego esta en modo edicion o no, valores posibles 0 o 1
 var edicion = 0
 // ? Bandera que indica si se esta editanto el personaje principal o el esbirro, valores posibles 'personaje' o 'esbirro'
-var tipoEdicion = 'personaje' // TODO: Descartar
+var tipoEdicion = 'personaje'
+// ? Indicador de experiencia general
+var experiencia = 0
+// ? Indica el arma seleccionada para ejecutar la función acción(), rango 1..2
+var slotArmaSeleccionada = 1
+// ? Indica el atributo seleccionado para ejecutar la función acción(), rango 1..6
+var slotEstadisticaSeleccionada = 1
+// ? Indica si selecciono un arma o un atributo para ejecutar la función acción(), valor "arma" || "estadistica"
+var objetoAccion = "arma"
+// ? Indica si los botones de izquierda y derecha de cambio de esbirro estan activados
+var flagControlesCambioEsbirro = false
+// ? Indica que ranura de equipamiento se esta editando, rango 1..3
+var equipamientoSeleccionado = 1
+// ? Guarda la estadistica que se esta modificando
+var estadisticaSeleccionada
+// ? Contiene el esbirro que se esta mostrando
+var esbirroSeleccionado = esbirros[0]
+// ? Indica si se esta usando el personaje o un esbirro
+var esPersonaje = true
+// ? Contiene el costo de experiencia de cada atributo
+const valorExperiencia = {
+  ataque: 3,
+  esquiva: 3,
+  bloqueo: 3,
+  velocidad: 6,
+  vidaMaxima: 1,
+  poderMaximo: 1
+}
 
+
+//!! //////////////////// COMIENZO BLOQUE DE PERSONAJE //!! ////////////////////
 var personaje = {
 
   nombre: "BIENVENIDO",
@@ -1261,30 +1290,6 @@ var personaje = {
   habilidad2: "HABILIDAD 2",
   habilidad3: "HABILIDAD 3",
 }
-
-// TODOME: Adaptar
-var pjIndex = 0
-// var expLibre = 0
-// var expTotal = 0
-var experiencia = 0
-var consolaData = ""
-var setDeArmas = "marciales / naturales / tecnoarcanas"
-
-const valorExperiencia = {
-  ataque: 3,
-  esquiva: 3,
-  bloqueo: 3,
-  velocidad: 6,
-  vidaMaxima: 1,
-  poderMaximo: 1
-}
-
-// ? Indica el arma seleccionada para ejecutar la función acción(), rango 1..2
-let slotArmaSeleccionada = 1
-// ? Indica el atributo seleccionado para ejecutar la función acción(), rango 1..6
-let slotEstadisticaSeleccionada = 1
-// ? Indica si selecciono un arma o un atributo para ejecutar la función acción(), valor "arma" || "estadistica"
-let objetoAccion = "arma"
 
 var arma1 = {
 
@@ -1449,7 +1454,6 @@ editarBtn.addEventListener('click', function () {
 
 })
 
-let flagControlesCambioEsbirro = false
 portadaBtn.addEventListener('click', function () {
   if (edicion == 1) {
     modalPersonaje.style.display = "grid"
@@ -1472,7 +1476,6 @@ portadaBtn.addEventListener('click', function () {
 
 })
 
-// !
 /* 
     * @opcion: string
 */
@@ -1502,33 +1505,17 @@ function cerrarModal(opcion) {
   }
 
 }
-// !
 
 cerrarModalPersonaje.addEventListener('click', function () {
-
-  // modalPersonaje.style.display = "none"
-  // edicion = 0
-  // editarImg.src = "img/editar.png"
-  cerrarModal("personajes") // !
+  cerrarModal("personajes")
 })
-
-
 cerrarModalArmas.addEventListener('click', function () {
-
-  // modalArmas.style.display = "none"
-  // edicion = 0
-  // editarImg.src = "img/editar.png"
-  cerrarModal("armas") // !
+  cerrarModal("armas")
 })
-
 cerrarModalEquipo.addEventListener('click', function () {
-
-  // modalEquipo.style.display = "none"
-  // edicion = 0
-  // editarImg.src = "img/editar.png"
-
   cerrarModal("equipamiento")
 })
+
 
 arma1ImgBtn.addEventListener('click', function () {
   armas(personaje.arma1, 1)
@@ -1541,17 +1528,11 @@ arma1TxtBtn.addEventListener('click', function () {
 arma2ImgBtn.addEventListener('click', function () {
   armas(personaje.arma2, 2)
   accionTxt.textContent = "ATACAR"
-
 })
 arma2TxtBtn.addEventListener('click', function () {
   armas(personaje.arma2, 2)
   accionTxt.textContent = "ATACAR"
 })
-
-
-
-
-
 
 
 
@@ -1586,6 +1567,8 @@ function avatar(meeple) {
   Object.assign(equipo2, equiposDict[personajesDict[meeple].equipo2])
   Object.assign(equipo3, equiposDict[personajesDict[meeple].equipo3])
 
+  if(meeple === 'nuevopj') experiencia += 200
+
   imprimirPersonaje()
   cerrarModal("personajes")
   cerrarEdicion()
@@ -1593,6 +1576,7 @@ function avatar(meeple) {
 }
 
 // * EventListener de los personajes del modal personaje
+// TODO: Agregar el nombre de los personajes restantes
 [
   "barbaro", "guerrero", "paladin",
   "picaro", "monje", "cazador",
@@ -1606,15 +1590,6 @@ function avatar(meeple) {
     else if (!esPersonaje) cambiarEsbirro(key)
   })
 })
-
-// TODO: Agregar los demas evenListener de los personajes faltantes
-
-
-function atributos() { }
-
-
-// ? Indica que ranura de equipamiento se esta editando, rango 1..3
-let equipamientoSeleccionado = 1
 
 /**
  * ? Funcion para mostrar el modal de equipamiento
@@ -1647,14 +1622,13 @@ equipo2Btn.addEventListener('click', function () { equipo(2) })
 equipo3Btn.addEventListener('click', function () { equipo(3) })
 
 function armas(armaSeleccionada, slot) {
-  slotArmaSeleccionada = slot // !
-  objetoAccion = "arma" // !
+  slotArmaSeleccionada = slot
+  objetoAccion = "arma"
   if (edicion == 1) {
 
     modalArmas.style.display = "grid"
 
   } else {
-    // !
     if (esPersonaje) {
       contenConsola(
         slotArmaSeleccionada == 1
@@ -1665,17 +1639,6 @@ function armas(armaSeleccionada, slot) {
     else contenConsola(esbirroSeleccionado[`arma${slotArmaSeleccionada}`].descripcion)
   }
 }
-
-// function accion() { }
-
-function habilidades() { }
-
-
-// !!!!!!! CODIGO FERNANDO !!!!!!!
-// ! Instalar Better Comments !
-
-// * variable global para guardar estadistica que se esta modificando
-let estadisticaSeleccionada
 
 { // * Cambio en las estadisticas del personaje
   { // * Funciones para manipulación de la experiencia
@@ -2351,64 +2314,7 @@ let estadisticaSeleccionada
 
 }
 
-// ! Descartado
-{ // * Creación de personaje nuevo
-  { // * Funciones para creación de un nuevo personaje
-    function nuevoPersonaje() {
-      personaje.nombre = "Nuevo Personaje"
-      personaje.meeple = "img/new.png"
-      personaje.descripcion = ""
-      experiencia = 200
-      personaje.ataque = 0
-      personaje.esquiva = 0
-      personaje.bloqueo = 0
-      personaje.velocidad = 0
-      personaje.vida = 0
-      personaje.vidaMaxima = 0
-      personaje.poder = 0
-      personaje.poderMaximo = 0
-      personaje.equipo1 = ""
-      personaje.equipo2 = ""
-      personaje.equipo3 = ""
-      personaje.arma1 = "Una Mano"
-      personaje.arma2 = "Dos Manos"
-      personaje.habilidad1 = "NUEVA HABILIDAD 1"
-      personaje.habilidad2 = "NUEVA HABILIDAD 2"
-      personaje.habilidad3 = "NUEVA HABILIDAD 3"
-
-
-      arma1 = {
-
-        nombre: "Arma1",
-        icono: "img/nada.png",
-        descripcion: "",
-        danno: 0,
-
-      }
-
-      arma2 = {
-
-        nombre: "Arma2",
-        icono: "img/nada.png",
-        descripcion: "",
-        danno: 0,
-
-      }
-
-      experiencia = 200
-
-      imprimirPersonaje()
-      cerrarModal('personajes')
-    }
-  }
-  { // * eventListener de personaje nuevo
-    // nuevopjBtn.addEventListener('click', () => {
-    //   nuevoPersonaje()
-    // })
-  }
-}
-
-{ // * Accion
+{ // * Accion Personaje
 
   { // * Funciones para tirada
     /* 
@@ -2504,9 +2410,10 @@ let estadisticaSeleccionada
     })
   }
 }
+//!! //////////////////// FIN BLOQUE DE PERSONAJE //!! ////////////////////
 
 
-// * COMIENZO BLOQUE DE MASCOTAS
+//!! //////////////////// COMIENZO BLOQUE DE MASCOTAS //!! ////////////////////
 { // * Variables
   /**
    * ? Clase que representa a un Esbirro.
@@ -2726,12 +2633,6 @@ let estadisticaSeleccionada
   // ! Lista de esbirros !
 }
 
-// ? Variable principal para guarda el esbirro que se esta mostrando
-let esbirroSeleccionado = esbirros[0]
-
-// ? Variable principal para determinar si se esta usando el personaje o un esbirro
-let esPersonaje = true
-
 // ? Elemento del botón para cambiar entre personaje y esbirros
 esbirrosBtn.addEventListener('click', () => {
   if (esPersonaje) {
@@ -2770,10 +2671,9 @@ esbirrosBtn.addEventListener('click', () => {
     imprimirPersonaje()
     contenConsola(personaje.descripcion)
 
-    esbirrosImg.src = "img/singlePlayer.svg"
+    esbirrosImg.src = "img/nada.png"
   }
-});
-
+})
 
 /**
  * ? Muestra la información del esbirro seleccionado en la interfaz gráfica.
@@ -2817,11 +2717,9 @@ function mostrarEsbirroSeleccionado() {
   equipo3Img.src = esbirroSeleccionado.equipo3.icono
 
   arma1Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma1.nombre)
-  // arma1Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma1.nombre)}.png`
   arma1Img.src = esbirroSeleccionado.arma1.icono
 
   arma2Txt.textContent = capitalizarPrimeraLetra(esbirroSeleccionado.arma2.nombre)
-  // arma2Img.src = `img/${quitarEspacios(esbirroSeleccionado.arma2.nombre)}.png`
   arma2Img.src = esbirroSeleccionado.arma2.icono
 
   habilidad1Txt.textContent = esbirroSeleccionado.habilidad1.nombre.toUpperCase()
@@ -2839,27 +2737,10 @@ function mostrarEsbirroSeleccionado() {
     }
     if (nombre in esbirrosDict) esbirroSeleccionado.actualizarPropiedades(esbirrosDict[nombre])
 
-    // if (nombre === 'lobo') {
-    //   esbirroSeleccionado.configurarEquipamiento(1, 'armaduraLigera')
-    //   esbirroSeleccionado.configurarEquipamiento(2, 'armaduraLigera')
-    //   esbirroSeleccionado.configurarEquipamiento(3, 'armaduraLigera')
-    // }
-    // if (nombre === 'esqueleto') {
-    //   esbirroSeleccionado.configurarEquipamiento(1, 'armaduraLigera')
-    //   esbirroSeleccionado.configurarEquipamiento(2, 'armaduraLigera')
-    //   esbirroSeleccionado.configurarEquipamiento(3, 'armaduraLigera')
-    // }
-
     mostrarEsbirroSeleccionado()
     cerrarEdicion()
     cerrarModal('personajes')
   }
-
-  // ? Trigger de cambio de esbirro
-  // nombreBtn.addEventListener('click', () => {
-  //   if (edicion && !esPersonaje) cambiarEsbirro(null)
-  //   else if (!edicion && !esPersonaje) contenConsola(esbirroSeleccionado.descripcion)
-  // })
 }
 
 { // * Edición de atributos de esbirro
@@ -2884,10 +2765,8 @@ function mostrarEsbirroSeleccionado() {
           esbirroSeleccionado[atributo]++
 
           if (atributo === 'vidaMaxima') {
-            // data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
             data = `Vida maxima ${esbirroSeleccionado['vidaMaxima']}`
           } else if (atributo === 'poderMaximo') {
-            // data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
             data = `Poder maximo ${esbirroSeleccionado['poderMaximo']}`
           } else {
             data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
@@ -2907,24 +2786,14 @@ function mostrarEsbirroSeleccionado() {
           // Decrementar el atributo
           esbirroSeleccionado[atributo]--
 
-          // Ajustar atributos de vida y poder si es necesario
-          // if (atributo === "vidaMaxima" && esbirroSeleccionado.vidaMaxima < esbirroSeleccionado.vida) {
-          //   esbirroSeleccionado.vida = esbirroSeleccionado.vidaMaxima
-          // }
-          // if (atributo === "poderMaximo" && esbirroSeleccionado.poderMaximo < esbirroSeleccionado.poder) {
-          //   esbirroSeleccionado.poder = esbirroSeleccionado.poderMaximo
-          // }
-
           // Incrementar experiencia
           aumentarDisminuirExperiencia('esbirroSeleccionado', 'mas', atributo)
 
           // Cambiar contenido mostrado en la consola
           if (atributo === 'vidaMaxima') {
-            // data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
             esbirroSeleccionado.vida--
             data = `Vida maxima ${esbirroSeleccionado['vidaMaxima']}`
           } else if (atributo === 'poderMaximo') {
-            // data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
             esbirroSeleccionado.poder--
             data = `Poder maximo ${esbirroSeleccionado['poderMaximo']}`
           } else {
@@ -2951,23 +2820,19 @@ function mostrarEsbirroSeleccionado() {
 
       if (estadisticaSeleccionada === 'vida') {
         if (accion === "mas") { // ? Incremento de vida
-          // if (esbirroSeleccionado.vida < esbirroSeleccionado.vidaMaxima) esbirroSeleccionado.vida++
           if (esbirroSeleccionado.vida < vidaMaxima) esbirroSeleccionado.vida++
         } else { // ? Decremento de vida
           if (esbirroSeleccionado.vida > 0) esbirroSeleccionado.vida--
         }
 
-        // consolaBtn.innerHTML = `Vida ${esbirroSeleccionado.vida} / ${esbirroSeleccionado.vidaMaxima}`
         consolaBtn.innerHTML = `Vida ${esbirroSeleccionado.vida} / ${vidaMaxima}`
       } else if (estadisticaSeleccionada === "poder") {
         if (accion === "mas") { // ? Incremento de poder
-          // if (esbirroSeleccionado.poder < esbirroSeleccionado.poderMaximo) esbirroSeleccionado.poder++
           if (esbirroSeleccionado.poder < poderMaximo) esbirroSeleccionado.poder++
         } else { // ? Decremento de poder
           if (esbirroSeleccionado.poder > 0) esbirroSeleccionado.poder--
         }
 
-        // consolaBtn.innerHTML = `Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`
         consolaBtn.innerHTML = `Poder ${esbirroSeleccionado.poder} / ${poderMaximo}`
       }
 
@@ -3027,7 +2892,7 @@ function mostrarEsbirroSeleccionado() {
 
           consolaBtn.innerHTML = `Vida ${esbirroSeleccionado.vida} / ${vidaMaxima}`
         }
-      });
+      })
 
       // Agregar un controlador de evento al botón "poderBtn"
       poderBtn.addEventListener('click', () => {
@@ -3048,7 +2913,6 @@ function mostrarEsbirroSeleccionado() {
           objetoAccion = "estadistica"
 
           // Mostrar información de la estadística de poder actual y máximo en la consola
-          // contenConsola(`Poder ${esbirroSeleccionado.poder} / ${esbirroSeleccionado.poderMaximo}`)
           let poderMaximo = esbirroSeleccionado.poderMaximo
           if (esbirroSeleccionado.equipo1.poderMaximo) poderMaximo += esbirroSeleccionado.equipo1.poderMaximo
           if (esbirroSeleccionado.equipo2.poderMaximo) poderMaximo += esbirroSeleccionado.equipo2.poderMaximo
@@ -3056,7 +2920,7 @@ function mostrarEsbirroSeleccionado() {
 
           consolaBtn.innerHTML = `Poder ${esbirroSeleccionado.poder} / ${poderMaximo}`
         }
-      });
+      })
     }
   }
 }
@@ -3085,7 +2949,6 @@ function mostrarEsbirroSeleccionado() {
         if (edicion && !esPersonaje) {
           esIngresarComando = false
           habilidadSeleccionada = esbirroSeleccionado[`habilidad${i}`]
-          // editarHabilidadEsbirro(i)
           mostrarInputComandos()
         }
         else if (!esPersonaje) descripcionHabilidadEsbirro(i)
@@ -3115,15 +2978,6 @@ function mostrarEsbirroSeleccionado() {
       cerrarModal('armas');
     }
 
-  }
-  { // * Triggers
-    // for (const arma in armasDict) {
-    //   debugger
-    //   const boton = document.getElementById(`${arma}Btn`) danno: 0, 
-    //   boton.addEventListener('click', () => {
-    //     console.log(`Seleccionaste ${arma}`)
-    //   })
-    // }
   }
 }
 
@@ -3244,8 +3098,4 @@ function mostrarEsbirroSeleccionado() {
     }
   }
 }
-
-
-// * Ejemplo
-// * Cambiar el personaje principal por Guerrero
-// avatar('guerrero')
+//!! //////////////////// FIN BLOQUE DE MASCOTAS //!! ////////////////////
