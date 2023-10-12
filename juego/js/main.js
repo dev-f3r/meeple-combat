@@ -1256,127 +1256,130 @@ const valorExperiencia = {
 
 
 //!! //////////////////// COMIENZO BLOQUE DE PERSONAJE //!! ////////////////////
-var personaje = {
+{ // * Variables personaje
+  var personaje = {
 
-  nombre: "BIENVENIDO",
-  // meeple: "img/logo-meeple-combat.png",
-  portada: "img/logo-meeple-combat.png",
-  descripcion: "Descripcion personaje default",
+    nombre: "BIENVENIDO",
+    // meeple: "img/logo-meeple-combat.png",
+    portada: "img/logo-meeple-combat.png",
+    descripcion: "Descripcion personaje default",
 
 
 
-  ataque: 0,
-  esquiva: 0,
-  bloqueo: 0,
-  velocidad: 0,
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
 
-  vida: 0,
-  vidaMaxima: 0,
+    vida: 0,
+    vidaMaxima: 0,
 
-  poder: 0,
-  poderMaximo: 0,
+    poder: 0,
+    poderMaximo: 0,
 
-  // * nivel del equipamiento
-  // equipo1: "",
-  // equipo2: "",
-  // equipo3: "",
+    // * nivel del equipamiento
+    // equipo1: "",
+    // equipo2: "",
+    // equipo3: "",
 
-  // * nombre de arma
-  arma1: "Una Mano",
-  arma2: "Dos Manos",
+    // * nombre de arma
+    arma1: "Una Mano",
+    arma2: "Dos Manos",
 
-  // * nombre de habilidades
-  habilidad1: "HABILIDAD 1",
-  habilidad2: "HABILIDAD 2",
-  habilidad3: "HABILIDAD 3",
+    // * nombre de habilidades
+    habilidad1: "HABILIDAD 1",
+    habilidad2: "HABILIDAD 2",
+    habilidad3: "HABILIDAD 3",
+  }
+
+  var arma1 = {
+
+    nombre: "Arma 1",
+    icono: "img/nada.png",
+    descripcion: "Espacio de arma 1",
+    danno: 0,
+
+  }
+
+  var arma2 = {
+
+    nombre: "Arma 2",
+    icono: "img/nada.png",
+    descripcion: "Espacio de arma 2",
+    danno: 0,
+
+  }
+
+  var equipo1 = {
+
+    nombre: "Equipo1",
+    icono: "img/nada.png",
+    descripcion: "",
+
+    nivel: 0,
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vidaMaxima: 0,
+    poderMaximo: 0,
+
+  }
+
+  var equipo2 = {
+
+    nombre: "Equipo1",
+    icono: "img/nada.png",
+    descripcion: "",
+
+    nivel: 0,
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vidaMaxima: 0,
+    poderMaximo: 0,
+
+  }
+
+  var equipo3 = {
+
+    nombre: "Equipo1",
+    icono: "img/nada.png",
+    descripcion: "",
+
+    nivel: 0,
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vidaMaxima: 0,
+    poderMaximo: 0,
+
+  }
+
+  var habilidad1 = {
+    nombre: "Nombre habilidad 1",
+    coste: 0,
+    descripcion: "Descripción de habilidad 1"
+  }
+
+  var habilidad2 = {
+    nombre: "Nombre habilidad 2",
+    coste: 0,
+    descripcion: "Descripción de habilidad 2"
+  }
+
+  var habilidad3 = {
+    nombre: "Nombre habilidad 3",
+    coste: 0,
+    descripcion: "Descripción de habilidad 3"
+  }
 }
 
-var arma1 = {
-
-  nombre: "Arma 1",
-  icono: "img/nada.png",
-  descripcion: "Espacio de arma 1",
-  danno: 0,
-
-}
-
-var arma2 = {
-
-  nombre: "Arma 2",
-  icono: "img/nada.png",
-  descripcion: "Espacio de arma 2",
-  danno: 0,
-
-}
-
-var equipo1 = {
-
-  nombre: "Equipo1",
-  icono: "img/nada.png",
-  descripcion: "",
-
-  nivel: 0,
-
-  ataque: 0,
-  esquiva: 0,
-  bloqueo: 0,
-  velocidad: 0,
-  vidaMaxima: 0,
-  poderMaximo: 0,
-
-}
-
-var equipo2 = {
-
-  nombre: "Equipo1",
-  icono: "img/nada.png",
-  descripcion: "",
-
-  nivel: 0,
-
-  ataque: 0,
-  esquiva: 0,
-  bloqueo: 0,
-  velocidad: 0,
-  vidaMaxima: 0,
-  poderMaximo: 0,
-
-}
-
-var equipo3 = {
-
-  nombre: "Equipo1",
-  icono: "img/nada.png",
-  descripcion: "",
-
-  nivel: 0,
-
-  ataque: 0,
-  esquiva: 0,
-  bloqueo: 0,
-  velocidad: 0,
-  vidaMaxima: 0,
-  poderMaximo: 0,
-
-}
-
-var habilidad1 = {
-  nombre: "Nombre habilidad 1",
-  coste: 0,
-  descripcion: "Descripción de habilidad 1"
-}
-
-var habilidad2 = {
-  nombre: "Nombre habilidad 2",
-  coste: 0,
-  descripcion: "Descripción de habilidad 2"
-}
-
-var habilidad3 = {
-  nombre: "Nombre habilidad 3",
-  coste: 0,
-  descripcion: "Descripción de habilidad 3"
-}
 /* 
     ? Refresca el texto y la imagen de los siguientes componentes:
         portada, nombre, estadisticas (ataque, esquiva, etc), equipamiento, arma slot 1, arma slot 2, habilidades
@@ -1567,7 +1570,7 @@ function avatar(meeple) {
   Object.assign(equipo2, equiposDict[personajesDict[meeple].equipo2])
   Object.assign(equipo3, equiposDict[personajesDict[meeple].equipo3])
 
-  if(meeple === 'nuevopj') experiencia += 200
+  if (meeple === 'nuevopj') experiencia += 200
 
   imprimirPersonaje()
   cerrarModal("personajes")
@@ -2414,7 +2417,7 @@ function armas(armaSeleccionada, slot) {
 
 
 //!! //////////////////// COMIENZO BLOQUE DE MASCOTAS //!! ////////////////////
-{ // * Variables
+{ // * Variables esbirro
   /**
    * ? Clase que representa a un Esbirro.
    * Un Esbirro es una criatura con diversas propiedades y habilidades.
