@@ -1234,7 +1234,7 @@ var personaje = {
   portada: "img/logo-meeple-combat.png",
   descripcion: "Descripcion personaje default",
 
-  experiencia: 0,
+  
 
   ataque: 0,
   esquiva: 0,
@@ -1261,6 +1261,14 @@ var personaje = {
   habilidad2: "HABILIDAD 2",
   habilidad3: "HABILIDAD 3",
 }
+
+// TODOME: Adaptar
+var pjIndex = 0
+// var expLibre = 0
+// var expTotal = 0
+var experiencia = 0
+var consolaData = ""
+var setDeArmas = "marciales / naturales / tecnoarcanas"
 
 const valorExperiencia = {
   ataque: 3,
@@ -1416,7 +1424,7 @@ function imprimirPersonaje() {
   habilidad2Txt.textContent = habilidad2.nombre.toUpperCase()
   habilidad3Txt.textContent = habilidad3.nombre.toUpperCase()
 
-  experienciaTxt.textContent = personaje.experiencia
+  experienciaTxt.textContent = experiencia
 }
 imprimirPersonaje()
 
@@ -1554,7 +1562,7 @@ function avatar(meeple) {
 
   habilidad1 = { nombre: personaje.habilidad1, descripcion: habilidadesDict[personaje.habilidad1] }
   habilidad2 = { nombre: personaje.habilidad2, descripcion: habilidadesDict[personaje.habilidad2] }
-  habilidad3 = { nombre: personaje.habilidad3, descripcion: habilidadesDict[personaje.habilidad3] }
+  habilidad3 = { nombre: personaje.habilidportadaad3, descripcion: habilidadesDict[personaje.habilidad3] }
 
   equipo1 = reiniciarEquipamiento(1)
   equipo2 = reiniciarEquipamiento(2)
@@ -1671,10 +1679,10 @@ let estadisticaSeleccionada
       if (!valor) valor = 0
 
       if (esPersonaje) {
-        personaje.experiencia += valor
+        experiencia += valor
         imprimirPersonaje()
       } else {
-        esbirroSeleccionado.experiencia += valor
+        experiencia += valor
         mostrarEsbirroSeleccionado()
       }
 
@@ -1705,7 +1713,7 @@ let estadisticaSeleccionada
               : personaje[estadistica] * valorExperiencia[estadistica]
         }
         // Incrementar o disminuir la experiencia del personaje
-        personaje.experiencia += accion === "mas" ? valor : valor * -1
+        experiencia += accion === "mas" ? valor : valor * -1
       } else {
         if (estadistica === 'vidaMaxima' || estadistica === 'poderMaximo') {
           valor = 1
@@ -1720,7 +1728,7 @@ let estadisticaSeleccionada
               : esbirroSeleccionado[estadistica] * valorExperiencia[estadistica]
         }
         // Incrementar o disminuir la experiencia del esbirro seleccionado
-        esbirroSeleccionado.experiencia += accion === "mas" ? valor : valor * -1
+        experiencia += accion === "mas" ? valor : valor * -1
       }
     }
 
@@ -1732,8 +1740,8 @@ let estadisticaSeleccionada
         mostrarInputExperiencia()
       } else {
         ocultarBtnArrivaAbajo()
-        if (esPersonaje) contenConsola(`Experiencia: ${personaje.experiencia}`)
-        else contenConsola(`Experiencia: ${esbirroSeleccionado.experiencia}`)
+        if (esPersonaje) contenConsola(`Experiencia: ${experiencia}`)
+        else contenConsola(`Experiencia: ${experiencia}`)
       }
     })
   }
@@ -1793,7 +1801,7 @@ let estadisticaSeleccionada
       else valor = (personaje[estadistica] + 1) * valorExperiencia[estadistica]
 
       if (accion === 'mas') {
-        if (personaje.experiencia >= valor) {
+        if (experiencia >= valor) {
           personaje[estadistica]++
 
           if (estadistica === 'vidaMaxima') {
@@ -2314,7 +2322,7 @@ let estadisticaSeleccionada
       personaje.nombre = "Nuevo Personaje"
       personaje.meeple = "img/new.png"
       personaje.descripcion = ""
-      personaje.experiencia = 200
+      experiencia = 200
       personaje.ataque = 0
       personaje.esquiva = 0
       personaje.bloqueo = 0
@@ -2497,7 +2505,6 @@ let estadisticaSeleccionada
       portada = "img/nada.png",
       icono = "", // Sin Uso
       descripcion = "Selecciona editar y luego el ícono de esta criatura para invocar otra.",
-      experiencia = 0,
 
       // Atributos de esbirro
       ataque = 0,
@@ -2561,7 +2568,6 @@ let estadisticaSeleccionada
       this.portada = portada;
       this.icono = icono;
       this.descripcion = descripcion;
-      this.experiencia = experiencia;
 
       // * Atributos de esbirro
       this.ataque = ataque;
@@ -2752,7 +2758,7 @@ function mostrarEsbirroSeleccionado() {
 
   nombreTxt.textContent = esbirroSeleccionado.nombre.toUpperCase()
   portadaImg.src = esbirroSeleccionado.portada
-  experienciaTxt.textContent = esbirroSeleccionado.experiencia
+  experienciaTxt.textContent = experiencia
 
   ataqueTxt.textContent = atributosEsbirroSeleccionado.ataque
   // esquivaTxt.textContent = esbirroSeleccionado.esquiva + eq1.esquiva + eq2.esquiva + eq3.esquiva
@@ -2835,7 +2841,7 @@ function mostrarEsbirroSeleccionado() {
       } else valor = (esbirroSeleccionado[atributo] + 1) * valorExperiencia[atributo]
 
       if (accion === 'mas') {
-        if (esbirroSeleccionado.experiencia >= valor) {
+        if (experiencia >= valor) {
           // Incrementar el atributo
           esbirroSeleccionado[atributo]++
 
