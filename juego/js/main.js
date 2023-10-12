@@ -176,23 +176,29 @@ document.body.addEventListener('dragstart', (e) => {
   })
 
   function ingresarComando(comando) {
-    // let comando = prompt("Ingrese comando")
-    console.log(comando)
+    comando = comando.toLowerCase()
     // ? Cambio de personaje con '/' + nombre
-    if (/^\//.test(comando)) {
+    // if (/^\//.test(comando)) {
+    //   if (esPersonaje) { // ? Cambio de personaje principal
+    //     let nombrePersonaje = comando.match(/^\/(.*)/)[1]
+
+    //     if (nombrePersonaje in personajesDict) avatar(nombrePersonaje)
+
+    //     else contenConsola("Personaje incorrecto")
+    //   } else { // ? Cambio de esbirro
+    //     let nombreEsbirro = comando.match(/^\/(.*)/)[1]
+
+    //     if (nombreEsbirro in personajesDict) cambiarEsbirro(nombreEsbirro)
+    //     else if (nombreEsbirro in esbirrosDict) cambiarEsbirro(nombreEsbirro)
+
+    //     else contenConsola("Personaje incorrecto")
+    //   }
+    // }
+    if (comando === '/barbaro') {
       if (esPersonaje) { // ? Cambio de personaje principal
-        let nombrePersonaje = comando.match(/^\/(.*)/)[1]
-
-        if (nombrePersonaje in personajesDict) avatar(nombrePersonaje)
-
-        else contenConsola("Personaje incorrecto")
+        avatar('barbaro')
       } else { // ? Cambio de esbirro
-        let nombreEsbirro = comando.match(/^\/(.*)/)[1]
-
-        if (nombreEsbirro in personajesDict) cambiarEsbirro(nombreEsbirro)
-        else if (nombreEsbirro in esbirrosDict) cambiarEsbirro(nombreEsbirro)
-
-        else contenConsola("Personaje incorrecto")
+        cambiarEsbirro('barbaro')
       }
     }
     // TODO: Agregar los demas comandos
