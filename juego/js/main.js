@@ -536,9 +536,9 @@ const armasDict = {
     danno: 1,
     descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
   },
-  "hoja runa": {
+  "hojaruna": {
     nombre: "hoja runa",
-    icono: "img/hoja_runa.png",
+    icono: "img/hojaruna.png",
     danno: 1,
     descripcion: "Arma mixta <br> 1 casillero x ataque / 2 Acciones / 100% de ataque como daño físico o mágico"
   },
@@ -1234,7 +1234,7 @@ var personaje = {
   portada: "img/logo-meeple-combat.png",
   descripcion: "Descripcion personaje default",
 
-  
+
 
   ataque: 0,
   esquiva: 0,
@@ -1530,11 +1530,23 @@ cerrarModalEquipo.addEventListener('click', function () {
   cerrarModal("equipamiento")
 })
 
-arma1ImgBtn.addEventListener('click', function () { armas(personaje.arma1, 1) })
-arma1TxtBtn.addEventListener('click', function () { armas(personaje.arma1, 1) })
+arma1ImgBtn.addEventListener('click', function () {
+  armas(personaje.arma1, 1)
+  accionTxt.textContent = "ATACAR"
+})
+arma1TxtBtn.addEventListener('click', function () {
+  armas(personaje.arma1, 1)
+  accionTxt.textContent = "ATACAR"
+})
+arma2ImgBtn.addEventListener('click', function () {
+  armas(personaje.arma2, 2)
+  accionTxt.textContent = "ATACAR"
 
-arma2ImgBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
-arma2TxtBtn.addEventListener('click', function () { armas(personaje.arma2, 2) })
+})
+arma2TxtBtn.addEventListener('click', function () {
+  armas(personaje.arma2, 2)
+  accionTxt.textContent = "ATACAR"
+})
 
 
 
@@ -1562,9 +1574,6 @@ function avatar(meeple) {
 
   Object.assign(arma2, armasDict[personaje.arma2])
 
-  // habilidad1 = { nombre: personaje.habilidad1, descripcion: habilidadesDict[personaje.habilidad1] }
-  // habilidad2 = { nombre: personaje.habilidad2, descripcion: habilidadesDict[personaje.habilidad2] }
-  // habilidad3 = { nombre: personaje.habilidportadaad3, descripcion: habilidadesDict[personaje.habilidad3] }
   Object.assign(habilidad1, habilidadesDict[personaje.habilidad1])
   Object.assign(habilidad2, habilidadesDict[personaje.habilidad2])
   Object.assign(habilidad3, habilidadesDict[personaje.habilidad3])
@@ -1618,9 +1627,18 @@ function equipo(slot) {
     modalEquipo.style.display = "grid"
 
   } else {
-    if (slot === 1) contenConsola(`${equipo1.descripcion}`)
-    if (slot === 2) contenConsola(`${equipo2.descripcion}`)
-    if (slot === 3) contenConsola(`${equipo3.descripcion}`)
+    if (slot === 1) {
+      if (esPersonaje) contenConsola(`${equipo1.descripcion}`)
+      else contenConsola(`${esbirroSeleccionado.equipo1.descripcion}`)
+    }
+    if (slot === 2) {
+      if (esPersonaje) contenConsola(`${equipo2.descripcion}`)
+      else contenConsola(`${esbirroSeleccionado.equipo2.descripcion}`)
+    }
+    if (slot === 3) {
+      if (esPersonaje) contenConsola(`${equipo3.descripcion}`)
+      else contenConsola(`${esbirroSeleccionado.equipo3.descripcion}`)
+    }
   }
 }
 
@@ -1902,6 +1920,8 @@ let estadisticaSeleccionada
         modificarEstadistica('ataque')
       }
       else if (esPersonaje) mostrarEstadistica('personaje', 'ataque')
+
+      accionTxt.textContent = "ATACAR"
     })
     esquivaBtn.addEventListener('click', () => {
       if (edicion) {
@@ -1909,6 +1929,8 @@ let estadisticaSeleccionada
         modificarEstadistica('esquiva')
       }
       else if (esPersonaje) mostrarEstadistica('personaje', 'esquiva')
+
+      accionTxt.textContent = "ESQUIVAR"
     })
     bloqueoBtn.addEventListener('click', () => {
       if (edicion) {
@@ -1916,6 +1938,8 @@ let estadisticaSeleccionada
         modificarEstadistica('bloqueo')
       }
       else if (esPersonaje) mostrarEstadistica('personaje', 'bloqueo')
+
+      accionTxt.textContent = "BLOQUEAR"
     })
     velocidadBtn.addEventListener('click', () => {
       if (edicion) {
@@ -1923,6 +1947,8 @@ let estadisticaSeleccionada
         modificarEstadistica('velocidad')
       }
       else if (esPersonaje) mostrarEstadistica('personaje', 'velocidad')
+
+      accionTxt.textContent = "CORRER"
     })
 
     vidaBtn.addEventListener('click', () => {
@@ -1939,6 +1965,8 @@ let estadisticaSeleccionada
 
         let vidaMaxima = personaje.vidaMaxima + equipo1.vidaMaxima + equipo2.vidaMaxima + equipo3.vidaMaxima
         consolaBtn.innerHTML = `Vida ${personaje.vida} / ${vidaMaxima}`
+
+        accionTxt.textContent = "ACCION"
       }
     })
     poderBtn.addEventListener('click', () => {
@@ -1955,6 +1983,8 @@ let estadisticaSeleccionada
 
         let poderMaximo = personaje.poderMaximo + equipo1.poderMaximo + equipo2.poderMaximo + equipo3.poderMaximo
         consolaBtn.innerHTML = `Poder ${personaje.poder} / ${poderMaximo}`
+
+        accionTxt.textContent = "ACCION"
       }
     })
   }
@@ -2365,6 +2395,8 @@ let estadisticaSeleccionada
 
       }
 
+      experiencia = 200
+
       imprimirPersonaje()
       cerrarModal('personajes')
     }
@@ -2437,11 +2469,11 @@ let estadisticaSeleccionada
           case 4: // * Huye
             // TODO: Retocar huye
             if (dado == 20)
-              contenConsola(`Huye<br>¡CRITICO!<br>${Math.floor(velocidad * 2)}`)
+              contenConsola(`Corre<br>¡CRITICO!<br>${Math.floor(velocidad * 2)}`)
             else if (dado == 1)
-              contenConsola(`Huye<br>¡PIFIA!`)
+              contenConsola(`Corre<br>¡PIFIA!`)
             else
-              contenConsola(`Huye<br>${dado + velocidad}`)
+              contenConsola(`Corre<br>${dado + velocidad}`)
             break;
           case 5: // * Tirada limpia vida
           case 6: // * Tirada limpia poder
@@ -2687,10 +2719,10 @@ let estadisticaSeleccionada
   // * con la información del esbirro "lobo" de esbirrosDict. Esto es temporal y debe descartarse
   // * después de completar las pruebas necesarias.
   esbirros[0].actualizarPropiedades(esbirrosDict.lobo)
-  esbirros[1].actualizarPropiedades(personajesDict.mago)
-  esbirros[2].actualizarPropiedades(esbirrosDict.ghalidos)
-  esbirros[3].actualizarPropiedades(esbirrosDict.naigaran)
-  esbirros[4].actualizarPropiedades(esbirrosDict.terronte)
+  esbirros[1].actualizarPropiedades(esbirrosDict.lobo)
+  esbirros[2].actualizarPropiedades(esbirrosDict.lobo)
+  esbirros[3].actualizarPropiedades(esbirrosDict.lobo)
+  esbirros[4].actualizarPropiedades(esbirrosDict.lobo)
   // ! Lista de esbirros !
 }
 
@@ -3178,11 +3210,11 @@ function mostrarEsbirroSeleccionado() {
         case 4: // * Huye
           // TODO: Retocar huye
           if (dado == 20)
-            contenConsola(`Huye<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+            contenConsola(`Corre<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
           else if (dado == 1)
-            contenConsola(`Huye<br>¡PIFIA!`)
+            contenConsola(`Corre<br>¡PIFIA!`)
           else
-            contenConsola(`Huye<br>${dado + esbirroSeleccionado.esquiva}`)
+            contenConsola(`Corre<br>${dado + esbirroSeleccionado.esquiva}`)
           break;
         case 5:
         case 6: // * Tirada limpia
