@@ -1240,8 +1240,6 @@ var flagControlesCambioEsbirro = false
 var equipamientoSeleccionado = 1
 // ? Guarda la estadistica que se esta modificando
 var estadisticaSeleccionada
-// ? Contiene el esbirro que se esta mostrando
-var esbirroSeleccionado = esbirros[0]
 // ? Indica si se esta usando el personaje o un esbirro
 var esPersonaje = true
 // ? Contiene el costo de experiencia de cada atributo
@@ -2634,6 +2632,9 @@ function armas(armaSeleccionada, slot) {
   esbirros[3].actualizarPropiedades(esbirrosDict.lobo)
   esbirros[4].actualizarPropiedades(esbirrosDict.lobo)
   // ! Lista de esbirros !
+
+  // ? Contiene el esbirro que se esta mostrando
+  var esbirroSeleccionado = esbirros[0]
 }
 
 // ? Elemento del botón para cambiar entre personaje y esbirros
