@@ -963,7 +963,7 @@ class Personaje {
    */
   constructor({
     // Propiedades generales de personaje
-    nombre = "",
+    nombre = "bienvenido",
     imagen = "img/nada.png",
     descripcion = "Selecciona editar y luego el ícono de esta criatura para invocar otra.",
 
@@ -1149,9 +1149,20 @@ class Personaje {
 }
 
 // ? Contiene los personajes que se pueden utilizar
-const listaPersonajes = []
+let listaPersonajes = []
 for (let i = 0; i < 6; i++) {
-  listaPersonajes.push(new Personaje())
+  listaPersonajes.push(new Personaje({}))
 }
 
+let indexPj = 0
 
+
+{ // * Funcionalidad de botones principales
+  esbirrosBtn.addEventListener('click', () => {
+    if(indexPj == 0) {
+      indexPj = 1
+    } else {
+      indexPj = 0
+    }
+  })
+}
