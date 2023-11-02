@@ -5,10 +5,14 @@ body {
 }
 
 
-
 * {
   margin: 0px;
   padding: 0px;
+}
+
+/* default styles */
+.btn-def {
+    cursor: pointer;
 }
 
 img {
@@ -277,3 +281,15 @@ a {
   background-color: rgb(255, 255, 255);
   }
 }
+
+/* laptop layout */
+/* @media screen and (min-width: 1000px) and (max-width: 1366px) { */
+/*     .contenedor { */
+/*         width: 100vw; */
+/*         display: flex; */
+/*         justify-content: center; */
+/*     } */
+/*     .grilla { */
+/*         width: 100%; */
+/*     } */
+/* } */
