@@ -299,7 +299,7 @@ const armasDict = {
     danno: 0.5,
     descripcion: "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
   },
-  "palma": {
+  "magia": {
     nombre: "palma",
     icono: "img/magia.png",
     danno: 1,
@@ -371,6 +371,12 @@ const armasDict = {
     danno: 1.25,
     descripcion: "RAMAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
   },
+  "hojas": {
+    nombre: "hojas",
+    icono: "img/hojas.png",
+    danno: 1.25,
+    descripcion: "HOJAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
+  },
   "esporas": {
     nombre: "esporas",
     icono: "img/esporas.png",
@@ -406,6 +412,73 @@ const armasDict = {
     icono: "img/tentaculos.png",
     danno: 1.25,
     descripcion: "TENTACULOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "cola": {
+    nombre: "cola",
+    icono: "img/cola.png",
+    danno: 1.25,
+    descripcion: "COLA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "pico": {
+    nombre: "pico",
+    icono: "img/pico.png",
+    danno: 1.25,
+    descripcion: "PICO <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "espinas": {
+    nombre: "espinas",
+    icono: "img/espinas.png",
+    danno: 1.25,
+    descripcion: "ESPINAS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "lengua": {
+    nombre: "lengua",
+    icono: "img/lengua.png",
+    danno: 1.25,
+    descripcion: "LENGUA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "aguijon": {
+    nombre: "aguijon",
+    icono: "img/aguijon.png",
+    danno: 1.25,
+    descripcion: "AGUIJON <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "aleta": {
+    nombre: "aleta",
+    icono: "img/aleta.png",
+    danno: 1.25,
+    descripcion: "ALETA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "antenas": {
+    nombre: "antenas",
+    icono: "img/antenas.png",
+    danno: 1.25,
+    descripcion: "ANTENAS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  }
+  ,
+  "glandula": {
+    nombre: "glandula",
+    icono: "img/glandula.png",
+    danno: 1.25,
+    descripcion: "GLANDULA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "raices": {
+    nombre: "raices",
+    icono: "img/raices.png",
+    danno: 1.25,
+    descripcion: "RAICES <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "flores": {
+    nombre: "flores",
+    icono: "img/flores.png",
+    danno: 1.25,
+    descripcion: "FLORES <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "frutos": {
+    nombre: "frutos",
+    icono: "img/frutos.png",
+    danno: 1.25,
+    descripcion: "FRUTOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   }
 }
 
@@ -438,6 +511,136 @@ const esbirrosDict = {
     equipo1: "nada",
     equipo2: "nada",
     equipo3: "nada"
+  },
+  "esbirro1": {
+    nombre: "Esbirro 1",
+    portada: "img/e1.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
+  "esbirro2": {
+    nombre: "Esbirro 2",
+    portada: "img/e2.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
+  "esbirro3": {
+    nombre: "Esbirro 3",
+    portada: "img/e3.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
+  "esbirro4": {
+    nombre: "Esbirro 4",
+    portada: "img/e4.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
+  "esbirro5": {
+    nombre: "Esbirro 5",
+    portada: "img/e5.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
   },
   "esqueleto": {
     nombre: "esqueleto",
@@ -473,7 +676,7 @@ const esbirrosDict = {
     vidaMaxima: 31,
     poder: 34,
     poderMaximo: 34,
-    arma1: "ramas",
+    arma1: "hojas",
     arma2: "esporas",
     habilidad1: "enraizar",
     habilidad2: "envenenar",
@@ -495,7 +698,7 @@ const esbirrosDict = {
     vidaMaxima: 20,
     poder: 51,
     poderMaximo: 51,
-    arma1: "palma",
+    arma1: "magia",
     arma2: "garras",
     habilidad1: "bola de fuego",
     habilidad2: "desgarro",
@@ -690,6 +893,32 @@ const personajesDict = {
     habilidad2: "habilidad 2",
     habilidad3: "habilidad 3",
   },
+  "nuevoesbirro": {
+    nombre: "nuevo",
+    portada: "img/nuevoesbirro.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
   "guerrero": {
     nombre: "guerrero",
     portada: "img/guerrero.png",
@@ -816,7 +1045,7 @@ const personajesDict = {
     equipo2: "nada",
     equipo3: "nada",
 
-    habilidad1: "boladehielo",
+    habilidad1: "bola de hielo",
     habilidad2: "explosiondeescarcha",
     habilidad3: "confundir",
   },
@@ -836,7 +1065,7 @@ const personajesDict = {
     poderMaximo: 41,
 
     arma1: "hojaruna",
-    arma2: "daga",
+    arma2: "magia",
 
     equipo1: "nada",
     equipo2: "nada",
@@ -894,13 +1123,42 @@ const personajesDict = {
     equipo2: "nada",
     equipo3: "nada",
 
-    habilidad1: "ataquemultiple",
-    habilidad2: "golpedechi",
+    habilidad1: "ataque multiple",
+    habilidad2: "golpe de chi",
     habilidad3: "desarmar",
   },
   "druida": {
     nombre: "druida",
     portada: "img/druida.png",
+    icono: "",
+    descripcion: "combatiente mágico con habilidades del Reino Vida, prefiere sanar antes que dañar.",
+
+    ataque: 5,
+    esquiva: 2,
+    bloqueo: 5,
+    velocidad: 3,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 40,
+    poderMaximo: 40,
+
+    arma1: "baculo",
+    arma2: "runa",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "enraizar",
+    habilidad2: "envenenar",
+    habilidad3: "sanar",
+  },
+
+
+
+  "nigromante": {
+    nombre: "nigromante",
+    portada: "img/nigromante.png",
     icono: "",
     descripcion: "combatiente mágico con habilidades del Reino Vida, prefiere sanar antes que dañar.",
 
@@ -1154,9 +1412,62 @@ for (let i = 0; i < 6; i++) {
   listaPersonajes.push(new Personaje({}))
 }
 
+
+// ? Indica el indice del personaje en uso
 let indexPj = 0
 
 
+
+// ! COMIENZO: Comienzo funciones basicas
+function mostrarPersonaje() {
+  let atributosPersonaje = {
+    ataque: listaPersonajes[indexPj].ataque,
+    esquiva: listaPersonajes[indexPj].esquiva,
+    bloqueo: listaPersonajes[indexPj].bloqueo,
+    velocidad: listaPersonajes[indexPj].velocidad,
+    vidaMaxima: listaPersonajes[indexPj].vidaMaxima,
+    poderMaximo: listaPersonajes[indexPj].poderMaximo
+  }
+
+  for (const key in atributosPersonaje) {
+    if (listaPersonajes[indexPj].equipo1[key]) atributosPersonaje[key] += listaPersonajes[indexPj].equipo1[key]
+    if (listaPersonajes[indexPj].equipo2[key]) atributosPersonaje[key] += listaPersonajes[indexPj].equipo2[key]
+    if (listaPersonajes[indexPj].equipo3[key]) atributosPersonaje[key] += listaPersonajes[indexPj].equipo3[key]
+  }
+
+  nombreTxt.textContent = listaPersonajes[indexPj].nombre.toUpperCase()
+  portadaImg.src = listaPersonajes[indexPj].imagen
+
+  ataqueTxt.textContent = atributosPersonaje.ataque
+  esquivaTxt.textContent = atributosPersonaje.esquiva
+  bloqueoTxt.textContent = atributosPersonaje.bloqueo
+  velocidadTxt.textContent = atributosPersonaje.velocidad
+  vidaTxt.textContent = listaPersonajes[indexPj].vida
+  poderTxt.textContent = listaPersonajes[indexPj].poder
+
+  equipo1Txt.textContent = listaPersonajes[indexPj].equipo1.nivel
+  equipo2Txt.textContent = listaPersonajes[indexPj].equipo2.nivel
+  equipo3Txt.textContent = listaPersonajes[indexPj].equipo3.nivel
+
+  equipo1Img.src = listaPersonajes[indexPj].equipo1.icono
+  equipo2Img.src = listaPersonajes[indexPj].equipo2.icono
+  equipo3Img.src = listaPersonajes[indexPj].equipo3.icono
+
+  arma1Txt.textContent = capitalizarPrimeraLetra(listaPersonajes[indexPj].arma1.nombre)
+  arma1Img.src = listaPersonajes[indexPj].arma1.icono
+
+  arma2Txt.textContent = capitalizarPrimeraLetra(listaPersonajes[indexPj].arma2.nombre)
+  arma2Img.src = listaPersonajes[indexPj].arma2.icono
+
+  habilidad1Txt.textContent = listaPersonajes[indexPj].habilidad1.nombre.toUpperCase()
+  habilidad2Txt.textContent = listaPersonajes[indexPj].habilidad2.nombre.toUpperCase()
+  habilidad3Txt.textContent = listaPersonajes[indexPj].habilidad3.nombre.toUpperCase()
+}
+// ! FIN: Funciones basicas
+
+
+
+// ! COMIENZO: Manipulación de comportamiento de botones
 { // * Funcionalidad de botones principales
   esbirrosBtn.addEventListener('click', () => {
     if(indexPj == 0) {
@@ -1166,3 +1477,4 @@ let indexPj = 0
     }
   })
 }
+// ! FIN: Manipulación de comportamiento de botones
