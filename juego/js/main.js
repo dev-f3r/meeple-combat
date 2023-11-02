@@ -33,7 +33,6 @@ document.body.addEventListener('dragstart', (e) => {
   // ? Limpia la consola si no esta en modo edición, caso contrario habre el promt de comandos
   consolaBtn.addEventListener('click', () => {
     if (!edicion) {
-      console.log("Clear")
       consolaBtn.innerHTML = ""
       ocultarControlesCambioEsbirro()
       ocultarBtnArrivaAbajo()
@@ -1968,7 +1967,6 @@ function armas(armaSeleccionada, slot) {
           if (tipoEdicion === "personaje") masMenosVidaPoder(accionBtn)
           else modificarVidaPoderActualEsbirro(accionBtn)
         }
-        // console.log(accionBtn, edicion, tipoEdicion)
       })
     })
   }
@@ -1990,7 +1988,6 @@ function armas(armaSeleccionada, slot) {
         * @habilidad:  Obj
      */
     function cambiarHabilidad(nombre) {
-      console.log(nombre)
       nombre = quitarAcentos(nombre).toLowerCase()
       // habilidadSeleccionada.nombre = nombre
       // habilidadSeleccionada = habilidadesDict[nombre]
@@ -2545,7 +2542,6 @@ function armas(armaSeleccionada, slot) {
      * @param {Object} props - Un objeto con las propiedades a actualizar.
      */
     actualizarPropiedades(props) {
-      console.log(props)
       Object.assign(this, props);
       this.configurarArma(1, this.arma1)
       this.configurarArma(2, this.arma2)
@@ -3094,7 +3090,6 @@ function mostrarEsbirroSeleccionado() {
 { // * Equipamiento de esbirros
   { // * Funciones
     function cambiarEquipamientoEsbirro(item) {
-      console.log(equipamientoSeleccionado, item)
       esbirroSeleccionado.configurarEquipamiento(equipamientoSeleccionado, item)
       mostrarEsbirroSeleccionado()
       cerrarModal('equipamiento')
