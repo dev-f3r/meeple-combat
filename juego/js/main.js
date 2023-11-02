@@ -40,8 +40,8 @@ document.body.addEventListener('dragstart', (e) => {
       ocultarBtnArrivaAbajo()
       flagControlesCambioEsbirro = false
     } else if (edicion) {
+      tipoIngreso = "comando"
       mostrarInputComandos()
-      esIngresarComando = true
     }
   })
 
@@ -53,7 +53,7 @@ document.body.addEventListener('dragstart', (e) => {
     ocultarBtnArrivaAbajo()
     experienciaTxt.style.display = "none"
 
-    esIngresarComando = true
+    tipoIngreso = "comando"
     ocultarInputExperiencia()
     ocultarInputComandos()
   }
@@ -150,13 +150,29 @@ document.body.addEventListener('dragstart', (e) => {
 
 
 { // * Ingreso de comandos
-  // ? Flag que indica si el input se esta usando para ingresar un comando o el nombre de una habilidad
-  var esIngresarComando = true
+  // ? Indica si el input se quiere usar para ingresar comandos, cambiar nombre de habilidades o nombre de personaje
+  var tipoIngreso = "comando"
+
   function mostrarInputComandos() {
     ocultarInputExperiencia()
     contenedorInputComandos.style.display = "flex"
-    if (esIngresarComando) inputLabelComandos.textContent = "Ingrese comando"
-    else inputLabelComandos.textContent = "Ingrese nombre de habilidad"
+
+    let data = ""
+    switch (tipoIngreso) {
+      case "comando":
+        data = "Ingrese comando"
+        break
+      case "habilidad":
+        data = "Ingrese nombre de habilidad"
+        break
+      case "nombre":
+        data = "Ingrese nombre"
+        break
+      default:
+        break
+    }
+
+    inputLabelComandos.textContent = data
   }
 
   function ocultarInputComandos() {
@@ -165,17 +181,61 @@ document.body.addEventListener('dragstart', (e) => {
 
   comandosValor.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
-      if (esIngresarComando) ingresarComando(comandosValor.value)
-      else if (!esIngresarComando && esPersonaje) cambiarHabilidad(comandosValor.value)
-      else if (!esIngresarComando && !esPersonaje) editarHabilidadEsbirro(comandosValor.value)
+      switch (tipoIngreso) {
+        case "comando":
+          ingresarComando(comandosValor.value)
+          break
+        case "nombre":
+          if (esPersonaje) {
+            personaje.nombre = comandosValor.value
+            imprimirPersonaje()
+          } else {
+            esbirroSeleccionado.nombre = comandosValor.value
+            mostrarEsbirroSeleccionado()
+          }
+          break
+        case "habilidad":
+          if (esPersonaje) {
+            console.log("personaje", comandosValor.value)
+            cambiarHabilidad(comandosValor.value)
+          } else {
+            console.log("esbirro", comandosValor.value)
+            editarHabilidadEsbirro(comandosValor.value)
+          }
+        default:
+          break
+      }
       ocultarInputComandos()
+      cerrarEdicion()
     }
   })
   ingresarComandos.addEventListener("click", function () {
-    if (esIngresarComando) ingresarComando(comandosValor.value)
-    else if (!esIngresarComando && esPersonaje) cambiarHabilidad(comandosValor.value)
-    else if (!esIngresarComando && !esPersonaje) editarHabilidadEsbirro(comandosValor.value)
+    switch (tipoIngreso) {
+      case "comando":
+        ingresarComando(comandosValor.value)
+        break
+      case "nombre":
+        if (esPersonaje) {
+          personaje.nombre = comandosValor.value
+          imprimirPersonaje()
+        } else {
+          esbirroSeleccionado.nombre = comandosValor.value
+          mostrarEsbirroSeleccionado()
+        }
+        break
+      case "habilidad":
+        if (esPersonaje) {
+          console.log("personaje", comandosValor.value)
+          cambiarHabilidad(comandosValor.value)
+        } else {
+          console.log("esbirro", comandosValor.value)
+          editarHabilidadEsbirro(comandosValor.value)
+        }
+      default:
+        break
+    }
     ocultarInputComandos()
+    cerrarEdicion()
   })
 
   function ingresarComando(comando) {
@@ -1725,9 +1785,6 @@ function imprimirPersonaje() {
   arma1Img.src = arma1.icono
   arma2Img.src = arma2.icono
 
-  // habilidad1Txt.textContent = personaje.habilidad1
-  // habilidad2Txt.textContent = personaje.habilidad2
-  // habilidad3Txt.textContent = personaje.habilidad3
   habilidad1Txt.textContent = habilidad1.nombre.toUpperCase()
   habilidad2Txt.textContent = habilidad2.nombre.toUpperCase()
   habilidad3Txt.textContent = habilidad3.nombre.toUpperCase()
@@ -2329,8 +2386,6 @@ function armas(armaSeleccionada, slot) {
      */
     function cambiarHabilidad(nombre) {
       nombre = quitarAcentos(nombre).toLowerCase()
-      // habilidadSeleccionada.nombre = nombre
-      // habilidadSeleccionada = habilidadesDict[nombre]
       Object.assign(habilidadSeleccionada, habilidadesDict[nombre])
 
       cerrarEdicion()
@@ -2343,7 +2398,7 @@ function armas(armaSeleccionada, slot) {
       if (edicion && esPersonaje) {
         // cambiarHabilidad(habilidad1)
         habilidadSeleccionada = habilidad1
-        esIngresarComando = false
+        tipoIngreso = "habilidad"
         mostrarInputComandos()
       } else if (esPersonaje) {
         // ? Motrar descripción de habilidad 
@@ -2354,7 +2409,7 @@ function armas(armaSeleccionada, slot) {
       // ? Personalizar habilidad
       if (edicion && esPersonaje) {
         habilidadSeleccionada = habilidad2
-        esIngresarComando = false
+        tipoIngreso = "habilidad"
         mostrarInputComandos()
       } else if (esPersonaje) {
         // ? Motrar descripción de habilidad 
@@ -2365,7 +2420,7 @@ function armas(armaSeleccionada, slot) {
       // ? Personalizar habilidad
       if (edicion && esPersonaje) {
         habilidadSeleccionada = habilidad3
-        esIngresarComando = false
+        tipoIngreso = "habilidad"
         mostrarInputComandos()
       } else if (esPersonaje) {
         // ? Motrar descripción de habilidad 
@@ -2377,19 +2432,23 @@ function armas(armaSeleccionada, slot) {
     nombreBtn.addEventListener('click', () => {
       if (esPersonaje) {
         if (edicion) {
-          let val = prompt("Nuevo nombre")
-          personaje.nombre = val
-          imprimirPersonaje()
-          cerrarEdicion()
+          // let val = prompt("Nuevo nombre")
+          // personaje.nombre = val
+          tipoIngreso = "nombre"
+          mostrarInputComandos()
+          // imprimirPersonaje()
+          // cerrarEdicion()
         } else if (esPersonaje) {
           contenConsola(personaje.descripcion)
         }
       } else {
         if (edicion) {
-          let val = prompt("Nuevo nombre")
-          esbirroSeleccionado.nombre = val
-          mostrarEsbirroSeleccionado()
-          cerrarEdicion()
+          // let val = prompt("Nuevo nombre")
+          // esbirroSeleccionado.nombre = val
+          tipoIngreso = "nombre"
+          mostrarInputComandos()
+          // imprimirPersonaje()
+          // cerrarEdicion()
         } else if (!esPersonaje) {
           contenConsola(esbirroSeleccionado.descripcion)
         }
@@ -3522,7 +3581,7 @@ function mostrarEsbirroSeleccionado() {
       const boton = document.getElementById(`habilidad${i}Btn`)
       boton.addEventListener('click', () => {
         if (edicion && !esPersonaje) {
-          esIngresarComando = false
+          tipoIngreso = "habilidad"
           habilidadSeleccionada = esbirroSeleccionado[`habilidad${i}`]
           mostrarInputComandos()
         }
