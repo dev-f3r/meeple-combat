@@ -52,6 +52,8 @@ document.body.addEventListener('dragstart', (e) => {
 
     ocultarBtnArrivaAbajo()
     experienciaTxt.style.display = "none"
+
+    esIngresarComando = true
     ocultarInputExperiencia()
     ocultarInputComandos()
   }
@@ -2161,23 +2163,15 @@ function armas(armaSeleccionada, slot) {
         if (personaje[estadistica] > 0) {
           personaje[estadistica]--
 
-          // if (estadistica === "vidaMaxima" && personaje.vidaMaxima < personaje.vida) {
-          //   personaje.vida = personaje.vidaMaxima
-          // }
-
-          // if (estadistica === "poderMaximo" && personaje.poderMaximo < personaje.poder) {
-          //   personaje.poder = personaje.poderMaximo
-          // }
-
           // * Incrementar exp
           aumentarDisminuirExperiencia('personaje', 'mas', estadistica)
 
           // * cambiar contenido mostrado
           if (estadistica === 'vidaMaxima') {
-            if(personaje.vidaMaxima < personaje.vida) personaje.vida--
+            if (personaje.vidaMaxima < personaje.vida) personaje.vida--
             data = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
           } else if (estadistica === 'poderMaximo') {
-            if(personaje.poderMaximo < personaje.poder) personaje.poder--
+            if (personaje.poderMaximo < personaje.poder) personaje.poder--
             data = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
           } else {
             data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
@@ -3372,10 +3366,10 @@ function mostrarEsbirroSeleccionado() {
 
           // Cambiar contenido mostrado en la consola
           if (atributo === 'vidaMaxima') {
-            if(esbirroSeleccionado.vidaMaxima < esbirroSeleccionado.vida) esbirroSeleccionado.vida--
+            if (esbirroSeleccionado.vidaMaxima < esbirroSeleccionado.vida) esbirroSeleccionado.vida--
             data = `Vida ${personaje.vida} / ${esbirroSeleccionado['vidaMaxima']}`
           } else if (atributo === 'poderMaximo') {
-            if(esbirroSeleccionado.poderMaximo < esbirroSeleccionado.poder) esbirroSeleccionado.poder--
+            if (esbirroSeleccionado.poderMaximo < esbirroSeleccionado.poder) esbirroSeleccionado.poder--
             data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
           } else {
             data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
