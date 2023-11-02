@@ -1827,7 +1827,7 @@ function cerrarModal(opcion) {
     default:
       break;
   }
-
+  cerrarEdicion()
 }
 
 cerrarModalPersonaje.addEventListener('click', function () {
