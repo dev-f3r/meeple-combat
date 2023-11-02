@@ -1194,6 +1194,7 @@ const valorExperiencia = {
   poderMaximo: 1
 }
 
+// ? Clase principal
 class Personaje {
   /**
    * @param {Object} opciones - Objeto que contiene las propiedades del Personaje.
@@ -1222,7 +1223,7 @@ class Personaje {
   constructor({
     // Propiedades generales de personaje
     nombre = "bienvenido",
-    imagen = "img/nada.png",
+    imagen = "img/logo-meeple-combat.png",
     descripcion = "Selecciona editar y luego el ícono de esta criatura para invocar otra.",
 
     // Atributos de personaje
@@ -1305,23 +1306,23 @@ class Personaje {
     },
   }) {
     // * Propiedades generales de personaje
-    this.nombre = nombre;
-    this.imagen = imagen;
-    this.descripcion = descripcion;
+    this.nombre = nombre
+    this.imagen = imagen
+    this.descripcion = descripcion
 
     // * Atributos de personaje
-    this.ataque = ataque;
-    this.esquiva = esquiva;
-    this.bloqueo = bloqueo;
-    this.velocidad = velocidad;
-    this.vida = vida;
-    this.vidaMaxima = vidaMaxima;
-    this.poder = poder;
-    this.poderMaximo = poderMaximo;
+    this.ataque = ataque
+    this.esquiva = esquiva
+    this.bloqueo = bloqueo
+    this.velocidad = velocidad
+    this.vida = vida
+    this.vidaMaxima = vidaMaxima
+    this.poder = poder
+    this.poderMaximo = poderMaximo
 
     // * Armas de personaje
-    this.arma1 = arma1;
-    this.arma2 = arma2;
+    this.arma1 = arma1
+    this.arma2 = arma2
 
     // * Equipamiento de personaje
     this.equipo1 = equipo1
@@ -1329,9 +1330,9 @@ class Personaje {
     this.equipo3 = equipo3
 
     // * Habilidades de personaje
-    this.habilidad1 = habilidad1;
-    this.habilidad2 = habilidad2;
-    this.habilidad3 = habilidad3;
+    this.habilidad1 = habilidad1
+    this.habilidad2 = habilidad2
+    this.habilidad3 = habilidad3
   }
 
   /**
@@ -1339,7 +1340,7 @@ class Personaje {
    * @param {Object} props - Un objeto con las propiedades a actualizar.
    */
   actualizarPropiedades(props) {
-    Object.assign(this, props);
+    Object.assign(this, props)
 
     this.configurarArma(1, this.arma1)
     this.configurarArma(2, this.arma2)
@@ -1409,72 +1410,173 @@ class Personaje {
 // ? Contiene los personajes que se pueden utilizar
 let listaPersonajes = []
 for (let i = 0; i < 6; i++) {
-  listaPersonajes.push(new Personaje({}))
+  let nombre = ""
+
+  if (i == 0) {
+    // El primer personaje se llama "bienvenidos"
+    nombre = "bienvenidos"
+  } else {
+    // Los demás personajes se llaman "Esbirro 1", "Esbirro 2", ...
+    nombre = `Esbirro ${i}`
+  }
+
+  // Agrega un nuevo personaje a la lista de personajes.
+  listaPersonajes.push(new Personaje({ nombre }))
 }
 
 
-// ? Indica el indice del personaje en uso
-let indexPj = 0
-
-
-
-// ! COMIENZO: Comienzo funciones basicas
-function mostrarPersonaje() {
-  let atributosPersonaje = {
-    ataque: listaPersonajes[indexPj].ataque,
-    esquiva: listaPersonajes[indexPj].esquiva,
-    bloqueo: listaPersonajes[indexPj].bloqueo,
-    velocidad: listaPersonajes[indexPj].velocidad,
-    vidaMaxima: listaPersonajes[indexPj].vidaMaxima,
-    poderMaximo: listaPersonajes[indexPj].poderMaximo
-  }
-
-  for (const key in atributosPersonaje) {
-    if (listaPersonajes[indexPj].equipo1[key]) atributosPersonaje[key] += listaPersonajes[indexPj].equipo1[key]
-    if (listaPersonajes[indexPj].equipo2[key]) atributosPersonaje[key] += listaPersonajes[indexPj].equipo2[key]
-    if (listaPersonajes[indexPj].equipo3[key]) atributosPersonaje[key] += listaPersonajes[indexPj].equipo3[key]
-  }
-
-  nombreTxt.textContent = listaPersonajes[indexPj].nombre.toUpperCase()
-  portadaImg.src = listaPersonajes[indexPj].imagen
-
-  ataqueTxt.textContent = atributosPersonaje.ataque
-  esquivaTxt.textContent = atributosPersonaje.esquiva
-  bloqueoTxt.textContent = atributosPersonaje.bloqueo
-  velocidadTxt.textContent = atributosPersonaje.velocidad
-  vidaTxt.textContent = listaPersonajes[indexPj].vida
-  poderTxt.textContent = listaPersonajes[indexPj].poder
-
-  equipo1Txt.textContent = listaPersonajes[indexPj].equipo1.nivel
-  equipo2Txt.textContent = listaPersonajes[indexPj].equipo2.nivel
-  equipo3Txt.textContent = listaPersonajes[indexPj].equipo3.nivel
-
-  equipo1Img.src = listaPersonajes[indexPj].equipo1.icono
-  equipo2Img.src = listaPersonajes[indexPj].equipo2.icono
-  equipo3Img.src = listaPersonajes[indexPj].equipo3.icono
-
-  arma1Txt.textContent = capitalizarPrimeraLetra(listaPersonajes[indexPj].arma1.nombre)
-  arma1Img.src = listaPersonajes[indexPj].arma1.icono
-
-  arma2Txt.textContent = capitalizarPrimeraLetra(listaPersonajes[indexPj].arma2.nombre)
-  arma2Img.src = listaPersonajes[indexPj].arma2.icono
-
-  habilidad1Txt.textContent = listaPersonajes[indexPj].habilidad1.nombre.toUpperCase()
-  habilidad2Txt.textContent = listaPersonajes[indexPj].habilidad2.nombre.toUpperCase()
-  habilidad3Txt.textContent = listaPersonajes[indexPj].habilidad3.nombre.toUpperCase()
+// ! Fariables de uso global
+const GLOBALES = {
+  // ? Indica el indice del personaje en uso
+  indexPersonaje: 0,
+  // ? Indica el indice del esbirro en uso
+  indexEsbirro: 1,
 }
-// ! FIN: Funciones basicas
 
 
+{ // ! Funciones generales
+  /**
+   * * Muestra los atributos y detalles del personaje actual en la aplicación.
+   */
+  function mostrarPersonaje() {
+    // Obtiene el personaje seleccionado desde la lista de personajes usando el índice global.
+    let personajeSeleccionado = listaPersonajes[GLOBALES.indexPersonaje];
 
-// ! COMIENZO: Manipulación de comportamiento de botones
-{ // * Funcionalidad de botones principales
-  esbirrosBtn.addEventListener('click', () => {
-    if(indexPj == 0) {
-      indexPj = 1
-    } else {
-      indexPj = 0
+    // Crea un objeto para almacenar los atributos del personaje.
+    let atributosPersonaje = {
+      ataque: personajeSeleccionado.ataque,
+      esquiva: personajeSeleccionado.esquiva,
+      bloqueo: personajeSeleccionado.bloqueo,
+      velocidad: personajeSeleccionado.velocidad,
+      vidaMaxima: personajeSeleccionado.vidaMaxima,
+      poderMaximo: personajeSeleccionado.poderMaximo,
+    };
+
+    // Suma los atributos de los equipos del personaje al objeto atributosPersonaje.
+    for (const key in atributosPersonaje) {
+      if (personajeSeleccionado.equipo1[key]) atributosPersonaje[key] += personajeSeleccionado.equipo1[key];
+      if (personajeSeleccionado.equipo2[key]) atributosPersonaje[key] += personajeSeleccionado.equipo2[key];
+      if (personajeSeleccionado.equipo3[key]) atributosPersonaje[key] += personajeSeleccionado.equipo3[key];
     }
-  })
+
+    // Actualiza la información en la interfaz de usuario con los atributos del personaje.
+    nombreTxt.textContent = personajeSeleccionado.nombre.toUpperCase();
+    portadaImg.src = personajeSeleccionado.imagen;
+
+    ataqueTxt.textContent = atributosPersonaje.ataque;
+    esquivaTxt.textContent = atributosPersonaje.esquiva;
+    bloqueoTxt.textContent = atributosPersonaje.bloqueo;
+    velocidadTxt.textContent = atributosPersonaje.velocidad;
+    vidaTxt.textContent = personajeSeleccionado.vida;
+    poderTxt.textContent = personajeSeleccionado.poder;
+
+    equipo1Txt.textContent = personajeSeleccionado.equipo1.nivel;
+    equipo2Txt.textContent = personajeSeleccionado.equipo2.nivel;
+    equipo3Txt.textContent = personajeSeleccionado.equipo3.nivel;
+
+    equipo1Img.src = personajeSeleccionado.equipo1.icono;
+    equipo2Img.src = personajeSeleccionado.equipo2.icono;
+    equipo3Img.src = personajeSeleccionado.equipo3.icono;
+
+    arma1Txt.textContent = capitalizarPrimeraLetra(personajeSeleccionado.arma1.nombre);
+    arma1Img.src = personajeSeleccionado.arma1.icono;
+
+    arma2Txt.textContent = capitalizarPrimeraLetra(personajeSeleccionado.arma2.nombre);
+    arma2Img.src = personajeSeleccionado.arma2.icono;
+
+    habilidad1Txt.textContent = personajeSeleccionado.habilidad1.nombre.toUpperCase();
+    habilidad2Txt.textContent = personajeSeleccionado.habilidad2.nombre.toUpperCase();
+    habilidad3Txt.textContent = personajeSeleccionado.habilidad3.nombre.toUpperCase();
+  }
+
+
+
+  /**
+   * * Cambia entre el personaje principal y el esbirro actual en la aplicación.
+   * * Si el personaje principal está activo, se cambia al esbirro actual y viceversa.
+   * * Además, se actualiza el logo del botón de cambio y se muestra el personaje actual.
+   */
+  function cambioPersonajeEsbirro() {
+    if (GLOBALES.indexPersonaje == 0) {
+      // Si el personaje principal está activo, cambia al esbirro actual.
+      GLOBALES.indexPersonaje = GLOBALES.indexEsbirro;
+
+      // Cambia el logo del botón de cambio a "personajeico.png".
+      esbirrosImg.src = "img/personajeico.png";
+    } else {
+      // Si el esbirro actual está activo, cambia al personaje principal.
+      GLOBALES.indexPersonaje = 0;
+
+      // Cambia el logo del botón de cambio a "esbirrosico.png".
+      esbirrosImg.src = "img/esbirrosico.png";
+    }
+
+    // Muestra el personaje actual en algún lugar de la aplicación.
+    mostrarPersonaje();
+  }
+
+
+  /**
+   * * Navega entre los esbirros en la lista de personajes en una dirección específica.
+   * @param {string} direccion - La dirección en la que se navegará ("izquierda" o "derecha").
+   */
+  function navegarEsbirros(direccion) {
+    // Obtiene el índice del esbirro actual desde las variables globales.
+    let i = GLOBALES.indexEsbirro
+
+    // Si la dirección es "izquierda", retrocede en la lista de personajes.
+    if (direccion == "izquierda") {
+      i--
+      // Si i se vuelve 0, establece i en el último índice de la lista.
+      if (i == 0) i = listaPersonajes.length - 1
+    } else {
+      // Si la dirección no es "izquierda", avanza en la lista de personajes.
+      i++
+      // Si i supera el último índice de la lista, establece i en 1.
+      if (i > listaPersonajes.length - 1) i = 1
+    }
+
+    // Actualiza los índices de esbirro y personaje en las variables globales.
+    GLOBALES.indexEsbirro = i
+    GLOBALES.indexPersonaje = i
+    // Muestra el personaje actual en algún lugar de la aplicación.
+    mostrarPersonaje()
+  }
+
+  // TODO: función para navegar entre personajes
+  // TODO: función para mostrar descripción del arma
+  // TODO: función para mostrar descripción de la habilidad
+  // TODO: función para mostrar descripción de equipamiento
 }
-// ! FIN: Manipulación de comportamiento de botones
+
+{ // ! Funciones de personajes
+  // TODO: función para reemplazar el personaje actual
+  // TODO: función para cambiar la habilidad
+  // TODO: función para cambiar el arma
+  // TODO: función para cambiar el nombre
+  // TODO: función para editar los atributos
+}
+
+{ // ! Helpers
+  /**
+   * ? Capitaliza la primera letra de un string.
+   *
+   * @param {string} texto - El string que se va a capitalizar.
+   * @returns {string} - El string con la primera letra en mayúscula.
+   */
+  function capitalizarPrimeraLetra(texto) {
+    // Verifica si el texto está vacío o es nulo y devuelve el mismo texto sin cambios
+    if (!texto) {
+      return texto
+    }
+    // Capitaliza la primera letra del texto y la concatena con el resto del texto en minúsculas
+    return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase()
+  }
+}
+
+{ // ! Funcionalidad de botones
+  esbirrosBtn.addEventListener('click', () => cambioPersonajeEsbirro())
+
+  izquierdaBtn.addEventListener('click', () => navegarEsbirros('izquierda'))
+  derechaBtn.addEventListener('click', () => navegarEsbirros('derecha'))
+}
