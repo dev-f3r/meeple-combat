@@ -96,6 +96,7 @@ img {
 .item-grilla:nth-child(7) {
     grid-column: 1 / span 9;
     grid-row: 8 / span 3;
+    overflow: scroll;
 }
 
 .item-grilla:nth-child(8) {

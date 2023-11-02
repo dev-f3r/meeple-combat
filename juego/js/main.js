@@ -1,17 +1,19 @@
 
-document.body.addEventListener('contextmenu', (e) => {
-  e.preventDefault();
-  return false;
-});
-// TODO: Descomentar el siguiente bloque
-// document.body.addEventListener('keydown', (e) => {
-//     e.preventDefault();
-//     return false;
-// });
+//document.body.addEventListener('contextmenu', (e) => {
+//  e.preventDefault();
+//  return false;
+//});
+
+//document.body.addEventListener('keydown', (e) => {
+//  e.preventDefault();
+//  return false;
+//});
+
 document.body.addEventListener('selectstart', (e) => {
   e.preventDefault();
   return false;
 });
+
 document.body.addEventListener('dragstart', (e) => {
   e.preventDefault();
   return false;
@@ -505,7 +507,7 @@ const armasDict = {
     danno: 0.5,
     descripcion: "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
   },
-  "palma": {
+  "magia": {
     nombre: "palma",
     icono: "img/magia.png",
     danno: 1,
@@ -577,6 +579,12 @@ const armasDict = {
     danno: 1.25,
     descripcion: "RAMAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
   },
+  "hojas": {
+    nombre: "hojas",
+    icono: "img/hojas.png",
+    danno: 1.25,
+    descripcion: "HOJAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
+  },
   "esporas": {
     nombre: "esporas",
     icono: "img/esporas.png",
@@ -612,6 +620,73 @@ const armasDict = {
     icono: "img/tentaculos.png",
     danno: 1.25,
     descripcion: "TENTACULOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "cola": {
+    nombre: "cola",
+    icono: "img/cola.png",
+    danno: 1.25,
+    descripcion: "COLA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "pico": {
+    nombre: "pico",
+    icono: "img/pico.png",
+    danno: 1.25,
+    descripcion: "PICO <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "espinas": {
+    nombre: "espinas",
+    icono: "img/espinas.png",
+    danno: 1.25,
+    descripcion: "ESPINAS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "lengua": {
+    nombre: "lengua",
+    icono: "img/lengua.png",
+    danno: 1.25,
+    descripcion: "LENGUA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "aguijon": {
+    nombre: "aguijon",
+    icono: "img/aguijon.png",
+    danno: 1.25,
+    descripcion: "AGUIJON <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "aleta": {
+    nombre: "aleta",
+    icono: "img/aleta.png",
+    danno: 1.25,
+    descripcion: "ALETA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "antenas": {
+    nombre: "antenas",
+    icono: "img/antenas.png",
+    danno: 1.25,
+    descripcion: "ANTENAS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  }
+  ,
+  "glandula": {
+    nombre: "glandula",
+    icono: "img/glandula.png",
+    danno: 1.25,
+    descripcion: "GLANDULA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "raices": {
+    nombre: "raices",
+    icono: "img/raices.png",
+    danno: 1.25,
+    descripcion: "RAICES <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "flores": {
+    nombre: "flores",
+    icono: "img/flores.png",
+    danno: 1.25,
+    descripcion: "FLORES <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+  },
+  "frutos": {
+    nombre: "frutos",
+    icono: "img/frutos.png",
+    danno: 1.25,
+    descripcion: "FRUTOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   }
 }
 
@@ -644,6 +719,136 @@ const esbirrosDict = {
     equipo1: "nada",
     equipo2: "nada",
     equipo3: "nada"
+  },
+  "esbirro1": {
+    nombre: "Esbirro 1",
+    portada: "img/e1.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
+  "esbirro2": {
+    nombre: "Esbirro 2",
+    portada: "img/e2.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
+  "esbirro3": {
+    nombre: "Esbirro 3",
+    portada: "img/e3.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
+  "esbirro4": {
+    nombre: "Esbirro 4",
+    portada: "img/e4.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
+  "esbirro5": {
+    nombre: "Esbirro 5",
+    portada: "img/e5.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
   },
   "esqueleto": {
     nombre: "esqueleto",
@@ -679,7 +884,7 @@ const esbirrosDict = {
     vidaMaxima: 31,
     poder: 34,
     poderMaximo: 34,
-    arma1: "ramas",
+    arma1: "hojas",
     arma2: "esporas",
     habilidad1: "enraizar",
     habilidad2: "envenenar",
@@ -701,7 +906,7 @@ const esbirrosDict = {
     vidaMaxima: 20,
     poder: 51,
     poderMaximo: 51,
-    arma1: "palma",
+    arma1: "magia",
     arma2: "garras",
     habilidad1: "bola de fuego",
     habilidad2: "desgarro",
@@ -896,6 +1101,32 @@ const personajesDict = {
     habilidad2: "habilidad 2",
     habilidad3: "habilidad 3",
   },
+  "nuevoesbirro": {
+    nombre: "nuevo",
+    portada: "img/nuevoesbirro.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
   "guerrero": {
     nombre: "guerrero",
     portada: "img/guerrero.png",
@@ -1022,7 +1253,7 @@ const personajesDict = {
     equipo2: "nada",
     equipo3: "nada",
 
-    habilidad1: "boladehielo",
+    habilidad1: "bola de hielo",
     habilidad2: "explosiondeescarcha",
     habilidad3: "confundir",
   },
@@ -1042,7 +1273,7 @@ const personajesDict = {
     poderMaximo: 41,
 
     arma1: "hojaruna",
-    arma2: "daga",
+    arma2: "magia",
 
     equipo1: "nada",
     equipo2: "nada",
@@ -1100,13 +1331,42 @@ const personajesDict = {
     equipo2: "nada",
     equipo3: "nada",
 
-    habilidad1: "ataquemultiple",
-    habilidad2: "golpedechi",
+    habilidad1: "ataque multiple",
+    habilidad2: "golpe de chi",
     habilidad3: "desarmar",
   },
   "druida": {
     nombre: "druida",
     portada: "img/druida.png",
+    icono: "",
+    descripcion: "combatiente mágico con habilidades del Reino Vida, prefiere sanar antes que dañar.",
+
+    ataque: 5,
+    esquiva: 2,
+    bloqueo: 5,
+    velocidad: 3,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 40,
+    poderMaximo: 40,
+
+    arma1: "baculo",
+    arma2: "runa",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "enraizar",
+    habilidad2: "envenenar",
+    habilidad3: "sanar",
+  },
+
+
+
+  "nigromante": {
+    nombre: "nigromante",
+    portada: "img/nigromante.png",
     icono: "",
     descripcion: "combatiente mágico con habilidades del Reino Vida, prefiere sanar antes que dañar.",
 
@@ -1239,7 +1499,8 @@ var flagControlesCambioEsbirro = false
 var equipamientoSeleccionado = 1
 // ? Guarda la estadistica que se esta modificando
 var estadisticaSeleccionada
-// ? Indica si se esta usando el personaje o un esbirro
+// ? Contiene el esbirro que se esta mostrando
+
 var esPersonaje = true
 // ? Contiene el costo de experiencia de cada atributo
 const valorExperiencia = {
@@ -1250,6 +1511,44 @@ const valorExperiencia = {
   vidaMaxima: 1,
   poderMaximo: 1
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //!! //////////////////// COMIENZO BLOQUE DE PERSONAJE //!! ////////////////////
@@ -1455,8 +1754,10 @@ editarBtn.addEventListener('click', function () {
 })
 
 portadaBtn.addEventListener('click', function () {
-  if (edicion == 1) {
+  if (edicion == 1 && tipoEdicion == "personaje") {
     modalPersonaje.style.display = "grid"
+  } else if (edicion == 1 && tipoEdicion == "esbirro") {
+    modalEsbirros.style.display = "grid"
   }
 
   // ? Si esta en modo juego y el personaje es un esbirro muestra los botones para intercambiar entre esbirros
@@ -1488,8 +1789,29 @@ function cerrarModal(opcion) {
       editarImg.src = "img/editar.png"
       break;
 
+    case "armasNaturales":
+      modalArmasNaturales.style.display = "none"
+      edicion = 0
+      editarImg.src = "img/editar.png"
+      tipoArma = "marciales"
+      break;
+
+    case "armasNaturales2":
+      modalArmasNaturales2.style.display = "none"
+      edicion = 0
+      editarImg.src = "img/editar.png"
+      tipoArma = "marciales"
+      break;
+
     case "personajes":
       modalPersonaje.style.display = "none"
+      edicion = 0
+      editarImg.src = "img/editar.png"
+      break;
+
+
+    case "esbirros":
+      modalEsbirros.style.display = "none"
       edicion = 0
       editarImg.src = "img/editar.png"
       break;
@@ -1509,9 +1831,22 @@ function cerrarModal(opcion) {
 cerrarModalPersonaje.addEventListener('click', function () {
   cerrarModal("personajes")
 })
+cerrarModalEsbirros.addEventListener('click', function () {
+  cerrarModal("esbirros")
+})
 cerrarModalArmas.addEventListener('click', function () {
   cerrarModal("armas")
 })
+
+cerrarModalArmasNaturales.addEventListener('click', function () {
+  cerrarModal("armasNaturales")
+})
+
+cerrarModalArmasNaturales2.addEventListener('click', function () {
+  cerrarModal("armasNaturales2")
+})
+
+
 cerrarModalEquipo.addEventListener('click', function () {
   cerrarModal("equipamiento")
 })
@@ -1567,22 +1902,35 @@ function avatar(meeple) {
   Object.assign(equipo2, equiposDict[personajesDict[meeple].equipo2])
   Object.assign(equipo3, equiposDict[personajesDict[meeple].equipo3])
 
-  if (meeple === 'nuevopj') experiencia += 200
+  if (meeple === 'nuevopj' || meeple === 'nuevoesbirro') experiencia += 200
 
   imprimirPersonaje()
   cerrarModal("personajes")
+  cerrarModal("esbirros")
   cerrarEdicion()
   contenConsola(personaje.descripcion)
+
 }
 
+
+
 // * EventListener de los personajes del modal personaje
+
 // TODO: Agregar el nombre de los personajes restantes
+
 [
+
   "barbaro", "guerrero", "paladin",
   "picaro", "monje", "cazador",
   "druida", "chaman", "mago",
   "paladinoscuro", "nigromante", "guardiarunico",
-  "nuevopj"
+  "nuevopj",
+
+  "nuevoesbirro", "cinirus", "naigaran",
+  "sarcomos", "raizor", "momontu", "ghalidos", "tortakla",
+  "kardanto", "terronte", 'lobo'
+
+
 ].forEach(key => {
   const boton = document.getElementById(`${key}Btn`)
   boton.addEventListener('click', () => {
@@ -1748,19 +2096,19 @@ function armas(armaSeleccionada, slot) {
 
       if (tipoEdicion === "personaje") {
         if (atributo === 'vidaMaxima') {
-          // data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
-          data = `Vida maxima ${personaje['vidaMaxima']}`
+          data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+
         } else if (atributo === 'poderMaximo') {
-          // data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
-          data = `Poder maximo ${personaje['poderMaximo']}`
+          data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+
         } else data = `${capitalizarPrimeraLetra(atributo)} ${personaje[atributo]}`;
       } else {
         if (atributo === 'vidaMaxima') {
-          // data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
-          data = `Vida maxima ${esbirroSeleccionado['vidaMaxima']}`
+          data = `Vida ${esbirroSeleccionado['vida']} / ${esbirroSeleccionado['vidaMaxima']}`
+
         } else if (atributo === 'poderMaximo') {
-          // data = `Vida ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
-          data = `Poder maximo ${esbirroSeleccionado['poderMaximo']}`
+          data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
+
         } else data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`;
       }
 
@@ -1791,11 +2139,11 @@ function armas(armaSeleccionada, slot) {
           personaje[estadistica]++
 
           if (estadistica === 'vidaMaxima') {
-            // data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
-            data = `Vida maxima ${personaje.vidaMaxima}`
+            data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
+
           } else if (estadistica === 'poderMaximo') {
-            // data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
-            data = `Poder ${personaje.poderMaximo}`
+            data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
+
           } else {
             data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
           }
@@ -1826,13 +2174,11 @@ function armas(armaSeleccionada, slot) {
 
           // * cambiar contenido mostrado
           if (estadistica === 'vidaMaxima') {
-            // data = `Vida ${personaje['vida']} / ${personaje['vidaMaxima']}`
-            personaje.vida--
-            data = `Vida maxima ${personaje.vidaMaxima}`
+            if(personaje.vidaMaxima < personaje.vida) personaje.vida--
+            data = `Vida ${personaje.vida} / ${personaje.vidaMaxima}`
           } else if (estadistica === 'poderMaximo') {
-            // data = `Poder ${personaje['poder']} / ${personaje['poderMaximo']}`
-            personaje.poder--
-            data = `Poder ${personaje.poderMaximo}`
+            if(personaje.poderMaximo < personaje.poder) personaje.poder--
+            data = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
           } else {
             data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
           }
@@ -2013,7 +2359,9 @@ function armas(armaSeleccionada, slot) {
     habilidad2Btn.addEventListener('click', () => {
       // ? Personalizar habilidad
       if (edicion && esPersonaje) {
-        cambiarHabilidad(habilidad2)
+        habilidadSeleccionada = habilidad2
+        esIngresarComando = false
+        mostrarInputComandos()
       } else if (esPersonaje) {
         // ? Motrar descripción de habilidad 
         descripcionHabilidad(habilidad2)
@@ -2022,7 +2370,9 @@ function armas(armaSeleccionada, slot) {
     habilidad3Btn.addEventListener('click', () => {
       // ? Personalizar habilidad
       if (edicion && esPersonaje) {
-        cambiarHabilidad(habilidad3)
+        habilidadSeleccionada = habilidad3
+        esIngresarComando = false
+        mostrarInputComandos()
       } else if (esPersonaje) {
         // ? Motrar descripción de habilidad 
         descripcionHabilidad(habilidad3)
@@ -2069,93 +2419,18 @@ function armas(armaSeleccionada, slot) {
       // ? crea una referencia al objeto arma1 o arma2, se basa en slotArmaSeleccionada, revisar función armas()
       else seleccion = slotArmaSeleccionada === 1 ? arma1 : arma2
 
-      // switch (arma) {
-      //   case 'daga':
-      //     // cambiar objeto arma1 o arma2
-      //     seleccion.nombre = "Daga"
-      //     seleccion.icono = "img/daga.png"
-      //     seleccion.danno = 1
-      //     seleccion.descripcion = "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
-
-      //     break;
-      //   case 'espada':
-      //     seleccion.nombre = "Espada"
-      //     seleccion.icono = "img/espada.png"
-      //     seleccion.danno = 1.5
-      //     seleccion.descripcion = "Arma a dos manos <br> 2 Acciones / 150% de ataque como daño físico"
-      //     break;
-      //   case 'arco':
-      //     seleccion.nombre = "Arco"
-      //     seleccion.icono = "img/arco.png"
-      //     seleccion.danno = 1.75
-      //     seleccion.descripcion = "Arma a distancia <br>  3 casilleros x ataque / 3 Acciones / 175% de ataque como daño físico"
-      //     break;
-      //   case 'arrojadiza':
-      //     seleccion.nombre = "Arrojadiza"
-      //     seleccion.icono = "img/arrojadiza.png"
-      //     seleccion.danno = 0.75
-      //     seleccion.descripcion = "Arma arrojadiza <br> 3 casillero x ataque / 2 Acciones / 75% de ataque como daño físico"
-      //     break;
-      //   case 'punno':
-      //     seleccion.nombre = "Puños"
-      //     seleccion.icono = "img/punno.png"
-      //     seleccion.danno = 0.75
-      //     seleccion.descripcion = "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
-      //     break;
-      //   case 'escudo':
-      //     seleccion.nombre = "Escudo"
-      //     seleccion.icono = "img/escudo.png"
-      //     seleccion.danno = 0.5
-      //     seleccion.descripcion = "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
-      //     break;
-      //   case 'magia':
-      //     seleccion.nombre = "Mano"
-      //     seleccion.icono = "img/magia.png"
-      //     seleccion.danno = 1
-      //     seleccion.descripcion = "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
-      //     break;
-      //   case 'varita':
-      //     seleccion.nombre = "Varita"
-      //     seleccion.icono = "img/varita.png"
-      //     seleccion.danno = 1
-      //     seleccion.descripcion = "Arma a distancia <br>  3 casilleros x ataque / 1 Accion / 100% de ataque como daño mágico"
-      //     break;
-      //   case 'baculo':
-      //     seleccion.nombre = "Baculo"
-      //     seleccion.icono = "img/baculo.png"
-      //     seleccion.danno = 1.5
-      //     seleccion.descripcion = "Arma a distancia <br>  2 casilleros x ataque / 2 Acciones / 150% de ataque como daño mágico"
-      //     break;
-      //   case 'totem':
-      //     seleccion.nombre = "Totem"
-      //     seleccion.icono = "img/totem.png"
-      //     seleccion.danno = 1
-      //     seleccion.descripcion = "Arma a distancia <br>  2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
-      //     break;
-      //   case 'runa':
-      //     seleccion.nombre = "Runa"
-      //     seleccion.icono = "img/runa.png"
-      //     seleccion.danno = 0.75
-      //     seleccion.descripcion = "Arma a distancia <br> 3 casilleros x ataque / 2 Acciones / 75% de ataque como daño mágico"
-      //     break;
-      //   case 'hojaruna':
-      //     seleccion.nombre = "Hoja Runa"
-      //     seleccion.icono = "img/hojaruna.png"
-      //     seleccion.danno = 1
-      //     seleccion.descripcion = "Arma mixta <br>  1 casilleros x ataque / 2 Acciones / 100% de ataque como daño fíisico o mágico"
-      //     break;
-
-      //   default:
-      //     break;
-      // }
 
       Object.assign(seleccion, armasDict[arma])
 
       // reflejar cambios
       modalArmas.style.display = "none"
+      modalArmasNaturales.style.display = "none"
+      modalArmasNaturales2.style.display = "none"
       // mostrarCambioArma()
       imprimirPersonaje()
       cerrarModal("armas")
+      cerrarModal("armasNaturales")
+      cerrarModal("armasNaturales2")
       cerrarEdicion()
     }
   }
@@ -2219,8 +2494,263 @@ function armas(armaSeleccionada, slot) {
       if (esPersonaje) cambiarArma('hojaruna')
       else cambiarArmaEsbirro('hojaruna')
     })
+
+
+
+
+    mordiscoBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('mordisco')
+      else cambiarArmaEsbirro('mordisco')
+    })
+
+    garrasBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('garras')
+      else cambiarArmaEsbirro('garras')
+    })
+
+    colaBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('cola')
+      else cambiarArmaEsbirro('cola')
+    })
+
+    cuernosBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('cuernos')
+      else cambiarArmaEsbirro('cuernos')
+    })
+
+    pinzasBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('pinzas')
+      else cambiarArmaEsbirro('pinzas')
+    })
+
+    picoBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('pico')
+      else cambiarArmaEsbirro('pico')
+    })
+
+    lenguaBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('lengua')
+      else cambiarArmaEsbirro('lengua')
+    })
+
+    aguijonBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('aguijon')
+      else cambiarArmaEsbirro('aguijon')
+    })
+
+    espinasBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('espinas')
+      else cambiarArmaEsbirro('espinas')
+    })
+
+    cascosBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('cascos')
+      else cambiarArmaEsbirro('cascos')
+    })
+
+    alientoBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('aliento')
+      else cambiarArmaEsbirro('aliento')
+    })
+
+    alasBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('alas')
+      else cambiarArmaEsbirro('alas')
+    })
+
+    aletaBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('aleta')
+      else cambiarArmaEsbirro('aleta')
+    })
+
+
+    tentaculosBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('tentaculos')
+      else cambiarArmaEsbirro('tentaculos')
+    })
+
+    antenasBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('antenas')
+      else cambiarArmaEsbirro('antenas')
+    })
+
+
+    menteBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('mente')
+      else cambiarArmaEsbirro('mente')
+    })
+
+
+    miradaBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('mirada')
+      else cambiarArmaEsbirro('mirada')
+    })
+
+
+    glandulaBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('glandula')
+      else cambiarArmaEsbirro('glandula')
+    })
+
+    raicesBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('raices')
+      else cambiarArmaEsbirro('raices')
+    })
+
+
+    ramasBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('ramas')
+      else cambiarArmaEsbirro('ramas')
+    })
+
+    hojasBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('hojas')
+      else cambiarArmaEsbirro('hojas')
+    })
+
+
+    frutosBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('frutos')
+      else cambiarArmaEsbirro('frutos')
+    })
+
+
+    floresBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('flores')
+      else cambiarArmaEsbirro('flores')
+    })
+
+
+    esporasBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarArma('esporas')
+      else cambiarArmaEsbirro('esporas')
+    })
+
+
+
+
+
+
   }
+
+
 }
+
+
+var tipoArma = "marciales"
+
+salvajesBtn.addEventListener('click', () => {
+
+
+
+  if (tipoArma == "marciales") {
+
+    modalArmas.style.display = "none"
+    modalArmasNaturales.style.display = "grid"
+    modalArmasNaturales2.style.display = "none"
+
+    tipoArma = "salvajes"
+
+  } else if (tipoArma == "salvajes") {
+
+    modalArmas.style.display = "grid"
+    modalArmasNaturales.style.display = "none"
+    modalArmasNaturales2.style.display = "none"
+
+    tipoArma = "marciales"
+
+  }
+
+})
+
+marcialesBtn.addEventListener('click', () => {
+
+
+  if (tipoArma == "marciales") {
+
+    modalArmas.style.display = "none"
+    modalArmasNaturales.style.display = "grid"
+    modalArmasNaturales2.style.display = "none"
+
+    tipoArma = "salvajes"
+
+  } else if (tipoArma == "salvajes") {
+
+    modalArmas.style.display = "grid"
+    modalArmasNaturales.style.display = "none"
+    modalArmasNaturales2.style.display = "none"
+
+    tipoArma = "marciales"
+
+  }
+
+})
+
+
+
+marciales2Btn.addEventListener('click', () => {
+
+
+  if (tipoArma == "marciales") {
+
+    modalArmas.style.display = "none"
+    modalArmasNaturales2.style.display = "none"
+    modalArmasNaturales.style.display = "grid"
+
+    tipoArma = "salvajes"
+
+  } else if (tipoArma == "salvajes") {
+
+    modalArmas.style.display = "grid"
+    modalArmasNaturales2.style.display = "none"
+    modalArmasNaturales.style.display = "none"
+
+    tipoArma = "marciales"
+
+  }
+
+})
+
+
+adelanteBtn.addEventListener('click', () => {
+
+
+
+
+  modalArmas.style.display = "none"
+  modalArmasNaturales.style.display = "none"
+  modalArmasNaturales2.style.display = "grid"
+
+  tipoArma = "salvajes"
+
+
+
+})
+
+atras2Btn.addEventListener('click', () => {
+
+
+
+
+  modalArmas.style.display = "none"
+  modalArmasNaturales.style.display = "grid"
+  modalArmasNaturales2.style.display = "none"
+
+  tipoArma = "salvajes"
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
 
 { // * Cambio de equipamiento
   { // * Funciones para cambiar el equipamiento
@@ -2409,6 +2939,57 @@ function armas(armaSeleccionada, slot) {
   }
 }
 //!! //////////////////// FIN BLOQUE DE PERSONAJE //!! ////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //!! //////////////////// COMIENZO BLOQUE DE MASCOTAS //!! ////////////////////
@@ -2622,15 +3203,14 @@ function armas(armaSeleccionada, slot) {
   // * El siguiente código se utiliza para actualizar la primera instancia de esbirro
   // * con la información del esbirro "lobo" de esbirrosDict. Esto es temporal y debe descartarse
   // * después de completar las pruebas necesarias.
-  esbirros[0].actualizarPropiedades(esbirrosDict.lobo)
-  esbirros[1].actualizarPropiedades(esbirrosDict.lobo)
-  esbirros[2].actualizarPropiedades(esbirrosDict.lobo)
-  esbirros[3].actualizarPropiedades(esbirrosDict.lobo)
-  esbirros[4].actualizarPropiedades(esbirrosDict.lobo)
+  esbirros[0].actualizarPropiedades(esbirrosDict.esbirro1)
+  esbirros[1].actualizarPropiedades(esbirrosDict.esbirro2)
+  esbirros[2].actualizarPropiedades(esbirrosDict.esbirro3)
+  esbirros[3].actualizarPropiedades(esbirrosDict.esbirro4)
+  esbirros[4].actualizarPropiedades(esbirrosDict.esbirro5)
   // ! Lista de esbirros !
-
-  // ? Contiene el esbirro que se esta mostrando
   var esbirroSeleccionado = esbirros[0]
+  // ? Indica si se esta usando el personaje o un esbirro
 }
 
 // ? Elemento del botón para cambiar entre personaje y esbirros
@@ -2640,6 +3220,7 @@ esbirrosBtn.addEventListener('click', () => {
     esPersonaje = false;
 
     tipoEdicion = 'esbirro'
+
 
     cerrarEdicion()
     ocultarInputExperiencia()
@@ -2652,7 +3233,7 @@ esbirrosBtn.addEventListener('click', () => {
 
     mostrarControlesCambioEsbirro()
 
-    esbirrosImg.src = "img/team.png"
+    esbirrosImg.src = "img/personajeico.png"
   } else {
     // Si se estaba mostrando un esbirro, cambia a mostrar el personaje
     esPersonaje = true;
@@ -2671,7 +3252,7 @@ esbirrosBtn.addEventListener('click', () => {
     imprimirPersonaje()
     contenConsola(personaje.descripcion)
 
-    esbirrosImg.src = "img/nada.png"
+    esbirrosImg.src = "img/esbirrosico.png"
   }
 })
 
@@ -2739,7 +3320,7 @@ function mostrarEsbirroSeleccionado() {
 
     mostrarEsbirroSeleccionado()
     cerrarEdicion()
-    cerrarModal('personajes')
+    cerrarModal('esbirros')
   }
 }
 
@@ -2765,9 +3346,9 @@ function mostrarEsbirroSeleccionado() {
           esbirroSeleccionado[atributo]++
 
           if (atributo === 'vidaMaxima') {
-            data = `Vida maxima ${esbirroSeleccionado['vidaMaxima']}`
+            data = `Vida ${personaje.vida} / ${esbirroSeleccionado['vidaMaxima']}`
           } else if (atributo === 'poderMaximo') {
-            data = `Poder maximo ${esbirroSeleccionado['poderMaximo']}`
+            data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
           } else {
             data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
           }
@@ -2791,11 +3372,11 @@ function mostrarEsbirroSeleccionado() {
 
           // Cambiar contenido mostrado en la consola
           if (atributo === 'vidaMaxima') {
-            esbirroSeleccionado.vida--
-            data = `Vida maxima ${esbirroSeleccionado['vidaMaxima']}`
+            if(esbirroSeleccionado.vidaMaxima < esbirroSeleccionado.vida) esbirroSeleccionado.vida--
+            data = `Vida ${personaje.vida} / ${esbirroSeleccionado['vidaMaxima']}`
           } else if (atributo === 'poderMaximo') {
-            esbirroSeleccionado.poder--
-            data = `Poder maximo ${esbirroSeleccionado['poderMaximo']}`
+            if(esbirroSeleccionado.poderMaximo < esbirroSeleccionado.poder) esbirroSeleccionado.poder--
+            data = `Poder ${esbirroSeleccionado['poder']} / ${esbirroSeleccionado['poderMaximo']}`
           } else {
             data = `${capitalizarPrimeraLetra(atributo)} ${esbirroSeleccionado[atributo]}`
           }
@@ -2976,6 +3557,8 @@ function mostrarEsbirroSeleccionado() {
 
       // Cierra el modal de selección de armas.
       cerrarModal('armas');
+      cerrarModal('armasNaturales');
+      cerrarModal('armasNaturales2');
     }
 
   }
