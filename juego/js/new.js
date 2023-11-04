@@ -1427,6 +1427,8 @@ for (let i = 0; i < 6; i++) {
 
 // ! Fariables de uso global
 const GLOBALES = {
+  // ? Indica si el juego esta en modo edición
+  modoEdicion: false,
   // ? Indica el indice del personaje en uso
   indexPersonaje: 0,
   // ? Indica el indice del esbirro en uso
@@ -1436,7 +1438,7 @@ const GLOBALES = {
 
 { // ! Funciones generales
   /**
-   * * Muestra los atributos y detalles del personaje actual en la aplicación.
+   * ? Muestra los atributos y detalles del personaje actual en la aplicación.
    */
   function mostrarPersonaje() {
     // Obtiene el personaje seleccionado desde la lista de personajes usando el índice global.
@@ -1492,9 +1494,9 @@ const GLOBALES = {
 
 
   /**
-   * * Cambia entre el personaje principal y el esbirro actual en la aplicación.
-   * * Si el personaje principal está activo, se cambia al esbirro actual y viceversa.
-   * * Además, se actualiza el logo del botón de cambio y se muestra el personaje actual.
+   * ? Cambia entre el personaje principal y el esbirro actual en la aplicación.
+   * ? Si el personaje principal está activo, se cambia al esbirro actual y viceversa.
+   * ? Además, se actualiza el logo del botón de cambio y se muestra el personaje actual.
    */
   function cambioPersonajeEsbirro() {
     if (GLOBALES.indexPersonaje == 0) {
@@ -1517,7 +1519,7 @@ const GLOBALES = {
 
 
   /**
-   * * Navega entre los esbirros en la lista de personajes en una dirección específica.
+   * ? Navega entre los esbirros en la lista de personajes en una dirección específica.
    * @param {string} direccion - La dirección en la que se navegará ("izquierda" o "derecha").
    */
   function navegarEsbirros(direccion) {
@@ -1543,10 +1545,27 @@ const GLOBALES = {
     mostrarPersonaje()
   }
 
-  // TODO: función para navegar entre personajes
+
+  /**
+   * ? Muestra la descripción del arma seleccionada
+   * @param {number} slot - El slot del arma cuya dirección se va a mostrar
+   */
+  function mostrarDescripcionArma(slot) {
+    let personajeSeleccionado = listaPersonajes[GLOBALES.indexPersonaje]
+    contenidoConsola(personajeSeleccionado[`arma${slot}`].descripcion)
+  }
   // TODO: función para mostrar descripción del arma
   // TODO: función para mostrar descripción de la habilidad
   // TODO: función para mostrar descripción de equipamiento
+
+
+  /**
+   * ? Cambia el contenido de la consola del juego
+   * @param {string} data - El texto que se va a mostrar por la consola
+   */
+  function contenidoConsola(data) {
+    consolaBtn.textContent = data
+  }
 }
 
 { // ! Funciones de personajes
@@ -1575,8 +1594,38 @@ const GLOBALES = {
 }
 
 { // ! Funcionalidad de botones
+  // * Boton para cambiar de personaje principal a esbirros y vicebersa
   esbirrosBtn.addEventListener('click', () => cambioPersonajeEsbirro())
 
-  izquierdaBtn.addEventListener('click', () => navegarEsbirros('izquierda'))
-  derechaBtn.addEventListener('click', () => navegarEsbirros('derecha'))
+
+  { // * Botonos para navegar entre personajes
+    izquierdaBtn.addEventListener('click', () => navegarEsbirros('izquierda'))
+    derechaBtn.addEventListener('click', () => navegarEsbirros('derecha'))
+  }
+
+
+  { // * Boton de arma1 y arma2
+    // Array que contiene los identificadores de los botones de armas
+    const idsBotonesArmas = ['arma1ImgBtn', 'arma1TxtBtn', 'arma2ImgBtn', 'arma2TxtBtn']
+    // Itera a través de los identificadores de los botones de armas
+    idsBotonesArmas.forEach((idBoton) => {
+      // Agrega un evento 'click' a cada botón de arma
+      document.getElementById(idBoton).addEventListener('click', () => {
+        let ranuraArma = 1
+
+        // Verifica si el identificador incluye '2' para determinar la ranura del arma
+        if (idBoton.includes('2')) {
+          ranuraArma = 2
+        }
+
+        // Comprueba si el modo de edición está activado
+        if (GLOBALES.modoEdicion) {
+          // Realiza acciones relacionadas con el modo de edición (código omitido)
+        } else {
+          // Llama a la función 'mostrarDescripcionArma' con la ranura del arma correspondiente
+          mostrarDescripcionArma(ranuraArma)
+        }
+      })
+    })
+  }
 }
