@@ -20,6 +20,94 @@ document.body.addEventListener('dragstart', (e) => {
 });
 
 { // * helpers, funciones varias
+  /**
+   * Guarda el estado de la lista de esbirros en el almacenamiento local.
+   */
+  function guardarEstadoListaEsbirros() {
+    console.log('esbirros saved')
+    // Convierte la lista de esbirros a una cadena JSON.
+    const esbirrosString = JSON.stringify(esbirros);
+
+    // Almacena la cadena JSON en el almacenamiento local con la clave 'listaEsbirros'.
+    localStorage.setItem('listaEsbirros', esbirrosString);
+  }
+
+  /**
+ * Carga el estado previamente guardado de la lista de esbirros desde el almacenamiento local.
+ * @returns {Array} - La lista de esbirros recuperada desde el almacenamiento local.
+ */
+  function cargarEstadoListaEsbirros() {
+    // Imprime un mensaje en la consola indicando que los esbirros han sido cargados.
+    console.log('esbirros loaded');
+
+    // Obtiene la cadena JSON almacenada en el almacenamiento local con la clave 'listaEsbirros'.
+    const esbirrosString = localStorage.getItem('listaEsbirros');
+
+    // Parsea la cadena JSON y, si es nula, asigna un array vacío.
+    const esbirrosData = JSON.parse(esbirrosString) || [];
+
+    // Convierte los objetos simples de esbirro a instancias de la clase Esbirro.
+    const lista = esbirrosData.map(data => new Esbirro(data));
+
+    // Devuelve la lista de esbirros.
+    return lista;
+  }
+
+
+  /**
+   * Guarda el estado del personaje en el almacenamiento local.
+   */
+  function guardarEstadoPersonaje() {
+    // Imprime un mensaje en la consola indicando que el personaje ha sido guardado.
+    console.log('personaje saved');
+
+    // Convierte el objeto del personaje a una cadena JSON.
+    const personajeString = JSON.stringify(personaje);
+
+    // Almacena la cadena JSON en el almacenamiento local con la clave 'personaje'.
+    localStorage.setItem('personaje', personajeString);
+
+    localStorage.setItem('arma1', JSON.stringify(arma1))
+    localStorage.setItem('arma2', JSON.stringify(arma2))
+
+    localStorage.setItem('equipo1', JSON.stringify(equipo1))
+    localStorage.setItem('equipo2', JSON.stringify(equipo2))
+    localStorage.setItem('equipo3', JSON.stringify(equipo3))
+
+    localStorage.setItem('habilidad1', JSON.stringify(habilidad1))
+    localStorage.setItem('habilidad2', JSON.stringify(habilidad2))
+    localStorage.setItem('habilidad3', JSON.stringify(habilidad3))
+  }
+
+  /**
+   * Carga el estado previamente guardado del personaje desde el almacenamiento local.
+   * @returns {Object} - El objeto del personaje recuperado desde el almacenamiento local.
+   */
+  function cargarEstadoPersonaje() {
+    let output = {}
+
+    // Imprime un mensaje en la consola indicando que el personaje ha sido cargado.
+    console.log('personaje loaded');
+
+    // Obtiene la cadena JSON almacenada en el almacenamiento local con la clave 'personaje'.
+    output.personaje = JSON.parse(localStorage.getItem('personaje'))
+
+    output.arma1 = JSON.parse(localStorage.getItem('arma1'))
+    output.arma2 = JSON.parse(localStorage.getItem('arma2'))
+
+    output.equipo1 = JSON.parse(localStorage.getItem('equipo1'))
+    output.equipo2 = JSON.parse(localStorage.getItem('equipo2'))
+    output.equipo3 = JSON.parse(localStorage.getItem('equipo3'))
+
+    output.habilidad1 = JSON.parse(localStorage.getItem('habilidad1'))
+    output.habilidad2 = JSON.parse(localStorage.getItem('habilidad2'))
+    output.habilidad3 = JSON.parse(localStorage.getItem('habilidad3'))
+
+
+    // Parsea la cadena JSON y devuelve el objeto del personaje.
+    return output
+  }
+
 
   /* 
       * @text: sring
@@ -56,6 +144,9 @@ document.body.addEventListener('dragstart', (e) => {
     tipoIngreso = "comando"
     ocultarInputExperiencia()
     ocultarInputComandos()
+
+    guardarEstadoListaEsbirros()
+    guardarEstadoPersonaje()
   }
   /* 
       * @estadistica: string
@@ -125,6 +216,8 @@ document.body.addEventListener('dragstart', (e) => {
   function ocultarBtnArrivaAbajo() {
     arribaBtn.style.display = "none"
     abajoBtn.style.display = "none"
+    if (esPersonaje) guardarEstadoPersonaje()
+    else guardarEstadoListaEsbirros()
   }
 
   /**
@@ -1615,126 +1708,149 @@ const valorExperiencia = {
 
 //!! //////////////////// COMIENZO BLOQUE DE PERSONAJE //!! ////////////////////
 { // * Variables personaje
-  var personaje = {
+  var personaje = {}
+  var arma1 = {}
+  var arma2 = {}
+  var equipo1 = {}
+  var equipo2 = {}
+  var equipo3 = {}
+  var habilidad1 = {}
+  var habilidad2 = {}
+  var habilidad3 = {}
 
-    nombre: "BIENVENIDO",
-    // meeple: "img/logo-meeple-combat.png",
-    portada: "img/logo-meeple-combat.png",
-    descripcion: "Descripcion personaje default",
+  if (localStorage.getItem('personaje')) {
+    personaje = cargarEstadoPersonaje().personaje
+
+    arma1 = cargarEstadoPersonaje().arma1
+    arma2 = cargarEstadoPersonaje().arma2
+    equipo1 = cargarEstadoPersonaje().equipo1
+    equipo2 = cargarEstadoPersonaje().equipo2
+    equipo3 = cargarEstadoPersonaje().equipo3
+    habilidad1 = cargarEstadoPersonaje().habilidad1
+    habilidad2 = cargarEstadoPersonaje().habilidad2
+    habilidad3 = cargarEstadoPersonaje().habilidad3
+  } else {
+    personaje = {
+
+      nombre: "BIENVENIDO",
+      // meeple: "img/logo-meeple-combat.png",
+      portada: "img/logo-meeple-combat.png",
+      descripcion: "Descripcion personaje default",
 
 
 
-    ataque: 0,
-    esquiva: 0,
-    bloqueo: 0,
-    velocidad: 0,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
 
-    vida: 0,
-    vidaMaxima: 0,
+      vida: 0,
+      vidaMaxima: 0,
 
-    poder: 0,
-    poderMaximo: 0,
+      poder: 0,
+      poderMaximo: 0,
 
-    // * nivel del equipamiento
-    // equipo1: "",
-    // equipo2: "",
-    // equipo3: "",
+      // * nivel del equipamiento
+      // equipo1: "",
+      // equipo2: "",
+      // equipo3: "",
 
-    // * nombre de arma
-    arma1: "Una Mano",
-    arma2: "Dos Manos",
+      // * nombre de arma
+      arma1: "Una Mano",
+      arma2: "Dos Manos",
 
-    // * nombre de habilidades
-    habilidad1: "HABILIDAD 1",
-    habilidad2: "HABILIDAD 2",
-    habilidad3: "HABILIDAD 3",
-  }
+      // * nombre de habilidades
+      habilidad1: "HABILIDAD 1",
+      habilidad2: "HABILIDAD 2",
+      habilidad3: "HABILIDAD 3",
+    }
 
-  var arma1 = {
+    arma1 = {
 
-    nombre: "Arma 1",
-    icono: "img/nada.png",
-    descripcion: "Espacio de arma 1",
-    danno: 0,
+      nombre: "Arma 1",
+      icono: "img/nada.png",
+      descripcion: "Espacio de arma 1",
+      danno: 0,
 
-  }
+    }
 
-  var arma2 = {
+    arma2 = {
 
-    nombre: "Arma 2",
-    icono: "img/nada.png",
-    descripcion: "Espacio de arma 2",
-    danno: 0,
+      nombre: "Arma 2",
+      icono: "img/nada.png",
+      descripcion: "Espacio de arma 2",
+      danno: 0,
 
-  }
+    }
 
-  var equipo1 = {
+    equipo1 = {
 
-    nombre: "Equipo1",
-    icono: "img/nada.png",
-    descripcion: "",
+      nombre: "Equipo1",
+      icono: "img/nada.png",
+      descripcion: "",
 
-    nivel: 0,
+      nivel: 0,
 
-    ataque: 0,
-    esquiva: 0,
-    bloqueo: 0,
-    velocidad: 0,
-    vidaMaxima: 0,
-    poderMaximo: 0,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
+      vidaMaxima: 0,
+      poderMaximo: 0,
 
-  }
+    }
 
-  var equipo2 = {
+    equipo2 = {
 
-    nombre: "Equipo1",
-    icono: "img/nada.png",
-    descripcion: "",
+      nombre: "Equipo1",
+      icono: "img/nada.png",
+      descripcion: "",
 
-    nivel: 0,
+      nivel: 0,
 
-    ataque: 0,
-    esquiva: 0,
-    bloqueo: 0,
-    velocidad: 0,
-    vidaMaxima: 0,
-    poderMaximo: 0,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
+      vidaMaxima: 0,
+      poderMaximo: 0,
 
-  }
+    }
 
-  var equipo3 = {
+    equipo3 = {
 
-    nombre: "Equipo1",
-    icono: "img/nada.png",
-    descripcion: "",
+      nombre: "Equipo1",
+      icono: "img/nada.png",
+      descripcion: "",
 
-    nivel: 0,
+      nivel: 0,
 
-    ataque: 0,
-    esquiva: 0,
-    bloqueo: 0,
-    velocidad: 0,
-    vidaMaxima: 0,
-    poderMaximo: 0,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
+      vidaMaxima: 0,
+      poderMaximo: 0,
 
-  }
+    }
 
-  var habilidad1 = {
-    nombre: "Nombre habilidad 1",
-    coste: 0,
-    descripcion: "Descripción de habilidad 1"
-  }
+    habilidad1 = {
+      nombre: "Nombre habilidad 1",
+      coste: 0,
+      descripcion: "Descripción de habilidad 1"
+    }
 
-  var habilidad2 = {
-    nombre: "Nombre habilidad 2",
-    coste: 0,
-    descripcion: "Descripción de habilidad 2"
-  }
+    habilidad2 = {
+      nombre: "Nombre habilidad 2",
+      coste: 0,
+      descripcion: "Descripción de habilidad 2"
+    }
 
-  var habilidad3 = {
-    nombre: "Nombre habilidad 3",
-    coste: 0,
-    descripcion: "Descripción de habilidad 3"
+    habilidad3 = {
+      nombre: "Nombre habilidad 3",
+      coste: 0,
+      descripcion: "Descripción de habilidad 3"
+    }
   }
 }
 
@@ -2269,7 +2385,10 @@ function armas(armaSeleccionada, slot) {
         // consolaBtn.innerHTML = `Poder ${personaje.poder} / ${personaje.poderMaximo}`
         consolaBtn.innerHTML = `Poder ${personaje.poder} / ${poderMaximo}`
       }
+      // muestra el personaje actualizado
       imprimirPersonaje()
+      // guarda los cambios en el navegador
+      guardarEstadoPersonaje()
     }
   }
 
@@ -3046,221 +3165,226 @@ atras2Btn.addEventListener('click', () => {
 
 
 //!! //////////////////// COMIENZO BLOQUE DE MASCOTAS //!! ////////////////////
-{ // * Variables esbirro
+/**
+ * ? Clase que representa a un Esbirro.
+ * Un Esbirro es una criatura con diversas propiedades y habilidades.
+ */
+class Esbirro {
   /**
-   * ? Clase que representa a un Esbirro.
-   * Un Esbirro es una criatura con diversas propiedades y habilidades.
+   * @param {Object} opciones - Objeto que contiene las propiedades del Esbirro.
+   * @param {string} opciones.nombre - El nombre del Esbirro.
+   * @param {string} opciones.portada - La URL de la imagen del Esbirro.
+   * @param {string} opciones.icono - El icono del Esbirro (sin uso).
+   * @param {string} opciones.descripcion - La descripción del Esbirro.
+   * @param {number} opciones.experiencia - La experiencia del Esbirro.
+   * @param {number} opciones.ataque - El valor de ataque del Esbirro.
+   * @param {number} opciones.esquiva - El valor de esquiva del Esbirro.
+   * @param {number} opciones.bloqueo - El valor de bloqueo del Esbirro.
+   * @param {number} opciones.velocidad - El valor de velocidad del Esbirro.
+   * @param {number} opciones.vida - El valor de vida actual del Esbirro.
+   * @param {number} opciones.vidaMaxima - El valor máximo de vida del Esbirro.
+   * @param {number} opciones.poder - El poder actual del Esbirro.
+   * @param {number} opciones.poderMaximo - El poder máximo del Esbirro.
+   * @param {Object} opciones.arma1 - El arma en la ranura 1 del Esbirro.
+   * @param {Object} opciones.arma2 - El arma en la ranura 2 del Esbirro.
+   * @param {Object} opciones.equipo1 - El equipo en la ranura 1 del Esbirro.
+   * @param {Object} opciones.equipo2 - El equipo en la ranura 2 del Esbirro.
+   * @param {Object} opciones.equipo3 - El equipo en la ranura 3 del Esbirro.
+   * @param {Object} opciones.habilidad1 - La habilidad en la ranura 1 del Esbirro.
+   * @param {Object} opciones.habilidad2 - La habilidad en la ranura 2 del Esbirro.
+   * @param {Object} opciones.habilidad3 - La habilidad en la ranura 3 del Esbirro.
    */
-  class Esbirro {
-    /**
-     * @param {Object} opciones - Objeto que contiene las propiedades del Esbirro.
-     * @param {string} opciones.nombre - El nombre del Esbirro.
-     * @param {string} opciones.portada - La URL de la imagen del Esbirro.
-     * @param {string} opciones.icono - El icono del Esbirro (sin uso).
-     * @param {string} opciones.descripcion - La descripción del Esbirro.
-     * @param {number} opciones.experiencia - La experiencia del Esbirro.
-     * @param {number} opciones.ataque - El valor de ataque del Esbirro.
-     * @param {number} opciones.esquiva - El valor de esquiva del Esbirro.
-     * @param {number} opciones.bloqueo - El valor de bloqueo del Esbirro.
-     * @param {number} opciones.velocidad - El valor de velocidad del Esbirro.
-     * @param {number} opciones.vida - El valor de vida actual del Esbirro.
-     * @param {number} opciones.vidaMaxima - El valor máximo de vida del Esbirro.
-     * @param {number} opciones.poder - El poder actual del Esbirro.
-     * @param {number} opciones.poderMaximo - El poder máximo del Esbirro.
-     * @param {Object} opciones.arma1 - El arma en la ranura 1 del Esbirro.
-     * @param {Object} opciones.arma2 - El arma en la ranura 2 del Esbirro.
-     * @param {Object} opciones.equipo1 - El equipo en la ranura 1 del Esbirro.
-     * @param {Object} opciones.equipo2 - El equipo en la ranura 2 del Esbirro.
-     * @param {Object} opciones.equipo3 - El equipo en la ranura 3 del Esbirro.
-     * @param {Object} opciones.habilidad1 - La habilidad en la ranura 1 del Esbirro.
-     * @param {Object} opciones.habilidad2 - La habilidad en la ranura 2 del Esbirro.
-     * @param {Object} opciones.habilidad3 - La habilidad en la ranura 3 del Esbirro.
-     */
-    constructor({
-      // Propiedades generales de esbirro
-      nombre = "",
-      portada = "img/nada.png",
-      icono = "", // Sin Uso
-      descripcion = "Selecciona editar y luego el ícono de esta criatura para invocar otra.",
+  constructor({
+    // Propiedades generales de esbirro
+    nombre = "",
+    portada = "img/nada.png",
+    icono = "", // Sin Uso
+    descripcion = "Selecciona editar y luego el ícono de esta criatura para invocar otra.",
 
-      // Atributos de esbirro
-      ataque = 0,
-      esquiva = 0,
-      bloqueo = 0,
-      velocidad = 0,
-      vida = 0,
-      vidaMaxima = 0,
-      poder = 0,
-      poderMaximo = 0,
+    // Atributos de esbirro
+    ataque = 0,
+    esquiva = 0,
+    bloqueo = 0,
+    velocidad = 0,
+    vida = 0,
+    vidaMaxima = 0,
+    poder = 0,
+    poderMaximo = 0,
 
-      // Armas de esbirro
-      arma1 = { nombre: "wp 1", icono: "img/nada.png", danno: 0, descripcion: "dc wp 1" },
-      arma2 = { nombre: "wp 2", icono: "img/nada.png", danno: 0, descripcion: "dc wp 2" },
+    // Armas de esbirro
+    arma1 = { nombre: "wp 1", icono: "img/nada.png", danno: 0, descripcion: "dc wp 1" },
+    arma2 = { nombre: "wp 2", icono: "img/nada.png", danno: 0, descripcion: "dc wp 2" },
 
-      // Equipamiento de esbirro
-      equipo1 = {
-        nombre: "Nada",
-        icono: "img/nada.png",
-        descripcion: "Sin descripcion",
-        nivel: 0,
-        ataque: 0,
-        esquiva: 0,
-        bloqueo: 0,
-        velocidad: 0,
-        vidaMaxima: 0,
-        poderMaximo: 0
-      },
-      equipo2 = {
-        nombre: "Nada",
-        icono: "img/nada.png",
-        descripcion: "Sin descripcion",
-        nivel: 0,
-        ataque: 0,
-        esquiva: 0,
-        bloqueo: 0,
-        velocidad: 0,
-        vidaMaxima: 0,
-        poderMaximo: 0
-      },
-      equipo3 = {
-        nombre: "Nada",
-        icono: "img/nada.png",
-        descripcion: "Sin descripcion",
-        nivel: 0,
-        ataque: 0,
-        esquiva: 0,
-        bloqueo: 0,
-        velocidad: 0,
-        vidaMaxima: 0,
-        poderMaximo: 0
-      },
+    // Equipamiento de esbirro
+    equipo1 = {
+      nombre: "Nada",
+      icono: "img/nada.png",
+      descripcion: "Sin descripcion",
+      nivel: 0,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
+      vidaMaxima: 0,
+      poderMaximo: 0
+    },
+    equipo2 = {
+      nombre: "Nada",
+      icono: "img/nada.png",
+      descripcion: "Sin descripcion",
+      nivel: 0,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
+      vidaMaxima: 0,
+      poderMaximo: 0
+    },
+    equipo3 = {
+      nombre: "Nada",
+      icono: "img/nada.png",
+      descripcion: "Sin descripcion",
+      nivel: 0,
+      ataque: 0,
+      esquiva: 0,
+      bloqueo: 0,
+      velocidad: 0,
+      vidaMaxima: 0,
+      poderMaximo: 0
+    },
 
-      // Habilidades de esbirro
-      habilidad1 = { nombre: "sk 1", coste: 0, descripcion: "dc sk 1" },
-      habilidad2 = { nombre: "sk 2", coste: 0, descripcion: "dc sk 2" },
-      habilidad3 = { nombre: "sk 3", coste: 0, descripcion: "dc sk 3" },
-    }) {
-      // * Propiedades generales de esbirro
-      this.nombre = nombre;
-      this.portada = portada;
-      this.icono = icono;
-      this.descripcion = descripcion;
+    // Habilidades de esbirro
+    habilidad1 = { nombre: "sk 1", coste: 0, descripcion: "dc sk 1" },
+    habilidad2 = { nombre: "sk 2", coste: 0, descripcion: "dc sk 2" },
+    habilidad3 = { nombre: "sk 3", coste: 0, descripcion: "dc sk 3" },
+  }) {
+    // * Propiedades generales de esbirro
+    this.nombre = nombre;
+    this.portada = portada;
+    this.icono = icono;
+    this.descripcion = descripcion;
 
-      // * Atributos de esbirro
-      this.ataque = ataque;
-      this.esquiva = esquiva;
-      this.bloqueo = bloqueo;
-      this.velocidad = velocidad;
-      this.vida = vida;
-      this.vidaMaxima = vidaMaxima;
-      this.poder = poder;
-      this.poderMaximo = poderMaximo;
+    // * Atributos de esbirro
+    this.ataque = ataque;
+    this.esquiva = esquiva;
+    this.bloqueo = bloqueo;
+    this.velocidad = velocidad;
+    this.vida = vida;
+    this.vidaMaxima = vidaMaxima;
+    this.poder = poder;
+    this.poderMaximo = poderMaximo;
 
-      // * Armas de esbirro
-      this.arma1 = arma1;
-      this.arma2 = arma2;
+    // * Armas de esbirro
+    this.arma1 = arma1;
+    this.arma2 = arma2;
 
-      // * Equipamiento de esbirro
-      this.equipo1 = equipo1
-      this.equipo2 = equipo2
-      this.equipo3 = equipo3
+    // * Equipamiento de esbirro
+    this.equipo1 = equipo1
+    this.equipo2 = equipo2
+    this.equipo3 = equipo3
 
-      // * Habilidades de esbirro
-      this.habilidad1 = habilidad1;
-      this.habilidad2 = habilidad2;
-      this.habilidad3 = habilidad3;
+    // * Habilidades de esbirro
+    this.habilidad1 = habilidad1;
+    this.habilidad2 = habilidad2;
+    this.habilidad3 = habilidad3;
+  }
+
+  /**
+   * ? Actualiza las propiedades del esbirro con los valores proporcionados.
+   * @param {Object} props - Un objeto con las propiedades a actualizar.
+   */
+  actualizarPropiedades(props) {
+    console.log(props)
+    Object.assign(this, props);
+    this.configurarArma(1, this.arma1)
+    this.configurarArma(2, this.arma2)
+
+    this.configurarHabilidad(1, this.habilidad1)
+    this.configurarHabilidad(2, this.habilidad2)
+    this.configurarHabilidad(3, this.habilidad3)
+
+    this.configurarEquipamiento(1, this.equipo1)
+    this.configurarEquipamiento(2, this.equipo2)
+    this.configurarEquipamiento(3, this.equipo3)
+    // let nombre = this.nombre.toLowerCase()
+    // if (nombre in equipPersonaje) {
+    //   this.configurarEquipamiento(1, equipPersonaje[nombre][0])
+    //   this.configurarEquipamiento(2, equipPersonaje[nombre][1])
+    //   this.configurarEquipamiento(3, equipPersonaje[nombre][2])
+    // } else console.error(`Esbirro: ${nombre} no esta en equipPersonaje`)
+  }
+
+  /**
+   * ? Configura el arma en una ranura específica.
+   * @param {number} ranura - El número de ranura del arma.
+   * @param {string} nombre - El nombre del arma.
+   */
+  configurarArma(ranura, nombre) {
+    if (nombre in armasDict) {
+      if (!armasDict[nombre].icono) console.error(`Esbirro: Agregar propiedad icono de ${nombre} en armasDict`)
+      this[`arma${ranura}`] = armasDict[nombre]
     }
+    else
+      this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
+  }
 
-    /**
-     * ? Actualiza las propiedades del esbirro con los valores proporcionados.
-     * @param {Object} props - Un objeto con las propiedades a actualizar.
-     */
-    actualizarPropiedades(props) {
-      Object.assign(this, props);
-      this.configurarArma(1, this.arma1)
-      this.configurarArma(2, this.arma2)
-
-      this.configurarHabilidad(1, this.habilidad1)
-      this.configurarHabilidad(2, this.habilidad2)
-      this.configurarHabilidad(3, this.habilidad3)
-
-      this.configurarEquipamiento(1, this.equipo1)
-      this.configurarEquipamiento(2, this.equipo2)
-      this.configurarEquipamiento(3, this.equipo3)
-      // let nombre = this.nombre.toLowerCase()
-      // if (nombre in equipPersonaje) {
-      //   this.configurarEquipamiento(1, equipPersonaje[nombre][0])
-      //   this.configurarEquipamiento(2, equipPersonaje[nombre][1])
-      //   this.configurarEquipamiento(3, equipPersonaje[nombre][2])
-      // } else console.error(`Esbirro: ${nombre} no esta en equipPersonaje`)
-    }
-
-    /**
-     * ? Configura el arma en una ranura específica.
-     * @param {number} ranura - El número de ranura del arma.
-     * @param {string} nombre - El nombre del arma.
-     */
-    configurarArma(ranura, nombre) {
-      if (nombre in armasDict) {
-        if (!armasDict[nombre].icono) console.error(`Esbirro: Agregar propiedad icono de ${nombre} en armasDict`)
-        this[`arma${ranura}`] = armasDict[nombre]
+  configurarEquipamiento(ranura, nombre) {
+    if (nombre in equiposDict) {
+      if (typeof this[`equipo${ranura}`] !== 'string') {
+        this.vida -= this[`equipo${ranura}`].vidaMaxima
+        this.poder -= this[`equipo${ranura}`].poderMaximo
       }
-      else
-        this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
+
+      this[`equipo${ranura}`] = equiposDict[nombre]
+
+      this.vida += this[`equipo${ranura}`].vidaMaxima
+      this.poder += this[`equipo${ranura}`].poderMaximo
+
+    } else console.error(`Esbirro: ${nombre} no esta en equiposDict`)
+
+  }
+
+  /**
+   * ? Configura la habilidad en una ranura específica.
+   * @param {number} ranura - El número de ranura de la habilidad.
+   * @param {string} nombre - El nombre de la habilidad.
+   */
+  configurarHabilidad(ranura, nombre) {
+    this[`habilidad${ranura}`] = {}
+    if (nombre in habilidadesDict) {
+      // this[`habilidad${ranura}`] = { nombre, descripcion: habilidadesDict[nombre.toLowerCase()] }
+      Object.assign(this[`habilidad${ranura}`], habilidadesDict[nombre])
     }
+    else {
+      Object.assign(this[`habilidad${ranura}`], { nombre, descripcion: "Habilidad sin descripción" })
 
-    configurarEquipamiento(ranura, nombre) {
-      if (nombre in equiposDict) {
-        if (typeof this[`equipo${ranura}`] !== 'string') {
-          this.vida -= this[`equipo${ranura}`].vidaMaxima
-          this.poder -= this[`equipo${ranura}`].poderMaximo
-        }
-
-        this[`equipo${ranura}`] = equiposDict[nombre]
-
-        this.vida += this[`equipo${ranura}`].vidaMaxima
-        this.poder += this[`equipo${ranura}`].poderMaximo
-
-      } else console.error(`Esbirro: ${nombre} no esta en equiposDict`)
-
-    }
-
-    /**
-     * ? Configura la habilidad en una ranura específica.
-     * @param {number} ranura - El número de ranura de la habilidad.
-     * @param {string} nombre - El nombre de la habilidad.
-     */
-    configurarHabilidad(ranura, nombre) {
-      this[`habilidad${ranura}`] = {}
-      if (nombre in habilidadesDict) {
-        // this[`habilidad${ranura}`] = { nombre, descripcion: habilidadesDict[nombre.toLowerCase()] }
-        Object.assign(this[`habilidad${ranura}`], habilidadesDict[nombre])
-      }
-      else {
-        Object.assign(this[`habilidad${ranura}`], { nombre, descripcion: "Habilidad sin descripción" })
-
-        console.error(`Esbirro: Agregar habilidad ${nombre} a habilidadesDict`)
-      }
+      console.error(`Esbirro: Agregar habilidad ${nombre} a habilidadesDict`)
     }
   }
+}
+{ // * Variables esbirro
 
   // ! Lista de esbirros !
   // Crea un array vacío para almacenar instancias de la clase Esbirro
   var esbirros = []
 
-  // Crea cinco instancias de Esbirro y las agrega al array esbirros
-  for (let i = 0; i < 5; i++) {
-    esbirros.push(new Esbirro({ nombre: `Esbirro ${i + 1}` }))
-  }
+  if (localStorage.getItem('listaEsbirros')) {
+    esbirros = cargarEstadoListaEsbirros()
+  } else {
+    // Crea cinco instancias de Esbirro y las agrega al array esbirros
+    for (let i = 0; i < 5; i++) {
+      esbirros.push(new Esbirro({ nombre: `Esbirro ${i + 1}` }))
+    }
 
-  // * El siguiente código se utiliza para actualizar la primera instancia de esbirro
-  // * con la información del esbirro "lobo" de esbirrosDict. Esto es temporal y debe descartarse
-  // * después de completar las pruebas necesarias.
-  esbirros[0].actualizarPropiedades(esbirrosDict.esbirro1)
-  esbirros[1].actualizarPropiedades(esbirrosDict.esbirro2)
-  esbirros[2].actualizarPropiedades(esbirrosDict.esbirro3)
-  esbirros[3].actualizarPropiedades(esbirrosDict.esbirro4)
-  esbirros[4].actualizarPropiedades(esbirrosDict.esbirro5)
+    // * El siguiente código se utiliza para actualizar la primera instancia de esbirro
+    // * con la información del esbirro "lobo" de esbirrosDict. Esto es temporal y debe descartarse
+    // * después de completar las pruebas necesarias.
+    esbirros[0].actualizarPropiedades(esbirrosDict.esbirro1)
+    esbirros[1].actualizarPropiedades(esbirrosDict.esbirro2)
+    esbirros[2].actualizarPropiedades(esbirrosDict.esbirro3)
+    esbirros[3].actualizarPropiedades(esbirrosDict.esbirro4)
+    esbirros[4].actualizarPropiedades(esbirrosDict.esbirro5)
+  }
   // ! Lista de esbirros !
   var esbirroSeleccionado = esbirros[0]
   // ? Indica si se esta usando el personaje o un esbirro
