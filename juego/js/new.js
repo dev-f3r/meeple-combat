@@ -1300,9 +1300,9 @@ class Personaje {
       descripcion: "Descripcion Habilidad 2"
     },
     habilidad3 = {
-      nombre: "Habilidad 2",
+      nombre: "Habilidad 3",
       coste: 0,
-      descripcion: "Descripcion Habilidad 2"
+      descripcion: "Descripcion Habilidad 3"
     },
   }) {
     // * Propiedades generales de personaje
@@ -1425,7 +1425,7 @@ for (let i = 0; i < 6; i++) {
 }
 
 
-// ! Fariables de uso global
+// ! Variables de uso global
 const GLOBALES = {
   // ? Indica si el juego esta en modo edición
   modoEdicion: false,
@@ -1554,10 +1554,18 @@ const GLOBALES = {
     let personajeSeleccionado = listaPersonajes[GLOBALES.indexPersonaje]
     contenidoConsola(personajeSeleccionado[`arma${slot}`].descripcion)
   }
-  // TODO: función para mostrar descripción del arma
-  // TODO: función para mostrar descripción de la habilidad
-  // TODO: función para mostrar descripción de equipamiento
 
+  // TODO: función para mostrar descripción de la habilidad
+  function mostrarDescripcionHabilidad(slot) {
+    let personajeSeleccionado = listaPersonajes[GLOBALES.indexPersonaje]
+    contenidoConsola(personajeSeleccionado[`habilidad${slot}`].descripcion)
+  }
+
+  // TODO: función para mostrar descripción de equipamiento
+  function mostrarDescripcionEquipamiento(slot) {
+    let personajeSeleccionado = listaPersonajes[GLOBALES.indexPersonaje]
+    contenidoConsola(personajeSeleccionado[`equipo${slot}`].descripcion)
+  }
 
   /**
    * ? Cambia el contenido de la consola del juego
@@ -1620,7 +1628,7 @@ const GLOBALES = {
 
         // Comprueba si el modo de edición está activado
         if (GLOBALES.modoEdicion) {
-          // Realiza acciones relacionadas con el modo de edición (código omitido)
+          // TODO: Modificar arma
         } else {
           // Llama a la función 'mostrarDescripcionArma' con la ranura del arma correspondiente
           mostrarDescripcionArma(ranuraArma)
@@ -1628,4 +1636,51 @@ const GLOBALES = {
       })
     })
   }
+
+  // TODO: Botones de habilidades
+  { // * Boton de habilidad 1, 2 y 3
+    // Array que contiene los identificadores de los botones de habilidades
+    const idsBotonesHabilidades = ['habilidad1Btn', 'habilidad2Btn', 'habilidad3Btn']
+    // Itera a través de los identificadores de los botones de habilidades
+    idsBotonesHabilidades.forEach((idBoton, i) => {
+      // Agrega un evento 'click' a cada botón de habilidad
+      document.getElementById(idBoton).addEventListener('click', () => {
+        // Comprueba si el modo de edición está activado
+        if (GLOBALES.modoEdicion) {
+          // TODO: Modificar habilidades
+        } else {
+          // Llama a la función 'mostrarDescripcionHablidad' con la ranura de la habilidad correspondiente
+          mostrarDescripcionHabilidad(i + 1)
+        }
+      })
+    })
+  }
+
+  // TODO: Botones de equipos
+  { // * Boton equipo 1, 2 y 3
+    // Array que contiene los identificadores de los botones del equipamiento
+    const idsBotonesEquipamiento = ['equipo1Btn', 'equipo2Btn', 'equipo3Btn']
+    // Itera a través de los identificadores de los botones del equipamiento
+    idsBotonesEquipamiento.forEach((idBoton, i) => {
+      // Agrega un evento 'click' a cada botón de equipo
+      document.getElementById(idBoton).addEventListener('click', () => {
+        // Comprueba si el modo de edición está activado
+        if (GLOBALES.modoEdicion) {
+          // TODO: Modificar equipamiento
+        } else {
+          // Llama a la función 'mostrarDescripcionEquipamiento' con la ranura del equipamiento correspondiente
+          mostrarDescripcionEquipamiento(i + 1)
+        }
+      })
+    })
+
+  }
+
+  // TODO: Boton de accion
+
+  // TODO: Botones de atributos
+
+  // TODO: Boton de experiencia
+
+  // TODO: Boton de portada
 }
