@@ -24,7 +24,6 @@ document.body.addEventListener('dragstart', (e) => {
    * Guarda el estado de la lista de esbirros en el almacenamiento local.
    */
   function guardarEstadoListaEsbirros() {
-    console.log('esbirros saved')
     // Convierte la lista de esbirros a una cadena JSON.
     const esbirrosString = JSON.stringify(esbirros);
 
@@ -37,9 +36,6 @@ document.body.addEventListener('dragstart', (e) => {
  * @returns {Array} - La lista de esbirros recuperada desde el almacenamiento local.
  */
   function cargarEstadoListaEsbirros() {
-    // Imprime un mensaje en la consola indicando que los esbirros han sido cargados.
-    console.log('esbirros loaded');
-
     // Obtiene la cadena JSON almacenada en el almacenamiento local con la clave 'listaEsbirros'.
     const esbirrosString = localStorage.getItem('listaEsbirros');
 
@@ -58,9 +54,6 @@ document.body.addEventListener('dragstart', (e) => {
    * Guarda el estado del personaje en el almacenamiento local.
    */
   function guardarEstadoPersonaje() {
-    // Imprime un mensaje en la consola indicando que el personaje ha sido guardado.
-    console.log('personaje saved');
-
     // Convierte el objeto del personaje a una cadena JSON.
     const personajeString = JSON.stringify(personaje);
 
@@ -85,9 +78,6 @@ document.body.addEventListener('dragstart', (e) => {
    */
   function cargarEstadoPersonaje() {
     let output = {}
-
-    // Imprime un mensaje en la consola indicando que el personaje ha sido cargado.
-    console.log('personaje loaded');
 
     // Obtiene la cadena JSON almacenada en el almacenamiento local con la clave 'personaje'.
     output.personaje = JSON.parse(localStorage.getItem('personaje'))
@@ -289,10 +279,8 @@ document.body.addEventListener('dragstart', (e) => {
           break
         case "habilidad":
           if (esPersonaje) {
-            console.log("personaje", comandosValor.value)
             cambiarHabilidad(comandosValor.value)
           } else {
-            console.log("esbirro", comandosValor.value)
             editarHabilidadEsbirro(comandosValor.value)
           }
         default:
@@ -318,10 +306,8 @@ document.body.addEventListener('dragstart', (e) => {
         break
       case "habilidad":
         if (esPersonaje) {
-          console.log("personaje", comandosValor.value)
           cambiarHabilidad(comandosValor.value)
         } else {
-          console.log("esbirro", comandosValor.value)
           editarHabilidadEsbirro(comandosValor.value)
         }
       default:
@@ -618,204 +604,272 @@ const armasDict = {
     nombre: "nada",
     icono: "img/nada.png",
     danno: 0,
+    coste: 0,
+    tipo: "",
     descripcion: "Arma sin descripción"
   },
   "punno": {
     nombre: "puño",
     icono: "img/punno.png",
     danno: 0.75,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma natural <br> 1 Acción / 75% de ataque como daño físico"
   },
   "patada": {
     nombre: "patada",
     icono: "img/patada.png",
     danno: 1,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma natural <br> 2 Acciones / 100% de ataque como daño físico"
   },
   "daga": {
     nombre: "daga",
     icono: "img/daga.png",
     danno: 1,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma a una mano <br> 1 Acción / 100% de ataque como daño físico"
   },
   "espada": {
     nombre: "espada",
     icono: "img/espada.png",
     danno: 1.5,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma a dos manos <br> 2 Acciones / 150% de ataque como daño físico"
   },
   "arco": {
     nombre: "arco",
     icono: "img/arco.png",
     danno: 1.75,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma a distancia <br> 3 casilleros x ataque / 3 Acciones / 175% de ataque como daño físico"
   },
   "arrojadiza": {
     nombre: "arrojadiza",
     icono: "img/arrojadiza.png",
     danno: 0.75,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma arrojadiza <br> 3 casillero x ataque / 2 Acciones / 75% de ataque como daño físico"
   },
   "escudo": {
     nombre: "escudo",
     icono: "img/escudo.png",
     danno: 0.5,
+    coste: 1,
+    tipo: "",
     descripcion: "Escudo <br> Permite bloquear ataques fuera de turno / 1 Accion / 50% de ataque como daño físico"
   },
   "magia": {
     nombre: "palma",
     icono: "img/magia.png",
     danno: 1,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma a distancia <br> 1 casillero x ataque / 1 Acción / 100% de ataque como daño mágico"
   },
   "varita": {
     nombre: "varita",
     icono: "img/varita.png",
     danno: 1,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma a distancia <br> 3 casilleros x ataque / 1 Accion / 100% de ataque como daño mágico"
   },
   "baculo": {
     nombre: "baculo",
     icono: "img/baculo.png",
     danno: 1.5,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 150% de ataque como daño mágico"
   },
   "runa": {
     nombre: "runa",
     icono: "img/runa.png",
     danno: 0.75,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma a distancia <br> 3 casilleros x ataque / 2 Acciones / 75% de ataque como daño mágico"
   },
   "totem": {
     nombre: "totem",
     icono: "img/totem.png",
     danno: 1,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma a distancia <br> 2 casilleros x ataque / 2 Acciones / 100% de ataque como daño mágico"
   },
   "hojaruna": {
     nombre: "hoja runa",
     icono: "img/hojaruna.png",
     danno: 1,
+    coste: 1,
+    tipo: "",
     descripcion: "Arma mixta <br> 1 casillero x ataque / 2 Acciones / 100% de ataque como daño físico o mágico"
   },
   "mordisco": {
     nombre: "mordisco",
     icono: "img/mordisco.png",
     danno: 1.5,
+    coste: 1,
+    tipo: "",
     descripcion: "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño físico"
   },
   "garras": {
     nombre: "garras",
     icono: "img/garras.png",
     danno: 1,
+    coste: 1,
+    tipo: "",
     descripcion: "Garras <br> / 1 Accion / 100% de ataque como daño físico"
   },
   "aliento": {
     nombre: "aliento",
     icono: "img/aliento.png",
     danno: 2.5,
+    coste: 1,
+    tipo: "",
     descripcion: "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima of 1 casillero x punto de ataque"
   },
   "pinzas": {
     nombre: "pinzas",
     icono: "img/pinzas.png",
     danno: 1.75,
+    coste: 1,
+    tipo: "",
     descripcion: "PINZAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 175% de ataque como daño físico"
   },
   "mente": {
     nombre: "mente",
     icono: "img/mente.png",
     danno: 1,
+    coste: 1,
+    tipo: "",
     descripcion: "MENTE <br> Arma a distancia / 1 Accion <br> 100% de ataque como daño mágico. <br> Distancia máxima of 2 casillero x punto de ataque"
   },
   "ramas": {
     nombre: "ramas",
     icono: "img/ramas.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "RAMAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
   },
   "hojas": {
     nombre: "hojas",
     icono: "img/hojas.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "HOJAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
   },
   "esporas": {
     nombre: "esporas",
     icono: "img/esporas.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "ESPORAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima of 1 casillero x punto de ataque"
   },
   "alas": {
     nombre: "alas",
     icono: "img/alas.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "ALAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
   },
   "mirada": {
     nombre: "mirada",
     icono: "img/mirada.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "MIRADA <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 2 casilleros x punto de ataque"
   },
   "cuernos": {
     nombre: "cuernos",
     icono: "img/cuernos.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "CUERNOS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
   },
   "cascos": {
     nombre: "cascos",
     icono: "img/cascos.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "CASCOS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
   },
   "tentaculos": {
     nombre: "tentaculos",
     icono: "img/tentaculos.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "TENTACULOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "cola": {
     nombre: "cola",
     icono: "img/cola.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "COLA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "pico": {
     nombre: "pico",
     icono: "img/pico.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "PICO <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "espinas": {
     nombre: "espinas",
     icono: "img/espinas.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "ESPINAS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "lengua": {
     nombre: "lengua",
     icono: "img/lengua.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "LENGUA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "aguijon": {
     nombre: "aguijon",
     icono: "img/aguijon.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "AGUIJON <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "aleta": {
     nombre: "aleta",
     icono: "img/aleta.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "ALETA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "antenas": {
     nombre: "antenas",
     icono: "img/antenas.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "ANTENAS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   }
   ,
@@ -823,24 +877,32 @@ const armasDict = {
     nombre: "glandula",
     icono: "img/glandula.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "GLANDULA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "raices": {
     nombre: "raices",
     icono: "img/raices.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "RAICES <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "flores": {
     nombre: "flores",
     icono: "img/flores.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "FLORES <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   },
   "frutos": {
     nombre: "frutos",
     icono: "img/frutos.png",
     danno: 1.25,
+    coste: 1,
+    tipo: "",
     descripcion: "FRUTOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
   }
 }
@@ -3042,6 +3104,12 @@ atras2Btn.addEventListener('click', () => {
           contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
         else
           contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque}<br>Daño base ${Math.floor(arma.danno * ataque)}`)
+
+        if (arma.tipo == "mecanomagica") {
+          personaje.poder -= arma.coste
+          guardarEstadoPersonaje()
+          imprimirPersonaje()
+        }
       } else {
         // ? Tirada con atributo
         switch (slot) {
@@ -3294,7 +3362,6 @@ class Esbirro {
    * @param {Object} props - Un objeto con las propiedades a actualizar.
    */
   actualizarPropiedades(props) {
-    console.log(props)
     Object.assign(this, props);
     this.configurarArma(1, this.arma1)
     this.configurarArma(2, this.arma2)
@@ -3306,12 +3373,6 @@ class Esbirro {
     this.configurarEquipamiento(1, this.equipo1)
     this.configurarEquipamiento(2, this.equipo2)
     this.configurarEquipamiento(3, this.equipo3)
-    // let nombre = this.nombre.toLowerCase()
-    // if (nombre in equipPersonaje) {
-    //   this.configurarEquipamiento(1, equipPersonaje[nombre][0])
-    //   this.configurarEquipamiento(2, equipPersonaje[nombre][1])
-    //   this.configurarEquipamiento(3, equipPersonaje[nombre][2])
-    // } else console.error(`Esbirro: ${nombre} no esta en equipPersonaje`)
   }
 
   /**
@@ -3789,6 +3850,12 @@ function mostrarEsbirroSeleccionado() {
         contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
       else
         contenConsola(`Ataque con ${arma.nombre}<br>${dado + esbirroSeleccionado.ataque}<br>Daño base ${Math.floor(arma.danno * esbirroSeleccionado.ataque)}`)
+
+      if (arma.tipo == "mecanomagica") {
+        esbirroSeleccionado.poder -= arma.coste
+        guardarEstadoListaEsbirros()
+        mostrarEsbirroSeleccionado()
+      }
     }
 
     function accionEsbirroAtributo(slot) {
