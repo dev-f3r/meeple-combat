@@ -5,6 +5,7 @@
     grid-template-columns: 1fr 6fr 1fr;
     align-items: center;
     justify-items: center;
+    overflow: hidden;
 }
 
 /* .consola-item svg {
@@ -29,17 +30,31 @@
     display: none;
 }
 
-#arribaBtn {
+#arribaBtn,
+#abajoBtn {
+    height: 100%;
     grid-column: 2;
 }
+
+#arribaBtn {
+    padding-top: 10px;
+}
+
 #abajoBtn {
-    grid-column: 2;
+    padding-bottom: 10px;
+}
+
+#arribaBtn svg,
+#abajoBtn svg {
+    height: 100%;
+    width: 25px;
 }
 
 #derechaBtn {
     grid-column: 3;
     grid-row: 1/ span 3;
 }
+
 #izquierdaBtn {
     grid-column: 1;
     grid-row: 1/ span 3;
@@ -90,9 +105,10 @@ span.experiencia-item {
     z-index: 100;
 }
 
-.contenedor-input .exp-input,.contenedor-input .comandos-input {
+.contenedor-input .exp-input,
+.contenedor-input .comandos-input {
     outline: solid 1.5px #000000;
-    border:none;
+    border: none;
 }
 
 .contenedor-input .input-button {
