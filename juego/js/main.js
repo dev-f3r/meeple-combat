@@ -320,22 +320,7 @@ document.body.addEventListener('dragstart', (e) => {
   function ingresarComando(comando) {
     comando = comando.toLowerCase()
     // ? Cambio de personaje con '/' + nombre
-    // if (/^\//.test(comando)) {
-    //   if (esPersonaje) { // ? Cambio de personaje principal
-    //     let nombrePersonaje = comando.match(/^\/(.*)/)[1]
 
-    //     if (nombrePersonaje in personajesDict) avatar(nombrePersonaje)
-
-    //     else contenConsola("Personaje incorrecto")
-    //   } else { // ? Cambio de esbirro
-    //     let nombreEsbirro = comando.match(/^\/(.*)/)[1]
-
-    //     if (nombreEsbirro in personajesDict) cambiarEsbirro(nombreEsbirro)
-    //     else if (nombreEsbirro in esbirrosDict) cambiarEsbirro(nombreEsbirro)
-
-    //     else contenConsola("Personaje incorrecto")
-    //   }
-    // }
     if (comando === '/barbaro') {
       if (esPersonaje) { // ? Cambio de personaje principal
         avatar('barbaro')
@@ -343,7 +328,40 @@ document.body.addEventListener('dragstart', (e) => {
         cambiarEsbirro('barbaro')
       }
     }
+
+
     // TODO: Agregar los demas comandos
+
+    if (comando === '/reload') {
+      localStorage.clear()
+      arma1 = armasDict.nada
+      arma2 = armasDict.nada
+
+      equipo1 = equiposDict.nada
+      equipo2 = equiposDict.nada
+      equipo3 = equiposDict.nada
+
+      habilidad1 = habilidadesDict['habilidad 1']
+      habilidad2 = habilidadesDict['habilidad 2']
+      habilidad3 = habilidadesDict['habilidad 3']
+
+      avatar('bienvenida')
+
+      for (let i = 0; i < esbirros.length; i++) {
+        console.log(i)
+        console.log(esbirros[i])
+        esbirros[i].actualizarPropiedades(esbirrosDict[`esbirro${i + 1}`])
+      }
+
+      
+
+      if (esPersonaje) imprimirPersonaje()
+      else mostrarEsbirroSeleccionado()
+
+      window.location.reload()
+    
+    }
+
   }
 }
 
@@ -598,7 +616,7 @@ const habilidadesDict = {
 }
 
 // ? Objeto para almacenar información de las armas
-// TODO: Agregar las demas armas
+// TODO: Agregar las demas armas / tipo: mecanomagica para consumir poder automaticamente.
 const armasDict = {
   "nada": {
     nombre: "nada",
@@ -718,7 +736,7 @@ const armasDict = {
     danno: 1.5,
     coste: 1,
     tipo: "",
-    descripcion: "Mordisco Arma natural <br> / 2 Acciones / 150% de ataque como daño físico"
+    descripcion: "Mordisco <br> / 2 Acciones / 150% de ataque como daño físico"
   },
   "garras": {
     nombre: "garras",
@@ -734,7 +752,7 @@ const armasDict = {
     danno: 2.5,
     coste: 1,
     tipo: "",
-    descripcion: "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Distancia máxima of 1 casillero x punto de ataque"
+    descripcion: "ALIENTO <br> Arma a distancia / 3 Acciones <br> 250% de ataque como daño mágico <br> Disperción máxima 1 casillero x punto de ataque"
   },
   "pinzas": {
     nombre: "pinzas",
@@ -750,7 +768,7 @@ const armasDict = {
     danno: 1,
     coste: 1,
     tipo: "",
-    descripcion: "MENTE <br> Arma a distancia / 1 Accion <br> 100% de ataque como daño mágico. <br> Distancia máxima of 2 casillero x punto de ataque"
+    descripcion: "MENTE <br> Arma a distancia / 2 Acciones <br> 100% de ataque como daño mágico. <br> Distancia máxima 2 casillero x punto de ataque"
   },
   "ramas": {
     nombre: "ramas",
@@ -766,39 +784,39 @@ const armasDict = {
     danno: 1.25,
     coste: 1,
     tipo: "",
-    descripcion: "HOJAS <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
+    descripcion: "HOJAS <br> Arma mixta / 2 Acciones <br> 125% de ataque como daño físico o mágico. <br> Distancia máxima 2 casillero x punto de ataque "
   },
   "esporas": {
     nombre: "esporas",
     icono: "img/esporas.png",
-    danno: 1.25,
+    danno: 1.75,
     coste: 1,
     tipo: "",
-    descripcion: "ESPORAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima of 1 casillero x punto de ataque"
+    descripcion: "ESPORAS <br> Arma a distancia / 2 Acciones <br> 175% de ataque como daño mágico. <br> Distancia máxima 1 casillero x punto de ataque"
   },
   "alas": {
     nombre: "alas",
     icono: "img/alas.png",
-    danno: 1.25,
+    danno: 2,
     coste: 1,
     tipo: "",
-    descripcion: "ALAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
+    descripcion: "ALAS <br> Arma a distancia / 3 Acciones <br> 200% de ataque como daño mágico. <br> Distancia máxima de 2 casillero x punto de ataque"
   },
   "mirada": {
     nombre: "mirada",
     icono: "img/mirada.png",
-    danno: 1.25,
+    danno: 1.5,
     coste: 1,
     tipo: "",
-    descripcion: "MIRADA <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 2 casilleros x punto de ataque"
+    descripcion: "MIRADA <br> Arma a distancia / 2 Acciones <br> 150% de ataque como daño mágico. <br> Distancia máxima de 1 casilleros x punto de ataque"
   },
   "cuernos": {
     nombre: "cuernos",
     icono: "img/cuernos.png",
-    danno: 1.25,
+    danno: 2.5,
     coste: 1,
     tipo: "",
-    descripcion: "CUERNOS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico. <br> Distancia máxima de 1 casillero x punto de ataque"
+    descripcion: "CUERNOS <br> Arma mixta / 3 Acciones <br> 250% de ataque como daño físco o mágico. <br> Distancia máxima de hechizos 1 casillero x punto de ataque"
   },
   "cascos": {
     nombre: "cascos",
@@ -830,39 +848,39 @@ const armasDict = {
     danno: 1.25,
     coste: 1,
     tipo: "",
-    descripcion: "PICO <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+    descripcion: "PICO <br> Arma cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño físico"
   },
   "espinas": {
     nombre: "espinas",
     icono: "img/espinas.png",
-    danno: 1.25,
+    danno: 0.75,
     coste: 1,
     tipo: "",
-    descripcion: "ESPINAS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+    descripcion: "ESPINAS <br> Arma mixta cuerpo a cuerpo / 1 Acciones <br> 75% de ataque como daño mágico o físico"
   },
   "lengua": {
     nombre: "lengua",
     icono: "img/lengua.png",
-    danno: 1.25,
+    danno: 1.5,
     coste: 1,
     tipo: "",
-    descripcion: "LENGUA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+    descripcion: "LENGUA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 150% de ataque como daño mágico o físico"
   },
   "aguijon": {
     nombre: "aguijon",
     icono: "img/aguijon.png",
-    danno: 1.25,
+    danno: 2.75,
     coste: 1,
     tipo: "",
-    descripcion: "AGUIJON <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+    descripcion: "AGUIJON <br> Arma mixta cuerpo a cuerpo / 3 Acciones <br> 275% de ataque como daño mágico o físico"
   },
   "aleta": {
     nombre: "aleta",
     icono: "img/aleta.png",
-    danno: 1.25,
+    danno: 2,
     coste: 1,
     tipo: "",
-    descripcion: "ALETA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+    descripcion: "ALETA <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 200% de ataque como daño mágico o físico"
   },
   "antenas": {
     nombre: "antenas",
@@ -870,7 +888,7 @@ const armasDict = {
     danno: 1.25,
     coste: 1,
     tipo: "",
-    descripcion: "ANTENAS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+    descripcion: "ANTENAS <br> Arma a distancia / 2 Acciones <br> 125% de ataque como daño mágico o físico <br> distancia máxima 1 casillero x punto de ataque"
   }
   ,
   "glandula": {
@@ -895,15 +913,15 @@ const armasDict = {
     danno: 1.25,
     coste: 1,
     tipo: "",
-    descripcion: "FLORES <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+    descripcion: "FLORES <br> Arma mixta / 2 Acciones <br> 125% de ataque como daño mágico o físico <br> distancia máxima 1 casillero x punto de ataque"
   },
   "frutos": {
     nombre: "frutos",
     icono: "img/frutos.png",
-    danno: 1.25,
+    danno: 1.75,
     coste: 1,
     tipo: "",
-    descripcion: "FRUTOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 125% de ataque como daño mágico o físico"
+    descripcion: "FRUTOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 175% de ataque como daño mágico o físico <br> distancia máxima 1 casillero x punto de ataque"
   }
 }
 
@@ -1292,6 +1310,33 @@ const esbirrosDict = {
 // ? Objeto para almecenar información de los esbirros
 // TODO: Agregar los demas personajes
 const personajesDict = {
+
+  "bienvenida": {
+    nombre: "BEINVENIDO",
+    portada: "img/logo-meeple-combat.png",
+    icono: "",
+    descripcion: "Sin descripción.",
+
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vida: 0,
+    vidaMaxima: 0,
+    poder: 0,
+    poderMaximo: 0,
+
+    arma1: "nada",
+    arma2: "nada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "habilidad 1",
+    habilidad2: "habilidad 2",
+    habilidad3: "habilidad 3",
+  },
   "nuevopj": {
     nombre: "nuevo",
     portada: "img/nuevopj.png",
@@ -1362,7 +1407,7 @@ const personajesDict = {
     arma1: "espada",
     arma2: "escudo",
 
-    equipo1: "armaduraPesada",
+    equipo1: "nada",
     equipo2: "nada",
     equipo3: "nada",
 
@@ -1385,7 +1430,7 @@ const personajesDict = {
     poder: 43,
     poderMaximo: 43,
 
-    arma1: "palma",
+    arma1: "magia",
     arma2: "totem",
 
     equipo1: "nada",
@@ -1414,7 +1459,7 @@ const personajesDict = {
     arma1: "espada",
     arma2: "patada",
 
-    equipo1: "armaduraPesada",
+    equipo1: "nada",
     equipo2: "nada",
     equipo3: "nada",
 
@@ -1522,8 +1567,8 @@ const personajesDict = {
     equipo2: "nada",
     equipo3: "nada",
 
-    habilidad1: "flechasmultiples",
-    habilidad2: "flechaenergizada",
+    habilidad1: "flechas multiples",
+    habilidad2: "flecha energizada",
     habilidad3: "invocar",
   },
   "monje": {
@@ -1615,7 +1660,7 @@ const equiposDict = {
   'nada': {
     nombre: "Nada",
     icono: "img/nada.png",
-    descripcion: "Descripción de nada",
+    descripcion: "",
     nivel: 0,
     ataque: 0,
     esquiva: 0,
@@ -1627,74 +1672,74 @@ const equiposDict = {
   'armaduraLigera': {
     nombre: "Armadura Ligera",
     icono: "img/armaduraligera.png",
-    descripcion: "Descripción de Armadura Ligera",
+    descripcion: "Armadura ligera <br> +1 al bloqueo / +10 a la vida máxima",
     nivel: 1,
-    ataque: 1,
-    esquiva: 1,
+    ataque: 0,
+    esquiva: 0,
     bloqueo: 1,
-    velocidad: 1,
-    vidaMaxima: 1,
-    poderMaximo: 1,
+    velocidad: 0,
+    vidaMaxima: 10,
+    poderMaximo: 0,
   },
   'armaduraMedia': {
     nombre: "Armadura Media",
     icono: "img/armaduramedia.png",
-    descripcion: "Descripción de Armadura Media",
+    descripcion: "Armadura Media <br> +1 al bloqueo / +15 de vida máxima <br> -1 a esquiva y velocidad",
     nivel: 1,
-    ataque: 1,
-    esquiva: 1,
-    bloqueo: 1,
-    velocidad: 1,
-    vidaMaxima: 1,
-    poderMaximo: 1,
+    ataque: 0,
+    esquiva: -1,
+    bloqueo: 2,
+    velocidad: -1,
+    vidaMaxima: 15,
+    poderMaximo: 0,
   },
   'armaduraPesada': {
     nombre: "Armadura Pesada",
     icono: "img/armadurapesada.png",
-    descripcion: "Una resistente armadura que proporciona una gran protección.",
+    descripcion: "Armadura Pesada <br> +4 de bloqueo / +20 de vida máxima <br> -1 al ataque / -2 a esquiva y velocidad.",
     nivel: 1,
-    ataque: 0,
-    esquiva: 1,
-    bloqueo: 5,
-    velocidad: 0,
+    ataque: -1,
+    esquiva: -2,
+    bloqueo: 4,
+    velocidad: -2,
     vidaMaxima: 20,
     poderMaximo: 0,
   },
   'anillo': {
     nombre: "Anillo",
     icono: "img/anillo.png",
-    descripcion: "Descripción del Anillo",
+    descripcion: "Anillo <br> +3 al ataque <br> -10 de poder máximo",
     nivel: 1,
-    ataque: 5,
-    esquiva: 3,
-    bloqueo: 2,
-    velocidad: 4,
-    vidaMaxima: 10,
-    poderMaximo: 12,
+    ataque: 3,
+    esquiva: 0,
+    bloqueo: 0,
+    velocidad: 0,
+    vidaMaxima: 0,
+    poderMaximo: -10,
   },
   'collar': {
     nombre: "Collar",
     icono: "img/collar.png",
-    descripcion: "Descripción del Collar",
+    descripcion: "Collar <br> +3 a la esquiva <br> -10 de poder máximo",
     nivel: 1,
-    ataque: 3,
-    esquiva: 5,
-    bloqueo: 2,
-    velocidad: 4,
-    vidaMaxima: 8,
-    poderMaximo: 15,
+    ataque: 0,
+    esquiva: 3,
+    bloqueo: 0,
+    velocidad: 0,
+    vidaMaxima: 0,
+    poderMaximo: -10,
   },
   'brazal': {
     nombre: "Brazal",
     icono: "img/brazal.png",
-    descripcion: "Descripción del Brazal",
+    descripcion: "Brazal <br> +3 de velocidad <br> -10 de poder máximo",
     nivel: 1,
-    ataque: 4,
-    esquiva: 2,
-    bloqueo: 4,
+    ataque: 0,
+    esquiva: 0,
+    bloqueo: 0,
     velocidad: 3,
-    vidaMaxima: 12,
-    poderMaximo: 10,
+    vidaMaxima: 0,
+    poderMaximo: -10,
   },
 }
 
@@ -1897,19 +1942,19 @@ const valorExperiencia = {
     }
 
     habilidad1 = {
-      nombre: "Nombre habilidad 1",
+      nombre: "habilidad 1",
       coste: 0,
       descripcion: "Descripción de habilidad 1"
     }
 
     habilidad2 = {
-      nombre: "Nombre habilidad 2",
+      nombre: "habilidad 2",
       coste: 0,
       descripcion: "Descripción de habilidad 2"
     }
 
     habilidad3 = {
-      nombre: "Nombre habilidad 3",
+      nombre: "habilidad 3",
       coste: 0,
       descripcion: "Descripción de habilidad 3"
     }
@@ -1926,6 +1971,8 @@ function imprimirPersonaje() {
     esquiva: personaje.esquiva,
     bloqueo: personaje.bloqueo,
     velocidad: personaje.velocidad,
+    vida: personaje.vida,
+    poder: personaje.poder,
     vidaMaxima: personaje.vidaMaxima,
     poderMaximo: personaje.poderMaximo
   }
@@ -3066,6 +3113,10 @@ atras2Btn.addEventListener('click', () => {
       if (esPersonaje) cambiarEquipamiento('brazal')
       else cambiarEquipamientoEsbirro('brazal')
     })
+    sinEquipoBtn.addEventListener('click', () => {
+      if (esPersonaje) cambiarEquipamiento('nada')
+      else cambiarEquipamientoEsbirro('nada')
+    })
   }
 }
 
@@ -3116,7 +3167,7 @@ atras2Btn.addEventListener('click', () => {
           case 1: // * Ataque
             // TODO: Retocar el ataque limpio
             if (dado == 20)
-              contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(ataque * 2)}`)
+              contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(ataque * 1)}`)
             else if (dado == 1)
               contenConsola(`Ataque limpio<br>¡PIFIA!<br>Daño base 0`)
             else
@@ -3125,7 +3176,7 @@ atras2Btn.addEventListener('click', () => {
           case 2: // * Esquiva
             // TODO: Retocar esquiva
             if (dado == 20)
-              contenConsola(`Esquiva<br>¡CRITICO!<br>${Math.floor(velocidad * 2)}`)
+              contenConsola(`Esquiva<br>¡CRITICO!`)
             else if (dado == 1)
               contenConsola(`Esquiva<br>¡PIFIA!`)
             else
@@ -3134,7 +3185,7 @@ atras2Btn.addEventListener('click', () => {
           case 3: // * Bloquea
             // TODO: Retocar bloqueo
             if (dado == 20)
-              contenConsola(`Bloquea<br>¡CRITICO!<br>${Math.floor(bloqueo * 2)}`)
+              contenConsola(`Bloquea<br>¡CRITICO!`)
             else if (dado == 1)
               contenConsola(`Bloquea<br>¡PIFIA!`)
             else
@@ -3143,7 +3194,7 @@ atras2Btn.addEventListener('click', () => {
           case 4: // * Huye
             // TODO: Retocar huye
             if (dado == 20)
-              contenConsola(`Corre<br>¡CRITICO!<br>${Math.floor(velocidad * 2)}`)
+              contenConsola(`Corre<br>¡CRITICO!`)
             else if (dado == 1)
               contenConsola(`Corre<br>¡PIFIA!`)
             else
@@ -3873,7 +3924,7 @@ function mostrarEsbirroSeleccionado() {
         case 2: // * Esquiva
           // TODO: Retocar esquiva
           if (dado == 20)
-            contenConsola(`Esquiva<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+            contenConsola(`Esquiva<br>¡CRITICO!`)
           else if (dado == 1)
             contenConsola(`Esquiva<br>¡PIFIA!`)
           else
@@ -3882,7 +3933,7 @@ function mostrarEsbirroSeleccionado() {
         case 3: // * Bloquea
           // TODO: Retocar bloqueo
           if (dado == 20)
-            contenConsola(`Bloquea<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+            contenConsola(`Bloquea<br>¡CRITICO!`)
           else if (dado == 1)
             contenConsola(`Bloquea<br>¡PIFIA!`)
           else
@@ -3891,11 +3942,11 @@ function mostrarEsbirroSeleccionado() {
         case 4: // * Huye
           // TODO: Retocar huye
           if (dado == 20)
-            contenConsola(`Corre<br>¡CRITICO!<br>${Math.floor(esbirroSeleccionado.velocidad * 2)}`)
+            contenConsola(`Corre<br>¡CRITICO!`)
           else if (dado == 1)
             contenConsola(`Corre<br>¡PIFIA!`)
           else
-            contenConsola(`Corre<br>${dado + esbirroSeleccionado.esquiva}`)
+            contenConsola(`Corre<br>${dado + esbirroSeleccionado.velocidad}`)
           break;
         case 5:
         case 6: // * Tirada limpia
