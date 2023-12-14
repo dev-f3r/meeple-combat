@@ -9,15 +9,15 @@
 //  return false;
 //});
 
-document.body.addEventListener('selectstart', (e) => {
-  e.preventDefault();
-  return false;
-});
+// document.body.addEventListener('selectstart', (e) => {
+//   e.preventDefault();
+//   return false;
+// });
 
-document.body.addEventListener('dragstart', (e) => {
-  e.preventDefault();
-  return false;
-});
+// document.body.addEventListener('dragstart', (e) => {
+//   e.preventDefault();
+//   return false;
+// });
 
 { // * helpers, funciones varias
   /**
@@ -353,13 +353,13 @@ document.body.addEventListener('dragstart', (e) => {
         esbirros[i].actualizarPropiedades(esbirrosDict[`esbirro${i + 1}`])
       }
 
-      
+
 
       if (esPersonaje) imprimirPersonaje()
       else mostrarEsbirroSeleccionado()
 
       window.location.reload()
-    
+
     }
 
   }
@@ -2578,12 +2578,21 @@ function armas(armaSeleccionada, slot) {
   }
 
   { // * eventListeners de los botones arriba y abajo
+
+    // Seleccionar los botones de arriba y abajo
     ['arriba', 'abajo'].forEach(key => {
       const boton = document.getElementById(`${key}Btn`)
+      let accionBtn = key === 'arriba'
+        ? 'mas'
+        : 'menos'
+
+      // Prevenir el menú contextual al hacer clic derecho en el botón
+      boton.addEventListener('contextmenu', (event) => {
+        event.preventDefault()
+      })
+
+      // Manejar el evento de clic en el botón
       boton.addEventListener('click', () => {
-        let accionBtn = key === 'arriba'
-          ? 'mas'
-          : 'menos'
         if (edicion) {
           if (tipoEdicion === "personaje") modificarValores(accionBtn, estadisticaSeleccionada)
           else modificarAtributosEsbirro(accionBtn, estadisticaSeleccionada)
@@ -2593,7 +2602,45 @@ function armas(armaSeleccionada, slot) {
           else modificarVidaPoderActualEsbirro(accionBtn)
         }
       })
+
+      let timer
+
+      // Iniciar un temporizador cuando se mantiene presionado el botón
+      function iniciarTimer() {
+        timer = setInterval(() => {
+          if (edicion) {
+            if (tipoEdicion === "personaje") modificarValores(accionBtn, estadisticaSeleccionada)
+            else modificarAtributosEsbirro(accionBtn, estadisticaSeleccionada)
+          }
+          else {
+            if (tipoEdicion === "personaje") masMenosVidaPoder(accionBtn)
+            else modificarVidaPoderActualEsbirro(accionBtn)
+          }
+        }, 100)
+      }
+
+      // Detener el temporizador cuando se deja de presionar el botón
+      function detenerTimer() {
+        clearTimeout(timer)
+      }
+
+      // Manejar el evento de presionar el botón
+      boton.addEventListener('mousedown', () => {
+        iniciarTimer()
+      })
+      boton.addEventListener('touchstart', () => {
+        iniciarTimer()
+      })
+
+      // Manejar el evento de soltar el botón
+      boton.addEventListener('mouseup', () => {
+        detenerTimer()
+      })
+      boton.addEventListener('touchend', () => {
+        detenerTimer()
+      })
     })
+
   }
 }
 
