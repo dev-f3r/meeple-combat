@@ -177,8 +177,7 @@
   function contenConsola(val) {
     consolaBtn.innerHTML = val
 
-    arribaBtn.style.display = "none"
-    abajoBtn.style.display = "none"
+    btnMasMenos.style.display = "none"
     if (!esPersonaje) {
       izquierdaBtn.style.display = "none"
       derechaBtn.style.display = "none"
@@ -196,16 +195,14 @@
 
   // ? Muestra los botones de incremento y decremento
   function mostrarBtnArribaAbajo() {
-    arribaBtn.style.display = "block"
-    abajoBtn.style.display = "block"
+    btnMasMenos.style.display = "flex"
     ocultarControlesCambioEsbirro()
     flagControlesCambioEsbirro = false
   }
 
   // ? Oculta los botones de incremento y decremento
   function ocultarBtnArrivaAbajo() {
-    arribaBtn.style.display = "none"
-    abajoBtn.style.display = "none"
+    btnMasMenos.style.display = "none"
     if (esPersonaje) guardarEstadoPersonaje()
     else guardarEstadoListaEsbirros()
   }

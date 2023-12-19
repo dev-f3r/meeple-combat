@@ -28,8 +28,6 @@
     height: 100%;
 }
 
-#arribaBtn,
-#abajoBtn,
 #derechaBtn,
 #izquierdaBtn {
     display: none;
@@ -39,19 +37,22 @@
 #abajoBtn {
     height: 100%;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #arribaBtn svg,
 #abajoBtn svg {
-    height: 100%;
+    height: max-content;
     width: 25px;
 }
 
-#arribaBtn {
-    transform: translateY(-10px);
+#arribaBtn svg {
+    transform: translateY(-5px);
 }
-#abajoBtn {
-    transform: translateY(10px);
+#abajoBtn svg {
+    transform: translateY(5px);
 }
 
 #derechaBtn {
