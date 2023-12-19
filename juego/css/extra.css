@@ -1,3 +1,12 @@
+.btns-mas-menos {
+    grid-row: 8/span 3;
+    grid-column: 5/span 1;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 250;
+    outline: 0;
+}
+
 /* * Estilos de consola  comienzo*/
 .item-grilla.consola-container {
     display: grid;
@@ -7,10 +16,6 @@
     justify-items: center;
     overflow: hidden;
 }
-
-/* .consola-item svg {
-    
-} */
 
 .consola-item.texto {
     margin: 0;
@@ -33,21 +38,20 @@
 #arribaBtn,
 #abajoBtn {
     height: 100%;
-    grid-column: 2;
-}
-
-#arribaBtn {
-    padding-top: 10px;
-}
-
-#abajoBtn {
-    padding-bottom: 10px;
+    width: 100%;
 }
 
 #arribaBtn svg,
 #abajoBtn svg {
     height: 100%;
     width: 25px;
+}
+
+#arribaBtn {
+    transform: translateY(-10px);
+}
+#abajoBtn {
+    transform: translateY(10px);
 }
 
 #derechaBtn {
