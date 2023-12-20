@@ -2760,8 +2760,12 @@ function armas(armaSeleccionada, slot) {
       // ? crea una referencia al objeto arma1 o arma2, se basa en slotArmaSeleccionada, revisar función armas()
       else seleccion = slotArmaSeleccionada === 1 ? arma1 : arma2
 
-
-      Object.assign(seleccion, armasDict[arma])
+      // Si se cambiar nuevamente al arma 'puño' carga el arma 'patada'
+      if(seleccion.nombre === 'puño' && arma === 'punno') {
+        Object.assign(seleccion, armasDict.patada)
+      } 
+      // Caso contrario carga el arma seleccionada
+      else Object.assign(seleccion, armasDict[arma])
 
       // reflejar cambios
       modalArmas.style.display = "none"
@@ -3494,7 +3498,10 @@ class Esbirro {
   configurarArma(ranura, nombre) {
     if (nombre in armasDict) {
       if (!armasDict[nombre].icono) console.error(`Esbirro: Agregar propiedad icono de ${nombre} en armasDict`)
-      this[`arma${ranura}`] = armasDict[nombre]
+
+      if(this[`arma${ranura}`].nombre === 'puño' && nombre === 'punno') {
+        this[`arma${ranura}`] = armasDict.patada
+      } else this[`arma${ranura}`] = armasDict[nombre]
     }
     else
       this[`arma${ranura}`] = { nombre, descripcion: "Arma sin descripción" }
