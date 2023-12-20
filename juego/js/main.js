@@ -314,6 +314,10 @@
     cerrarEdicion()
   })
 
+  /**
+   * Función que procesa un comando ingresado y realiza las acciones correspondientes.
+   * @param {string} comando - El comando ingresado por el usuario.
+   */
   function ingresarComando(comando) {
     comando = comando.toLowerCase()
     // ? Cambio de personaje con '/' + nombre
@@ -326,8 +330,20 @@
       }
     }
 
+    if (comando === '/full') {
+      if (esPersonaje) {
+        personaje.vida = personaje.vidaMaxima
+        personaje.poder = personaje.poderMaximo
 
-    // TODO: Agregar los demas comandos
+        imprimirPersonaje()
+      } else {
+        esbirroSeleccionado.vida = esbirroSeleccionado.vidaMaxima
+        esbirroSeleccionado.poder = esbirroSeleccionado.poderMaximo
+
+        mostrarEsbirroSeleccionado()
+      }
+    }
+
     if (comando === '/reload') {
       localStorage.clear()
       arma1 = armasDict.nada
@@ -356,6 +372,8 @@
 
       window.location.reload()
     }
+
+    // TODO: Agregar los demas comandos
 
   }
 }
