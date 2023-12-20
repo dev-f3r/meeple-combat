@@ -328,7 +328,6 @@
 
 
     // TODO: Agregar los demas comandos
-
     if (comando === '/reload') {
       localStorage.clear()
       arma1 = armasDict.nada
@@ -356,7 +355,6 @@
       else mostrarEsbirroSeleccionado()
 
       window.location.reload()
-
     }
 
   }
@@ -2630,10 +2628,10 @@ function armas(armaSeleccionada, slot) {
       })
 
       // Manejar el evento de soltar el botón
-      boton.addEventListener('mouseup', () => {
+      document.addEventListener('mouseup', () => {
         detenerTimer()
       })
-      boton.addEventListener('touchend', () => {
+      document.addEventListener('touchend', () => {
         detenerTimer()
       })
     })
