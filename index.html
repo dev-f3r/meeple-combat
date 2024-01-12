@@ -15,13 +15,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/meeple.css">
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-09R6PTWDCE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-09R6PTWDCE');
+</script>
 <body>
     <div class="contenedor">
 
         <div class="grilla">
 
-            <div class="itemGrilla btn-def" id="logoBtn">
+            <div class="itemGrilla" id="logoBtn">
                 <img src="img/meeple-combat-logo.png" alt="Meeple Combat Logo">
             </div>
 
@@ -37,7 +45,7 @@
                     <span class="titulo">¡BIENVENIDOS AVENTUREROS!</span><br>
                     <img src="img/barra.png" class="barra" alt="Barra"><br>
                     Meeple Combat es una herramienta pensada para instruir a
-                    nuevos jugadores en el mundo de rol, brindando un sistema sólido y compacto.<br><br>
+                    nuevos jugadores en el mundo de rol, brindando un sistema sólido y compacto, pero con un sin fín de posibilidades.<br><br>
                     Los participantes comprenderán
                     todo durante su primera partida, pero quedarán ávidos
                     de probar nuevas combinaciones y estilos de juego.<br><br>
@@ -58,14 +66,14 @@
             </div>
 
             <div class="itemGrilla">
-                <span class="textoBlanco btn-def" id="jugarBtn">JUGAR AHORA</span>
+                <span class="textoBlanco" id="jugarBtn">JUGAR AHORA</span>
             </div>
 
             <div class="itemGrilla">
                 <div class="botonera">
-                    <div class="boton btn-def" id="proyectoBtn"><span class="texto">EL PROYECTO</span></div>
-                    <div class="boton btn-def" id="matecitoBtn"> <img src="img/colabora.png" alt="Colabora"> </div>
-                    <div class="boton btn-def" id="imprimiblesBtn"><span class="texto">IMPRIMIBLES</span></div>
+                    <div class="boton" id="proyectoBtn"><span class="texto">SINOPSIS</span></div>
+                    <div class="boton" id="matecitoBtn"> <img src="img/colabora.png" alt="Colabora"> </div>
+                    <div class="boton" id="imprimiblesBtn"><span class="texto">IMPRIMIBLES</span></div>
                 </div>
             </div>
 
@@ -74,6 +82,7 @@
     </div><!--Contenedor-->
 
 </body>
-<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
 
 </html>

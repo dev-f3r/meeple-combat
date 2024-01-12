@@ -1,21 +1,21 @@
 packBtn.addEventListener('click', function () {
 
 
-    window.location = "../../recursos/2d/meeple-combat.pdf"
+    window.location = "../../juego/meeple-combat/recursos/2d/meeple-combat.pdf"
 
 })
 
 losetasBtn.addEventListener('click', function () {
 
 
-    window.location = "../../recursos/2d/losetas.pdf"
+    window.location = "../../juego/meeple-combat/recursos/2d/losetas.pdf"
 
 })
 
 personajesBtn.addEventListener('click', function () {
 
 
-    window.location = "../../recursos/2d/personajes-marcas.pdf"
+    window.location = "../../juego/meeple-combat/recursos/2d/personajes-marcas.pdf"
 
 })
 
@@ -23,6 +23,14 @@ personajesBtn.addEventListener('click', function () {
 manualBtn.addEventListener('click', function () {
 
 
-    window.location = "../../recursos/manuales/manual-meeple-combat.pdf"
+    window.location = "../../juego/meeple-combat/recursos/manuales/manual-meeple-combat.pdf"
+
+})
+
+
+pack3dBtn.addEventListener('click', function () {
+
+
+    window.location = "../../juego/meeple-combat/recursos/3d/3mf-meeple-combat.rar"
 
 })

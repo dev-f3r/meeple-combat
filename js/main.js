@@ -17,19 +17,19 @@ document.body.addEventListener('dragstart', (e) => {
 
 imprimiblesBtn.addEventListener('click', function () {
 
-    window.location = "/imprimibles.html"
+    window.location = "../../juego/meeple-combat/imprimibles.html"
 
 })
 
 logoBtn.addEventListener('click', function () {
 
-    window.location = "/index.html"
+    window.location = "../../juego/meeple-combat/"
 
 })
 
 matecitoBtn.addEventListener('click', function () {
 
-    window.location = "https://www.matecito.co/Battlerol.net"
+    window.location = "https://www.matecito.co/battlerol.net"
 
 })
 
@@ -37,7 +37,7 @@ matecitoBtn.addEventListener('click', function () {
 jugarBtn.addEventListener('click', function () {
 
 
-    window.location = "../../juego/index.html"
+    window.location = "../../juego/meeple-combat/interfaz/index.html"
 
 })
 
@@ -46,7 +46,7 @@ jugarBtn.addEventListener('click', function () {
 
 proyectoBtn.addEventListener('click', function () {
 
-    window.location = "/proyecto.html"
+    window.location = "../../juego/meeple-combat/proyecto.html"
 
 })
 
