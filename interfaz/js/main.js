@@ -20,6 +20,30 @@ document.body.addEventListener('dragstart', (e) => {
 });
 
 { // * helpers, funciones varias
+  function cambioImagen(event) {
+    var input = event.target;
+
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+
+        if(esPersonaje) {
+          personaje.portada = e.target.result
+          guardarEstadoPersonaje()
+          imprimirPersonaje()
+        } else {
+          esbirroSeleccionado.portada = e.target.result
+          guardarEstadoListaEsbirros()
+          mostrarEsbirroSeleccionado()
+        }
+      };
+
+      // Read the selected image as a data URL
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
   /**
    * Guarda el estado de la lista de esbirros en el almacenamiento local.
    */
@@ -579,6 +603,10 @@ document.body.addEventListener('dragstart', (e) => {
 
         cambiarEsbirro(nombre)
       }
+    }
+
+    if (comando === '.imagen') {
+      cambioImagenBtn.click()
     }
     // TODO: Agregar los demas comandos
   }
