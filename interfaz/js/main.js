@@ -20,6 +20,9 @@ document.body.addEventListener('dragstart', (e) => {
 });
 
 { // * helpers, funciones varias
+  /**
+   * ? Cambia la portada del personaje o del esbirro seleccionado
+   */
   function cambioImagen(event) {
     var input = event.target;
 
@@ -28,7 +31,7 @@ document.body.addEventListener('dragstart', (e) => {
 
       reader.onload = function (e) {
 
-        if(esPersonaje) {
+        if (esPersonaje) {
           personaje.portada = e.target.result
           guardarEstadoPersonaje()
           imprimirPersonaje()
@@ -607,6 +610,31 @@ document.body.addEventListener('dragstart', (e) => {
 
     if (comando === '.imagen') {
       cambioImagenBtn.click()
+    }
+
+    if (comando === '.loot') {
+      const lista = ['armaduraLigera', 'daga', 'anillo', 'espada']
+      const index = Math.floor(Math.random() * lista.length)
+
+      const elemento = lista[index]
+
+      if (esPersonaje) {
+        if(armasDict[elemento]) {
+          cambiarArma(elemento, slotArmaSeleccionada)
+        }
+        if(equiposDict[elemento]) {
+          cambiarEquipamiento(elemento)
+          equipamientoSeleccionado += equipamientoSeleccionado < 3 ? 1 : -2
+        }
+      } else {
+        if(armasDict[elemento]) {
+          cambiarArmaEsbirro(elemento)
+        }
+        if(equiposDict[elemento]) {
+          cambiarEquipamientoEsbirro(elemento)
+          equipamientoSeleccionado += equipamientoSeleccionado < 3 ? 1 : -2
+        }
+      }
     }
     // TODO: Agregar los demas comandos
   }
@@ -2283,7 +2311,6 @@ const personajesDict = {
   }
 
 }
-
 const listaPersonajes = Object.keys(personajesDict).filter(name => {
   if (
     name !== 'bienvenida'
@@ -2382,6 +2409,11 @@ const equiposDict = {
     poderMaximo: -10,
   },
 }
+const listaEquipos = Object.keys(equiposDict).filter(name => {
+  if (name !== 'nada') {
+    return true
+  } else return false
+})
 
 // ? Bandera que indica si el juego esta en modo edicion o no, valores posibles 0 o 1
 var edicion = 0
