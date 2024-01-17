@@ -566,8 +566,21 @@ document.body.addEventListener('dragstart', (e) => {
       window.location.reload()
     }
 
-    // TODO: Agregar los demas comandos
+    if (comando === '/reencarnar') {
+      console.log(esPersonaje)
+      if (esPersonaje) {
+        let index = Math.floor(Math.random() * listaPersonajes.length)
+        let nombre = listaPersonajes[index]
 
+        avatar(nombre)
+      } else {
+        let index = Math.floor(Math.random() * listaEsbirros.length)
+        let nombre = listaEsbirros[index]
+
+        cambiarEsbirro(nombre)
+      }
+    }
+    // TODO: Agregar los demas comandos
   }
 }
 
@@ -1180,6 +1193,7 @@ const armasDict = {
     descripcion: "FRUTOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 175% de ataque como daño mágico o físico <br> distancia máxima 1 casillero x punto de ataque"
   }
 }
+const listaArmas = Object.keys(armasDict)
 
 // ? Objeto para almacenar información de los esbirros
 // TODO: Agregar los demas esbirros
@@ -1562,6 +1576,11 @@ const esbirrosDict = {
     equipo3: "nada"
   }
 }
+const listaEsbirros = Object.keys(esbirrosDict).filter(name => {
+  if (["esbirro1", "esbirro2", "esbirro3", "esbirro4", "esbirro5"].indexOf(name) === -1) {
+    return true
+  } else return false
+})
 
 // ? Objeto para almecenar información de los esbirros
 // TODO: Agregar los demas personajes
@@ -2237,6 +2256,16 @@ const personajesDict = {
 
 }
 
+const listaPersonajes = Object.keys(personajesDict).filter(name => {
+  if (
+    name !== 'bienvenida'
+    && name !== 'nuevopj'
+    && name !== 'nuevoesbirro'
+  ) {
+    return true
+  } else return false
+})
+
 // ? Objeto para almacenar información de los distintos equipamientos
 // TODO: Revisar atributos de cada item
 const equiposDict = {
@@ -2647,7 +2676,7 @@ portadaBtn.addEventListener('click', function () {
 /* 
     * @opcion: string
 */
-// ? cierra modal de armas, de personajes o de equipamiento
+// ? cierra modal de armas, de personajes, de equipamiento o de la mochila
 function cerrarModal(opcion) {
   switch (opcion) {
     case "armas":
@@ -2676,7 +2705,6 @@ function cerrarModal(opcion) {
       editarImg.src = "img/editar.png"
       break;
 
-
     case "esbirros":
       modalEsbirros.style.display = "none"
       edicion = 0
@@ -2688,6 +2716,10 @@ function cerrarModal(opcion) {
       edicion = 0
       editarImg.src = "img/editar.png"
       break;
+
+    case "mochila":
+      // TODO: Completar
+      modalMochila.style.display = "none"
 
     default:
       break;
@@ -2704,20 +2736,18 @@ cerrarModalEsbirros.addEventListener('click', function () {
 cerrarModalArmas.addEventListener('click', function () {
   cerrarModal("armas")
 })
-
 cerrarModalArmasNaturales.addEventListener('click', function () {
   cerrarModal("armasNaturales")
 })
-
 cerrarModalArmasNaturales2.addEventListener('click', function () {
   cerrarModal("armasNaturales2")
 })
-
-
 cerrarModalEquipo.addEventListener('click', function () {
   cerrarModal("equipamiento")
 })
-
+cerrarModalMochila.addEventListener('click', function () {
+  cerrarModal("mochila")
+})
 
 arma1ImgBtn.addEventListener('click', function () {
   armas(personaje.arma1, 1)
@@ -2736,6 +2766,11 @@ arma2TxtBtn.addEventListener('click', function () {
   accionTxt.textContent = "ATACAR"
 })
 
+
+// ! Mochila
+mochilaBtn.addEventListener('click', function () {
+  modalMochila.style.display = "grid"
+})
 
 
 /* 
