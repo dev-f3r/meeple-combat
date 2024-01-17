@@ -619,21 +619,33 @@ document.body.addEventListener('dragstart', (e) => {
       const elemento = lista[index]
 
       if (esPersonaje) {
-        if(armasDict[elemento]) {
+        if (armasDict[elemento]) {
           cambiarArma(elemento, slotArmaSeleccionada)
         }
-        if(equiposDict[elemento]) {
+        if (equiposDict[elemento]) {
           cambiarEquipamiento(elemento)
           equipamientoSeleccionado += equipamientoSeleccionado < 3 ? 1 : -2
         }
       } else {
-        if(armasDict[elemento]) {
+        if (armasDict[elemento]) {
           cambiarArmaEsbirro(elemento)
         }
-        if(equiposDict[elemento]) {
+        if (equiposDict[elemento]) {
           cambiarEquipamientoEsbirro(elemento)
           equipamientoSeleccionado += equipamientoSeleccionado < 3 ? 1 : -2
         }
+      }
+    }
+
+    if (comando === '/licantropo') {
+      if (esPersonaje) {
+        cambiarArma('mordisco', 1)
+        cambiarArma('garras', 2)
+      } else {
+        slotArmaSeleccionada = 1
+        cambiarArmaEsbirro('mordisco')
+        slotArmaSeleccionada = 2
+        cambiarArmaEsbirro('garras')
       }
     }
     // TODO: Agregar los demas comandos
