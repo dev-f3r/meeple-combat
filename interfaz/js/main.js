@@ -9,15 +9,15 @@ document.body.addEventListener('contextmenu', (e) => {
 //  return false;
 //});
 
- document.body.addEventListener('selectstart', (e) => {
-   e.preventDefault();
-   return false;
- });
+document.body.addEventListener('selectstart', (e) => {
+  e.preventDefault();
+  return false;
+});
 
- document.body.addEventListener('dragstart', (e) => {
-   e.preventDefault();
-   return false;
- });
+document.body.addEventListener('dragstart', (e) => {
+  e.preventDefault();
+  return false;
+});
 
 { // * helpers, funciones varias
   /**
@@ -406,6 +406,22 @@ document.body.addEventListener('contextmenu', (e) => {
       }
     }
 
+    if (comando === '/paladinoscuro') {
+      if (esPersonaje) { // ? Cambio de personaje principal
+        avatar('paladinoscuro')
+      } else { // ? Cambio de esbirro
+        cambiarEsbirro('paladinoscuro')
+      }
+    }
+
+    if (comando === '/guardiarunico') {
+      if (esPersonaje) { // ? Cambio de personaje principal
+        avatar('guardiarunico')
+      } else { // ? Cambio de esbirro
+        cambiarEsbirro('guardiarunico')
+      }
+    }
+
     if (comando === '/cinirus') {
       if (esPersonaje) { // ? Cambio de personaje principal
         avatar('cinirus')
@@ -601,7 +617,7 @@ const habilidadesDict = {
   "ataque rapido": {
     nombre: "ataque rapido",
     coste: 1,
-    descripcion: "Avanza hacia el objetivo y lo ataca en una acción combinada / distancia máx(velocidad x 2) <br> Poder min(3) / Acciones(Arma)"
+    descripcion: "Avanza hacia el objetivo y lo ataca en una acción combinada (solo ataques cuerpo a cuepro) / distancia máx(velocidad x 2) <br> Poder min(3) / Acciones(Arma)"
   },
   "cobertura": {
     nombre: "cobertura",
@@ -736,7 +752,7 @@ const habilidadesDict = {
   "licantropia": {
     nombre: "licantropia",
     coste: 1,
-    descripcion: "Puedes tener garras y colmillos como armas naturales durante 3 turnos <br> Poder o Poder(3) <br> Escribe el comando: /licántropo"
+    descripcion: "Puedes tener garras y colmillos como armas naturales durante 3 turnos <br> Poderr(3)<br>"
   },
   "terremoto": {
     nombre: "terremoto",
@@ -801,7 +817,57 @@ const habilidadesDict = {
   "petrificar": {
     nombre: "petrificar",
     coste: 1,
-    descripcion: "Rompe los huesos de la víctima, causando daño físico y dejando a la víctima con -1 a la velocidad durante 3 turnos, este penalizador se puede acumular, el tiempo de efecto se reinicia al hacerlo, una vez sin velocidad el objetivo recibe doble de daño <br> Poder(6)"
+    descripcion: "Vuelve roca al objetivo indefinidamente<br> Poder(vida actual del objetivo +)"
+  },
+  "disparo en movimiento": {
+    nombre: "disparo en movimiento",
+    coste: 1,
+    descripcion: "Habilida pasiva que permite disparar con cualquier arma a distancia mientras se esta en movimiento, combinando ambas acciones. La velocidad de movimiento no puede superar tu velocidad por acción.<br> Consume solo las acciones de ataque(arma)."
+  },
+  "reanimar": {
+    nombre: "reanimar",
+    coste: 1,
+    descripcion: "Levanta un cadaver con atributos de zombie básico, durante 6 turnos para que te ayude<br> Poder(10)."
+  },
+  "resucitar": {
+    nombre: "resucitar",
+    coste: 1,
+    descripcion: "Devuelve el objetivo a la vida.<br> Poder(vida máxima del objetivo)."
+  },
+  "reencarnar": {
+    nombre: "reencarnar",
+    coste: 1,
+    descripcion: "Vuelve a la vida a un objetivo o a ti mismo, pero en un personaje o criatura al azar (puedes usar el comando /reencarnar), debes estar vivo aun para lanzarlo.<br> Poder(el nuevo personaje pierde todo su poder inicial)."
+  },
+  "karma": {
+    nombre: "karma",
+    coste: 1,
+    descripcion: "El proximo daño que haga el objetivo, ya sea a ti o cualquiera, se le aplicara a el también.<br> Poder(9)."
+  },
+  "esfera de luz": {
+    nombre: "esfera de luz",
+    coste: 1,
+    descripcion: "Una poderosa luz que puedes dirigir por todas partes, iluminando a una ditancia de 9 casilleros, durante 3 turnos.<br> Poder(6)."
+  },
+  "dagas etereas": {
+    nombre: "dagas etereas",
+    coste: 1,
+    descripcion: "Materializa dos dagas gemelas durante 3 turnos.<br> Poder(6)."
+  },
+  "provocar": {
+    nombre: "provocar",
+    coste: 1,
+    descripcion: "Provoca al objetivo para que te ataque y le restas 3 puntos a su primer ataque contra ti, impidiendo que puede hacerte daño círitico.<br> Poder(6)."
+  },
+  "combo marcial": {
+    nombre: "combo marcial",
+    coste: 1,
+    descripcion: "Ataca con un combo de un dos puñetazos y una patada final, en solo 2 acciones, generando todo el daño al final de la habilidad.<br> Poder(6)."
+  },
+  "golpe bajo": {
+    nombre: "golpe bajo",
+    coste: 1,
+    descripcion: "Daña e inhabilita al objetivo, quitandole 2 acciones de su proximo turno.<br> Poder(6)."
   }
 }
 
@@ -1843,7 +1909,59 @@ const personajesDict = {
     habilidad3: "sanar",
   },
 
+  "paladinoscuro": {
+    nombre: "paladin oscuro",
+    portada: "img/paladinoscuro.png",
+    icono: "",
+    descripcion: "combatiente mágico con habilidades del Reino Vida, prefiere sanar antes que dañar.",
 
+    ataque: 5,
+    esquiva: 2,
+    bloqueo: 5,
+    velocidad: 3,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 40,
+    poderMaximo: 40,
+
+    arma1: "hojaruna",
+    arma2: "magia",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "enraizar",
+    habilidad2: "envenenar",
+    habilidad3: "sanar",
+  },
+
+  "guardiarunico": {
+    nombre: "guardia runico",
+    portada: "img/guardiarunico.png",
+    icono: "",
+    descripcion: "combatiente mágico con habilidades del Reino Vida, prefiere sanar antes que dañar.",
+
+    ataque: 5,
+    esquiva: 2,
+    bloqueo: 5,
+    velocidad: 3,
+    vida: 25,
+    vidaMaxima: 25,
+    poder: 40,
+    poderMaximo: 40,
+
+    arma1: "hojaruna",
+    arma2: "escudo",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "embestida con escudo",
+    habilidad2: "enraizar",
+    habilidad3: "sanar",
+  },
 
 
 
@@ -2149,7 +2267,7 @@ const equiposDict = {
   'armaduraMedia': {
     nombre: "Armadura Media",
     icono: "img/armaduramedia.png",
-    descripcion: "Armadura Media <br> +1 al bloqueo / +15 de vida máxima <br> -1 a esquiva y velocidad",
+    descripcion: "Armadura Media <br> +2 al bloqueo / +15 de vida máxima <br> -1 a esquiva y velocidad",
     nivel: 1,
     ataque: 0,
     esquiva: -1,
@@ -2161,11 +2279,11 @@ const equiposDict = {
   'armaduraPesada': {
     nombre: "Armadura Pesada",
     icono: "img/armadurapesada.png",
-    descripcion: "Armadura Pesada <br> +4 de bloqueo / +20 de vida máxima <br> -1 al ataque / -2 a esquiva y velocidad.",
+    descripcion: "Armadura Pesada <br> +3 de bloqueo / +20 de vida máxima <br> -1 al ataque / -2 a esquiva y velocidad.",
     nivel: 1,
     ataque: -1,
     esquiva: -2,
-    bloqueo: 4,
+    bloqueo: 3,
     velocidad: -2,
     vidaMaxima: 20,
     poderMaximo: 0,
@@ -3213,9 +3331,9 @@ function armas(armaSeleccionada, slot) {
       else seleccion = slotArmaSeleccionada === 1 ? arma1 : arma2
 
       // Si se cambiar nuevamente al arma 'puño' carga el arma 'patada'
-      if(seleccion.nombre === 'puño' && arma === 'punno') {
+      if (seleccion.nombre === 'puño' && arma === 'punno') {
         Object.assign(seleccion, armasDict.patada)
-      } 
+      }
       // Caso contrario carga el arma seleccionada
       else Object.assign(seleccion, armasDict[arma])
 
@@ -3951,7 +4069,7 @@ class Esbirro {
     if (nombre in armasDict) {
       if (!armasDict[nombre].icono) console.error(`Esbirro: Agregar propiedad icono de ${nombre} en armasDict`)
 
-      if(this[`arma${ranura}`].nombre === 'puño' && nombre === 'punno') {
+      if (this[`arma${ranura}`].nombre === 'puño' && nombre === 'punno') {
         this[`arma${ranura}`] = armasDict.patada
       } else this[`arma${ranura}`] = armasDict[nombre]
     }
