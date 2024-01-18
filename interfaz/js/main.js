@@ -2431,6 +2431,12 @@ const listaEquipos = Object.keys(equiposDict).filter(name => {
 var edicion = 0
 // ? Bandera que indica si se esta editanto el personaje principal o el esbirro, valores posibles 'personaje' o 'esbirro'
 var tipoEdicion = 'personaje'
+// ? Contiene informacion sobre la cantidad de monedas en la mochila
+var capital = {
+  oro: 1,
+  plata: 0,
+  bronce: 0,
+}
 // ? Indicador de experiencia general
 var experiencia = 0
 // ? Indica el arma seleccionada para ejecutar la función acción(), rango 1..2
@@ -2843,7 +2849,64 @@ arma2TxtBtn.addEventListener('click', function () {
 mochilaBtn.addEventListener('click', function () {
   modalMochila.style.display = "grid"
 })
+function actualizarMochila() {
+  oroTxt.textContent = capital.oro
+  plataTxt.textContent = capital.plata
+  bronceTxt.textContent = capital.bronce
+  // TODO: Agregar items en la mochila
+}
+actualizarMochila()
 
+function restarSumarMonedas(tipo) {
+  // ? Valores con respecto al oro
+  const vals = {
+    oro: 1,
+    plata: 10,
+    bronce: 100,
+  }
+  switch (tipo) {
+    case "oro":
+      if (capital.plata >= 10) {
+        capital.oro += 1
+        capital.plata -= 10
+      } else if (capital.bronce >= 100) {
+        capital.oro += 1
+        capital.bronce -= 100
+      }
+      break;
+    case "plata":
+      if (capital.oro >= 1) {
+        capital.plata += 10
+        capital.oro -= 1
+      } else if (capital.bronce >= 10) {
+        capital.plata += 1
+        capital.bronce -= 10
+      }
+      break;
+    case "bronce":
+      if (capital.oro >= 1) {
+        capital.bronce += 100
+        capital.oro -= 1
+      } else if (capital.plata >= 1) {
+        capital.bronce += 10
+        capital.plata -= 1
+      }
+      break;
+    default:
+      break;
+  }
+  actualizarMochila()
+}
+
+{
+  const monedas = ['oro', 'plata', 'bronce']
+  monedas.forEach(nombre => {
+    const boton = document.getElementById(`${nombre}Btn`)
+    boton.addEventListener('click', function () {
+      restarSumarMonedas(nombre)
+    })
+  })
+}
 
 /* 
     * @meeple: string
