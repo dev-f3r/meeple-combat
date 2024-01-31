@@ -2893,22 +2893,47 @@ function restarMonedas(tipo) {
 }
 
 function sumarMonedas(tipo) {
+  switch (tipo) {
+    case "oro":
+      capital.oro++
+      break
+    case "plata":
+      capital.plata++
+      break
+    case "bronce":
+      capital.bronce++
+      break
+    default:
+      break
+  }
+
+  // Evalua el capital
+  if (capital.plata / 100 >= 1) {
+    capital.plata %= 100
+    capital.oro++
+  }
+  if (capital.bronce / 100 >= 1) {
+    capital.bronce %= 100
+    capital.plata++
+  }
+  actualizarMochila()
 }
 
 {
   const monedas = ['oro', 'plata', 'bronce']
   monedas.forEach(nombre => {
     const boton = document.getElementById(`${nombre}Btn`)
-    const handler = edicion ?
-      sumarMonedas : restarMonedas
-
     boton.addEventListener('click', function () {
+      const handler = edicion == 1 ?
+        sumarMonedas : restarMonedas
       handler(nombre)
     })
 
     let timer
     function iniciarTimer() {
       timer = setInterval(() => {
+        const handler = edicion == 1 ?
+          sumarMonedas : restarMonedas
         handler(nombre)
       }, 100)
     }
