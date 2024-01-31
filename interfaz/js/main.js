@@ -554,6 +554,7 @@ document.body.addEventListener('dragstart', (e) => {
       if (esPersonaje) {
         personaje.vida = personaje.vidaMaxima
         personaje.poder = personaje.poderMaximo
+        contenConsola("VIDA Y PODER REESTABLECIDOS")
 
         imprimirPersonaje()
       } else {
@@ -613,28 +614,14 @@ document.body.addEventListener('dragstart', (e) => {
     }
 
     if (comando === '.loot') {
-      const lista = ['armaduraLigera', 'daga', 'anillo', 'espada']
+      const lista = ['Armadura Ligera', 'daga', 'anillo', 'espada', 'escudo', 'varita', 'baculo', 'pergamino']
       const index = Math.floor(Math.random() * lista.length)
 
       const elemento = lista[index]
 
-      if (esPersonaje) {
-        if (armasDict[elemento]) {
-          cambiarArma(elemento, slotArmaSeleccionada)
-        }
-        if (equiposDict[elemento]) {
-          cambiarEquipamiento(elemento)
-          equipamientoSeleccionado += equipamientoSeleccionado < 3 ? 1 : -2
-        }
-      } else {
-        if (armasDict[elemento]) {
-          cambiarArmaEsbirro(elemento)
-        }
-        if (equiposDict[elemento]) {
-          cambiarEquipamientoEsbirro(elemento)
-          equipamientoSeleccionado += equipamientoSeleccionado < 3 ? 1 : -2
-        }
-      }
+
+
+      contenConsola("Loot = " + elemento)
     }
 
     if (comando === '/licantropo') {
@@ -758,7 +745,7 @@ const habilidadesDict = {
   "flecha elemental": {
     nombre: "flecha elemental",
     coste: 1,
-    descripcion: "Cambia el tipo de daño elemental que produce tu flecha <br> Poder(3) / Requiere arco"
+    descripcion: "Cambia el tipo de daño elemental que produce tu flecha <br> Poder(6) / Requiere arco"
   },
   "invocar": {
     nombre: "invocar",
@@ -833,7 +820,7 @@ const habilidadesDict = {
   "licantropia": {
     nombre: "licantropia",
     coste: 1,
-    descripcion: "Puedes tener garras y colmillos como armas naturales durante 3 turnos <br> Poderr(3)<br>"
+    descripcion: "Puedes tener garras y colmillos como armas naturales durante 3 turnos (puedes usar el comando /licantropo) <br> Poderr(3)<br>"
   },
   "terremoto": {
     nombre: "terremoto",
@@ -873,7 +860,7 @@ const habilidadesDict = {
   "drenar": {
     nombre: "drenar",
     coste: 1,
-    descripcion: "Transfiere vida, energía o maná del objetivo al conjurador, puedes apostar una de estas poders para aumentar el efecto, la cual solo se consumirá si fallas el ataque <br> Poder min(0)"
+    descripcion: "Transfiere vida o energía del objetivo al conjurador, puedes apostar una de estos para aumentar el efecto, el cual se consumirá aún si fallas el ataque <br> Poder min(0)"
   },
   "transmutar": {
     nombre: "transmutar",
@@ -2798,6 +2785,7 @@ function cerrarModal(opcion) {
     case "mochila":
       // TODO: Completar
       modalMochila.style.display = "none"
+
 
     default:
       break;
