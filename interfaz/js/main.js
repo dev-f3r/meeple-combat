@@ -2857,38 +2857,32 @@ function actualizarMochila() {
 }
 actualizarMochila()
 
-function restarSumarMonedas(tipo) {
-  // ? Valores con respecto al oro
-  const vals = {
-    oro: 1,
-    plata: 10,
-    bronce: 100,
-  }
+function restarMonedas(tipo) {
   switch (tipo) {
     case "oro":
-      if (capital.plata >= 10) {
+      if (capital.plata >= 100) {
         capital.oro += 1
-        capital.plata -= 10
-      } else if (capital.bronce >= 100) {
+        capital.plata -= 100
+      } else if (capital.bronce >= 10000) {
         capital.oro += 1
-        capital.bronce -= 100
+        capital.bronce -= 10000
       }
       break;
     case "plata":
       if (capital.oro >= 1) {
-        capital.plata += 10
+        capital.plata += 100
         capital.oro -= 1
-      } else if (capital.bronce >= 10) {
+      } else if (capital.bronce >= 100) {
         capital.plata += 1
-        capital.bronce -= 10
+        capital.bronce -= 100
       }
       break;
     case "bronce":
       if (capital.oro >= 1) {
-        capital.bronce += 100
+        capital.bronce += 10000
         capital.oro -= 1
       } else if (capital.plata >= 1) {
-        capital.bronce += 10
+        capital.bronce += 100
         capital.plata -= 1
       }
       break;
@@ -2898,13 +2892,46 @@ function restarSumarMonedas(tipo) {
   actualizarMochila()
 }
 
+function sumarMonedas(tipo) {
+}
+
 {
   const monedas = ['oro', 'plata', 'bronce']
   monedas.forEach(nombre => {
     const boton = document.getElementById(`${nombre}Btn`)
+    const handler = edicion ?
+      sumarMonedas : restarMonedas
+
     boton.addEventListener('click', function () {
-      restarSumarMonedas(nombre)
+      handler(nombre)
     })
+
+    let timer
+    function iniciarTimer() {
+      timer = setInterval(() => {
+        handler(nombre)
+      }, 100)
+    }
+
+    function detenerTimer() {
+      clearInterval(timer)
+    }
+
+    boton.addEventListener('mousedown', () => {
+      iniciarTimer()
+    })
+    boton.addEventListener('touchstart', () => {
+      iniciarTimer()
+    })
+
+    // Manejar el evento de soltar el botón
+    document.addEventListener('mouseup', () => {
+      detenerTimer()
+    })
+    document.addEventListener('touchend', () => {
+      detenerTimer()
+    })
+
   })
 }
 
