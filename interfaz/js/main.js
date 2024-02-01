@@ -47,6 +47,20 @@ document.body.addEventListener('dragstart', (e) => {
     }
   }
 
+  function guardarEstadoMochila() {
+    const mochilaString = JSON.stringify({ capital, itemMochila })
+
+    localStorage.setItem('mochila', mochilaString)
+  }
+
+  function cargarEstadoMochila() {
+    const mochilaString = localStorage.getItem('mochila')
+
+    const mochilaData = JSON.parse(mochilaString)
+
+    return mochilaData
+  }
+
   /**
    * Guarda el estado de la lista de esbirros en el almacenamiento local.
    */
@@ -2436,6 +2450,14 @@ var itemMochila = {
   1: "",
   2: "",
   3: ""
+}
+
+if (localStorage.getItem('mochila')) {
+  const mochila = cargarEstadoMochila()
+  Object.assign(capital, mochila.capital)
+  Object.assign(itemMochila, mochila.itemMochila)
+
+  actualizarMochila()
 }
 
 // ? Indicador de experiencia general
