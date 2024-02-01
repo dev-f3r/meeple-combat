@@ -2856,43 +2856,38 @@ function actualizarMochila() {
   plataTxt.textContent = capital.plata
   bronceTxt.textContent = capital.bronce
   // TODO: Agregar items en la mochila
-  for(let i=1; i <= 3; i++) {
+  for (let i = 1; i <= 3; i++) {
     document.getElementById(`item-mochila${i}`).textContent = itemMochila[i]
   }
 }
 actualizarMochila()
 
 function restarMonedas(tipo) {
+  // if (capital[tipo] > 0) {
+  //   capital[tipo]--
+  // }
   switch (tipo) {
     case "oro":
-      if (capital.plata >= 100) {
-        capital.oro += 1
-        capital.plata -= 100
-      } else if (capital.bronce >= 10000) {
-        capital.oro += 1
-        capital.bronce -= 10000
-      }
-      break;
+      if (capital.oro > 0) capital.oro--
+      break
     case "plata":
-      if (capital.oro >= 1) {
-        capital.plata += 100
-        capital.oro -= 1
-      } else if (capital.bronce >= 100) {
-        capital.plata += 1
-        capital.bronce -= 100
+      if (capital.plata === 0 && capital.oro > 0) {
+        capital.oro--
+        capital.plata += 99
+      } else if (capital.plata > 0) {
+        capital.plata--
       }
-      break;
+      break
     case "bronce":
-      if (capital.oro >= 1) {
-        capital.bronce += 10000
-        capital.oro -= 1
-      } else if (capital.plata >= 1) {
-        capital.bronce += 100
-        capital.plata -= 1
+      if (capital.bronce === 0 && capital.plata > 0) {
+        capital.plata--
+        capital.bronce += 99
+      } else if (capital.bronce > 0) {
+        capital.bronce--
       }
-      break;
+      break
     default:
-      break;
+      break
   }
   actualizarMochila()
 }
