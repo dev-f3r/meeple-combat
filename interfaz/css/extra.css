@@ -107,7 +107,7 @@ span.experiencia-item {
     justify-content: center;
     flex-direction: column;
     outline: solid 1.5px #000000;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .contenedor-input .exp-input,

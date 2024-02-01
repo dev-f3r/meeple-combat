@@ -275,6 +275,8 @@ document.body.addEventListener('dragstart', (e) => {
       case "nombre":
         data = "Ingrese nombre"
         break
+      case "mochila-item":
+        data = "Ingrese nombre del item"
       default:
         break
     }
@@ -307,6 +309,9 @@ document.body.addEventListener('dragstart', (e) => {
           } else {
             editarHabilidadEsbirro(comandosValor.value)
           }
+        case "mochila-item":
+          cambiarItemMochila(comandosValor.value)
+          actualizarMochila()
         default:
           break
       }
@@ -334,6 +339,9 @@ document.body.addEventListener('dragstart', (e) => {
         } else {
           editarHabilidadEsbirro(comandosValor.value)
         }
+      case "mochila-item":
+        cambiarItemMochila(comandosValor.value)
+        actualizarMochila()
       default:
         break
     }
@@ -2424,6 +2432,12 @@ var capital = {
   plata: 0,
   bronce: 0,
 }
+var itemMochila = {
+  1: "",
+  2: "",
+  3: ""
+}
+
 // ? Indicador de experiencia general
 var experiencia = 0
 // ? Indica el arma seleccionada para ejecutar la función acción(), rango 1..2
@@ -2842,6 +2856,9 @@ function actualizarMochila() {
   plataTxt.textContent = capital.plata
   bronceTxt.textContent = capital.bronce
   // TODO: Agregar items en la mochila
+  for(let i=1; i <= 3; i++) {
+    document.getElementById(`item-mochila${i}`).textContent = itemMochila[i]
+  }
 }
 actualizarMochila()
 
@@ -2907,7 +2924,11 @@ function sumarMonedas(tipo) {
   actualizarMochila()
 }
 
-{
+function cambiarItemMochila(txt) {
+  itemMochila[idxitemMochila] = txt
+}
+
+{ // Triggers de monedas
   const monedas = ['oro', 'plata', 'bronce']
   monedas.forEach(nombre => {
     const boton = document.getElementById(`${nombre}Btn`)
@@ -2946,6 +2967,20 @@ function sumarMonedas(tipo) {
     })
 
   })
+}
+
+let idxitemMochila = 1
+{ // Items mochila
+  for (let i = 1; i <= 3; i++) {
+    const item = document.getElementById(`item-mochila${i}`)
+    item.addEventListener('click', () => {
+      if (edicion) {
+        tipoIngreso = "mochila-item"
+        idxitemMochila = i
+        mostrarInputComandos()
+      }
+    })
+  }
 }
 
 /* 
