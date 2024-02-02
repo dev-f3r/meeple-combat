@@ -325,6 +325,7 @@ document.body.addEventListener('dragstart', (e) => {
           }
         case "mochila-item":
           cambiarItemMochila(comandosValor.value)
+          guardarEstadoMochila()
           actualizarMochila()
         default:
           break
@@ -2877,7 +2878,6 @@ function actualizarMochila() {
   oroTxt.textContent = capital.oro
   plataTxt.textContent = capital.plata
   bronceTxt.textContent = capital.bronce
-  // TODO: Agregar items en la mochila
   for (let i = 1; i <= 3; i++) {
     document.getElementById(`item-mochila${i}`).textContent = itemMochila[i]
   }
@@ -2885,9 +2885,6 @@ function actualizarMochila() {
 actualizarMochila()
 
 function restarMonedas(tipo) {
-  // if (capital[tipo] > 0) {
-  //   capital[tipo]--
-  // }
   switch (tipo) {
     case "oro":
       if (capital.oro > 0) capital.oro--
@@ -2911,6 +2908,8 @@ function restarMonedas(tipo) {
     default:
       break
   }
+
+  guardarEstadoMochila()
   actualizarMochila()
 }
 
@@ -2938,6 +2937,8 @@ function sumarMonedas(tipo) {
     capital.bronce %= 100
     capital.plata++
   }
+
+  guardarEstadoMochila()
   actualizarMochila()
 }
 
