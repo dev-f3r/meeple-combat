@@ -136,7 +136,7 @@ document.body.addEventListener('dragstart', (e) => {
     output.habilidad2 = JSON.parse(localStorage.getItem('habilidad2'))
     output.habilidad3 = JSON.parse(localStorage.getItem('habilidad3'))
 
-    experiencia = localStorage.getItem('exp')
+    if(localStorage.getItem('exp')) experiencia = Number(localStorage.getItem('exp'))
     // Parsea la cadena JSON y devuelve el objeto del personaje.
     return output
   }
@@ -327,7 +327,6 @@ document.body.addEventListener('dragstart', (e) => {
           }
         case "mochila-item":
           cambiarItemMochila(comandosValor.value)
-          guardarEstadoMochila()
           actualizarMochila()
         default:
           break
@@ -2946,6 +2945,7 @@ function sumarMonedas(tipo) {
 
 function cambiarItemMochila(txt) {
   itemMochila[idxitemMochila] = txt
+  guardarEstadoMochila()
 }
 
 { // Triggers de monedas
