@@ -111,6 +111,8 @@ document.body.addEventListener('dragstart', (e) => {
     localStorage.setItem('habilidad1', JSON.stringify(habilidad1))
     localStorage.setItem('habilidad2', JSON.stringify(habilidad2))
     localStorage.setItem('habilidad3', JSON.stringify(habilidad3))
+
+    localStorage.setItem('exp', experiencia)
   }
 
   /**
@@ -134,7 +136,7 @@ document.body.addEventListener('dragstart', (e) => {
     output.habilidad2 = JSON.parse(localStorage.getItem('habilidad2'))
     output.habilidad3 = JSON.parse(localStorage.getItem('habilidad3'))
 
-
+    experiencia = localStorage.getItem('exp')
     // Parsea la cadena JSON y devuelve el objeto del personaje.
     return output
   }
