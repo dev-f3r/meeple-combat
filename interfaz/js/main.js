@@ -188,8 +188,11 @@ document.body.addEventListener('dragstart', (e) => {
   function mostrarEstadistica(tipo, estadistica) {
     let data
 
-    if (tipo === "personaje") data = `${capitalizarPrimeraLetra(estadistica)} ${personaje[estadistica]}`
-    else data = `${capitalizarPrimeraLetra(estadistica)} ${esbirroSeleccionado[estadistica]}`
+    let personajeEstadistica = personaje[estadistica] + equipo1[estadistica] + equipo2[estadistica] + equipo3[estadistica]
+    let esbirroEstadistica = esbirroSeleccionado[estadistica]  + esbirroSeleccionado.equipo1[estadistica] + esbirroSeleccionado.equipo2[estadistica] + esbirroSeleccionado.equipo3[estadistica]
+
+    if (tipo === "personaje") data = `${capitalizarPrimeraLetra(estadistica)} ${personajeEstadistica}`
+    else data = `${capitalizarPrimeraLetra(estadistica)} ${esbirroEstadistica}`
 
     // * Para la funcion accion()
     switch (estadistica) {
@@ -4085,12 +4088,27 @@ atras2Btn.addEventListener('click', () => {
         * @slot: number
     */
     function accion(slot) {
-      let ataque = personaje.ataque,
-        esquiva = personaje.esquiva,
-        bloqueo = personaje.bloqueo,
-        velocidad = personaje.velocidad,
-        vidaMaxima = personaje.vidaMaxima,
-        poderMaximo = personaje.poderMaximo
+      const atributos = {
+        ataque: personaje.ataque,
+        esquiva: personaje.esquiva,
+        bloqueo: personaje.bloqueo,
+        velocidad: personaje.velocidad,
+        vidaMaxima: personaje.vidaMaxima,
+        poderMaximo: personaje.poderMaximo
+      }
+
+      for(const key in atributos) {
+        if(equipo1[key]) atributos[key] += equipo1[key]
+        if(equipo2[key]) atributos[key] += equipo2[key]
+        if(equipo3[key]) atributos[key] += equipo3[key]
+      }
+
+      let ataque = atributos.ataque,
+        esquiva = atributos.esquiva,
+        bloqueo = atributos.bloqueo,
+        velocidad = atributos.velocidad,
+        vidaMaxima = atributos.vidaMaxima,
+        poderMaximo = atributos.poderMaximo
 
 
       let dado = Math.ceil((Math.random() * 20) + 0)
@@ -4101,11 +4119,11 @@ atras2Btn.addEventListener('click', () => {
 
         // TODO: Completar el funcionamiento de tirada con arma
         if (dado == 20)
-          contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * ataque * 2)}`)
+          contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno + ataque * 2)}`)
         else if (dado == 1)
           contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
         else
-          contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque + equipo1.ataque}<br>Daño base ${Math.floor(arma.danno * ataque + equipo1.ataque)}`)
+          contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque + equipo1.ataque}<br>Daño base ${Math.floor(arma.danno + ataque)}`)
 
         if (arma.tipo == "mecanomagica") {
           personaje.poder -= arma.coste
@@ -4118,7 +4136,7 @@ atras2Btn.addEventListener('click', () => {
           case 1: // * Ataque
             // TODO: Retocar el ataque limpio
             if (dado == 20)
-              contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(ataque * 1)}`)
+              contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(ataque * 2)}`)
             else if (dado == 1)
               contenConsola(`Ataque limpio<br>¡PIFIA!<br>Daño base 0`)
             else
@@ -4845,16 +4863,33 @@ function mostrarEsbirroSeleccionado() {
 { // * Accion esbirro
   { // * Funciones
     function accionEsbirroArma(slot) {
+      const atributos = {
+        ataque: esbirroSeleccionado.ataque,
+        esquiva: esbirroSeleccionado.esquiva,
+        bloqueo: esbirroSeleccionado.bloqueo,
+        velocidad: esbirroSeleccionado.velocidad,
+        vidaMaxima: esbirroSeleccionado.vidaMaxima,
+        poderMaximo: esbirroSeleccionado.poderMaximo
+      }
+
+      for(const key in atributos) {
+        if(esbirroSeleccionado.equipo1[key]) atributos[key] += esbirroSeleccionado.equipo1[key]
+        if(esbirroSeleccionado.equipo2[key]) atributos[key] += esbirroSeleccionado.equipo2[key]
+        if(esbirroSeleccionado.equipo3[key]) atributos[key] += esbirroSeleccionado.equipo3[key]
+      }
+
+      let ataque = atributos.ataque
+
       let dado = Math.ceil((Math.random() * 20) + 0)
 
       let arma = esbirroSeleccionado[`arma${slot}`]
       // TODO: Completar el funcionamiento de tirada
       if (dado == 20)
-        contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * esbirroSeleccionado.ataque * 2)}`)
+        contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno + ataque * 2)}`)
       else if (dado == 1)
         contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
       else
-        contenConsola(`Ataque con ${arma.nombre}<br>${dado + esbirroSeleccionado.ataque}<br>Daño base ${Math.floor(arma.danno * esbirroSeleccionado.ataque)}`)
+        contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque}<br>Daño base ${Math.floor(arma.danno + ataque)}`)
 
       if (arma.tipo == "mecanomagica") {
         esbirroSeleccionado.poder -= arma.coste
@@ -4864,16 +4899,38 @@ function mostrarEsbirroSeleccionado() {
     }
 
     function accionEsbirroAtributo(slot) {
+      const atributos = {
+        ataque: esbirroSeleccionado.ataque,
+        esquiva: esbirroSeleccionado.esquiva,
+        bloqueo: esbirroSeleccionado.bloqueo,
+        velocidad: esbirroSeleccionado.velocidad,
+        vidaMaxima: esbirroSeleccionado.vidaMaxima,
+        poderMaximo: esbirroSeleccionado.poderMaximo
+      }
+
+      for(const key in atributos) {
+        if(esbirroSeleccionado.equipo1[key]) atributos[key] += esbirroSeleccionado.equipo1[key]
+        if(esbirroSeleccionado.equipo2[key]) atributos[key] += esbirroSeleccionado.equipo2[key]
+        if(esbirroSeleccionado.equipo3[key]) atributos[key] += esbirroSeleccionado.equipo3[key]
+      }
+
+      let ataque = atributos.ataque,
+        esquiva = atributos.esquiva,
+        bloqueo = atributos.bloqueo,
+        velocidad = atributos.velocidad,
+        vidaMaxima = atributos.vidaMaxima,
+        poderMaximo = atributos.poderMaximo
+
       let dado = Math.ceil((Math.random() * 20) + 0)
       switch (slot) {
         case 1: // * Ataque
           // TODO: Retocar el ataque limpio
           if (dado == 20)
-            contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(esbirroSeleccionado.ataque * 2)}`)
+            contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(ataque * 2)}`)
           else if (dado == 1)
             contenConsola(`Ataque limpio<br>¡PIFIA!<br>Daño base 0`)
           else
-            contenConsola(`Ataque limpio<br>${dado + esbirroSeleccionado.ataque}<br>Daño base ${Math.floor(esbirroSeleccionado.ataque)}`)
+            contenConsola(`Ataque limpio<br>${dado + ataque}<br>Daño base ${Math.floor(ataque)}`)
           break;
         case 2: // * Esquiva
           // TODO: Retocar esquiva
@@ -4882,7 +4939,7 @@ function mostrarEsbirroSeleccionado() {
           else if (dado == 1)
             contenConsola(`Esquiva<br>¡PIFIA!`)
           else
-            contenConsola(`Esquiva<br>${dado + esbirroSeleccionado.esquiva}`)
+            contenConsola(`Esquiva<br>${dado + esquiva}`)
           break;
         case 3: // * Bloquea
           // TODO: Retocar bloqueo
@@ -4891,7 +4948,7 @@ function mostrarEsbirroSeleccionado() {
           else if (dado == 1)
             contenConsola(`Bloquea<br>¡PIFIA!`)
           else
-            contenConsola(`Bloquea<br>${dado + esbirroSeleccionado.esquiva}`)
+            contenConsola(`Bloquea<br>${dado + esquiva}`)
           break;
         case 4: // * Huye
           // TODO: Retocar huye
@@ -4900,7 +4957,7 @@ function mostrarEsbirroSeleccionado() {
           else if (dado == 1)
             contenConsola(`Corre<br>¡PIFIA!`)
           else
-            contenConsola(`Corre<br>${dado + esbirroSeleccionado.velocidad}`)
+            contenConsola(`Corre<br>${dado + velocidad}`)
           break;
         case 5:
         case 6: // * Tirada limpia
