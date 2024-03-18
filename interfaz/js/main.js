@@ -136,7 +136,7 @@ document.body.addEventListener('dragstart', (e) => {
     output.habilidad2 = JSON.parse(localStorage.getItem('habilidad2'))
     output.habilidad3 = JSON.parse(localStorage.getItem('habilidad3'))
 
-    if (localStorage.getItem('exp')) experiencia = Number(localStorage.getItem('exp'))
+    if(localStorage.getItem('exp')) experiencia = Number(localStorage.getItem('exp'))
     // Parsea la cadena JSON y devuelve el objeto del personaje.
     return output
   }
@@ -571,6 +571,15 @@ document.body.addEventListener('dragstart', (e) => {
     }
 
 
+    if (comando === '/soldado') {
+      if (esPersonaje) { // ? Cambio de personaje principal
+        avatar('soldado')
+      } else { // ? Cambio de esbirro
+        cambiarEsbirro('soldado')
+      }
+    }
+
+
 
 
 
@@ -684,7 +693,7 @@ const habilidadesDict = {
   "machacar": {
     nombre: "machacar",
     coste: 1,
-    descripcion: "Impacta en el objetivo generando daño crítico y quitándole mitigación durante 1 turno <br> Poder min(6)"
+    descripcion: "Impacta en el objetivo generando daño crítico y quitándole mitigación durante 1 turno <br> Poder(6)"
   },
   "ira ciega": {
     nombre: "ira ciega",
@@ -714,12 +723,12 @@ const habilidadesDict = {
   "cobertura": {
     nombre: "cobertura",
     coste: 1,
-    descripcion: "Aumenta 300% la mitigación ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo"
+    descripcion: "Aumenta en 3 la mitigación ante proyectiles físicos durante 3 turnos (al moverse se pierde la cobertura) <br> Poder(3) / Requiere Escudo"
   },
   "embestida con escudo": {
     nombre: "embestida con escudo",
     coste: 1,
-    descripcion: "Golpeas al objetivo generándole 200% daño físico y derribándolo <br> Poder(3) / Requiere Escudo"
+    descripcion: "Golpeas al objetivo generándole 1 punto de daño físico por punto de poder consumido y derribándolo. <br> Poder min(3) / Requiere Escudo"
   },
   "ataque poderoso": {
     nombre: "ataque poderoso",
@@ -729,17 +738,17 @@ const habilidadesDict = {
   "ataque multiple": {
     nombre: "ataque multiple",
     coste: 1,
-    descripcion: "Una serie de golpes, los cuales suman todo su daño, generándolo de manera explosiva al finalizar la habilidad <br> Poder min(3)"
+    descripcion: "Una serie de golpes, los cuales suman todo su daño, generándolo de manera explosiva al finalizar la habilidad <br> Poder(3)"
   },
   "golpe de chi": {
     nombre: "golpe de chi",
     coste: 1,
-    descripcion: "Un poderoso empujón cargado de energía, que genera daño físico, aturde al objetivo 1 turno y lo hace retroceder (ataque x casilleros) <br> Poder min(6)"
+    descripcion: "Un poderoso empujón cargado de energía, que genera daño físico, aturde al objetivo 1 turno y lo hace retroceder 1 casillero x punto de ataque <br> Poder(6)"
   },
   "patada voladora": {
     nombre: "patada voladora",
     coste: 1,
-    descripcion: "Te lanzas hacia el objetivo a una distancia máxima de (velocidad x casilleros), al golpearlo generas 200% de daño físico + 1 punto de daño por metro recorrido <br> Poder min(3) / Sin Requisitos"
+    descripcion: "Te lanzas hacia el objetivo a una distancia máxima en casilleros igual a tu velocidad, al golpearlo generas + 1 punto de daño por metro recorrido y + 1 por cada punto de poder consumido. <br> Poder min(3)"
   },
   "desarmar": {
     nombre: "desarmar",
@@ -754,7 +763,7 @@ const habilidadesDict = {
   "torbellino": {
     nombre: "torbellino",
     coste: 1,
-    descripcion: "Giras tu con tu arma generando 50% de daño a todos los objetivos en tu rango de alcance, puedes caminar mientras la habilidad está activa <br> Poder min(6)"
+    descripcion: "Giras tu con tu arma generando la mitad de tu daño base a todos los objetivos en tu rango de alcance, puedes moverte mientras la habilidad está activa <br> Poder(9)"
   },
   "flechas multiples": {
     nombre: "flechas multiples",
@@ -1270,6 +1279,22 @@ const armasDict = {
     coste: 1,
     tipo: "",
     descripcion: "FRUTOS <br> Arma mixta cuerpo a cuerpo / 2 Acciones <br> 175% de ataque como daño mágico o físico <br> distancia máxima 1 casillero x punto de ataque"
+  },
+  "fusil": {
+    nombre: "fusil",
+    icono: "img/fusil.png",
+    danno: 2,
+    coste: 3,
+    tipo: "mecanomagica",
+    descripcion: "FUSIL <br> Arma Tecnomágica / 2 Acciones <br> 200% de ataque como daño físico (poder por disparo 3) <br> distancia máxima 3 casillero x punto de ataque"
+  },
+  "granada": {
+    nombre: "granada",
+    icono: "img/granada.png",
+    danno: 3,
+    coste: 6,
+    tipo: "mecanomagica",
+    descripcion: "GRANADA <br> Arma Tecnomágica  / 3 Acciones <br> 300% de ataque como daño físico en el lugar de impacto y la mitad de este en los casilleros adyacentes (poder por lanzamiento 6) <br> distancia máxima 3 casillero x punto de ataque"
   }
 }
 const listaArmas = Object.keys(armasDict)
@@ -2029,9 +2054,9 @@ const personajesDict = {
     equipo2: "nada",
     equipo3: "nada",
 
-    habilidad1: "enraizar",
-    habilidad2: "envenenar",
-    habilidad3: "sanar",
+    habilidad1: "drenar",
+    habilidad2: "ataque poderoso",
+    habilidad3: "reanimar",
   },
 
   "guardiarunico": {
@@ -2058,7 +2083,7 @@ const personajesDict = {
 
     habilidad1: "embestida con escudo",
     habilidad2: "enraizar",
-    habilidad3: "sanar",
+    habilidad3: "envenenar",
   },
 
 
@@ -2331,6 +2356,33 @@ const personajesDict = {
     equipo1: "nada",
     equipo2: "nada",
     equipo3: "nada"
+  },
+
+  "soldado": {
+    nombre: "soldado",
+    portada: "img/soldado.png",
+    icono: "",
+    descripcion: "Combatiente con poco entrenamiento y equipado con armas de tecnología arcana.",
+
+    ataque: 5,
+    esquiva: 2,
+    bloqueo: 4,
+    velocidad: 3,
+    vida: 20,
+    vidaMaxima: 20,
+    poder: 55,
+    poderMaximo: 55,
+
+    arma1: "fusil",
+    arma2: "granada",
+
+    equipo1: "nada",
+    equipo2: "nada",
+    equipo3: "nada",
+
+    habilidad1: "",
+    habilidad2: "",
+    habilidad3: "",
   }
 
 }
@@ -3034,7 +3086,7 @@ function avatar(meeple) {
   Object.assign(equipo2, equiposDict[personajesDict[meeple].equipo2])
   Object.assign(equipo3, equiposDict[personajesDict[meeple].equipo3])
 
-  if (meeple === 'nuevopj' || meeple === 'nuevoesbirro') experiencia += 200
+  if (meeple === 'nuevopj' || meeple === 'nuevoesbirro') experiencia = 200
 
   imprimirPersonaje()
   cerrarModal("personajes")
@@ -4033,27 +4085,13 @@ atras2Btn.addEventListener('click', () => {
         * @slot: number
     */
     function accion(slot) {
-      const atributos = {
-        ataque: personaje.ataque,
-        esquiva: personaje.esquiva,
-        bloqueo: personaje.bloqueo,
-        velocidad: personaje.velocidad,
-        vidaMaxima: personaje.vidaMaxima,
-        poderMaximo: personaje.poderMaximo
-      }
+      let ataque = personaje.ataque,
+        esquiva = personaje.esquiva,
+        bloqueo = personaje.bloqueo,
+        velocidad = personaje.velocidad,
+        vidaMaxima = personaje.vidaMaxima,
+        poderMaximo = personaje.poderMaximo
 
-      for(const key in atributos) {
-        if(equipo1[key]) atributos[key] += equipo1[key]
-        if(equipo2[key]) atributos[key] += equipo2[key]
-        if(equipo3[key]) atributos[key] += equipo3[key]
-      }
-
-      let ataque = atributos.ataque,
-        esquiva = atributos.esquiva,
-        bloqueo = atributos.bloqueo,
-        velocidad = atributos.velocidad,
-        vidaMaxima = atributos.vidaMaxima,
-        poderMaximo = atributos.poderMaximo
 
       let dado = Math.ceil((Math.random() * 20) + 0)
 
@@ -4067,7 +4105,7 @@ atras2Btn.addEventListener('click', () => {
         else if (dado == 1)
           contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
         else
-          contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque}<br>Daño base ${Math.floor(arma.danno * ataque)}`)
+          contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque + equipo1.ataque}<br>Daño base ${Math.floor(arma.danno * ataque + equipo1.ataque)}`)
 
         if (arma.tipo == "mecanomagica") {
           personaje.poder -= arma.coste
@@ -4080,7 +4118,7 @@ atras2Btn.addEventListener('click', () => {
           case 1: // * Ataque
             // TODO: Retocar el ataque limpio
             if (dado == 20)
-              contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(ataque * 2)}`)
+              contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(ataque * 1)}`)
             else if (dado == 1)
               contenConsola(`Ataque limpio<br>¡PIFIA!<br>Daño base 0`)
             else
@@ -4807,29 +4845,16 @@ function mostrarEsbirroSeleccionado() {
 { // * Accion esbirro
   { // * Funciones
     function accionEsbirroArma(slot) {
-      const atributos = {
-        ataque: personaje.ataque,
-      }
-
-      for(const key in atributos) {
-        if(equipo1[key]) atributos[key] += esbirroSeleccionado.equipo1[key]
-        if(equipo2[key]) atributos[key] += esbirroSeleccionado.equipo2[key]
-        if(equipo3[key]) atributos[key] += esbirroSeleccionado.equipo3[key]
-      }
-
-      let ataque = atributos.ataque
-
-
       let dado = Math.ceil((Math.random() * 20) + 0)
 
       let arma = esbirroSeleccionado[`arma${slot}`]
       // TODO: Completar el funcionamiento de tirada
       if (dado == 20)
-        contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * ataque * 2)}`)
+        contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * esbirroSeleccionado.ataque * 2)}`)
       else if (dado == 1)
         contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
       else
-        contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque}<br>Daño base ${Math.floor(arma.danno * ataque)}`)
+        contenConsola(`Ataque con ${arma.nombre}<br>${dado + esbirroSeleccionado.ataque}<br>Daño base ${Math.floor(arma.danno * esbirroSeleccionado.ataque)}`)
 
       if (arma.tipo == "mecanomagica") {
         esbirroSeleccionado.poder -= arma.coste
@@ -4839,32 +4864,16 @@ function mostrarEsbirroSeleccionado() {
     }
 
     function accionEsbirroAtributo(slot) {
-      const atributos = {
-        ataque: personaje.ataque,
-        esquiva: esbirroSeleccionado.esquiva,
-        velocidad: esbirroSeleccionado.velocidad,
-      }
-
-      for(const key in atributos) {
-        if(equipo1[key]) atributos[key] += esbirroSeleccionado.equipo1[key]
-        if(equipo2[key]) atributos[key] += esbirroSeleccionado.equipo2[key]
-        if(equipo3[key]) atributos[key] += esbirroSeleccionado.equipo3[key]
-      }
-
-      let ataque = atributos.ataque,
-          esquiva = atributos.esquiva,
-          velocidad = atributos.velocidad
-
       let dado = Math.ceil((Math.random() * 20) + 0)
       switch (slot) {
         case 1: // * Ataque
           // TODO: Retocar el ataque limpio
           if (dado == 20)
-            contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(ataque * 2)}`)
+            contenConsola(`Ataque limpio<br>¡CRITICO!<br>Daño base ${Math.floor(esbirroSeleccionado.ataque * 2)}`)
           else if (dado == 1)
             contenConsola(`Ataque limpio<br>¡PIFIA!<br>Daño base 0`)
           else
-            contenConsola(`Ataque limpio<br>${dado + ataque}<br>Daño base ${Math.floor(ataque)}`)
+            contenConsola(`Ataque limpio<br>${dado + esbirroSeleccionado.ataque}<br>Daño base ${Math.floor(esbirroSeleccionado.ataque)}`)
           break;
         case 2: // * Esquiva
           // TODO: Retocar esquiva
@@ -4873,7 +4882,7 @@ function mostrarEsbirroSeleccionado() {
           else if (dado == 1)
             contenConsola(`Esquiva<br>¡PIFIA!`)
           else
-            contenConsola(`Esquiva<br>${dado + esquiva}`)
+            contenConsola(`Esquiva<br>${dado + esbirroSeleccionado.esquiva}`)
           break;
         case 3: // * Bloquea
           // TODO: Retocar bloqueo
@@ -4882,7 +4891,7 @@ function mostrarEsbirroSeleccionado() {
           else if (dado == 1)
             contenConsola(`Bloquea<br>¡PIFIA!`)
           else
-            contenConsola(`Bloquea<br>${dado + esquiva}`)
+            contenConsola(`Bloquea<br>${dado + esbirroSeleccionado.esquiva}`)
           break;
         case 4: // * Huye
           // TODO: Retocar huye
@@ -4891,7 +4900,7 @@ function mostrarEsbirroSeleccionado() {
           else if (dado == 1)
             contenConsola(`Corre<br>¡PIFIA!`)
           else
-            contenConsola(`Corre<br>${dado + velocidad}`)
+            contenConsola(`Corre<br>${dado + esbirroSeleccionado.velocidad}`)
           break;
         case 5:
         case 6: // * Tirada limpia
