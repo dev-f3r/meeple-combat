@@ -4119,11 +4119,11 @@ atras2Btn.addEventListener('click', () => {
 
         // TODO: Completar el funcionamiento de tirada con arma
         if (dado == 20)
-          contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno + ataque * 2)}`)
+          contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * ataque * 2)}`)
         else if (dado == 1)
           contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
         else
-          contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque + equipo1.ataque}<br>Daño base ${Math.floor(arma.danno + ataque)}`)
+          contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque + equipo1.ataque}<br>Daño base ${Math.floor(arma.danno * ataque)}`)
 
         if (arma.tipo == "mecanomagica") {
           personaje.poder -= arma.coste
@@ -4864,7 +4864,7 @@ function mostrarEsbirroSeleccionado() {
   { // * Funciones
     function accionEsbirroArma(slot) {
       const atributos = {
-        ataque: esbirroSeleccionado.ataque,
+        ataque: esbirroSeleccionado.ataque + 1,
         esquiva: esbirroSeleccionado.esquiva,
         bloqueo: esbirroSeleccionado.bloqueo,
         velocidad: esbirroSeleccionado.velocidad,
@@ -4885,11 +4885,11 @@ function mostrarEsbirroSeleccionado() {
       let arma = esbirroSeleccionado[`arma${slot}`]
       // TODO: Completar el funcionamiento de tirada
       if (dado == 20)
-        contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno + ataque * 2)}`)
+        contenConsola(`Ataque con ${arma.nombre}<br>¡CRITICO!<br>Daño base ${Math.floor(arma.danno * ataque * 2)}`)
       else if (dado == 1)
         contenConsola(`Ataque con ${arma.nombre}<br>¡PIFIA!<br>Daño base 0`)
       else
-        contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque}<br>Daño base ${Math.floor(arma.danno + ataque)}`)
+        contenConsola(`Ataque con ${arma.nombre}<br>${dado + ataque}<br>Daño base ${Math.floor(arma.danno * ataque)}`)
 
       if (arma.tipo == "mecanomagica") {
         esbirroSeleccionado.poder -= arma.coste
@@ -4900,7 +4900,7 @@ function mostrarEsbirroSeleccionado() {
 
     function accionEsbirroAtributo(slot) {
       const atributos = {
-        ataque: esbirroSeleccionado.ataque,
+        ataque: esbirroSeleccionado.ataque + 1,
         esquiva: esbirroSeleccionado.esquiva,
         bloqueo: esbirroSeleccionado.bloqueo,
         velocidad: esbirroSeleccionado.velocidad,
