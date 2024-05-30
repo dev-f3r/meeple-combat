@@ -328,9 +328,11 @@ document.body.addEventListener('dragstart', (e) => {
           } else {
             editarHabilidadEsbirro(comandosValor.value)
           }
+          break
         case "mochila-item":
           cambiarItemMochila(comandosValor.value)
           actualizarMochila()
+          break
         default:
           break
       }
@@ -358,9 +360,11 @@ document.body.addEventListener('dragstart', (e) => {
         } else {
           editarHabilidadEsbirro(comandosValor.value)
         }
+        break
       case "mochila-item":
         cambiarItemMochila(comandosValor.value)
         actualizarMochila()
+        break
       default:
         break
     }
@@ -375,216 +379,22 @@ document.body.addEventListener('dragstart', (e) => {
   function ingresarComando(comando) {
     comando = comando.toLowerCase()
     // ? Cambio de personaje con '/' + nombre
-
-    if (comando === '/barbaro') {
+    if (personajesDict[comando]) {
       if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('barbaro')
+        avatar(comando)
       } else { // ? Cambio de esbirro
-        cambiarEsbirro('barbaro')
+        cambiarEsbirro(comando)
       }
     }
-
-
-    if (comando === '/guerrero') {
+    else if (esbirrosDict[comando]) {
       if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('guerrero')
+        avatar(comando)
       } else { // ? Cambio de esbirro
-        cambiarEsbirro('guerrero')
+        cambiarEsbirro(comando)
       }
-    }
+    }else {contenConsola("NO EXISTE " + comando)}
 
-
-    if (comando === '/paladin') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('paladin')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('paladin')
-      }
-    }
-
-    if (comando === '/chaman') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('chaman')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('chaman')
-      }
-    }
-
-    if (comando === '/mago') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('mago')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('mago')
-      }
-    }
-
-    if (comando === '/druida') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('druida')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('druida')
-      }
-    }
-
-
-    if (comando === '/monje') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('monje')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('monje')
-      }
-    }
-
-
-    if (comando === '/picaro') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('picaro')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('picaro')
-      }
-    }
-
-    if (comando === '/cazador') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('cazador')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('cazador')
-      }
-    }
-
-    if (comando === '/nigromante') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('nigromante')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('nigromante')
-      }
-    }
-
-    if (comando === '/paladinoscuro') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('paladinoscuro')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('paladinoscuro')
-      }
-    }
-
-    if (comando === '/guardiarunico') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('guardiarunico')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('guardiarunico')
-      }
-    }
-
-    if (comando === '/cinirus') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('cinirus')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('cinirus')
-      }
-    }
-
-    if (comando === '/naigaran') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('naigaran')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('naigaran')
-      }
-    }
-
-    if (comando === '/terronte') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('terronte')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('terronte')
-      }
-    }
-
-    if (comando === '/tortakla') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('tortakla')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('tortakla')
-      }
-    }
-
-    if (comando === '/kardanto') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('kardanto')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('kardanto')
-      }
-    }
-
-    if (comando === '/ghalidos') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('ghalidos')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('ghalidos')
-      }
-    }
-
-    if (comando === '/sarcomos') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('sarcomos')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('sarcomos')
-      }
-    }
-
-    if (comando === '/raizor') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('raizor')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('raizor')
-      }
-    }
-
-    if (comando === '/momontu') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('momontu')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('momontu')
-      }
-    }
-
-    if (comando === '/lobo') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('lobo')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('lobo')
-      }
-    }
-
-
-    if (comando === '/raptor') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('raptor')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('raptor')
-      }
-    }
-
-    if (comando === '/esqueleto') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('esqueleto')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('esqueleto')
-      }
-    }
-
-
-    if (comando === '/soldado') {
-      if (esPersonaje) { // ? Cambio de personaje principal
-        avatar('soldado')
-      } else { // ? Cambio de esbirro
-        cambiarEsbirro('soldado')
-      }
-    }
-
-
-
-
+    
 
     if (comando === '/full') {
       if (esPersonaje) {
@@ -613,6 +423,8 @@ document.body.addEventListener('dragstart', (e) => {
       habilidad1 = habilidadesDict['habilidad 1']
       habilidad2 = habilidadesDict['habilidad 2']
       habilidad3 = habilidadesDict['habilidad 3']
+
+      experiencia = 0
 
       avatar('bienvenida')
 
@@ -649,13 +461,11 @@ document.body.addEventListener('dragstart', (e) => {
       cambioImagenBtn.click()
     }
 
-    if (comando === '.loot') {
+    if (comando === '/loot') {
       const lista = ['Armadura Ligera', 'daga', 'anillo', 'espada', 'escudo', 'varita', 'baculo', 'pergamino']
       const index = Math.floor(Math.random() * lista.length)
 
       const elemento = lista[index]
-
-
 
       contenConsola("Loot = " + elemento)
     }
@@ -671,9 +481,29 @@ document.body.addEventListener('dragstart', (e) => {
         cambiarArmaEsbirro('garras')
       }
     }
+
+    if (comando === '/version') {
+    
+      contenConsola("VERSION 2.5.0 A")
+    }
+
     // TODO: Agregar los demas comandos
   }
 }
+
+
+
+
+
+
+
+
+
+//HABILIDADES
+
+
+
+
 
 // ? Objeto para almacenar información de las habilidades
 // TODO: Agregar habilidades restantes, y revisar existentes
@@ -974,6 +804,32 @@ const habilidadesDict = {
     descripcion: "Daña e inhabilita al objetivo, quitandole 2 acciones de su proximo turno.<br> Poder(6)."
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//ARMAS
+
+
+
+
+
+
+
+
+
+
 
 // ? Objeto para almacenar información de las armas
 // TODO: Agregar las demas armas / tipo: mecanomagica para consumir poder automaticamente.
@@ -1302,6 +1158,20 @@ const armasDict = {
 }
 const listaArmas = Object.keys(armasDict)
 
+
+
+
+
+
+
+//ESBIRROS
+
+
+
+
+
+
+
 // ? Objeto para almacenar información de los esbirros
 // TODO: Agregar los demas esbirros
 const esbirrosDict = {
@@ -1330,7 +1200,7 @@ const esbirrosDict = {
 
     equipo1: "nada",
     equipo2: "nada",
-    equipo3: "nada"
+    equipo3: "nada",
   },
   "esbirro1": {
     nombre: "Esbirro 1",
@@ -1689,6 +1559,18 @@ const listaEsbirros = Object.keys(esbirrosDict).filter(name => {
   } else return false
 })
 
+
+
+
+
+
+//PERSONAJES
+
+
+
+
+
+
 // ? Objeto para almecenar información de los esbirros
 // TODO: Agregar los demas personajes
 const personajesDict = {
@@ -1898,7 +1780,7 @@ const personajesDict = {
     equipo3: "nada",
 
     habilidad1: "bola de hielo",
-    habilidad2: "explosiondeescarcha",
+    habilidad2: "explosion de escarcha",
     habilidad3: "confundir",
   },
   "paladin": {
@@ -2088,6 +1970,12 @@ const personajesDict = {
     habilidad2: "enraizar",
     habilidad3: "envenenar",
   },
+
+
+
+
+//ESBIRROS POR COMANDO
+
 
 
 
@@ -2389,6 +2277,8 @@ const personajesDict = {
   }
 
 }
+
+
 const listaPersonajes = Object.keys(personajesDict).filter(name => {
   if (
     name !== 'bienvenida'
@@ -2398,6 +2288,27 @@ const listaPersonajes = Object.keys(personajesDict).filter(name => {
     return true
   } else return false
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ? Objeto para almacenar información de los distintos equipamientos
 // TODO: Revisar atributos de cada item
@@ -2499,7 +2410,7 @@ var edicion = 0
 var tipoEdicion = 'personaje'
 // ? Contiene informacion sobre la cantidad de monedas en la mochila
 var capital = {
-  oro: 1,
+  oro: 0,
   plata: 0,
   bronce: 0,
 }
@@ -3019,7 +2930,7 @@ function cambiarItemMochila(txt) {
         const handler = edicion == 1 ?
           sumarMonedas : restarMonedas
         handler(nombre)
-      }, 100)
+      }, 300)
     }
 
     function detenerTimer() {
@@ -3088,6 +2999,8 @@ function avatar(meeple) {
   Object.assign(equipo1, equiposDict[personajesDict[meeple].equipo1])
   Object.assign(equipo2, equiposDict[personajesDict[meeple].equipo2])
   Object.assign(equipo3, equiposDict[personajesDict[meeple].equipo3])
+
+  experiencia = 0
 
   if (meeple === 'nuevopj' || meeple === 'nuevoesbirro') experiencia = 200
 
@@ -3519,7 +3432,7 @@ function armas(armaSeleccionada, slot) {
             if (tipoEdicion === "personaje") masMenosVidaPoder(accionBtn)
             else modificarVidaPoderActualEsbirro(accionBtn)
           }
-        }, 100)
+        }, 300)
       }
 
       // Detener el temporizador cuando se deja de presionar el botón
